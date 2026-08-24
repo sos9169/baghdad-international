@@ -1138,7 +1138,7 @@ body.dark .dest-badge {
   gap: 8px;
 }
 
-/* INTERACTIVE TAG BUTTONS (كروت وركائز التقديم المباشر) */
+/* INTERACTIVE TAG BUTTONS */
 .dest-tag-btn {
   font-size: 11.5px;
   font-weight: 800;
@@ -1347,17 +1347,6 @@ body.lang-en .modal-close {
   margin-bottom: 22px;
 }
 
-.modal-badge {
-  display: inline-block;
-  font: 700 11px var(--font-mono);
-  color: var(--gold);
-  letter-spacing: 1px;
-  background: rgba(197, 154, 74, 0.12);
-  padding: 4px 12px;
-  border-radius: 999px;
-  margin-bottom: 8px;
-}
-
 .modal-header h3 {
   font-size: 24px;
   margin: 0 0 6px;
@@ -1378,6 +1367,13 @@ body.lang-en .modal-close {
 .modal-form {
   display: grid;
   gap: 14px;
+}
+
+.modal-selectors select {
+  font-weight: 800;
+  color: var(--gold);
+  border-color: rgba(197, 154, 74, 0.5);
+  background: rgba(197, 154, 74, 0.08);
 }
 
 .form-row {

@@ -334,33 +334,59 @@
     });
   });
 
-  // --- SERVICE QUICK REQUEST MODAL LOGIC ---
+  // --- SERVICE QUICK REQUEST MODAL LOGIC WITH EDITABLE SELECTORS ---
   const serviceModal = document.getElementById("serviceModal");
   const closeServiceModalBtn = document.getElementById("closeServiceModal");
   const serviceModalForm = document.getElementById("serviceModalForm");
-  const modalCountryBadge = document.getElementById("modalCountryBadge");
   const modalServiceName = document.getElementById("modalServiceName");
-  const modalInputService = document.getElementById("modalInputService");
-  const modalInputCountry = document.getElementById("modalInputCountry");
+  const modalServiceSelect = document.getElementById("modalServiceSelect");
+  const modalCountrySelect = document.getElementById("modalCountrySelect");
   const modalWaBtn = document.getElementById("modalWaBtn");
   const modalStatus = document.getElementById("modalStatus");
 
-  function openModalForTag(serviceKey, countryKey, flag) {
-    const isEn = body.classList.contains("lang-en");
-    const dict = translations[isEn ? "en" : "ar"];
+  function updateModalHeaderAndWa() {
+    const sVal = modalServiceSelect ? modalServiceSelect.value : "";
+    const cVal = modalCountrySelect ? modalCountrySelect.value : "";
 
-    const sName = dict[serviceKey] || serviceKey;
-    const cName = dict[countryKey] || countryKey;
-    const fullCountry = `${flag || ""} ${cName}`.trim();
+    if (modalServiceName) modalServiceName.textContent = sVal;
 
-    if (modalCountryBadge) modalCountryBadge.textContent = fullCountry;
-    if (modalServiceName) modalServiceName.textContent = sName;
-    if (modalInputService) modalInputService.value = sName;
-    if (modalInputCountry) modalInputCountry.value = cName;
-
-    // Update WhatsApp link with pre-filled message
-    const waText = encodeURIComponent(`مرحباً Baghdad International Group، أرغب في الاستفسار والتقديم على خدمة (${sName}) الخاصة بدولة (${cName}).`);
+    // Update WhatsApp link dynamically
+    const waText = encodeURIComponent(`مرحباً Baghdad International Group، أرغب في الاستفسار والتقديم على خدمة (${sVal}) الخاصة بدولة (${cVal}).`);
     if (modalWaBtn) modalWaBtn.href = `https://wa.me/201000000000?text=${waText}`;
+  }
+
+  if (modalServiceSelect) modalServiceSelect.addEventListener("change", updateModalHeaderAndWa);
+  if (modalCountrySelect) modalCountrySelect.addEventListener("change", updateModalHeaderAndWa);
+
+  function openModalForTag(serviceVal, countryVal) {
+    const isEn = body.classList.contains("lang-en");
+
+    if (modalServiceSelect && serviceVal) {
+      // Find matching option or set value
+      let matchFound = false;
+      for (let i = 0; i < modalServiceSelect.options.length; i++) {
+        if (modalServiceSelect.options[i].value === serviceVal || modalServiceSelect.options[i].text.includes(serviceVal)) {
+          modalServiceSelect.selectedIndex = i;
+          matchFound = true;
+          break;
+        }
+      }
+      if (!matchFound) modalServiceSelect.value = serviceVal;
+    }
+
+    if (modalCountrySelect && countryVal) {
+      let cMatchFound = false;
+      for (let i = 0; i < modalCountrySelect.options.length; i++) {
+        if (modalCountrySelect.options[i].value === countryVal || modalCountrySelect.options[i].text.includes(countryVal)) {
+          modalCountrySelect.selectedIndex = i;
+          cMatchFound = true;
+          break;
+        }
+      }
+      if (!cMatchFound) modalCountrySelect.value = countryVal;
+    }
+
+    updateModalHeaderAndWa();
 
     if (modalStatus) {
       modalStatus.textContent = "";
@@ -373,10 +399,9 @@
   document.querySelectorAll(".dest-tag-btn").forEach((btn) => {
     btn.addEventListener("click", (e) => {
       e.stopPropagation();
-      const serviceKey = btn.dataset.serviceKey;
-      const countryKey = btn.dataset.countryKey;
-      const flag = btn.dataset.countryFlag;
-      openModalForTag(serviceKey, countryKey, flag);
+      const serviceVal = btn.dataset.serviceVal || btn.textContent.replace("↗", "").trim();
+      const countryVal = btn.dataset.countryVal || "";
+      openModalForTag(serviceVal, countryVal);
     });
   });
 
