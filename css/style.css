@@ -2155,3 +2155,29 @@ body.lang-en .contact-form input, body.lang-en .contact-form textarea {
   }
   .reveal { opacity: 1; transform: none; }
 }
+
+/* =========================================================
+   UNIVERSAL BIDI LTR PROTECTION FOR PHONE NUMBERS & METRICS
+   Prevents browser BiDi flipping in RTL / LTR language mode
+   ========================================================= */
+.phone-num,
+.country-phones a,
+.years-badge strong,
+.counter-num,
+.ltr-num,
+.modal-wa-btn,
+a[href^="tel:"],
+a[href^="https://wa.me"],
+input[type="tel"] {
+  direction: ltr !important;
+  unicode-bidi: isolate !important;
+  display: inline-block;
+  text-align: left;
+}
+
+bdi {
+  direction: ltr !important;
+  unicode-bidi: isolate !important;
+  display: inline-block;
+}
+
