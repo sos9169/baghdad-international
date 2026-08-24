@@ -19,6 +19,7 @@ body.lang-en .contact-form,
 body.lang-en .service-card,
 body.lang-en .program-item,
 body.lang-en .destination-card,
+body.lang-en .trust-item,
 body.lang-en .social-banner-inner,
 body.lang-en .why-list,
 body.lang-en .why-list > div,
@@ -79,6 +80,16 @@ body.lang-en .boarding-pass .bp-stub p {
 
   .program-grid {
     grid-template-columns: repeat(2, 1fr);
+  }
+
+  .trust-inner {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+
+  .stats-counter-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
   }
 
   .destinations-showcase {
@@ -194,6 +205,16 @@ body.lang-en .boarding-pass .bp-stub p {
 
   .two-col, .why-grid, .contact-box, .destinations-showcase {
     grid-template-columns: 1fr;
+  }
+
+  .trust-inner {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+
+  .stats-counter-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
   }
 
   .destinations-map-wrap {
@@ -344,6 +365,20 @@ body.lang-en .boarding-pass .bp-stub p {
     font-size: 9px;
     white-space: normal;
     line-height: 1.4;
+  }
+
+  .trust-inner {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .stats-counter-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  .counter-card {
+    padding: 16px 12px;
   }
 
   .hero-visual {

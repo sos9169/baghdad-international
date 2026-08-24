@@ -29,6 +29,14 @@
       "ticker.3": "GENERAL TRADE",
       "ticker.4": "TRAINING",
       "ticker.5": "LEGAL SUPPORT",
+      "trust.1.title": "شراكات دولية",
+      "trust.1.text": "جامعات ومؤسسات معتمدة",
+      "trust.2.title": "إسناد إجرائي قانوني",
+      "trust.2.text": "فريق قانوني ومتابعة مرخصة",
+      "trust.3.title": "تراخيص رسمية",
+      "trust.3.text": "سجل تجاري ومقر موثق",
+      "trust.4.title": "+9 سنوات خبرة",
+      "trust.4.text": "في سوق الخدمات الدولية",
       "about.eyebrow": "ABOUT US",
       "about.title": "خبرة تُحوّل<br><span>التفاصيل إلى نتائج</span>",
       "about.lead": "Baghdad International Group هي واجهة لخدمات دولية مصممة للأفراد والعائلات والطلاب وأصحاب الأعمال.",
@@ -53,6 +61,10 @@
       "program.2.text": "برامج تدريبية لتطوير المهارات العملية والمهنية حسب المجال المطلوب.",
       "program.3.title": "المؤتمرات والبرامج المهنية",
       "program.3.text": "مؤتمرات علمية ودورات مهنية متخصصة، بما يشمل برامج مثل MBA",
+      "stats.clients": "عميل وطالب مخدوم",
+      "stats.partners": "جامعة وشريك دولي",
+      "stats.success": "نسبة إنجاز المعاملات",
+      "stats.years": "سنوات خبرة متواصلة",
       "destinations.eyebrow": "DESTINATIONS & COVERAGE",
       "destinations.title": "شبكة خدماتنا الدولية<br><span>عبر أهم الوجهات</span>",
       "destinations.note": "نربط عملائنا بأحدث الفرص التعليمية، خيارات السفر والإقامة، والتسهيلات التجارية في الدول المستهدفة.",
@@ -144,6 +156,14 @@
       "ticker.3": "GENERAL TRADE",
       "ticker.4": "TRAINING",
       "ticker.5": "LEGAL SUPPORT",
+      "trust.1.title": "Global Partnerships",
+      "trust.1.text": "Accredited Universities",
+      "trust.2.title": "Legal Procedure Support",
+      "trust.2.text": "Licensed Legal Team",
+      "trust.3.title": "Official Licensing",
+      "trust.3.text": "Commercial Register & HQ",
+      "trust.4.title": "+9 Years Experience",
+      "trust.4.text": "In International Services",
       "about.eyebrow": "ABOUT US",
       "about.title": "Experience that turns<br><span>details into results</span>",
       "about.lead": "Baghdad International Group is a gateway to international services designed for individuals, families, students and businesses.",
@@ -168,6 +188,10 @@
       "program.2.text": "Training programs for practical and professional skill development by field.",
       "program.3.title": "Conferences & Professional Programs",
       "program.3.text": "Scientific conferences and specialized professional courses, including programs such as MBA",
+      "stats.clients": "Served Clients & Students",
+      "stats.partners": "Universities & Global Partners",
+      "stats.success": "Transaction Success Rate",
+      "stats.years": "Years of Continuous Experience",
       "destinations.eyebrow": "DESTINATIONS & COVERAGE",
       "destinations.title": "Our international network<br><span>across key destinations</span>",
       "destinations.note": "We connect our clients with educational opportunities, travel and residency options, and trade facilities across target destinations.",
@@ -303,6 +327,43 @@
     });
   }
 
+  // --- INTERACTIVE COUNTER ANIMATION FOR STATISTICS ---
+  const counters = document.querySelectorAll(".counter-num");
+  let animatedStats = false;
+
+  function runCounters() {
+    if (animatedStats) return;
+    animatedStats = true;
+    counters.forEach((counter) => {
+      const target = +counter.dataset.target || 0;
+      const suffix = counter.dataset.suffix || "";
+      let count = 0;
+      const step = Math.max(1, Math.ceil(target / 40));
+
+      const timer = setInterval(() => {
+        count += step;
+        if (count >= target) {
+          count = target;
+          clearInterval(timer);
+        }
+        counter.textContent = `${count}${suffix}`;
+      }, 35);
+    });
+  }
+
+  const statsSection = document.querySelector(".stats-counter-section");
+  if (statsSection && "IntersectionObserver" in window) {
+    const statsObserver = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting) {
+        runCounters();
+        statsObserver.unobserve(statsSection);
+      }
+    }, { threshold: 0.2 });
+    statsObserver.observe(statsSection);
+  } else {
+    runCounters();
+  }
+
   // --- Interactive Destinations Country Cards & Map Node Sync ---
   const destCards = document.querySelectorAll(".destination-card");
   const mapNodes = document.querySelectorAll(".map-node");
@@ -362,7 +423,6 @@
     const isEn = body.classList.contains("lang-en");
 
     if (modalServiceSelect && serviceVal) {
-      // Find matching option or set value
       let matchFound = false;
       for (let i = 0; i < modalServiceSelect.options.length; i++) {
         if (modalServiceSelect.options[i].value === serviceVal || modalServiceSelect.options[i].text.includes(serviceVal)) {
