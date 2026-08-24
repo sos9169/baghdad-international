@@ -32,7 +32,7 @@
       "about.eyebrow": "ABOUT US",
       "about.title": "خبرة تُحوّل<br><span>التفاصيل إلى نتائج</span>",
       "about.lead": "Baghdad International Group هي واجهة لخدمات دولية مصممة للأفراد والعائلات والطلاب وأصحاب الأعمال.",
-      "about.text": "نساعدك في ترتيب الخطوات، فهم الإجراءات، واختيار الحل الأنسب لاحتياجك — بأسلوب واضح، سريع واحترافي.",
+      "about.text": "نساعدك في ترتيب الخطوات، فهم الإجراءات، وااختيار الحل الأنسب لاحتياجك — بأسلوب واضح، سريع واحترافي.",
       "about.signature": "Baghdad International Group",
       "about.years": "+9",
       "about.yearsLabel": "سنوات خبرة في السوق",
@@ -53,13 +53,39 @@
       "program.2.text": "برامج تدريبية لتطوير المهارات العملية والمهنية حسب المجال المطلوب.",
       "program.3.title": "المؤتمرات والبرامج المهنية",
       "program.3.text": "مؤتمرات علمية ودورات مهنية متخصصة، بما يشمل برامج مثل MBA",
-      "destinations.eyebrow": "DESTINATIONS",
-      "destinations.title": "خدمات سفر مرتبطة<br><span>بعدة دول</span>",
-      "country.egypt": "مصر",
-      "country.iraq": "العراق",
-      "country.turkey": "تركيا",
-      "country.iran": "إيران",
-      "country.russia": "روسيا",
+      "destinations.eyebrow": "DESTINATIONS & COVERAGE",
+      "destinations.title": "شبكة خدماتنا الدولية<br><span>عبر أهم الوجهات</span>",
+      "destinations.note": "نربط عملائنا بأحدث الفرص التعليمية، خيارات السفر والإقامة، والتسهيلات التجارية في الدول المستهدفة.",
+      "dest.hub": "المركز الرئيسي",
+      "dest.active": "متابعة مباشرة",
+      "dest.available": "خدمات منسقة",
+      "dest.egypt.name": "جمهورية مصر العربية",
+      "dest.egypt.code": "Egypt • Hub Central",
+      "dest.egypt.desc": "مقرنا الرئيسي في القاهرة والدقي — تقديمات جامعية، عقود وسكن، وإسناد إجرائي كامل للمقيمين والوافدين.",
+      "dest.iraq.name": "جمهورية العراق",
+      "dest.iraq.code": "Iraq • Primary Origin",
+      "dest.iraq.desc": "تسهيل إجراءات السفر والدراسة للطلاب والتجار العراقيين الراغبين بالدراسة والاستثمار في مصر وخارجها.",
+      "dest.turkey.name": "تركيا",
+      "dest.turkey.code": "Turkey • Istanbul Gateway",
+      "dest.turkey.desc": "قبولات جامعية في إسطنبول وأنقرة، تنسيق تجاري بين الأسواق العربية والتركية، ومساندة سفر.",
+      "dest.iran.name": "إيران",
+      "dest.iran.code": "Iran • Academic & Medical",
+      "dest.iran.desc": "برامج مقاعد جامعية متخصصة، دورات تدريبية، ومتابعة المسارات التعليمية الطبية والهندسية.",
+      "dest.russia.name": "روسيا الاتحادية",
+      "dest.russia.code": "Russia • Medical Universities",
+      "dest.russia.desc": "تنسيق القبولات الجامعية في التخصصات الطبية والهندسية، سنة تحضيرية، ومتابعة ملفات السفر.",
+      "dest.tag.uni": "جامعات دولية",
+      "dest.tag.residency": "إقامة وسكن",
+      "dest.tag.business": "خدمات رجال أعمال",
+      "dest.tag.edu": "متابعة طلابية",
+      "dest.tag.trade": "تجارة عامة",
+      "dest.tag.travel": "تأشيرات رحلات",
+      "dest.tag.import": "استيراد وتصدير",
+      "dest.tag.tours": "سفر ومعارض",
+      "dest.tag.medical": "طب وهندسة",
+      "dest.tag.scholar": "منح ومقاعد",
+      "dest.tag.prep": "سنة تحضيرية",
+      "dest.tag.med": "جامعات حكومية",
       "banner.eyebrow": "BAGHDAD INTERNATIONAL GROUP",
       "banner.title": "خدمات دولية | سفر | تعليم | تجارة عامة",
       "banner.text": "هوية واضحة مناسبة للاستخدام كبانر تعريفي على فيسبوك والمنصات الاجتماعية.",
@@ -142,13 +168,39 @@
       "program.2.text": "Training programs for practical and professional skill development by field.",
       "program.3.title": "Conferences & Professional Programs",
       "program.3.text": "Scientific conferences and specialized professional courses, including programs such as MBA",
-      "destinations.eyebrow": "DESTINATIONS",
-      "destinations.title": "Travel services connected<br><span>to multiple countries</span>",
-      "country.egypt": "Egypt",
-      "country.iraq": "Iraq",
-      "country.turkey": "Turkey",
-      "country.iran": "Iran",
-      "country.russia": "Russia",
+      "destinations.eyebrow": "DESTINATIONS & COVERAGE",
+      "destinations.title": "Our international network<br><span>across key destinations</span>",
+      "destinations.note": "We connect our clients with educational opportunities, travel and residency options, and trade facilities across target destinations.",
+      "dest.hub": "Main Hub",
+      "dest.active": "Direct Follow-up",
+      "dest.available": "Coordinated Services",
+      "dest.egypt.name": "Arab Republic of Egypt",
+      "dest.egypt.code": "Egypt • Hub Central",
+      "dest.egypt.desc": "Our main headquarters in Cairo & Dokki — University admissions, contracts & housing, and full legal support for residents.",
+      "dest.iraq.name": "Republic of Iraq",
+      "dest.iraq.code": "Iraq • Primary Origin",
+      "dest.iraq.desc": "Facilitating travel and study procedures for Iraqi students and traders looking to study or invest in Egypt & abroad.",
+      "dest.turkey.name": "Turkey",
+      "dest.turkey.code": "Turkey • Istanbul Gateway",
+      "dest.turkey.desc": "University admissions in Istanbul & Ankara, commercial coordination between Arab & Turkish markets, and travel support.",
+      "dest.iran.name": "Iran",
+      "dest.iran.code": "Iran • Academic & Medical",
+      "dest.iran.desc": "Specialized academic placements, professional training programs, and medical/engineering path follow-ups.",
+      "dest.russia.name": "Russian Federation",
+      "dest.russia.code": "Russia • Medical Universities",
+      "dest.russia.desc": "Coordinating university admissions in medical and engineering fields, preparatory year, and travel processing.",
+      "dest.tag.uni": "International Universities",
+      "dest.tag.residency": "Housing & Residency",
+      "dest.tag.business": "Business Services",
+      "dest.tag.edu": "Student Support",
+      "dest.tag.trade": "General Trade",
+      "dest.tag.travel": "Travel Visas",
+      "dest.tag.import": "Import & Export",
+      "dest.tag.tours": "Travel & Exhibitions",
+      "dest.tag.medical": "Medicine & Engineering",
+      "dest.tag.scholar": "Scholarships",
+      "dest.tag.prep": "Preparatory Year",
+      "dest.tag.med": "State Universities",
       "banner.eyebrow": "BAGHDAD INTERNATIONAL GROUP",
       "banner.title": "International Services | Travel | Education | General Trade",
       "banner.text": "A clear identity block suitable as an introductory Facebook and social media banner.",
@@ -250,6 +302,36 @@
       a.addEventListener("click", () => nav.classList.remove("open"));
     });
   }
+
+  // --- Interactive Destinations Country Cards & Map Node Sync ---
+  const destCards = document.querySelectorAll(".destination-card");
+  const mapNodes = document.querySelectorAll(".map-node");
+  const routeLines = document.querySelectorAll(".route-line");
+
+  function activateCountry(countryId) {
+    destCards.forEach((c) => c.classList.toggle("active", c.dataset.country === countryId));
+    mapNodes.forEach((n) => n.classList.toggle("active", n.dataset.node === countryId));
+    
+    routeLines.forEach((line) => {
+      if (countryId === "egypt") {
+        line.classList.add("active");
+      } else {
+        line.classList.toggle("active", line.id === `route-${countryId}`);
+      }
+    });
+  }
+
+  destCards.forEach((card) => {
+    card.addEventListener("click", () => {
+      activateCountry(card.dataset.country);
+    });
+  });
+
+  mapNodes.forEach((node) => {
+    node.addEventListener("click", () => {
+      activateCountry(node.dataset.node);
+    });
+  });
 
   // --- Dynamic Showcase Slider (Images & Short Videos) ---
   const prevBtn = document.getElementById("prevSlide");

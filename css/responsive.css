@@ -18,6 +18,7 @@ body.lang-en .contact-box,
 body.lang-en .contact-form,
 body.lang-en .service-card,
 body.lang-en .program-item,
+body.lang-en .destination-card,
 body.lang-en .social-banner-inner,
 body.lang-en .why-list,
 body.lang-en .why-list > div,
@@ -80,14 +81,11 @@ body.lang-en .boarding-pass .bp-stub p {
     grid-template-columns: repeat(2, 1fr);
   }
 
-  .destinations-grid {
+  .destinations-showcase {
     grid-template-columns: 1fr;
     gap: 28px;
   }
 
-  .country-list {
-    grid-template-columns: repeat(3, 1fr);
-  }
   .why-grid {
     gap: 50px;
   }
@@ -194,8 +192,12 @@ body.lang-en .boarding-pass .bp-stub p {
     margin-inline: auto;
   }
 
-  .two-col, .why-grid, .contact-box {
+  .two-col, .why-grid, .contact-box, .destinations-showcase {
     grid-template-columns: 1fr;
+  }
+
+  .destinations-map-wrap {
+    min-height: 340px;
   }
 
   .section {
@@ -422,12 +424,16 @@ body.lang-en .boarding-pass .bp-stub p {
     padding: 24px;
   }
 
-  .country-list {
-    grid-template-columns: repeat(2, 1fr);
+  .destination-card {
+    padding: 18px 16px;
   }
 
-  .country-list span {
-    min-height: 74px;
+  .dest-flag {
+    font-size: 26px;
+  }
+
+  .destinations-map-wrap {
+    min-height: 300px;
   }
 
   .social-banner-inner {
