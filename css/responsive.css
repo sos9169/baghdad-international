@@ -227,7 +227,19 @@ body.lang-en .boarding-pass .bp-stub p {
   }
 
   .destinations-map-wrap {
-    min-height: 340px;
+    min-height: 420px;
+  }
+
+  .node-glass-card {
+    padding: 6px 10px;
+  }
+
+  .node-glass-card strong {
+    font-size: 11.5px;
+  }
+
+  .node-glass-card small {
+    font-size: 8px;
   }
 
   .section {
@@ -481,8 +493,14 @@ body.lang-en .boarding-pass .bp-stub p {
   }
 
   .destinations-map-wrap {
-    min-height: 300px;
+    min-height: 380px;
   }
+
+  .node-baghdad { top: 46%; left: 32%; }
+  .node-cairo { top: 72%; left: 4%; }
+  .node-turkey { top: 16%; left: 14%; }
+  .node-iran { top: 58%; left: 60%; }
+  .node-moscow { top: 10%; left: 54%; }
 
   .social-banner-inner {
     align-items: flex-start;
