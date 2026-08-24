@@ -172,19 +172,20 @@ body.lang-en .boarding-pass .bp-stub p {
   }
 
   .social-links {
-    gap: 8px;
+    gap: 6px;
     margin-inline-end: 2px;
   }
 
-  .social {
-    width: 20px;
-    font-size: 15px;
-  }
-
-  .control-btn {
-    width: 38px;
-    height: 38px;
-    font-size: 12px;
+  .social, .control-btn, .menu-btn {
+    width: 36px !important;
+    height: 36px !important;
+    font-size: 13px !important;
+    border-radius: 50% !important;
+    border: 1px solid var(--line) !important;
+    background: var(--card-bg) !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
   }
 
   .section {
