@@ -110,7 +110,8 @@ body.lang-en .boarding-pass .bp-stub p {
 /* Tablets & Mobile Navigation Trigger (<= 800px) */
 @media (max-width: 800px) {
   .container {
-    width: min(100% - 28px, 640px);
+    width: min(100% - 32px, 640px);
+    margin-inline: auto;
   }
 
   .nav-wrap {
@@ -187,32 +188,39 @@ body.lang-en .boarding-pass .bp-stub p {
   }
 
   .section {
-    padding: 65px 0;
+    padding: 55px 0;
   }
 
   .hero {
-    padding-top: 110px;
-    padding-bottom: 50px;
+    padding-top: 105px;
+    padding-bottom: 45px;
     min-height: auto;
   }
 
   .hero-grid {
     grid-template-columns: 1fr;
-    gap: 40px;
+    gap: 35px;
+  }
+
+  .hero-copy h1 {
+    font-size: 34px;
+    line-height: 1.25;
+    margin: 14px 0 18px;
   }
 
   .hero-stats {
-    gap: 18px;
+    gap: 16px;
     flex-wrap: wrap;
+    margin-top: 25px;
   }
 
   .hero-stats div {
-    min-width: 90px;
+    min-width: 85px;
   }
 
   .two-col {
     grid-template-columns: 1fr;
-    gap: 35px;
+    gap: 32px;
   }
 
   .about-copy {
@@ -225,73 +233,85 @@ body.lang-en .boarding-pass .bp-stub p {
 
   .trust-inner {
     grid-template-columns: repeat(2, 1fr);
-    gap: 14px;
+    gap: 12px;
+  }
+
+  .trust-item strong {
+    font-size: 13px;
   }
 
   .stats-counter-grid {
     grid-template-columns: repeat(2, 1fr);
-    gap: 14px;
+    gap: 12px;
+  }
+
+  .counter-card {
+    padding: 16px 10px;
   }
 
   .counter-num {
-    font-size: 36px;
+    font-size: 34px;
   }
 
   .why-grid {
     grid-template-columns: 1fr;
-    gap: 40px;
+    gap: 35px;
   }
 
   .why-visual {
-    height: 280px;
+    height: 250px;
   }
 
   .big-number {
-    font-size: 120px;
+    font-size: 110px;
   }
 
   .why-ring {
-    width: 240px;
-    height: 240px;
+    width: 220px;
+    height: 220px;
   }
 
   .contact-box {
     grid-template-columns: 1fr;
-    gap: 35px;
+    gap: 32px;
+    padding: 24px 18px;
+    border-radius: 20px;
   }
 
   .subsidiary-grid {
     grid-template-columns: 1fr;
+    gap: 16px;
   }
 
-  .counter-card {
-    padding: 16px 12px;
+  .subsidiary-card {
+    padding: 22px 18px;
+    border-radius: 18px;
   }
 
   .hero-visual {
-    min-height: 380px;
+    min-height: 360px;
   }
 
   .hero-orbit {
-    width: min(350px, 90vw);
-    height: min(350px, 90vw);
+    width: min(340px, 88vw);
+    height: min(340px, 88vw);
   }
 
   .boarding-pass {
-    width: calc(100% - 14px);
+    width: 100%;
     transform: none !important;
     border-radius: 18px;
   }
 
-  .bp-main { padding: 22px 20px 18px; }
-  .bp-stub { padding: 18px 20px 22px; }
+  .bp-main { padding: 22px 18px 16px; }
+  .bp-stub { padding: 16px 18px 20px; }
 
-  .boarding-pass h3 { font-size: 22px; }
-  .bp-stamp { width: 50px; height: 50px; }
+  .boarding-pass h3 { font-size: 21px; }
+  .bp-stamp { width: 48px; height: 48px; }
 
   .floating-chip {
     font-size: 8.5px;
-    padding: 8px 11px;
+    padding: 7px 10px;
     white-space: nowrap;
   }
 
@@ -299,123 +319,94 @@ body.lang-en .boarding-pass .bp-stub p {
   .chip-two { left: 0; bottom: 2%; }
 
   .slides {
-    height: 450px;
+    height: 400px;
+    border-radius: 18px;
   }
 
   .slide-overlay {
-    padding: 24px;
+    padding: 20px;
     display: block;
   }
 
   .slide-overlay > span {
     display: block;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
   }
 
-  .slide-overlay h3 { font-size: 22px; }
+  .slide-overlay h3 { font-size: 20px; }
 
   .slider-btn {
-    width: 44px;
-    height: 44px;
-    font-size: 14px;
+    width: 42px;
+    height: 42px;
+    font-size: 13px;
   }
 
   .slider-btn-prev {
-    left: 12px;
+    left: 10px;
   }
 
   .slider-btn-next {
-    right: 12px;
+    right: 10px;
   }
 
   .service-grid {
     grid-template-columns: 1fr;
+    gap: 16px;
   }
 
   .service-card {
-    min-height: 290px;
-    padding: 24px;
+    min-height: auto;
+    padding: 22px 18px;
+    border-radius: 18px;
   }
 
   .program-grid {
     grid-template-columns: 1fr;
+    gap: 16px;
   }
 
   .program-item {
     min-height: auto;
-    padding: 24px;
+    padding: 22px 18px;
+    border-radius: 18px;
+  }
+
+  /* DESTINATIONS SECTION ON MOBILE */
+  .destinations-showcase {
+    grid-template-columns: 1fr !important;
+    gap: 20px;
   }
 
   .destination-card {
-    padding: 18px 16px;
+    padding: 20px 18px;
+    border-radius: 18px;
   }
 
-  /* DESTINATIONS MOBILE SECTION LAYOUT */
-  .destinations-showcase {
-    grid-template-columns: 1fr !important;
-    gap: 28px;
-  }
-
-  /* MOBILE MAP COMPACT NON-OVERLAPPING LAYOUT */
+  /* HIDE GRAPHIC SVG MAP CANVAS ON MOBILE SCREENS TO PREVENT OVERLAP/CLUTTER */
   .destinations-map-wrap {
-    width: 100% !important;
-    min-height: 440px !important;
-    border-radius: 22px;
-  }
-
-  .node-glass-card {
-    padding: 5px 9px !important;
-    border-radius: 10px !important;
-    gap: 5px !important;
-  }
-
-  .node-glass-card strong {
-    font-size: 11px !important;
-  }
-
-  .node-glass-card small {
     display: none !important;
   }
-
-  .hq-star {
-    font-size: 8px !important;
-    padding: 1px 4px !important;
-  }
-
-  .node-flag-img {
-    width: 18px !important;
-    height: 12px !important;
-  }
-
-  /* Perfectly Spread Mobile Coordinates - Zero Overlap */
-  .node-baghdad { top: 44% !important; left: 22% !important; }
-  .node-cairo { top: 78% !important; left: 3% !important; }
-  .node-turkey { top: 10% !important; left: 3% !important; }
-  .node-iran { top: 70% !important; left: 60% !important; }
-  .node-moscow { top: 10% !important; left: 60% !important; }
 
   .social-banner-inner {
     align-items: flex-start;
     flex-direction: column-reverse;
     min-height: auto;
-    padding: 24px;
+    padding: 22px 18px;
+    border-radius: 18px;
   }
 
   .social-banner-inner strong {
-    font-size: 26px;
+    font-size: 24px;
   }
 
   .section-heading h2, .section-top h2, .why-content h2, .contact-box h2 {
-    font-size: 34px;
+    font-size: 30px;
+    line-height: 1.2;
   }
 
   .why-list > div {
-    grid-template-columns: 38px 1fr;
+    grid-template-columns: 36px 1fr;
     gap: 12px;
-  }
-
-  .contact-box {
-    padding: 28px 20px;
   }
 
   .floating-whatsapp, .floating-top {
@@ -440,8 +431,8 @@ body.lang-en .boarding-pass .bp-stub p {
     gap: 4px;
   }
 
-  h1 {
-    font-size: 35px;
+  .hero-copy h1 {
+    font-size: 30px;
   }
 
   .boarding-pass {
@@ -449,26 +440,13 @@ body.lang-en .boarding-pass .bp-stub p {
   }
 
   .bp-main, .bp-stub {
-    padding-inline: 16px;
+    padding-inline: 14px;
   }
 
   .hero-orbit {
-    width: 290px;
-    height: 290px;
+    width: 270px;
+    height: 270px;
   }
-
-  /* Ultra compact mobile map badges */
-  .node-glass-card {
-    padding: 4px 7px !important;
-  }
-  .node-glass-card strong {
-    font-size: 10px !important;
-  }
-  .node-baghdad { top: 44% !important; left: 18% !important; }
-  .node-cairo { top: 78% !important; left: 2% !important; }
-  .node-turkey { top: 8% !important; left: 2% !important; }
-  .node-iran { top: 70% !important; left: 56% !important; }
-  .node-moscow { top: 8% !important; left: 56% !important; }
 }
 
 /* iOS Safe Areas */
