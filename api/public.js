@@ -15,6 +15,13 @@ function readJson(filename, fallback) {
   }
 }
 
+function writeJson(filename, data) {
+  try {
+    const filePath = path.join(dataDir, filename);
+    fs.writeFileSync(filePath, JSON.stringify(data, null, 2), 'utf8');
+  } catch (err) {}
+}
+
 export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
@@ -61,11 +68,31 @@ export default async function handler(req, res) {
     return res.status(200).json({ ok: true, slides });
   }
 
+  if (action === 'services') {
+    const services = readJson('services.json', []);
+    return res.status(200).json({ ok: true, services });
+  }
+
   if (action === 'track') {
+    const type = String(body.type || 'visit');
+    const page = String(body.page || '/');
+
     if (isSupabaseConfigured()) {
-      await trackEvent(body.type, body.page).catch(() => null);
+      await trackEvent(type, page).catch(() => null);
     }
-    return res.status(200).json({ ok: true });
+
+    const metrics = readJson('metrics.json', { visits: 0, interactions: 0, whatsappClicks: 0, formSubmits: 0 });
+    if (type === 'visit') {
+      metrics.visits = (metrics.visits || 0) + 1;
+    } else if (type === 'whatsapp') {
+      metrics.whatsappClicks = (metrics.whatsappClicks || 0) + 1;
+      metrics.interactions = (metrics.interactions || 0) + 1;
+    } else {
+      metrics.interactions = (metrics.interactions || 0) + 1;
+    }
+    writeJson('metrics.json', metrics);
+
+    return res.status(200).json({ ok: true, metrics });
   }
 
   if (action === 'order') {
@@ -88,6 +115,15 @@ export default async function handler(req, res) {
     const order = isSupabaseConfigured()
       ? await createOrder({ name, phone, message }).catch(() => fallbackOrder)
       : fallbackOrder;
+
+    const orders = readJson('orders.json', []);
+    orders.unshift(order);
+    writeJson('orders.json', orders);
+
+    const metrics = readJson('metrics.json', { visits: 0, interactions: 0, whatsappClicks: 0, formSubmits: 0 });
+    metrics.formSubmits = (metrics.formSubmits || 0) + 1;
+    metrics.interactions = (metrics.interactions || 0) + 1;
+    writeJson('metrics.json', metrics);
 
     return res.status(200).json({ ok: true, order });
   }

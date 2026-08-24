@@ -1,0 +1,34 @@
+[
+  {
+    "id": "service-01",
+    "icon": "✦",
+    "title_ar": "الخدمات التعليمية",
+    "title_en": "Education Services",
+    "text_ar": "مساعدة الطلاب في إجراءات الدراسة، الاختيارات التعليمية، والتنسيق للخطوات المطلوبة.",
+    "text_en": "Support with study procedures, education choices and coordinating the required steps."
+  },
+  {
+    "id": "service-02",
+    "icon": "↗",
+    "title_ar": "السفر والتنقل",
+    "title_en": "Travel & Mobility",
+    "text_ar": "مساندة في السفر والتنقل والإجراءات المرتبطة بمصر وخارجها.",
+    "text_en": "Support for travel, mobility and related procedures for Egypt and beyond."
+  },
+  {
+    "id": "service-03",
+    "icon": "◇",
+    "title_ar": "خدمات الأعمال",
+    "title_en": "Business Services",
+    "text_ar": "حلول ودعم للأفراد والشركات التي تحتاج إلى خدمات دولية منسقة.",
+    "text_en": "Solutions and support for individuals and businesses that need coordinated international services."
+  },
+  {
+    "id": "service-04",
+    "icon": "◎",
+    "title_ar": "خدمات المقيمين",
+    "title_en": "Resident Services",
+    "text_ar": "مساندة وخدمات للأشخاص المقيمين في مصر، مع تركيز على الوضوح وسهولة الإجراءات.",
+    "text_en": "Practical support for people living in Egypt, focused on clarity and easier procedures."
+  }
+]

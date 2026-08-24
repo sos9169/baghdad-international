@@ -319,6 +319,42 @@ small.success { color: var(--success); }
   line-height: 1.6;
 }
 
+/* Services Grid in Admin Panel */
+.services-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
+}
+
+.service-card-admin {
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: #fff;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.service-card-admin .icon-badge {
+  font-size: 24px;
+  color: var(--gold);
+  margin-bottom: 10px;
+}
+
+.service-card-admin h4 {
+  margin: 0 0 6px;
+  font-size: 16px;
+  font-weight: 800;
+}
+
+.service-card-admin p {
+  margin: 0 0 16px;
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
 .table-wrap {
   overflow-x: auto;
   border-radius: 12px;

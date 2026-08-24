@@ -22,17 +22,29 @@ function readJson(filename, fallback) {
   }
 }
 
-// In-memory state fallback for serverless session/dynamic modifications
+function writeJson(filename, data) {
+  try {
+    const filePath = path.join(dataDir, filename);
+    fs.writeFileSync(filePath, JSON.stringify(data, null, 2), 'utf8');
+  } catch (err) {}
+}
+
 let memoryState = {
   admin: null,
   settings: null,
   slides: null,
-  orders: [],
+  services: null,
+  orders: null,
   metrics: null
 };
 
 function hashPassword(salt, password) {
   return crypto.createHash('sha256').update(salt + password).digest('hex');
+}
+
+function isAuthenticated(req) {
+  const cookieHeader = req.headers.cookie || '';
+  return cookieHeader.includes('big_logged_in=true');
 }
 
 export default async function handler(req, res) {
@@ -80,6 +92,10 @@ export default async function handler(req, res) {
     memoryState.slides = readJson('slides.json', []);
   }
 
+  if (!memoryState.services) {
+    memoryState.services = readJson('services.json', []);
+  }
+
   if (!memoryState.admin) {
     memoryState.admin = readJson('admin.json', {
       salt: 'big-admin-v1',
@@ -91,6 +107,11 @@ export default async function handler(req, res) {
     memoryState.metrics = readJson('metrics.json', emptyMetrics);
   }
 
+  if (!memoryState.orders) {
+    memoryState.orders = readJson('orders.json', []);
+  }
+
+  // Unauthenticated actions: login only
   if (action === 'login') {
     const password = String(body.password || '');
     const salt = memoryState.admin.salt || 'big-admin-v1';
@@ -98,7 +119,7 @@ export default async function handler(req, res) {
     const computedHash = hashPassword(salt, password);
 
     if (password === '241000' || computedHash === storedHash) {
-      res.setHeader('Set-Cookie', 'big_logged_in=true; Path=/; HttpOnly; SameSite=Lax');
+      res.setHeader('Set-Cookie', 'big_logged_in=true; Path=/; HttpOnly; SameSite=Lax; Max-Age=86400');
       return res.status(200).json({ ok: true });
     }
 
@@ -110,7 +131,18 @@ export default async function handler(req, res) {
     return res.status(200).json({ ok: true });
   }
 
+  // ALL OTHER ACTIONS REQUIRE AUTHENTICATION!
+  if (!isAuthenticated(req)) {
+    return res.status(401).json({ ok: false, error: 'غير مصرح للوصول — يرجى تسجيل الدخول أولاً' });
+  }
+
   if (action === 'state') {
+    memoryState.metrics = readJson('metrics.json', memoryState.metrics);
+    memoryState.orders = readJson('orders.json', memoryState.orders);
+    memoryState.slides = readJson('slides.json', memoryState.slides);
+    memoryState.services = readJson('services.json', memoryState.services);
+    memoryState.settings = readJson('settings.json', memoryState.settings);
+
     const metrics = isSupabaseConfigured()
       ? await getMetrics().catch(() => memoryState.metrics)
       : memoryState.metrics;
@@ -123,7 +155,8 @@ export default async function handler(req, res) {
       settings: memoryState.settings,
       metrics,
       orders,
-      slides: memoryState.slides
+      slides: memoryState.slides,
+      services: memoryState.services
     });
   }
 
@@ -138,6 +171,7 @@ export default async function handler(req, res) {
     }
 
     memoryState.settings = { facebook, instagram, whatsapp, maps };
+    writeJson('settings.json', memoryState.settings);
     return res.status(200).json({ ok: true, settings: memoryState.settings });
   }
 
@@ -165,13 +199,47 @@ export default async function handler(req, res) {
     };
 
     memoryState.slides.unshift(newSlide);
+    writeJson('slides.json', memoryState.slides);
     return res.status(200).json({ ok: true, slide: newSlide, slides: memoryState.slides });
   }
 
   if (action === 'delete-slide') {
     const id = String(body.id || '');
     memoryState.slides = memoryState.slides.filter((s) => s.id !== id);
+    writeJson('slides.json', memoryState.slides);
     return res.status(200).json({ ok: true, slides: memoryState.slides });
+  }
+
+  if (action === 'add-service') {
+    const title_ar = String(body.title_ar || '').trim();
+    const title_en = String(body.title_en || title_ar).trim();
+    const text_ar = String(body.text_ar || '').trim();
+    const text_en = String(body.text_en || text_ar).trim();
+    const icon = String(body.icon || '✦').trim();
+
+    if (!title_ar) {
+      return res.status(422).json({ ok: false, error: 'عنوان الخدمة بالعربية مطلوب' });
+    }
+
+    const newService = {
+      id: 'service-' + Date.now(),
+      icon,
+      title_ar,
+      title_en,
+      text_ar,
+      text_en
+    };
+
+    memoryState.services.push(newService);
+    writeJson('services.json', memoryState.services);
+    return res.status(200).json({ ok: true, service: newService, services: memoryState.services });
+  }
+
+  if (action === 'delete-service') {
+    const id = String(body.id || '');
+    memoryState.services = memoryState.services.filter((s) => s.id !== id);
+    writeJson('services.json', memoryState.services);
+    return res.status(200).json({ ok: true, services: memoryState.services });
   }
 
   if (action === 'password') {
@@ -184,6 +252,7 @@ export default async function handler(req, res) {
       salt,
       passwordHash: hashPassword(salt, newPassword)
     };
+    writeJson('admin.json', memoryState.admin);
     return res.status(200).json({ ok: true });
   }
 
@@ -200,6 +269,7 @@ export default async function handler(req, res) {
     const order = memoryState.orders.find((o) => o.id === id);
     if (order) {
       order.status = status;
+      writeJson('orders.json', memoryState.orders);
       return res.status(200).json({ ok: true, order });
     }
     return res.status(404).json({ ok: false, error: 'الطلب غير موجود' });

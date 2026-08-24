@@ -9,9 +9,9 @@
   const passwordForm = $("#passwordForm");
   const slideForm = $("#slideForm");
   const slidesList = $("#slidesList");
+  const serviceForm = $("#serviceForm");
+  const servicesList = $("#servicesList");
   const ordersBody = $("#ordersBody");
-  const isVercel = window.location.hostname.endsWith(".vercel.app");
-  const adminApiUrl = isVercel ? "/api/admin" : "/admin/api.php";
 
   function setStatus(id, message, isError, isSuccess) {
     const el = $(id);
@@ -24,13 +24,13 @@
   if (window.location.protocol === "file:") {
     const notice = document.createElement("p");
     notice.style.cssText = "color:#e4c47d;font-size:12px;margin-top:12px;line-height:1.6;background:rgba(197,154,74,0.1);padding:10px;border-radius:8px;border:1px solid rgba(197,154,74,0.3);text-align:center;";
-    notice.textContent = "تنبيه: تفتح الصفحة حالياً كملف محلي (file://). لتشغيل وااختبار تسجيل الدخول والـ PHP، يرجى رفع الملفات على سيرفر الاستضافة (cPanel) أو تشغيل سيرفر محلي (php -S localhost:8000).";
+    notice.textContent = "تنبيه: تفتح الصفحة حالياً كملف محلي (file://). لتشغيل واختبار تسجيل الدخول، يرجى تشغيل الموقع عبر السيرفر أو الرفع على Vercel.";
     if (loginForm) loginForm.appendChild(notice);
   }
 
   async function request(action, payload) {
     if (window.location.protocol === "file:") {
-      throw new Error("لا يمكن الاتصال بقاعدة البيانات محلياً عبر file://. يرجى رفع الموقع على الاستضافة أو تشغيل سيرفر PHP محلي.");
+      throw new Error("لا يمكن الاتصال بالسيرفر محلياً عبر file://. يرجى تشغيل الموقع عبر السيرفر أو Vercel.");
     }
 
     const isFormData = payload instanceof FormData;
@@ -46,10 +46,12 @@
       body: bodyData
     };
 
-    const response = await fetch(`${adminApiUrl}?action=${encodeURIComponent(action)}`, options);
+    const response = await fetch(`/admin/api.php?action=${encodeURIComponent(action)}`, options);
     const data = await response.json().catch(() => ({}));
     if (!response.ok || !data.ok) {
-      throw new Error(data.error || "حدث خطأ غير متوقع");
+      const err = new Error(data.error || "حدث خطأ غير متوقع");
+      err.status = response.status;
+      throw err;
     }
     return data;
   }
@@ -71,7 +73,7 @@
     $("#visitsCount").textContent = metrics.visits || 0;
     $("#interactionsCount").textContent = metrics.interactions || 0;
     $("#whatsappCount").textContent = metrics.whatsappClicks || 0;
-    $("#ordersCount").textContent = Array.isArray(orders) ? orders.length : 0;
+    $("#ordersCount").textContent = Array.isArray(orders) ? orders.length : (metrics.formSubmits || 0);
   }
 
   function resolveMediaUrl(src) {
@@ -112,6 +114,25 @@
         </div>
       `;
     }).join("");
+  }
+
+  function fillServices(services) {
+    if (!servicesList) return;
+    if (!Array.isArray(services) || services.length === 0) {
+      servicesList.innerHTML = '<p style="color:var(--muted);grid-column:1/-1">لا توجد خدمات معروضة حالياً.</p>';
+      return;
+    }
+
+    servicesList.innerHTML = services.map((srv) => `
+      <div class="service-card-admin">
+        <div>
+          <div class="icon-badge">${escapeHtml(srv.icon || "✦")}</div>
+          <h4>${escapeHtml(srv.title_ar || srv.title_en || "")}</h4>
+          <p>${escapeHtml(srv.text_ar || srv.text_en || "-")}</p>
+        </div>
+        <button class="danger-btn" data-delete-service="${escapeAttr(srv.id || "")}">حذف الخدمة</button>
+      </div>
+    `).join("");
   }
 
   function formatDate(value) {
@@ -158,12 +179,17 @@
   }
 
   async function loadState() {
-    const data = await request("state");
-    showDashboard(true);
-    fillSettings(data.settings);
-    fillMetrics(data.metrics || {}, data.orders || []);
-    fillOrders(data.orders || []);
-    fillSlides(data.slides || []);
+    try {
+      const data = await request("state");
+      showDashboard(true);
+      fillSettings(data.settings);
+      fillMetrics(data.metrics || {}, data.orders || []);
+      fillOrders(data.orders || []);
+      fillSlides(data.slides || []);
+      fillServices(data.services || []);
+    } catch (err) {
+      showDashboard(false);
+    }
   }
 
   loginForm.addEventListener("submit", async (event) => {
@@ -187,12 +213,12 @@
   if (slideForm) {
     slideForm.addEventListener("submit", async (event) => {
       event.preventDefault();
-      setStatus("#slideStatus", "جار رفع الميديا ونشر الموضوع...");
+      setStatus("#slideStatus", "جار نشر الموضوع...");
       const formData = new FormData(slideForm);
       try {
         const data = await request("add-slide", formData);
         slideForm.reset();
-        setStatus("#slideStatus", "تم نشر الموضوع والميديا بنجاح!", false, true);
+        setStatus("#slideStatus", "تم نشر الموضوع بنجاح!", false, true);
         fillSlides(data.slides);
       } catch (error) {
         setStatus("#slideStatus", error.message, true);
@@ -210,6 +236,43 @@
       try {
         const data = await request("delete-slide", { id: slideId });
         fillSlides(data.slides);
+      } catch (error) {
+        alert(error.message);
+      }
+    });
+  }
+
+  if (serviceForm) {
+    serviceForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      setStatus("#serviceStatus", "جار إضافة الخدمة...");
+      const title_ar = serviceForm.title_ar.value;
+      const title_en = serviceForm.title_en.value;
+      const text_ar = serviceForm.text_ar.value;
+      const text_en = serviceForm.text_en.value;
+      const icon = serviceForm.icon.value;
+
+      try {
+        const data = await request("add-service", { title_ar, title_en, text_ar, text_en, icon });
+        serviceForm.reset();
+        setStatus("#serviceStatus", "تمت إضافة الخدمة بنجاح!", false, true);
+        fillServices(data.services);
+      } catch (error) {
+        setStatus("#serviceStatus", error.message, true);
+      }
+    });
+  }
+
+  if (servicesList) {
+    servicesList.addEventListener("click", async (event) => {
+      const btn = event.target.closest("button[data-delete-service]");
+      if (!btn) return;
+      const serviceId = btn.dataset.deleteService;
+      if (!confirm("هل أنت تأكد من رغبتك في حذف هذه الخدمة؟")) return;
+
+      try {
+        const data = await request("delete-service", { id: serviceId });
+        fillServices(data.services);
       } catch (error) {
         alert(error.message);
       }
@@ -252,5 +315,5 @@
       .catch((error) => alert(error.message));
   });
 
-  loadState().catch(() => showDashboard(false));
+  loadState();
 })();

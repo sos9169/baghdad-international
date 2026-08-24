@@ -37,7 +37,7 @@
       </header>
 
       <section class="stats-grid" id="statsGrid">
-        <article><span>زيارات الموقع</span><strong id="visitsCount">0</strong></article>
+        <article><span>زيارات الموقع الحية</span><strong id="visitsCount">0</strong></article>
         <article><span>التفاعلات</span><strong id="interactionsCount">0</strong></article>
         <article><span>ضغطات واتساب</span><strong id="whatsappCount">0</strong></article>
         <article><span>طلبات مرسلة</span><strong id="ordersCount">0</strong></article>
@@ -94,11 +94,58 @@
         </div>
       </section>
 
+      <section class="panel services-panel">
+        <div class="panel-head">
+          <h2>إدارة الخدمات المعروضة بالموقع</h2>
+          <p>أضف خدمات جديدة أو احذف أي خدمة لتنعكس فوراً في صفحة خدماتنا بالموقع الرئيسي.</p>
+        </div>
+        <form id="serviceForm" class="slide-form">
+          <div class="form-grid">
+            <label>
+              <span>اسم الخدمة بالعربية *</span>
+              <input type="text" name="title_ar" required placeholder="مثال: الاستشارات الدولية">
+            </label>
+            <label>
+              <span>اسم الخدمة بالإنجليزي</span>
+              <input type="text" name="title_en" placeholder="Example: International Consulting">
+            </label>
+            <label>
+              <span>أيقونة / رمز الخدمة</span>
+              <select name="icon">
+                <option value="✦">✦ نجمة ذهبية</option>
+                <option value="↗">↗ سهم انطلاق</option>
+                <option value="◇">◇ ماسة</option>
+                <option value="◎">◎ دائرة مركزية</option>
+                <option value="⚡">⚡ سرعة</option>
+                <option value="🌐">🌐 عالمي</option>
+              </select>
+            </label>
+            <label class="full-width">
+              <span>الوصف بالعربية</span>
+              <textarea name="text_ar" rows="2" placeholder="وصف مختصر للخدمة..."></textarea>
+            </label>
+            <label class="full-width">
+              <span>الوصف بالإنجليزي</span>
+              <textarea name="text_en" rows="2" placeholder="Short description in English..."></textarea>
+            </label>
+          </div>
+          <button type="submit" style="margin-top:10px">إضافة خدمة جديدة</button>
+          <small id="serviceStatus"></small>
+        </form>
+
+        <div class="slides-preview-head">
+          <h3>الخدمات المعروضة حالياً:</h3>
+        </div>
+        <div class="services-list" id="servicesList">
+          <!-- Dynamically filled -->
+        </div>
+      </section>
+
       <section class="panel-grid">
         <form class="panel" id="settingsForm">
           <div class="panel-head">
-            <h2>روابط التواصل</h2>
-            <p>أي تعديل هنا ينعكس على الموقع بعد الحفظ.</p>
+            <h2>روابط التواصل ورقم الهاتف</h2>
+            <p>أي تعديل هنا ينعكس على الموقع مباشرة بعد الحفظ.</p>
           </div>
           <label><span>Facebook</span><input type="url" name="facebook" placeholder="https://facebook.com/..."></label>
           <label><span>Instagram</span><input type="url" name="instagram" placeholder="https://instagram.com/..."></label>
@@ -121,8 +168,8 @@
 
       <section class="panel orders-panel">
         <div class="panel-head">
-          <h2>الطلبات</h2>
-          <p>الطلبات المرسلة من نموذج التواصل في الموقع.</p>
+          <h2>الطلبات المرسلة</h2>
+          <p>الطلبات المرسلة من نموذج التواصل في الموقع الرئيسي.</p>
         </div>
         <div class="table-wrap">
           <table>

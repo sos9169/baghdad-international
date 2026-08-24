@@ -32,7 +32,7 @@
       "about.eyebrow": "ABOUT US",
       "about.title": "خبرة تُحوّل<br><span>التفاصيل إلى نتائج.</span>",
       "about.lead": "Baghdad International Group هي واجهة لخدمات دولية مصممة للأفراد والعائلات والطلاب وأصحاب الأعمال.",
-      "about.text": "نساعدك في ترتيب الخطوات، فهم الإجراءات، واختيار الحل الأنسب لاحتياجك — بأسلوب واضح، سريع واحترافي.",
+      "about.text": "نساعدك في ترتيب الخطوات، فهم الإجراءات، وااختيار الحل الأنسب لاحتياجك — بأسلوب واضح، سريع واحترافي.",
       "about.signature": "Baghdad International Group",
       "about.years": "+9",
       "about.yearsLabel": "سنوات خبرة في السوق",
@@ -44,39 +44,8 @@
       "slide.2.text": "خدمات ومساندة لتنظيم السفر والتنقل، مع اهتمام بالتفاصيل من البداية.",
       "slide.3.title": "حلول للأعمال والخدمات الدولية",
       "slide.3.text": "دعم عملي للأفراد والشركات في الخدمات التي تحتاج تنسيقاً ومتابعة دقيقة.",
-      "education.eyebrow": "EDUCATION & TRAINING",
-      "education.title": "الدراسة والتطوير<br><span>في مكان واحد.</span>",
-      "education.note": "نرتب خطوات الدراسة، التقديمات الجامعية، التدريب المهني، والمؤتمرات العلمية بطريقة واضحة قابلة للمتابعة.",
-      "program.1.title": "الدراسة والتقديمات الجامعية",
-      "program.1.text": "تجهيز الملفات، متابعة التقديم، واختيار الوجهة التعليمية المناسبة للطالب.",
-      "program.2.title": "الدورات التدريبية",
-      "program.2.text": "برامج تدريبية لتطوير المهارات العملية والمهنية حسب المجال المطلوب.",
-      "program.3.title": "المؤتمرات والبرامج المهنية",
-      "program.3.text": "مؤتمرات علمية ودورات مهنية متخصصة، بما يشمل برامج مثل MBA.",
-      "destinations.eyebrow": "DESTINATIONS",
-      "destinations.title": "خدمات سفر مرتبطة<br><span>بعدة دول.</span>",
-      "country.egypt": "مصر",
-      "country.iraq": "العراق",
-      "country.turkey": "تركيا",
-      "country.iran": "إيران",
-      "country.russia": "روسيا",
-      "banner.eyebrow": "BAGHDAD INTERNATIONAL GROUP",
-      "banner.title": "خدمات دولية | سفر | تعليم | تجارة عامة",
-      "banner.text": "هوية واضحة مناسبة للاستخدام كبانر تعريفي على فيسبوك والمنصات الاجتماعية.",
       "services.eyebrow": "WHAT WE DO",
       "services.title": "خدماتنا، بشكل<br><span>أبسط وأوضح.</span>",
-      "service.1.title": "خدمات السفر والإقامة",
-      "service.1.text": "تنسيق الفيزا، ترتيبات السفر، السكن، والإقامة بخطوات واضحة ومتابعة مستمرة.",
-      "service.2.title": "الإجراءات والعقود",
-      "service.2.text": "خدمات الإجراءات العامة، العقود الإيجارية، وتجهيز الملفات المطلوبة حسب الحالة.",
-      "service.3.title": "التجارة العامة",
-      "service.3.text": "دعم خدمات الاستيراد والتصدير والمتابعة التجارية بين الأسواق المستهدفة.",
-      "service.4.title": "الخدمات التعليمية",
-      "service.4.text": "التقديمات الجامعية، ملفات الدراسة، واختيار المسار التعليمي الأنسب للطالب.",
-      "service.5.title": "التدريب وتطوير المهارات",
-      "service.5.text": "دورات تدريبية ومهنية، مؤتمرات علمية، وبرامج تطوير مثل MBA حسب الاحتياج.",
-      "service.6.title": "الدعم القانوني",
-      "service.6.text": "فريق محامين للمساندة في الحالات القانونية أو الإجرائية ومتابعة الحل المناسب.",
       "service.more": "اعرف المزيد ↙",
       "why.eyebrow": "WHY BIG",
       "why.title": "مش مجرد خدمة.<br><span>دي تجربة كاملة.</span>",
@@ -102,17 +71,12 @@
       "form.error": "حدث خطأ أثناء الإرسال، يرجى المحاولة لاحقاً.",
       "contact.addressLabel": "العنوان",
       "contact.address": "عمارة رقم ٧، شارع عقبة بن نافع، الدور الأول، مكتب رقم ٣ — أمام البيت الثقافي الروسي، الدقي، الجيزة",
-      "contact.directions": "احصل على الاتجاهات ↗",
-      "contact.regionLabel": "التواصل والخدمات",
-      "contact.regions": "متابعة لعملاء مصر، العراق، وتركيا.",
-      "footer.copy": "خدمات دولية مصممة حول احتياجك."
+      "contact.directions": "احصل على الاتجاهات ↗"
     },
     en: {
       "nav.home": "Home",
       "nav.about": "About Us",
       "nav.services": "Services",
-      "nav.education": "Education",
-      "nav.destinations": "Countries",
       "nav.why": "Why Us",
       "nav.contact": "Contact",
       "hero.eyebrow": "BAGHDAD INTERNATIONAL GROUP",
@@ -148,39 +112,8 @@
       "slide.2.text": "Support for travel and mobility planning, with attention to details from day one.",
       "slide.3.title": "Business and international solutions",
       "slide.3.text": "Practical support for individuals and companies that need coordinated international services.",
-      "education.eyebrow": "EDUCATION & TRAINING",
-      "education.title": "Study and development<br><span>in one place.</span>",
-      "education.note": "We organize study steps, university applications, professional training, and scientific conferences with clear follow-up.",
-      "program.1.title": "Study & University Applications",
-      "program.1.text": "Preparing files, following applications, and choosing the right study destination.",
-      "program.2.title": "Training Courses",
-      "program.2.text": "Training programs for practical and professional skill development by field.",
-      "program.3.title": "Conferences & Professional Programs",
-      "program.3.text": "Scientific conferences and specialized professional courses, including programs such as MBA.",
-      "destinations.eyebrow": "DESTINATIONS",
-      "destinations.title": "Travel services connected<br><span>to multiple countries.</span>",
-      "country.egypt": "Egypt",
-      "country.iraq": "Iraq",
-      "country.turkey": "Turkey",
-      "country.iran": "Iran",
-      "country.russia": "Russia",
-      "banner.eyebrow": "BAGHDAD INTERNATIONAL GROUP",
-      "banner.title": "International Services | Travel | Education | General Trade",
-      "banner.text": "A clear identity block suitable as an introductory Facebook and social media banner.",
       "services.eyebrow": "WHAT WE DO",
       "services.title": "Our services,<br><span>simple and clear.</span>",
-      "service.1.title": "Travel & Residency",
-      "service.1.text": "Visa coordination, travel arrangements, housing, and residency support with clear follow-up.",
-      "service.2.title": "Procedures & Contracts",
-      "service.2.text": "General procedures, rental contracts, and preparing required files according to each case.",
-      "service.3.title": "General Trade",
-      "service.3.text": "Support for import, export, and commercial follow-up across target markets.",
-      "service.4.title": "Education Services",
-      "service.4.text": "University applications, study files, and choosing the right educational path for each student.",
-      "service.5.title": "Training & Skill Development",
-      "service.5.text": "Training and professional courses, scientific conferences, and development programs such as MBA.",
-      "service.6.title": "Legal Support",
-      "service.6.text": "A lawyer-supported workflow for legal or procedural cases and the right follow-up path.",
       "service.more": "Learn more ↙",
       "why.eyebrow": "WHY BIG",
       "why.title": "More than a service.<br><span>A complete experience.</span>",
@@ -206,10 +139,7 @@
       "form.error": "An error occurred while sending. Please try again later.",
       "contact.addressLabel": "Address",
       "contact.address": "Building 7, Okba Ibn Nafeh St., 1st Floor, Office 3 — In front of the Russian Cultural Centre, Dokki, Giza",
-      "contact.directions": "Get directions ↗",
-      "contact.regionLabel": "Service Regions",
-      "contact.regions": "Follow-up for clients in Egypt, Iraq, and Turkey.",
-      "footer.copy": "International services designed around your needs."
+      "contact.directions": "Get directions ↗"
     }
   };
 
@@ -223,8 +153,8 @@
   const contactForm = document.getElementById("contactForm");
   const apiUrl = window.location.hostname.endsWith(".vercel.app") ? "/api/public" : "api.php";
 
-  // Dynamic slides data
   let slidesData = [];
+  let servicesData = [];
 
   // --- i18n Language Switcher ---
   function setLanguage(lang) {
@@ -247,10 +177,8 @@
 
     localStorage.setItem("big-lang", currentLang);
 
-    // Update dynamic slide titles/texts for active language
     updateSlideTexts();
-
-    // Rebuild marquee ticker when language text changes
+    if (servicesData.length) renderServices(servicesData);
     rebuildTicker();
   }
 
@@ -404,7 +332,6 @@
     slidesElements.forEach((s, i) => s.classList.toggle("active", i === slideIndex));
     dotsElements.forEach((d, i) => d.classList.toggle("active", i === slideIndex));
 
-    // Auto-play videos if active slide contains video
     const activeVideo = slidesElements[slideIndex]?.querySelector("video");
     if (activeVideo && activeVideo.paused) {
       activeVideo.play().catch(() => {});
@@ -483,7 +410,6 @@
     slidesTrack.addEventListener("dragstart", (e) => e.preventDefault());
   }
 
-  // Keyboard navigation for slider
   window.addEventListener("keydown", (e) => {
     if (e.key === "ArrowLeft") {
       showSlide(slideIndex - 1);
@@ -494,10 +420,9 @@
     }
   });
 
-  // Initialize static slides right away for local file:// compatibility
   initStaticSlides();
 
-  // Fetch dynamic slides from backend API (if running on HTTP/HTTPS server)
+  // Fetch dynamic slides
   fetch(`${apiUrl}?action=slides`, { cache: "no-store" })
     .then((res) => (res.ok ? res.json() : null))
     .then((data) => {
@@ -506,6 +431,57 @@
       }
     })
     .catch(() => {});
+
+  // Dynamic Services Rendering
+  function renderServices(services) {
+    const serviceGrid = document.querySelector(".service-grid");
+    if (!serviceGrid || !Array.isArray(services) || !services.length) return;
+    servicesData = services;
+    const isEn = body.classList.contains("lang-en");
+    const moreText = isEn ? "اعرف المزيد ↙" : "اعرف المزيد ↙";
+
+    serviceGrid.innerHTML = services.map((srv) => {
+      const title = isEn ? (srv.title_en || srv.title_ar) : (srv.title_ar || srv.title_en);
+      const text = isEn ? (srv.text_en || srv.text_ar) : (srv.text_ar || srv.text_en);
+      const icon = srv.icon || "✦";
+
+      return `
+        <article class="service-card reveal visible">
+          <div class="service-icon">${escapeHtml(icon)}</div>
+          <h3>${escapeHtml(title)}</h3>
+          <p>${escapeHtml(text)}</p>
+          <a href="#contact">${moreText}</a>
+        </article>
+      `;
+    }).join("");
+  }
+
+  fetch(`${apiUrl}?action=services`, { cache: "no-store" })
+    .then((res) => (res.ok ? res.json() : null))
+    .then((data) => {
+      if (data && Array.isArray(data.services) && data.services.length) {
+        renderServices(data.services);
+      }
+    })
+    .catch(() => {});
+
+  // Track page visit & clicks
+  fetch(`${apiUrl}?action=track`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ type: "visit", page: window.location.pathname })
+  }).catch(() => {});
+
+  const waBtn = document.querySelector(".floating-whatsapp");
+  if (waBtn) {
+    waBtn.addEventListener("click", () => {
+      fetch(`${apiUrl}?action=track`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ type: "whatsapp", page: window.location.pathname })
+      }).catch(() => {});
+    });
+  }
 
   // --- Gapless Infinite Marquee Ticker ---
   function rebuildTicker() {
@@ -620,7 +596,7 @@
         }
       } catch (err) {
         if (statusEl) {
-          statusEl.textContent = dict["form.success"]; // Graceful fallback
+          statusEl.textContent = dict["form.success"];
           statusEl.className = "form-status success";
         }
         contactForm.reset();
