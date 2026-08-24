@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "cleanUrls": true,
+  "rewrites": [
+    { "source": "/api", "destination": "/api/public" },
+    { "source": "/api.php", "destination": "/api/public" },
+    { "source": "/admin/api", "destination": "/api/admin" },
+    { "source": "/admin/api.php", "destination": "/api/admin" }
+  ]
+}

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <title>لوحة إدارة Baghdad International</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link rel="stylesheet" href="/admin/admin.css">
+</head>
+<body>
+  <main class="admin-shell">
+    <section class="login-view" id="loginView">
+      <form class="login-card" id="loginForm">
+        <img src="/assets/logo.jpg" alt="" width="58" height="58">
+        <h1>دخول الأدمن</h1>
+        <p>أدخل الرقم السري لمتابعة الإحصائيات والطلبات وتعديل بيانات التواصل.</p>
+        <label>
+          <span>الرقم السري</span>
+          <input type="password" name="password" autocomplete="current-password" required autofocus>
+        </label>
+        <button type="submit">دخول</button>
+        <small id="loginStatus"></small>
+      </form>
+    </section>
+
+    <section class="dashboard hidden" id="dashboardView">
+      <header class="topbar">
+        <div>
+          <span>Baghdad International</span>
+          <h1>لوحة التحكم</h1>
+        </div>
+        <button class="ghost" id="logoutBtn" type="button">تسجيل خروج</button>
+      </header>
+
+      <section class="stats-grid" id="statsGrid">
+        <article><span>زيارات الموقع</span><strong id="visitsCount">0</strong></article>
+        <article><span>التفاعلات</span><strong id="interactionsCount">0</strong></article>
+        <article><span>ضغطات واتساب</span><strong id="whatsappCount">0</strong></article>
+        <article><span>طلبات مرسلة</span><strong id="ordersCount">0</strong></article>
+      </section>
+
+      <section class="panel slides-panel">
+        <div class="panel-head">
+          <h2>إدارة المعرض والمواضيع (صور وفيديوهات قصيرة)</h2>
+          <p>قم بنشر مواضيع جديدة، صور، أو فيديوهات قصيرة (10–15 ثانية) لتظهر مباشرة في السلايدر الرئيسي بالموقع.</p>
+        </div>
+        <form id="slideForm" class="slide-form" enctype="multipart/form-data">
+          <div class="form-grid">
+            <label>
+              <span>العنوان بالعربية *</span>
+              <input type="text" name="title_ar" required placeholder="مثال: خدمات السفر والرحلات">
+            </label>
+            <label>
+              <span>العنوان بالإنجليزي</span>
+              <input type="text" name="title_en" placeholder="Example: Travel & Mobility Services">
+            </label>
+            <label class="full-width">
+              <span>الوصف بالعربية</span>
+              <textarea name="text_ar" rows="2" placeholder="وصف مختصر للخدمة أو الموضوع..."></textarea>
+            </label>
+            <label class="full-width">
+              <span>الوصف بالإنجليزي</span>
+              <textarea name="text_en" rows="2" placeholder="Short description in English..."></textarea>
+            </label>
+            <label>
+              <span>نوع الوسائط</span>
+              <select name="type">
+                <option value="image">صورة (Image)</option>
+                <option value="video">فيديو قصير (10-15s Video)</option>
+              </select>
+            </label>
+            <label>
+              <span>رفع ملف (صورة أو فيديو قصير)</span>
+              <input type="file" name="media_file" accept="image/*,video/mp4,video/webm">
+            </label>
+            <label class="full-width">
+              <span>أو ضع رابط مباشر (Image/Video URL)</span>
+              <input type="url" name="media_url" placeholder="https://...">
+            </label>
+          </div>
+          <button type="submit" style="margin-top:10px">نشر الموضوع / الميديا</button>
+          <small id="slideStatus"></small>
+        </form>
+
+        <div class="slides-preview-head">
+          <h3>المواضيع المعروضة حالياً في السلايدر:</h3>
+        </div>
+        <div class="slides-list" id="slidesList">
+          <!-- Dynamically filled -->
+        </div>
+      </section>
+
+      <section class="panel-grid">
+        <form class="panel" id="settingsForm">
+          <div class="panel-head">
+            <h2>روابط التواصل</h2>
+            <p>أي تعديل هنا ينعكس على الموقع بعد الحفظ.</p>
+          </div>
+          <label><span>Facebook</span><input type="url" name="facebook" placeholder="https://facebook.com/..."></label>
+          <label><span>Instagram</span><input type="url" name="instagram" placeholder="https://instagram.com/..."></label>
+          <label><span>رقم واتساب الدولي</span><input type="tel" name="whatsapp" placeholder="201000000000" required></label>
+          <label><span>رابط خرائط Google</span><input type="url" name="maps" placeholder="https://www.google.com/maps/..."></label>
+          <button type="submit">حفظ التعديلات</button>
+          <small id="settingsStatus"></small>
+        </form>
+
+        <form class="panel" id="passwordForm">
+          <div class="panel-head">
+            <h2>تغيير الرقم السري</h2>
+            <p>الرقم الحالي عند التسليم هو 241000.</p>
+          </div>
+          <label><span>رقم سري جديد</span><input type="password" name="password" autocomplete="new-password" minlength="4" required></label>
+          <button type="submit">تغيير الرقم السري</button>
+          <small id="passwordStatus"></small>
+        </form>
+      </section>
+
+      <section class="panel orders-panel">
+        <div class="panel-head">
+          <h2>الطلبات</h2>
+          <p>الطلبات المرسلة من نموذج التواصل في الموقع.</p>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>التاريخ</th>
+                <th>الاسم</th>
+                <th>الهاتف</th>
+                <th>الرسالة</th>
+                <th>الحالة</th>
+              </tr>
+            </thead>
+            <tbody id="ordersBody">
+              <tr><td colspan="5">لا توجد طلبات حتى الآن.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <script src="/admin/admin.js"></script>
+</body>
+</html>

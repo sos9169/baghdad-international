@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="description" content="Baghdad International Group — Education, travel and business support services.">
+  <meta name="theme-color" content="#071827">
+  <title>Baghdad International Group</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap">
+  <link rel="preload" href="assets/logo.jpg" as="image">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+
+<body>
+<div class="page-bg"></div>
+
+<header class="site-header" id="top">
+  <div class="container nav-wrap">
+    <a class="brand" href="#home" aria-label="Baghdad International Group">
+      <span class="brand-mark"><img src="assets/logo.jpg" width="46" height="46" alt="Baghdad International Group logo"></span>
+      <span class="brand-copy"><strong>Baghdad International</strong><small>Group</small></span>
+    </a>
+
+    <nav class="main-nav" aria-label="Main navigation">
+      <a href="#home" data-i18n="nav.home">الرئيسية</a>
+      <a href="#about" data-i18n="nav.about">من نحن</a>
+      <a href="#services" data-i18n="nav.services">خدماتنا</a>
+      <a href="#education" data-i18n="nav.education">التعليم والتدريب</a>
+      <a href="#destinations" data-i18n="nav.destinations">الدول</a>
+      <a href="#why-us" data-i18n="nav.why">لماذا نحن</a>
+      <a href="#contact" data-i18n="nav.contact">تواصل معنا</a>
+    </nav>
+
+    <div class="header-actions">
+      <div class="social-links" aria-label="Social media">
+        <a href="https://facebook.com/" target="_blank" rel="noopener noreferrer" aria-label="Facebook" class="social facebook"><i class="fa-brands fa-facebook-f"></i></a>
+        <a href="https://instagram.com/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="social instagram"><i class="fa-brands fa-instagram"></i></a>
+        <a href="https://wa.me/201000000000" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" class="social whatsapp"><i class="fa-brands fa-whatsapp"></i></a>
+      </div>
+      <button class="control-btn" id="langToggle" type="button" aria-label="Switch language"><span class="lang-ar">EN</span><span class="lang-en">عربي</span></button>
+      <button class="control-btn theme-toggle" id="themeToggle" type="button" aria-label="Toggle theme"><span class="sun">☀</span><span class="moon">☾</span></button>
+      <button class="menu-btn" id="menuBtn" type="button" aria-label="Open menu">☰</button>
+    </div>
+  </div>
+</header>
+
+<main>
+<section class="hero section" id="home">
+  <div class="container hero-grid">
+    <div class="hero-copy reveal">
+      <span class="eyebrow" data-i18n="hero.eyebrow">BAGHDAD INTERNATIONAL GROUP</span>
+      <h1 data-i18n="hero.title">نفتح لك الطريق<br><span>إلى فرص أكبر.</span></h1>
+      <p data-i18n="hero.text">حلول متكاملة في التعليم والسفر والخدمات الدولية، بتجربة احترافية تبدأ من أول تواصل وحتى إنجاز التفاصيل.</p>
+      <div class="hero-actions">
+        <a href="#services" class="btn btn-primary" data-i18n="hero.primary">اكتشف خدماتنا <span>↙</span></a>
+        <a href="#contact" class="btn btn-ghost" data-i18n="hero.secondary">تواصل معنا</a>
+      </div>
+      <div class="hero-stats">
+        <div><strong>01</strong><span data-i18n="hero.stat1">حلول متكاملة</span></div>
+        <div><strong>02</strong><span data-i18n="hero.stat2">خدمة احترافية</span></div>
+        <div><strong>03</strong><span data-i18n="hero.stat3">دعم مستمر</span></div>
+      </div>
+    </div>
+
+    <div class="hero-visual reveal">
+      <div class="hero-orbit" aria-hidden="true">
+        <span class="orbit-plane orbit-plane-a"><i class="fa-solid fa-plane"></i></span>
+        <span class="orbit-plane orbit-plane-b"><i class="fa-solid fa-plane"></i></span>
+      </div>
+      <div class="boarding-pass">
+        <div class="bp-main">
+          <div class="bp-row">
+            <div class="hero-logo"><img src="assets/logo.jpg" width="52" height="52" alt="Baghdad International Group" loading="eager"></div>
+            <span class="bp-code">BIG · 001</span>
+          </div>
+          <span class="bp-label" data-i18n="hero.cardLabel">YOUR NEXT STEP</span>
+          <h3 data-i18n="hero.cardTitle">نرتب التفاصيل.<br>وأنت تبدأ الرحلة.</h3>
+          <div class="bp-route"><span>EDU</span><i></i><span>TRV</span><i></i><span>BIZ</span></div>
+        </div>
+        <div class="bp-perf"></div>
+        <div class="bp-stub">
+          <p data-i18n="hero.cardText">تعليم • سفر • خدمات دولية</p>
+          <span class="bp-stamp">
+            <svg viewBox="0 0 100 100" aria-hidden="true">
+              <path id="stampCircle" d="M 50,50 m -38,0 a 38,38 0 1,1 76,0 a 38,38 0 1,1 -76,0" fill="none"></path>
+              <text font-size="9.2" font-weight="700" letter-spacing="2.6"><textPath href="#stampCircle">BAGHDAD INTERNATIONAL GROUP • EST. SUPPORT •</textPath></text>
+            </svg>
+            <b>BIG</b>
+          </span>
+        </div>
+      </div>
+      <div class="floating-chip chip-one">✦ <span data-i18n="hero.chip1">Trusted Support</span></div>
+      <div class="floating-chip chip-two">• <span data-i18n="hero.chip2">International</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="ticker" aria-label="Services Ticker">
+  <div class="ticker-track" id="tickerTrack">
+    <div class="ticker-unit">
+      <span data-i18n="ticker.1">EDUCATION</span><i>✦</i>
+      <span data-i18n="ticker.2">TRAVEL</span><i>✦</i>
+      <span data-i18n="ticker.3">GENERAL TRADE</span><i>✦</i>
+      <span data-i18n="ticker.4">TRAINING</span><i>✦</i>
+      <span data-i18n="ticker.5">LEGAL SUPPORT</span><i>✦</i>
+    </div>
+  </div>
+</section>
+
+<section class="section about" id="about">
+  <div class="container two-col">
+    <div class="section-heading reveal">
+      <span class="eyebrow" data-i18n="about.eyebrow">ABOUT US</span>
+      <h2 data-i18n="about.title">خبرة تُحوّل<br><span>التفاصيل إلى نتائج.</span></h2>
+    </div>
+    <div class="about-copy reveal">
+      <p class="lead" data-i18n="about.lead">Baghdad International Group هي واجهة لخدمات دولية مصممة للأفراد والعائلات والطلاب وأصحاب الأعمال.</p>
+      <p data-i18n="about.text">نساعدك في ترتيب الخطوات، فهم الإجراءات، واختيار الحل الأنسب لاحتياجك — بأسلوب واضح، سريع واحترافي.</p>
+      <div class="signature"><span>BIG</span><small data-i18n="about.signature">Baghdad International Group</small></div>
+      <div class="years-badge"><strong data-i18n="about.years">+9</strong><span data-i18n="about.yearsLabel">سنوات خبرة في السوق</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="section showcase">
+  <div class="container">
+    <div class="section-top reveal">
+      <div>
+        <span class="eyebrow" data-i18n="showcase.eyebrow">OUR WORLD</span>
+        <h2 data-i18n="showcase.title">من الفكرة إلى<br><span>الخطوة التالية.</span></h2>
+      </div>
+    </div>
+    
+    <div class="slider reveal">
+      <button class="slider-btn slider-btn-prev" id="prevSlide" type="button" aria-label="Previous slide"><i class="fa-solid fa-chevron-left"></i></button>
+      <button class="slider-btn slider-btn-next" id="nextSlide" type="button" aria-label="Next slide"><i class="fa-solid fa-chevron-right"></i></button>
+
+      <div class="slides" id="slides">
+        <article class="slide active">
+          <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1200&q=80" width="1200" height="800" alt="Education" fetchpriority="high">
+          <div class="slide-overlay"><span>01</span><div><h3 data-i18n="slide.1.title">ابدأ مستقبلك التعليمي</h3><p data-i18n="slide.1.text">نساعد الطلاب في الوصول إلى الخيارات التعليمية المناسبة وترتيب خطواتهم بثقة.</p></div></div>
+        </article>
+        <article class="slide">
+          <img src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=1200&q=80" width="1200" height="800" alt="Travel" loading="lazy">
+          <div class="slide-overlay"><span>02</span><div><h3 data-i18n="slide.2.title">رحلتك تبدأ من هنا</h3><p data-i18n="slide.2.text">خدمات ومساندة لتنظيم السفر والتنقل، مع اهتمام بالتفاصيل من البداية.</p></div></div>
+        </article>
+        <article class="slide">
+          <img src="https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=1200&q=80" width="1200" height="800" alt="Business Support" loading="lazy">
+          <div class="slide-overlay"><span>03</span><div><h3 data-i18n="slide.3.title">حلول للأعمال والخدمات الدولية</h3><p data-i18n="slide.3.text">دعم عملي للأفراد والشركات في الخدمات التي تحتاج تنسيقاً ومتابعة دقيقة.</p></div></div>
+        </article>
+      </div>
+
+      <div class="dots" id="dots">
+        <button class="dot active" data-index="0" aria-label="Slide 1"></button>
+        <button class="dot" data-index="1" aria-label="Slide 2"></button>
+        <button class="dot" data-index="2" aria-label="Slide 3"></button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section services" id="services">
+  <div class="container">
+    <div class="section-top reveal">
+      <div><span class="eyebrow" data-i18n="services.eyebrow">WHAT WE DO</span><h2 data-i18n="services.title">خدماتنا، بشكل<br><span>أبسط وأوضح.</span></h2></div>
+    </div>
+    <div class="service-grid">
+      <article class="service-card reveal">
+        <div class="service-icon"><i class="fa-solid fa-plane-departure"></i></div>
+        <h3 data-i18n="service.1.title">خدمات السفر والإقامة</h3>
+        <p data-i18n="service.1.text">تنسيق الفيزا، ترتيبات السفر، السكن، والإقامة بخطوات واضحة ومتابعة مستمرة.</p>
+        <a href="#contact" data-i18n="service.more">اعرف المزيد ↙</a>
+      </article>
+      <article class="service-card reveal">
+        <div class="service-icon"><i class="fa-solid fa-file-signature"></i></div>
+        <h3 data-i18n="service.2.title">الإجراءات والعقود</h3>
+        <p data-i18n="service.2.text">خدمات الإجراءات العامة، العقود الإيجارية، وتجهيز الملفات المطلوبة حسب الحالة.</p>
+        <a href="#contact" data-i18n="service.more">اعرف المزيد ↙</a>
+      </article>
+      <article class="service-card reveal">
+        <div class="service-icon"><i class="fa-solid fa-ship"></i></div>
+        <h3 data-i18n="service.3.title">التجارة العامة</h3>
+        <p data-i18n="service.3.text">دعم خدمات الاستيراد والتصدير والمتابعة التجارية بين الأسواق المستهدفة.</p>
+        <a href="#contact" data-i18n="service.more">اعرف المزيد ↙</a>
+      </article>
+      <article class="service-card reveal">
+        <div class="service-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+        <h3 data-i18n="service.4.title">الخدمات التعليمية</h3>
+        <p data-i18n="service.4.text">التقديمات الجامعية، ملفات الدراسة، واختيار المسار التعليمي الأنسب للطالب.</p>
+        <a href="#education" data-i18n="service.more">اعرف المزيد ↙</a>
+      </article>
+      <article class="service-card reveal">
+        <div class="service-icon"><i class="fa-solid fa-chart-line"></i></div>
+        <h3 data-i18n="service.5.title">التدريب وتطوير المهارات</h3>
+        <p data-i18n="service.5.text">دورات تدريبية ومهنية، مؤتمرات علمية، وبرامج تطوير مثل MBA حسب الاحتياج.</p>
+        <a href="#education" data-i18n="service.more">اعرف المزيد ↙</a>
+      </article>
+      <article class="service-card reveal">
+        <div class="service-icon"><i class="fa-solid fa-scale-balanced"></i></div>
+        <h3 data-i18n="service.6.title">الدعم القانوني</h3>
+        <p data-i18n="service.6.text">فريق محامين للمساندة في الحالات القانونية أو الإجرائية ومتابعة الحل المناسب.</p>
+        <a href="#contact" data-i18n="service.more">اعرف المزيد ↙</a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="section education" id="education">
+  <div class="container">
+    <div class="section-top reveal">
+      <div>
+        <span class="eyebrow" data-i18n="education.eyebrow">EDUCATION & TRAINING</span>
+        <h2 data-i18n="education.title">الدراسة والتطوير<br><span>في مكان واحد.</span></h2>
+      </div>
+      <p class="section-note" data-i18n="education.note">نرتب خطوات الدراسة، التقديمات الجامعية، التدريب المهني، والمؤتمرات العلمية بطريقة واضحة قابلة للمتابعة.</p>
+    </div>
+    <div class="program-grid">
+      <article class="program-item reveal"><span>01</span><h3 data-i18n="program.1.title">الدراسة والتقديمات الجامعية</h3><p data-i18n="program.1.text">تجهيز الملفات، متابعة التقديم، واختيار الوجهة التعليمية المناسبة للطالب.</p></article>
+      <article class="program-item reveal"><span>02</span><h3 data-i18n="program.2.title">الدورات التدريبية</h3><p data-i18n="program.2.text">برامج تدريبية لتطوير المهارات العملية والمهنية حسب المجال المطلوب.</p></article>
+      <article class="program-item reveal"><span>03</span><h3 data-i18n="program.3.title">المؤتمرات والبرامج المهنية</h3><p data-i18n="program.3.text">مؤتمرات علمية ودورات مهنية متخصصة، بما يشمل برامج مثل MBA.</p></article>
+    </div>
+  </div>
+</section>
+
+<section class="section destinations" id="destinations">
+  <div class="container destinations-grid">
+    <div class="section-heading reveal">
+      <span class="eyebrow" data-i18n="destinations.eyebrow">DESTINATIONS</span>
+      <h2 data-i18n="destinations.title">خدمات سفر مرتبطة<br><span>بعدة دول.</span></h2>
+    </div>
+    <div class="country-list reveal">
+      <span data-i18n="country.egypt">مصر</span>
+      <span data-i18n="country.iraq">العراق</span>
+      <span data-i18n="country.turkey">تركيا</span>
+      <span data-i18n="country.iran">إيران</span>
+      <span data-i18n="country.russia">روسيا</span>
+    </div>
+  </div>
+</section>
+
+<section class="social-banner" aria-label="Facebook banner preview">
+  <div class="container social-banner-inner reveal">
+    <div>
+      <span data-i18n="banner.eyebrow">BAGHDAD INTERNATIONAL GROUP</span>
+      <strong data-i18n="banner.title">خدمات دولية | سفر | تعليم | تجارة عامة</strong>
+      <small data-i18n="banner.text">هوية واضحة مناسبة للاستخدام كبانر تعريفي على فيسبوك والمنصات الاجتماعية.</small>
+    </div>
+    <img src="assets/logo.jpg" width="72" height="72" alt="Baghdad International Group">
+  </div>
+</section>
+
+<section class="section why" id="why-us">
+  <div class="container why-grid">
+    <div class="why-visual reveal">
+      <div class="big-number">03</div>
+      <div class="why-ring"></div>
+      <div class="why-caption"><span>BIG</span><small data-i18n="why.caption">Built around your next step.</small></div>
+    </div>
+    <div class="why-content reveal">
+      <span class="eyebrow" data-i18n="why.eyebrow">WHY BIG</span>
+      <h2 data-i18n="why.title">مش مجرد خدمة.<br><span>دي تجربة كاملة.</span></h2>
+      <div class="why-list">
+        <div><b>01</b><div><h4 data-i18n="why.1.title">وضوح من البداية</h4><p data-i18n="why.1.text">نشرح لك الخطوات والمطلوب بدون تعقيد.</p></div></div>
+        <div><b>02</b><div><h4 data-i18n="why.2.title">متابعة مستمرة</h4><p data-i18n="why.2.text">نبقى معك حتى تكتمل الصورة وتتحرك للخطوة التالية.</p></div></div>
+        <div><b>03</b><div><h4 data-i18n="why.3.title">حلول مرنة</h4><p data-i18n="why.3.text">نرتب الخدمة حسب احتياجك، وليس العكس.</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section contact" id="contact">
+  <div class="container contact-box reveal">
+    <div>
+      <span class="eyebrow" data-i18n="contact.eyebrow">LET'S TALK</span>
+      <h2 data-i18n="contact.title">جاهز للخطوة<br><span>التالية؟</span></h2>
+      <p data-i18n="contact.text">احكي لنا احتياجك، ونرتب معك أفضل طريقة للبدء.</p>
+      <div class="contact-address">
+        <i class="fa-solid fa-location-dot"></i>
+        <div>
+          <span data-i18n="contact.addressLabel">العنوان</span>
+          <p data-i18n="contact.address">عمارة رقم ٧، شارع عقبة بن نافع، الدور الأول، مكتب رقم ٣ — أمام البيت الثقافي الروسي، الدقي، الجيزة</p>
+          <a href="https://www.google.com/maps/search/?api=1&query=7+Okba+Ibn+Nafeh+St+Dokki+Giza+Egypt" target="_blank" rel="noopener noreferrer" data-i18n="contact.directions">احصل على الاتجاهات ↗</a>
+        </div>
+      </div>
+      <div class="contact-channels">
+        <span data-i18n="contact.regionLabel">التواصل والخدمات</span>
+        <p data-i18n="contact.regions">متابعة لعملاء مصر، العراق، وتركيا.</p>
+      </div>
+    </div>
+    <form class="contact-form" id="contactForm">
+      <label>
+        <span data-i18n="form.name">الاسم</span>
+        <input type="text" name="name" required data-placeholder="form.namePlaceholder" placeholder="اكتب اسمك">
+      </label>
+      <label>
+        <span data-i18n="form.phone">رقم الهاتف</span>
+        <input type="tel" name="phone" required data-placeholder="form.phonePlaceholder" placeholder="01xxxxxxxxx" inputmode="tel">
+      </label>
+      <label>
+        <span data-i18n="form.message">كيف نقدر نساعدك؟</span>
+        <textarea name="message" rows="4" data-placeholder="form.messagePlaceholder" placeholder="اكتب رسالتك هنا..."></textarea>
+      </label>
+      <button class="btn btn-primary" type="submit"><span data-i18n="form.submit">إرسال الطلب</span><span>↗</span></button>
+      <small id="formStatus" class="form-status"></small>
+    </form>
+  </div>
+</section>
+
+<a class="floating-whatsapp" href="https://wa.me/201000000000" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+<button class="floating-top" id="floatingTop" type="button" aria-label="Back to top"><i class="fa-solid fa-arrow-up"></i></button>
+</main>
+
+<footer class="footer">
+  <div class="container footer-grid">
+    <div class="brand footer-brand">
+      <span class="brand-mark"><img src="assets/logo.jpg" width="38" height="38" alt="" loading="lazy"></span>
+      <span class="brand-copy"><strong>Baghdad International</strong><small>Group</small></span>
+    </div>
+
+    <div class="footer-socials" aria-label="Social media">
+      <a href="https://facebook.com/" target="_blank" rel="noopener noreferrer" aria-label="Facebook" class="social facebook"><i class="fa-brands fa-facebook-f"></i></a>
+      <a href="https://instagram.com/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="social instagram"><i class="fa-brands fa-instagram"></i></a>
+      <a href="https://wa.me/201000000000" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" class="social whatsapp"><i class="fa-brands fa-whatsapp"></i></a>
+    </div>
+
+    <div class="footer-copyright">
+      <span>© 2026 Baghdad International Group</span>
+    </div>
+  </div>
+</footer>
+
+<script src="js/app.js" defer></script>
+<script src="js/tracker.js" defer></script>
+</body>
+</html>

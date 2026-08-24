@@ -1,0 +1,35 @@
+[
+  {
+    "id": "slide-01",
+    "type": "image",
+    "src": "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1200&q=80",
+    "badge": "01",
+    "title_ar": "ابدأ مستقبلك التعليمي",
+    "title_en": "Start your educational future",
+    "text_ar": "نساعد الطلاب في الوصول إلى الخيارات التعليمية المناسبة وترتيب خطواتهم بثقة.",
+    "text_en": "We help students find suitable education options and organize the required steps with confidence.",
+    "createdAt": "2026-08-15T21:00:00+03:00"
+  },
+  {
+    "id": "slide-02",
+    "type": "image",
+    "src": "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=1200&q=80",
+    "badge": "02",
+    "title_ar": "رحلتك تبدأ من هنا",
+    "title_en": "Your journey starts here",
+    "text_ar": "خدمات ومساندة لتنظيم السفر والتنقل، مع اهتمام بالتفاصيل من البداية.",
+    "text_en": "Support for travel and mobility planning, with attention to details from day one.",
+    "createdAt": "2026-08-15T21:00:00+03:00"
+  },
+  {
+    "id": "slide-03",
+    "type": "image",
+    "src": "https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=1200&q=80",
+    "badge": "03",
+    "title_ar": "حلول للأعمال والخدمات الدولية",
+    "title_en": "Business & international solutions",
+    "text_ar": "دعم عملي للأفراد والشركات في الخدمات التي تحتاج تنسيقاً ومتابعة دقيقة.",
+    "text_en": "Practical support for individuals and businesses that need coordinated international services.",
+    "createdAt": "2026-08-15T21:00:00+03:00"
+  }
+]
