@@ -110,7 +110,7 @@ body.lang-en .boarding-pass .bp-stub p {
 /* Tablets & Mobile Navigation Trigger (<= 800px) */
 @media (max-width: 800px) {
   .container {
-    width: min(100% - 32px, 640px);
+    width: min(100% - 28px, 640px);
     margin-inline: auto;
   }
 
@@ -374,7 +374,7 @@ body.lang-en .boarding-pass .bp-stub p {
   /* DESTINATIONS SECTION ON MOBILE */
   .destinations-showcase {
     grid-template-columns: 1fr !important;
-    gap: 20px;
+    gap: 24px;
   }
 
   .destination-card {
@@ -382,10 +382,45 @@ body.lang-en .boarding-pass .bp-stub p {
     border-radius: 18px;
   }
 
-  /* HIDE GRAPHIC SVG MAP CANVAS ON MOBILE SCREENS TO PREVENT OVERLAP/CLUTTER */
+  /* INTERACTIVE FLIGHT MAP FULLY VISIBLE & RESPONSIVE ON MOBILE */
   .destinations-map-wrap {
+    display: block !important;
+    width: 100% !important;
+    min-height: 400px !important;
+    border-radius: 22px;
+    margin-top: 14px;
+  }
+
+  .node-glass-card {
+    padding: 4px 8px !important;
+    border-radius: 9px !important;
+    gap: 5px !important;
+  }
+
+  .node-glass-card strong {
+    font-size: 10.5px !important;
+  }
+
+  .node-glass-card small {
     display: none !important;
   }
+
+  .hq-star {
+    font-size: 7.5px !important;
+    padding: 1px 3px !important;
+  }
+
+  .node-flag-img {
+    width: 16px !important;
+    height: 11px !important;
+  }
+
+  /* Non-overlapping Mobile Coordinates */
+  .node-baghdad { top: 48% !important; left: 24% !important; }
+  .node-cairo { top: 78% !important; left: 2% !important; }
+  .node-turkey { top: 8% !important; left: 2% !important; }
+  .node-iran { top: 70% !important; left: 58% !important; }
+  .node-moscow { top: 8% !important; left: 58% !important; }
 
   .social-banner-inner {
     align-items: flex-start;
@@ -447,6 +482,23 @@ body.lang-en .boarding-pass .bp-stub p {
     width: 270px;
     height: 270px;
   }
+
+  .destinations-map-wrap {
+    min-height: 360px !important;
+  }
+
+  /* Ultra compact mobile map badges */
+  .node-glass-card {
+    padding: 3px 6px !important;
+  }
+  .node-glass-card strong {
+    font-size: 9.5px !important;
+  }
+  .node-baghdad { top: 48% !important; left: 16% !important; }
+  .node-cairo { top: 78% !important; left: 1% !important; }
+  .node-turkey { top: 6% !important; left: 1% !important; }
+  .node-iran { top: 70% !important; left: 54% !important; }
+  .node-moscow { top: 6% !important; left: 54% !important; }
 }
 
 /* iOS Safe Areas */
