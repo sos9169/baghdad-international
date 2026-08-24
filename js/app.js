@@ -81,10 +81,10 @@
       "dest.egypt.desc": "مقرنا الرئيسي في القاهرة والدقي — تقديمات جامعية، عقود وسكن، وإسناد إجرائي كامل للمقيمين والوافدين.",
       "dest.iraq.name": "جمهورية العراق",
       "dest.iraq.code": "Iraq • Primary Origin",
-      "dest.iraq.desc": "تسهيل إجراءات السفر والدراسة للطلاب والتجار العراقيين الراغبين بالدراسة والاستثمار في مصر وخارجها.",
+      "dest.iraq.desc": "فرع بغداد (زيونة - شارع الربيعي) — تسهيل إجراءات السفر والدراسة للطلاب والتجار العراقيين.",
       "dest.turkey.name": "تركيا",
       "dest.turkey.code": "Turkey • Istanbul Gateway",
-      "dest.turkey.desc": "قبولات جامعية في إسطنبول وأنقرة، تنسيق تجاري بين الأسواق العربية والتركية، ومساندة سفر.",
+      "dest.turkey.desc": "فرع تركيا والمتابعة المباشرة — قبولات جامعية في إسطنبول وأنقرة وتنسيق تجاري وسياحي.",
       "dest.iran.name": "إيران",
       "dest.iran.code": "Iran • Academic & Medical",
       "dest.iran.desc": "برامج مقاعد جامعية متخصصة، دورات تدريبية، ومتابعة المسارات التعليمية الطبية والهندسية.",
@@ -132,8 +132,10 @@
       "form.sending": "جار إرسال طلبك...",
       "form.success": "تم إرسال طلبك بنجاح! وسنتواصل معك قريباً.",
       "form.error": "حدث خطأ أثناء الإرسال، يرجى المحاولة لاحقاً.",
-      "contact.addressLabel": "العنوان الرئيسي",
-      "contact.address": "عمارة رقم ٧، شارع عقبة بن نافع، الدور الأول، مكتب رقم ٣ — أمام البيت الثقافي الروسي، الدقي، الجيزة",
+      "contact.addressLabel1": "مقر القاهرة (مصر)",
+      "contact.address1": "عمارة رقم ٧، شارع عقبة بن نافع، الدور الأول، مكتب رقم ٣ — أمام البيت الثقافي الروسي، الدقي، الجيزة",
+      "contact.addressLabel2": "فرع بغداد (العراق)",
+      "contact.address2": "بغداد — زيونة — شارع الربيعي — بداية كوين",
       "contact.directions": "احصل على الاتجاهات ↗"
     },
     en: {
@@ -214,10 +216,10 @@
       "dest.egypt.desc": "Our main headquarters in Cairo & Dokki — University admissions, contracts & housing, and full legal support for residents.",
       "dest.iraq.name": "Republic of Iraq",
       "dest.iraq.code": "Iraq • Primary Origin",
-      "dest.iraq.desc": "Facilitating travel and study procedures for Iraqi students and traders looking to study or invest in Egypt & abroad.",
+      "dest.iraq.desc": "Baghdad Branch (Zeyouna - Al Rubaie St) — Facilitating travel and study procedures for Iraqi students and traders.",
       "dest.turkey.name": "Turkey",
       "dest.turkey.code": "Turkey • Istanbul Gateway",
-      "dest.turkey.desc": "University admissions in Istanbul & Ankara, commercial coordination between Arab & Turkish markets, and travel support.",
+      "dest.turkey.desc": "Turkey Branch & Direct Follow-up — University admissions in Istanbul & Ankara, commercial coordination and travel.",
       "dest.iran.name": "Iran",
       "dest.iran.code": "Iran • Academic & Medical",
       "dest.iran.desc": "Specialized academic placements, professional training programs, and medical/engineering path follow-ups.",
@@ -265,8 +267,10 @@
       "form.sending": "Sending your request...",
       "form.success": "Your request has been submitted successfully! We will contact you soon.",
       "form.error": "An error occurred while sending. Please try again later.",
-      "contact.addressLabel": "Main Address",
-      "contact.address": "Building 7, Okba Ibn Nafeh St., 1st Floor, Office 3 — In front of the Russian Cultural Centre, Dokki, Giza",
+      "contact.addressLabel1": "Cairo Headquarters (Egypt)",
+      "contact.address1": "Building 7, Okba Ibn Nafeh St., 1st Floor, Office 3 — In front of the Russian Cultural Centre, Dokki, Giza",
+      "contact.addressLabel2": "Baghdad Branch (Iraq)",
+      "contact.address2": "Baghdad — Zeyouna — Al Rubaie St — Beginning of Queen",
       "contact.directions": "Get directions ↗"
     }
   };
@@ -417,15 +421,21 @@
   const modalWaBtn = document.getElementById("modalWaBtn");
   const modalStatus = document.getElementById("modalStatus");
 
+  function getCountryWaNumber(countryVal) {
+    if (countryVal.includes("عراق") || countryVal.includes("Iraq")) return "9647742881766";
+    if (countryVal.includes("تركيا") || countryVal.includes("Turkey")) return "905011263577";
+    return "201505502339"; // Default Egypt / Al-Lail
+  }
+
   function updateModalHeaderAndWa() {
     const sVal = modalServiceSelect ? modalServiceSelect.value : "";
     const cVal = modalCountrySelect ? modalCountrySelect.value : "";
 
     if (modalServiceName) modalServiceName.textContent = sVal;
 
-    // Update WhatsApp link dynamically
+    const waNum = getCountryWaNumber(cVal);
     const waText = encodeURIComponent(`مرحباً Baghdad International Group، أرغب في الاستفسار والتقديم على خدمة (${sVal}) الخاصة بدولة (${cVal}).`);
-    if (modalWaBtn) modalWaBtn.href = `https://wa.me/201000000000?text=${waText}`;
+    if (modalWaBtn) modalWaBtn.href = `https://wa.me/${waNum}?text=${waText}`;
   }
 
   if (modalServiceSelect) modalServiceSelect.addEventListener("change", updateModalHeaderAndWa);
