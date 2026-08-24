@@ -97,9 +97,9 @@ body.lang-en .boarding-pass .bp-stub p {
     gap: 20px;
   }
 
-  .destinations-showcase {
-    grid-template-columns: 1fr;
-    gap: 28px;
+  .destinations-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
   }
 
   .why-grid {
@@ -372,23 +372,9 @@ body.lang-en .boarding-pass .bp-stub p {
   }
 
   /* DESTINATIONS SECTION ON MOBILE */
-  .destinations-showcase {
+  .destinations-grid {
     grid-template-columns: 1fr !important;
-    gap: 24px;
-  }
-
-  .destination-card {
-    padding: 20px 18px;
-    border-radius: 18px;
-  }
-
-  /* INTERACTIVE FLIGHT MAP FULLY VISIBLE & RESPONSIVE ON MOBILE */
-  .destinations-map-wrap {
-    display: block !important;
-    width: 100% !important;
-    min-height: 400px !important;
-    border-radius: 22px;
-    margin-top: 14px;
+    gap: 16px;
   }
 
   .node-glass-card {

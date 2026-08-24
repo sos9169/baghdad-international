@@ -1216,16 +1216,10 @@ body.dark .service-card:hover {
   transition: background-color 0.3s ease;
 }
 
-.destinations-showcase {
+.destinations-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 32px;
-  align-items: center;
-}
-
-.destinations-cards {
-  display: grid;
-  gap: 16px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
 }
 
 .destination-card {
