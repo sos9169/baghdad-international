@@ -120,15 +120,15 @@ body.lang-en .boarding-pass .bp-stub p {
   }
 
   .brand {
-    flex: 1 1 auto;
-    min-width: 0;
+    flex: none;
   }
 
   .brand-copy strong {
-    max-width: 155px;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    font-size: 13px;
     white-space: nowrap;
+    overflow: visible;
+    text-overflow: clip;
+    max-width: none;
   }
 
   .main-nav {
