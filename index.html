@@ -53,15 +53,36 @@
 
 <main>
 <section class="hero section" id="home">
+  <!-- Glowing Background Mesh Effect -->
+  <div class="hero-bg-glow"></div>
+
   <div class="container hero-grid">
     <div class="hero-copy reveal">
       <span class="eyebrow" data-i18n="hero.eyebrow">BAGHDAD INTERNATIONAL GROUP</span>
-      <h1 data-i18n="hero.title">نفتح لك الطريق<br><span>إلى فرص أكبر</span></h1>
+      <h1 data-i18n="hero.title">نفتح لك الطريق<br><span id="heroDynamicText" class="dynamic-typewriter">إلى فرص أكبر ✦</span></h1>
       <p data-i18n="hero.text">حلول متكاملة في التعليم والسفر والخدمات الدولية، بتجربة احترافية تبدأ من أول تواصل وحتى إنجاز التفاصيل.</p>
+      
       <div class="hero-actions">
         <a href="#services" class="btn btn-primary" data-i18n="hero.primary">اكتشف خدماتنا <span>↙</span></a>
         <a href="#contact" class="btn btn-ghost" data-i18n="hero.secondary">تواصل معنا</a>
       </div>
+
+      <!-- Quick Country Direct Contact Pills -->
+      <div class="hero-quick-countries">
+        <span class="quick-label">تواصل مباشر حسب الدولة:</span>
+        <div class="quick-country-pills">
+          <a href="https://wa.me/9647742881766" target="_blank" rel="noopener" class="quick-pill active" title="المقر الرئيسي - بغداد">
+            <span class="pill-flag">🇮🇶</span> <strong>بغداد (HQ)</strong>
+          </a>
+          <a href="https://wa.me/201505502339" target="_blank" rel="noopener" class="quick-pill" title="فرع مصر - القاهرة">
+            <span class="pill-flag">🇪🇬</span> <strong>القاهرة</strong>
+          </a>
+          <a href="https://wa.me/905011263577" target="_blank" rel="noopener" class="quick-pill" title="فرع تركيا - يالوفا">
+            <span class="pill-flag">🇹🇷</span> <strong>تركيا</strong>
+          </a>
+        </div>
+      </div>
+
       <div class="hero-stats">
         <div><strong>01</strong><span data-i18n="hero.stat1">حلول متكاملة</span></div>
         <div><strong>02</strong><span data-i18n="hero.stat2">خدمة احترافية</span></div>
@@ -169,7 +190,7 @@
 
 <div class="gold-glow-divider"></div>
 
-<!-- Group Subsidiaries Section -->
+<!-- Group Subsidiaries Section with Dynamic Glowing Animated Borders -->
 <section class="section subsidiaries" id="subsidiaries">
   <div class="container">
     <div class="section-top reveal">
@@ -181,28 +202,28 @@
     </div>
 
     <div class="subsidiary-grid">
-      <article class="subsidiary-card reveal">
+      <article class="subsidiary-card glow-card reveal">
         <div class="sub-icon"><i class="fa-solid fa-graduation-cap"></i></div>
         <h3>بغداد أكاديمي</h3>
         <span class="sub-tag">Baghdad Academy</span>
         <p>خدمات القبولات الجامعية، التقديمات الأكاديمية الدولية، والتوجيه الدراسي للطلاب.</p>
       </article>
 
-      <article class="subsidiary-card reveal">
+      <article class="subsidiary-card glow-card reveal">
         <div class="sub-icon"><i class="fa-solid fa-moon"></i></div>
         <h3>شركة الليل</h3>
         <span class="sub-tag">Al-Lail Company</span>
         <p>تنسيق خدمات السفر والرحلات، الإقامة والتأشيرات، ومتابعة أنشطة التجارة العامة.</p>
       </article>
 
-      <article class="subsidiary-card reveal">
+      <article class="subsidiary-card glow-card reveal">
         <div class="sub-icon"><i class="fa-solid fa-school"></i></div>
         <h3>مدارس الحضارة</h3>
         <span class="sub-tag">Al-Hadara Schools</span>
         <p>مؤسسات تعليمية مدرسية تشمل كل المراحل: الابتدائي، الإعدادي، والثانوي.</p>
       </article>
 
-      <article class="subsidiary-card reveal">
+      <article class="subsidiary-card glow-card reveal">
         <div class="sub-icon"><i class="fa-solid fa-book-bookmark"></i></div>
         <h3>مدارس قرطبة</h3>
         <span class="sub-tag">Cordoba Schools</span>
@@ -259,37 +280,37 @@
       <div><span class="eyebrow" data-i18n="services.eyebrow">WHAT WE DO</span><h2 data-i18n="services.title">خدماتنا، بشكل<br><span>أبسط وأوضح</span></h2></div>
     </div>
     <div class="service-grid">
-      <article class="service-card reveal">
+      <article class="service-card glow-card reveal">
         <div class="service-icon"><i class="fa-solid fa-plane-departure"></i></div>
         <h3 data-i18n="service.1.title">خدمات السفر والإقامة</h3>
         <p data-i18n="service.1.text">تنسيق الفيزا، تذاكر السفر، ترتيبات السكن الإيجاري، والإقامة بخطوات واضحة ومتابعة مستمرة.</p>
         <a href="#contact" data-i18n="service.more">اعرف المزيد ↙</a>
       </article>
-      <article class="service-card reveal">
+      <article class="service-card glow-card reveal">
         <div class="service-icon"><i class="fa-solid fa-robot"></i></div>
         <h3 data-i18n="service.ai.title">الذكاء الاصطناعي والبرمجيات</h3>
         <p data-i18n="service.ai.text">تطوير البرمجيات الحديثة، الحلول التقنية الذكية، وتوفير الاستشارات البرمجية للأعمال.</p>
         <a href="#contact" data-i18n="service.more">اعرف المزيد ↙</a>
       </article>
-      <article class="service-card reveal">
+      <article class="service-card glow-card reveal">
         <div class="service-icon"><i class="fa-solid fa-ship"></i></div>
         <h3 data-i18n="service.3.title">التجارة العامة والاستيراد</h3>
-        <p data-i18n="service.3.text">دعم خدمات الاستيراد والتصدير والمتابعة التجارية بين الأسوق المستهدفة.</p>
+        <p data-i18n="service.3.text">دعم خدمات الاستيراد والتصدير والمتابعة التجارية بين الأسواق المستهدفة.</p>
         <a href="#contact" data-i18n="service.more">اعرف المزيد ↙</a>
       </article>
-      <article class="service-card reveal">
+      <article class="service-card glow-card reveal">
         <div class="service-icon"><i class="fa-solid fa-graduation-cap"></i></div>
         <h3 data-i18n="service.4.title">الخدمات التعليمية والمدرسية</h3>
         <p data-i18n="service.4.text">القبولات الجامعية والتعليم المدرسي تشمل مراحل (ابتدائي، إعدادي، وثانوي).</p>
         <a href="#education" data-i18n="service.more">اعرف المزيد ↙</a>
       </article>
-      <article class="service-card reveal">
+      <article class="service-card glow-card reveal">
         <div class="service-icon"><i class="fa-solid fa-chalkboard-user"></i></div>
         <h3 data-i18n="service.5.title">التدريب والتطوير في كافة المجالات</h3>
         <p data-i18n="service.5.text">برامج تدريبية ورعايات في كافة التخصصات (طبية، هندسية، إدارية، تقنية) ومؤتمرات MBA.</p>
         <a href="#education" data-i18n="service.more">اعرف المزيد ↙</a>
       </article>
-      <article class="service-card reveal">
+      <article class="service-card glow-card reveal">
         <div class="service-icon"><i class="fa-solid fa-scale-balanced"></i></div>
         <h3 data-i18n="service.6.title">الدعم والإسناد القانوني</h3>
         <p data-i18n="service.6.text">فريق محامين متخصص للمساندة وحماية العملاء في الحالات القانونية والإجرائية.</p>
@@ -354,7 +375,7 @@
 
     <div class="destinations-showcase reveal">
       <div class="destinations-cards">
-        <article class="destination-card active" data-country="iraq">
+        <article class="destination-card glow-card active" data-country="iraq">
           <div class="dest-card-header">
             <span class="dest-flag">🇮🇶</span>
             <div>
@@ -377,7 +398,7 @@
           </div>
         </article>
 
-        <article class="destination-card" data-country="egypt">
+        <article class="destination-card glow-card" data-country="egypt">
           <div class="dest-card-header">
             <span class="dest-flag">🇪🇬</span>
             <div>
@@ -400,7 +421,7 @@
           </div>
         </article>
 
-        <article class="destination-card" data-country="turkey">
+        <article class="destination-card glow-card" data-country="turkey">
           <div class="dest-card-header">
             <span class="dest-flag">🇹🇷</span>
             <div>
@@ -423,7 +444,7 @@
           </div>
         </article>
 
-        <article class="destination-card" data-country="iran">
+        <article class="destination-card glow-card" data-country="iran">
           <div class="dest-card-header">
             <span class="dest-flag">🇮🇷</span>
             <div>
@@ -443,7 +464,7 @@
           </div>
         </article>
 
-        <article class="destination-card" data-country="russia">
+        <article class="destination-card glow-card" data-country="russia">
           <div class="dest-card-header">
             <span class="dest-flag">🇷🇺</span>
             <div>
@@ -615,7 +636,36 @@
       <h2 data-i18n="contact.title">جاهز للخطوة<br><span>التالية؟</span></h2>
       <p data-i18n="contact.text">احكي لنا احتياجك، ونرتب معك أفضل طريقة للبدء.</p>
       
-      <!-- Address & Multi-Country Phones -->
+      <!-- Quick Interactive Multi-Country Dial Bar -->
+      <div class="quick-dial-bar-container">
+        <span class="dial-bar-label">اختر فرع الدولة للتواصل الفوري:</span>
+        <div class="dial-tabs" id="dialTabs">
+          <button type="button" class="dial-tab active" data-dial-country="iraq">
+            <span class="flag">🇮🇶</span> <span>العراق (HQ)</span>
+          </button>
+          <button type="button" class="dial-tab" data-dial-country="egypt">
+            <span class="flag">🇪🇬</span> <span>مصر</span>
+          </button>
+          <button type="button" class="dial-tab" data-dial-country="turkey">
+            <span class="flag">🇹🇷</span> <span>تركيا</span>
+          </button>
+        </div>
+
+        <div class="dial-active-card" id="dialActiveCard">
+          <div class="dial-info">
+            <span class="dial-tag" id="dialTag">المقر الرئيسي ⭐</span>
+            <h4 id="dialCity">بغداد — زيونة — شارع الربيعي — بداية كوين</h4>
+            <p id="dialPhoneList">
+              <a href="https://wa.me/9647742881766" target="_blank" rel="noopener" class="phone-num" dir="ltr"><bdi>+964 774 288 1766</bdi></a> / 
+              <a href="tel:01507501547" class="phone-num" dir="ltr"><bdi>01507501547</bdi></a>
+            </p>
+          </div>
+          <a href="https://wa.me/9647742881766" target="_blank" rel="noopener" class="btn btn-primary dial-wa-btn" id="dialActionBtn">
+            <i class="fa-brands fa-whatsapp"></i> واتساب الفرع ↗
+          </a>
+        </div>
+      </div>
+
       <div class="contact-address-block">
         <div class="contact-address">
           <i class="fa-solid fa-location-dot"></i>
@@ -642,15 +692,6 @@
           </div>
         </div>
       </div>
-
-      <div class="contact-channels">
-        <span>أرقام الفروع والواتساب المباشرة</span>
-        <div class="country-phones">
-          <div><span>🇮🇶 المقر الرئيسي بغداد (العراق):</span> <a href="https://wa.me/9647742881766" target="_blank" rel="noopener" id="contactPhoneIraq" class="phone-num" dir="ltr"><bdi>+964 774 288 1766</bdi></a> / <a href="tel:01507501547" class="phone-num" dir="ltr"><bdi>01507501547</bdi></a></div>
-          <div><span>🇪🇬 فرع مصر / شركة الليل:</span> <a href="https://wa.me/201505502339" target="_blank" rel="noopener" id="contactPhoneEgypt" class="phone-num" dir="ltr"><bdi>+20 150 550 2339</bdi></a> / <a href="https://wa.me/201505502337" target="_blank" rel="noopener" class="phone-num" dir="ltr"><bdi>+20 150 550 2337</bdi></a></div>
-          <div><span>🇹🇷 فرع تركيا:</span> <a href="https://wa.me/905011263577" target="_blank" rel="noopener" id="contactPhoneTurkey" class="phone-num" dir="ltr"><bdi>+90 501 126 3577</bdi></a></div>
-        </div>
-      </div>
     </div>
     <form class="contact-form" id="contactForm">
       <label>
@@ -671,7 +712,11 @@
   </div>
 </section>
 
-<a class="floating-whatsapp" href="https://wa.me/9647742881766" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+<!-- Sleek Floating WhatsApp Button with Luxury Tooltip Badge & Outer Pulse -->
+<a class="floating-whatsapp" href="https://wa.me/9647742881766" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
+  <i class="fa-brands fa-whatsapp"></i>
+  <span class="wa-tooltip">تواصل معنا عبر الواتساب 💬</span>
+</a>
 <button class="floating-top" id="floatingTop" type="button" aria-label="Back to top"><i class="fa-solid fa-arrow-up"></i></button>
 
 <!-- Service Quick Request Modal with Editable Selectors -->

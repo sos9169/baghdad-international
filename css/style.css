@@ -391,6 +391,12 @@ h1 span, h2 span {
   display: inline-block;
 }
 
+.dynamic-typewriter {
+  color: var(--gold) !important;
+  transition: opacity 0.35s ease, transform 0.35s ease;
+  display: inline-block;
+}
+
 .eyebrow {
   display: inline-flex;
   align-items: center;
@@ -417,6 +423,17 @@ h1 span, h2 span {
   display: flex;
   align-items: center;
   overflow: hidden;
+  position: relative;
+}
+
+.hero-bg-glow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: 
+    radial-gradient(circle at 75% 30%, rgba(197, 154, 74, 0.18), transparent 45%),
+    radial-gradient(circle at 20% 70%, rgba(16, 59, 99, 0.14), transparent 50%);
+  z-index: 0;
 }
 
 .hero-grid {
@@ -424,6 +441,8 @@ h1 span, h2 span {
   grid-template-columns: minmax(0, 1fr) minmax(380px, 0.9fr);
   gap: 60px;
   align-items: center;
+  position: relative;
+  z-index: 1;
 }
 
 .hero-copy {
@@ -441,13 +460,65 @@ h1 span, h2 span {
 .hero-actions {
   display: flex;
   gap: 12px;
-  margin: 30px 0;
+  margin: 30px 0 20px;
+}
+
+/* Quick Country Direct Contact Pills */
+.hero-quick-countries {
+  margin: 22px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.quick-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--muted);
+  font-family: var(--font-mono);
+}
+
+.quick-country-pills {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.quick-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  background: rgba(197, 154, 74, 0.08);
+  border: 1px solid rgba(197, 154, 74, 0.25);
+  color: var(--text);
+  text-decoration: none;
+  font-size: 12.5px;
+  transition: all 0.25s ease;
+}
+
+.quick-pill:hover, .quick-pill.active {
+  background: var(--ink);
+  color: #fff;
+  border-color: var(--gold);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(8, 35, 61, 0.2);
+}
+
+body.dark .quick-pill:hover, body.dark .quick-pill.active {
+  background: var(--gold);
+  color: #071827;
+}
+
+.pill-flag {
+  font-size: 16px;
 }
 
 .hero-stats {
   display: flex;
   gap: 34px;
-  margin-top: 40px;
+  margin-top: 30px;
   font-family: var(--font-mono);
 }
 
@@ -664,6 +735,32 @@ h1 span, h2 span {
 
 .chip-one { top: 10%; right: -1%; }
 .chip-two { bottom: 10%; left: -3%; }
+
+/* Dynamic Glowing Animated Border Class */
+.glow-card {
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.glow-card::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  padding: 2px;
+  background: linear-gradient(135deg, transparent, rgba(197, 154, 74, 0.65), transparent);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+.glow-card:hover::before {
+  opacity: 1;
+}
 
 /* Ticker Bar */
 .ticker {
@@ -1907,6 +2004,98 @@ body.dark .why {
   line-height: 1.85;
 }
 
+/* Quick Interactive Multi-Country Dial Bar */
+.quick-dial-bar-container {
+  margin: 28px 0;
+  padding: 22px;
+  border-radius: 20px;
+  background: var(--card-bg);
+  border: 1.5px solid var(--gold);
+  box-shadow: 0 14px 35px rgba(197, 154, 74, 0.15);
+}
+
+.dial-bar-label {
+  display: block;
+  font: 700 11px var(--font-mono);
+  color: var(--gold);
+  margin-bottom: 12px;
+  letter-spacing: 1px;
+}
+
+.dial-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.dial-tab {
+  flex: 1;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+}
+
+.dial-tab:hover, .dial-tab.active {
+  background: var(--ink);
+  color: #fff;
+  border-color: var(--ink);
+}
+
+body.dark .dial-tab:hover, body.dark .dial-tab.active {
+  background: var(--gold);
+  color: #071827;
+  border-color: var(--gold);
+}
+
+.dial-active-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px 20px;
+  border-radius: 14px;
+  background: rgba(197, 154, 74, 0.06);
+  border: 1px dashed rgba(197, 154, 74, 0.4);
+}
+
+.dial-tag {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 800;
+  color: var(--gold);
+  margin-bottom: 4px;
+}
+
+.dial-info h4 {
+  margin: 0 0 4px;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.dial-info p {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.dial-wa-btn {
+  background: #25D366 !important;
+  color: #fff !important;
+  border-color: #25D366 !important;
+  box-shadow: 0 8px 20px rgba(37, 211, 102, 0.3) !important;
+  flex: none;
+}
+
 /* Contact Section */
 .contact {
   background: var(--cream);
@@ -2092,9 +2281,83 @@ body.lang-en .contact-form input, body.lang-en .contact-form textarea {
 }
 
 /* Floating Utilities */
-.floating-whatsapp, .floating-top {
+.floating-whatsapp {
+  position: fixed;
+  z-index: 9999;
+  left: 28px;
+  bottom: 28px;
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #25D366, #1da851);
+  color: #ffffff !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 12px 30px rgba(37, 211, 102, 0.45);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  overflow: visible;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.floating-whatsapp::before {
+  content: "";
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  border: 2px solid rgba(37, 211, 102, 0.6);
+  animation: waPulseRing 2.2s infinite cubic-bezier(0.215, 0.61, 0.355, 1);
+  pointer-events: none;
+}
+
+@keyframes waPulseRing {
+  0% { transform: scale(0.85); opacity: 0.9; }
+  100% { transform: scale(1.6); opacity: 0; }
+}
+
+.floating-whatsapp i {
+  font-size: 28px;
+  color: #ffffff;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+.wa-tooltip {
+  position: absolute;
+  right: calc(100% + 14px);
+  top: 50%;
+  transform: translateY(-50%) translateX(10px);
+  background: rgba(7, 24, 39, 0.92);
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 7px 14px;
+  border-radius: 12px;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  border: 1px solid var(--gold);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+body[dir="ltr"] .wa-tooltip {
+  right: auto;
+  left: calc(100% + 14px);
+  transform: translateY(-50%) translateX(-10px);
+}
+
+.floating-whatsapp:hover .wa-tooltip {
+  opacity: 1;
+  transform: translateY(-50%) translateX(0);
+}
+
+.floating-top {
   position: fixed;
   z-index: 90;
+  right: max(16px, env(safe-area-inset-right));
+  bottom: max(16px, env(safe-area-inset-bottom));
   width: 52px;
   height: 52px;
   border-radius: 50%;
@@ -2102,24 +2365,13 @@ body.lang-en .contact-form input, body.lang-en .contact-form textarea {
   place-items: center;
   text-decoration: none;
   color: #fff;
-  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.16);
-  transition: transform 0.2s ease, opacity 0.2s ease, box-shadow 0.2s ease;
-  -webkit-tap-highlight-color: transparent;
-}
-
-.floating-whatsapp {
-  left: max(16px, env(safe-area-inset-left));
-  bottom: max(16px, env(safe-area-inset-bottom));
-  background: #25D366;
-}
-
-.floating-top {
-  right: max(16px, env(safe-area-inset-right));
-  bottom: max(16px, env(safe-area-inset-bottom));
   background: var(--ink);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.16);
   opacity: 0;
   pointer-events: none;
   transform: translateY(10px);
+  transition: transform 0.2s ease, opacity 0.2s ease, box-shadow 0.2s ease;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .floating-top.show {
@@ -2133,7 +2385,7 @@ body.lang-en .contact-form input, body.lang-en .contact-form textarea {
   box-shadow: 0 16px 32px rgba(0, 0, 0, 0.24);
 }
 
-.floating-whatsapp i, .floating-top i { font-size: 21px; }
+.floating-top i { font-size: 21px; }
 
 /* Reveal Animations */
 .reveal {
@@ -2156,10 +2408,7 @@ body.lang-en .contact-form input, body.lang-en .contact-form textarea {
   .reveal { opacity: 1; transform: none; }
 }
 
-/* =========================================================
-   UNIVERSAL BIDI LTR PROTECTION FOR PHONE NUMBERS & METRICS
-   Prevents browser BiDi flipping in RTL / LTR language mode
-   ========================================================= */
+/* UNIVERSAL BIDI LTR PROTECTION FOR PHONE NUMBERS & METRICS */
 .phone-num,
 .country-phones a,
 .years-badge strong,
@@ -2180,4 +2429,3 @@ bdi {
   unicode-bidi: isolate !important;
   display: inline-block;
 }
-
