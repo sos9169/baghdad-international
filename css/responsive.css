@@ -152,250 +152,112 @@ body.lang-en .boarding-pass .bp-stub p {
   }
 
   .main-nav a {
-    padding: 12px 14px;
+    padding: 10px 14px;
     border-radius: 10px;
-    font-size: 14px;
+    font-size: 13.5px;
   }
 
   .main-nav a:hover {
-    background: var(--cream);
-  }
-
-  .main-nav a::after {
-    display: none;
+    background: rgba(197, 154, 74, 0.12);
   }
 
   .menu-btn {
     display: grid;
-  }
-
-  .hero {
-    padding-top: 120px;
-    padding-bottom: 55px;
-    min-height: auto;
-    display: block;
-  }
-
-  .hero-grid {
-    grid-template-columns: 1fr !important;
-    gap: 32px;
-  }
-
-  .hero-copy {
-    width: 100%;
-    max-width: none !important;
-  }
-
-  h1 {
-    font-size: clamp(40px, 8.5vw, 58px);
-    line-height: 1.1;
-  }
-
-  .hero-visual {
-    width: 100%;
-    min-height: 440px;
-    margin-top: 10px;
-  }
-
-  .hero-orbit {
-    width: min(440px, 92vw);
-    height: min(440px, 92vw);
-  }
-
-  .boarding-pass {
-    width: min(390px, calc(100% - 20px));
-    transform: rotate(-1deg);
-    margin-inline: auto;
-  }
-
-  .two-col, .why-grid, .contact-box, .destinations-showcase {
-    grid-template-columns: 1fr;
-  }
-
-  .trust-inner {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
-  }
-
-  .stats-counter-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
-  }
-
-  .subsidiary-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .destinations-map-wrap {
-    min-height: 420px;
-  }
-
-  .node-glass-card {
-    padding: 6px 10px;
-  }
-
-  .node-glass-card strong {
-    font-size: 11.5px;
-  }
-
-  .node-glass-card small {
-    font-size: 8px;
-  }
-
-  .section {
-    padding: 80px 0;
-  }
-
-  .section-top {
-    align-items: flex-start;
-    flex-direction: column;
-    gap: 18px;
-  }
-
-  .slides {
-    height: 480px;
-  }
-
-  .service-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .why-visual {
-    height: 360px;
-  }
-
-  .contact-box {
-    padding: 36px 26px;
-    gap: 38px;
-  }
-
-  .footer-grid {
-    flex-direction: column;
-    align-items: center;
-    gap: 16px;
-    text-align: center;
-  }
-
-  .footer-brand {
-    justify-content: center;
-  }
-
-  .floating-top {
-    right: max(16px, env(safe-area-inset-right));
-    bottom: calc(max(16px, env(safe-area-inset-bottom)) + 62px);
-  }
-}
-
-/* Smartphone / Android / iPhone (<= 560px) */
-@media (max-width: 560px) {
-  .container {
-    width: calc(100% - 24px);
-  }
-
-  .nav-wrap {
-    height: 68px;
-    gap: 6px;
-  }
-
-  .brand-mark {
-    width: 38px;
-    height: 38px;
-  }
-
-  .brand-copy strong {
-    font-size: 11px;
-    max-width: 92px;
-    white-space: normal;
-    line-height: 1.08;
-  }
-
-  .brand-copy small {
-    font-size: 8px;
-    letter-spacing: 1.8px;
-    margin-top: 3px;
+    flex: none;
   }
 
   .header-actions {
-    gap: 4px;
+    gap: 6px;
   }
 
   .social-links {
-    gap: 5px;
-    margin-inline-end: 0;
+    gap: 8px;
+    margin-inline-end: 2px;
   }
 
   .social {
-    width: 18px;
-    height: 30px;
-    font-size: 14px;
+    width: 20px;
+    font-size: 15px;
   }
 
-  .control-btn, .menu-btn {
-    width: 36px;
-    height: 36px;
+  .control-btn {
+    width: 38px;
+    height: 38px;
     font-size: 12px;
   }
 
+  .section {
+    padding: 65px 0;
+  }
+
   .hero {
-    padding-top: 108px;
-    padding-bottom: 45px;
+    padding-top: 110px;
+    padding-bottom: 50px;
+    min-height: auto;
   }
 
   .hero-grid {
-    gap: 26px;
-  }
-
-  .eyebrow {
-    font-size: 9px;
-    letter-spacing: 2px;
-  }
-
-  h1 {
-    font-size: clamp(36px, 10vw, 46px);
-    margin: 16px 0 20px;
-  }
-
-  .hero-copy > p {
-    font-size: 14px;
-    line-height: 1.85;
-  }
-
-  .hero-actions {
-    flex-direction: column;
-    gap: 10px;
-    margin: 24px 0 0;
-  }
-
-  .hero-actions .btn {
-    width: 100%;
-    min-height: 52px;
+    grid-template-columns: 1fr;
+    gap: 40px;
   }
 
   .hero-stats {
-    gap: 10px;
-    justify-content: space-between;
-    margin-top: 28px;
+    gap: 18px;
+    flex-wrap: wrap;
   }
 
   .hero-stats div {
-    min-width: 0;
-    flex: 1;
+    min-width: 90px;
   }
 
-  .hero-stats span {
-    font-size: 9px;
-    white-space: normal;
-    line-height: 1.4;
+  .two-col {
+    grid-template-columns: 1fr;
+    gap: 35px;
+  }
+
+  .about-copy {
+    padding-top: 0;
+  }
+
+  .about-copy .lead {
+    font-size: 18px;
   }
 
   .trust-inner {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
     gap: 14px;
   }
 
   .stats-counter-grid {
     grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
+    gap: 14px;
+  }
+
+  .counter-num {
+    font-size: 36px;
+  }
+
+  .why-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .why-visual {
+    height: 280px;
+  }
+
+  .big-number {
+    font-size: 120px;
+  }
+
+  .why-ring {
+    width: 240px;
+    height: 240px;
+  }
+
+  .contact-box {
+    grid-template-columns: 1fr;
+    gap: 35px;
   }
 
   .subsidiary-grid {
@@ -488,19 +350,41 @@ body.lang-en .boarding-pass .bp-stub p {
     padding: 18px 16px;
   }
 
-  .dest-flag {
-    font-size: 26px;
-  }
-
+  /* MOBILE MAP COMPACT NON-OVERLAPPING LAYOUT */
   .destinations-map-wrap {
-    min-height: 380px;
+    min-height: 420px;
   }
 
-  .node-baghdad { top: 46%; left: 32%; }
-  .node-cairo { top: 72%; left: 4%; }
-  .node-turkey { top: 16%; left: 14%; }
-  .node-iran { top: 58%; left: 60%; }
-  .node-moscow { top: 10%; left: 54%; }
+  .node-glass-card {
+    padding: 5px 10px;
+    border-radius: 10px;
+    gap: 6px;
+  }
+
+  .node-glass-card strong {
+    font-size: 11px;
+  }
+
+  .node-glass-card small {
+    display: none !important;
+  }
+
+  .hq-star {
+    font-size: 8px;
+    padding: 1px 4px;
+  }
+
+  .node-flag-img {
+    width: 18px;
+    height: 12px;
+  }
+
+  /* Non-overlapping Spread Coordinates on Mobile Screen */
+  .node-baghdad { top: 48%; left: 34%; }
+  .node-cairo { top: 76%; left: 3%; }
+  .node-turkey { top: 12%; left: 5%; }
+  .node-iran { top: 62%; left: 65%; }
+  .node-moscow { top: 10%; left: 62%; }
 
   .social-banner-inner {
     align-items: flex-start;
@@ -564,6 +448,19 @@ body.lang-en .boarding-pass .bp-stub p {
     width: 290px;
     height: 290px;
   }
+
+  /* Ultra compact mobile map badges */
+  .node-glass-card {
+    padding: 4px 7px;
+  }
+  .node-glass-card strong {
+    font-size: 10px;
+  }
+  .node-baghdad { top: 48%; left: 28%; }
+  .node-cairo { top: 78%; left: 2%; }
+  .node-turkey { top: 10%; left: 2%; }
+  .node-iran { top: 62%; left: 62%; }
+  .node-moscow { top: 8%; left: 58%; }
 }
 
 /* iOS Safe Areas */
