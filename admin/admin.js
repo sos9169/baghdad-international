@@ -13,6 +13,8 @@
   const servicesList = $("#servicesList");
   const ordersBody = $("#ordersBody");
 
+  let adminToken = localStorage.getItem("big_admin_token") || "";
+
   function setStatus(id, message, isError, isSuccess) {
     const el = $(id);
     if (!el) return;
@@ -40,9 +42,14 @@
       bodyData = JSON.stringify({ action, ...obj });
     }
 
-    const options = payload === undefined ? { cache: "no-store" } : {
+    const headers = isFormData ? {} : { "Content-Type": "application/json" };
+    if (adminToken) {
+      headers["x-admin-token"] = adminToken;
+    }
+
+    const options = payload === undefined ? { headers: { "x-admin-token": adminToken }, cache: "no-store" } : {
       method: "POST",
-      headers: isFormData ? {} : { "Content-Type": "application/json" },
+      headers,
       body: bodyData
     };
 
@@ -52,6 +59,10 @@
       const err = new Error(data.error || "حدث خطأ غير متوقع");
       err.status = response.status;
       throw err;
+    }
+    if (data.token) {
+      adminToken = data.token;
+      localStorage.setItem("big_admin_token", data.token);
     }
     return data;
   }
@@ -195,8 +206,11 @@
   loginForm.addEventListener("submit", async (event) => {
     event.preventDefault();
     setStatus("#loginStatus", "جار تسجيل الدخول...");
+    const typedPassword = loginForm.password.value.trim();
     try {
-      await request("login", { password: loginForm.password.value });
+      const res = await request("login", { password: typedPassword });
+      adminToken = res.token || typedPassword;
+      localStorage.setItem("big_admin_token", adminToken);
       loginForm.reset();
       setStatus("#loginStatus", "");
       await loadState();
@@ -206,6 +220,8 @@
   });
 
   $("#logoutBtn").addEventListener("click", async () => {
+    adminToken = "";
+    localStorage.removeItem("big_admin_token");
     await request("logout", {}).catch(() => {});
     showDashboard(false);
   });

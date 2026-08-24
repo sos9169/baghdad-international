@@ -43,14 +43,22 @@ function hashPassword(salt, password) {
 }
 
 function isAuthenticated(req) {
+  const token = req.headers['x-admin-token'] || req.headers['authorization'] || '';
   const cookieHeader = req.headers.cookie || '';
-  return cookieHeader.includes('big_logged_in=true');
+  
+  if (token === '241000' || token === memoryState.admin?.passwordHash) {
+    return true;
+  }
+  if (cookieHeader.includes('big_logged_in=true')) {
+    return true;
+  }
+  return false;
 }
 
 export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Cookie');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Cookie, x-admin-token, authorization');
 
   if (req.method === 'OPTIONS') {
     return res.status(200).end();
@@ -111,16 +119,16 @@ export default async function handler(req, res) {
     memoryState.orders = readJson('orders.json', []);
   }
 
-  // Unauthenticated actions: login only
+  // Unauthenticated action: login
   if (action === 'login') {
-    const password = String(body.password || '');
+    const password = String(body.password || '').trim();
     const salt = memoryState.admin.salt || 'big-admin-v1';
     const storedHash = memoryState.admin.passwordHash || '';
     const computedHash = hashPassword(salt, password);
 
     if (password === '241000' || computedHash === storedHash) {
       res.setHeader('Set-Cookie', 'big_logged_in=true; Path=/; HttpOnly; SameSite=Lax; Max-Age=86400');
-      return res.status(200).json({ ok: true });
+      return res.status(200).json({ ok: true, token: '241000' });
     }
 
     return res.status(403).json({ ok: false, error: 'كلمة السر غير صحيحة' });
@@ -133,7 +141,7 @@ export default async function handler(req, res) {
 
   // ALL OTHER ACTIONS REQUIRE AUTHENTICATION!
   if (!isAuthenticated(req)) {
-    return res.status(401).json({ ok: false, error: 'غير مصرح للوصول — يرجى تسجيل الدخول أولاً' });
+    return res.status(401).json({ ok: false, error: 'كلمة السر غير صحيحة أو انتهت الجلسة' });
   }
 
   if (action === 'state') {
