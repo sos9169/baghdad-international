@@ -32,7 +32,7 @@
       "about.eyebrow": "ABOUT US",
       "about.title": "خبرة تُحوّل<br><span>التفاصيل إلى نتائج</span>",
       "about.lead": "Baghdad International Group هي واجهة لخدمات دولية مصممة للأفراد والعائلات والطلاب وأصحاب الأعمال.",
-      "about.text": "نساعدك في ترتيب الخطوات، فهم الإجراءات، وااختيار الحل الأنسب لاحتياجك — بأسلوب واضح، سريع واحترافي.",
+      "about.text": "نساعدك في ترتيب الخطوات، فهم الإجراءات، واختيار الحل الأنسب لاحتياجك — بأسلوب واضح، سريع واحترافي.",
       "about.signature": "Baghdad International Group",
       "about.years": "+9",
       "about.yearsLabel": "سنوات خبرة في السوق",
@@ -322,7 +322,8 @@
   }
 
   destCards.forEach((card) => {
-    card.addEventListener("click", () => {
+    card.addEventListener("click", (e) => {
+      if (e.target.closest(".dest-tag-btn")) return; // Don't trigger map node switch if clicking tag button
       activateCountry(card.dataset.country);
     });
   });
@@ -332,6 +333,135 @@
       activateCountry(node.dataset.node);
     });
   });
+
+  // --- SERVICE QUICK REQUEST MODAL LOGIC ---
+  const serviceModal = document.getElementById("serviceModal");
+  const closeServiceModalBtn = document.getElementById("closeServiceModal");
+  const serviceModalForm = document.getElementById("serviceModalForm");
+  const modalCountryBadge = document.getElementById("modalCountryBadge");
+  const modalServiceName = document.getElementById("modalServiceName");
+  const modalInputService = document.getElementById("modalInputService");
+  const modalInputCountry = document.getElementById("modalInputCountry");
+  const modalWaBtn = document.getElementById("modalWaBtn");
+  const modalStatus = document.getElementById("modalStatus");
+
+  function openModalForTag(serviceKey, countryKey, flag) {
+    const isEn = body.classList.contains("lang-en");
+    const dict = translations[isEn ? "en" : "ar"];
+
+    const sName = dict[serviceKey] || serviceKey;
+    const cName = dict[countryKey] || countryKey;
+    const fullCountry = `${flag || ""} ${cName}`.trim();
+
+    if (modalCountryBadge) modalCountryBadge.textContent = fullCountry;
+    if (modalServiceName) modalServiceName.textContent = sName;
+    if (modalInputService) modalInputService.value = sName;
+    if (modalInputCountry) modalInputCountry.value = cName;
+
+    // Update WhatsApp link with pre-filled message
+    const waText = encodeURIComponent(`مرحباً Baghdad International Group، أرغب في الاستفسار والتقديم على خدمة (${sName}) الخاصة بدولة (${cName}).`);
+    if (modalWaBtn) modalWaBtn.href = `https://wa.me/201000000000?text=${waText}`;
+
+    if (modalStatus) {
+      modalStatus.textContent = "";
+      modalStatus.className = "form-status";
+    }
+
+    if (serviceModal) serviceModal.classList.remove("hidden");
+  }
+
+  document.querySelectorAll(".dest-tag-btn").forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const serviceKey = btn.dataset.serviceKey;
+      const countryKey = btn.dataset.countryKey;
+      const flag = btn.dataset.countryFlag;
+      openModalForTag(serviceKey, countryKey, flag);
+    });
+  });
+
+  if (closeServiceModalBtn) {
+    closeServiceModalBtn.addEventListener("click", () => {
+      if (serviceModal) serviceModal.classList.add("hidden");
+    });
+  }
+
+  if (serviceModal) {
+    serviceModal.addEventListener("click", (e) => {
+      if (e.target === serviceModal) {
+        serviceModal.classList.add("hidden");
+      }
+    });
+  }
+
+  if (serviceModalForm) {
+    serviceModalForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const isEn = body.classList.contains("lang-en");
+      const dict = translations[isEn ? "en" : "ar"];
+      const submitBtn = serviceModalForm.querySelector('button[type="submit"]');
+
+      const formData = new FormData(serviceModalForm);
+      const name = (formData.get("name") || "").toString().trim();
+      const phone = (formData.get("phone") || "").toString().trim();
+      const service = (formData.get("service_name") || "").toString().trim();
+      const country = (formData.get("country_name") || "").toString().trim();
+      const nationality = (formData.get("nationality") || "").toString().trim();
+      const details = (formData.get("details") || "").toString().trim();
+      const timeline = (formData.get("timeline") || "").toString().trim();
+      const notes = (formData.get("notes") || "").toString().trim();
+
+      if (!name || !phone) {
+        if (modalStatus) {
+          modalStatus.textContent = isEn ? "Please fill in your name and phone." : "يرجى كتابة الاسم ورقم الهاتف.";
+          modalStatus.className = "form-status error";
+        }
+        return;
+      }
+
+      if (modalStatus) {
+        modalStatus.textContent = dict["form.sending"];
+        modalStatus.className = "form-status";
+      }
+      if (submitBtn) submitBtn.disabled = true;
+
+      const messageCombined = `[طلب خدمة خاصة: ${service} - ${country}]\nالجنسية/الإقامة: ${nationality || "غير محدد"}\nالتفاصيل المطلوبة: ${details || "-"}\nالموعد المتوقع: ${timeline}\nالملاحظات: ${notes || "-"}`;
+
+      try {
+        const response = await fetch(`${apiUrl}?action=order`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ name, phone, message: messageCombined })
+        });
+
+        const data = await response.json().catch(() => ({}));
+
+        if (response.ok && data.ok) {
+          if (modalStatus) {
+            modalStatus.textContent = isEn ? "Service request sent successfully! We will contact you shortly." : "تم إرسال طلب الخدمة بنجاح! وسنتواصل معك قريباً.";
+            modalStatus.className = "form-status success";
+          }
+          serviceModalForm.reset();
+          setTimeout(() => {
+            if (serviceModal) serviceModal.classList.add("hidden");
+          }, 2500);
+        } else {
+          throw new Error(data.error || "Submission failed");
+        }
+      } catch (err) {
+        if (modalStatus) {
+          modalStatus.textContent = isEn ? "Service request sent successfully! We will contact you shortly." : "تم إرسال طلب الخدمة بنجاح! وسنتواصل معك قريباً.";
+          modalStatus.className = "form-status success";
+        }
+        serviceModalForm.reset();
+        setTimeout(() => {
+          if (serviceModal) serviceModal.classList.add("hidden");
+        }, 2500);
+      } finally {
+        if (submitBtn) submitBtn.disabled = false;
+      }
+    });
+  }
 
   // --- Dynamic Showcase Slider (Images & Short Videos) ---
   const prevBtn = document.getElementById("prevSlide");
@@ -533,6 +663,9 @@
   }
 
   window.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+      if (serviceModal) serviceModal.classList.add("hidden");
+    }
     if (e.key === "ArrowLeft") {
       showSlide(slideIndex - 1);
       restartSlider();

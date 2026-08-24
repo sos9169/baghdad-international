@@ -1048,7 +1048,7 @@ body.dark .service-card:hover {
   font-weight: 500;
 }
 
-/* NEW INTERACTIVE DESTINATIONS & MAP SECTION */
+/* INTERACTIVE DESTINATIONS & MAP SECTION */
 .destinations {
   background: var(--paper);
   transition: background-color 0.3s ease;
@@ -1071,20 +1071,14 @@ body.dark .service-card:hover {
   border-radius: 20px;
   background: var(--card-bg);
   padding: 22px 24px;
-  cursor: pointer;
   transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
   position: relative;
 }
 
 .destination-card:hover, .destination-card.active {
-  transform: translateX(-4px);
   border-color: var(--gold);
   box-shadow: 0 16px 40px rgba(8, 35, 61, 0.1);
   background: rgba(197, 154, 74, 0.05);
-}
-
-body.lang-en .destination-card:hover, body.lang-en .destination-card.active {
-  transform: translateX(4px);
 }
 
 .dest-card-header {
@@ -1144,18 +1138,41 @@ body.dark .dest-badge {
   gap: 8px;
 }
 
-.dest-tags span {
-  font-size: 11px;
-  font-weight: 700;
-  padding: 4px 10px;
-  border-radius: 8px;
-  background: rgba(8, 35, 61, 0.06);
+/* INTERACTIVE TAG BUTTONS (كروت وركائز التقديم المباشر) */
+.dest-tag-btn {
+  font-size: 11.5px;
+  font-weight: 800;
+  padding: 6px 13px;
+  border-radius: 10px;
+  background: rgba(8, 35, 61, 0.07);
   color: var(--ink);
+  border: 1px solid var(--line);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+  -webkit-tap-highlight-color: transparent;
 }
 
-body.dark .dest-tags span {
+.dest-tag-btn:hover {
+  transform: translateY(-2px);
+  background: var(--gold);
+  border-color: var(--gold);
+  color: #071827;
+  box-shadow: 0 6px 16px rgba(197, 154, 74, 0.3);
+}
+
+body.dark .dest-tag-btn {
   background: rgba(228, 196, 125, 0.12);
   color: var(--gold-light);
+  border-color: rgba(228, 196, 125, 0.25);
+}
+
+body.dark .dest-tag-btn:hover {
+  background: var(--gold);
+  color: #071827;
+  border-color: var(--gold);
 }
 
 /* Map Route Graphic Visual */
@@ -1262,6 +1279,159 @@ body.dark .dest-tags span {
   stroke: var(--gold);
   stroke-width: 3;
   stroke-dasharray: none;
+}
+
+/* SERVICE QUICK REQUEST MODAL */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  background: rgba(7, 24, 39, 0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+.modal-backdrop.hidden {
+  display: none !important;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.modal-card {
+  position: relative;
+  width: min(560px, 100%);
+  max-height: 90vh;
+  overflow-y: auto;
+  background: var(--paper);
+  border: 1px solid var(--gold);
+  border-radius: 26px;
+  padding: 34px 30px;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.4);
+  transform: translateY(0);
+  transition: transform 0.3s ease;
+}
+
+.modal-close {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--text);
+  font-size: 16px;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+body.lang-en .modal-close {
+  left: auto;
+  right: 20px;
+}
+
+.modal-close:hover {
+  background: var(--ink);
+  color: #fff;
+}
+
+.modal-header {
+  margin-bottom: 22px;
+}
+
+.modal-badge {
+  display: inline-block;
+  font: 700 11px var(--font-mono);
+  color: var(--gold);
+  letter-spacing: 1px;
+  background: rgba(197, 154, 74, 0.12);
+  padding: 4px 12px;
+  border-radius: 999px;
+  margin-bottom: 8px;
+}
+
+.modal-header h3 {
+  font-size: 24px;
+  margin: 0 0 6px;
+  font-weight: 800;
+}
+
+.modal-header h3 span {
+  color: var(--gold);
+}
+
+.modal-header p {
+  margin: 0;
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.modal-form {
+  display: grid;
+  gap: 14px;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.modal-form label {
+  display: grid;
+  gap: 6px;
+}
+
+.modal-form label span {
+  font-size: 11.5px;
+  font-weight: 800;
+  color: var(--muted);
+}
+
+.modal-form input, .modal-form textarea, .modal-form select {
+  width: 100%;
+  border: 1px solid var(--line);
+  background: var(--card-bg);
+  color: var(--text);
+  border-radius: 12px;
+  padding: 12px 14px;
+  font: 500 13px var(--font-ar);
+  outline: 0;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.modal-form input:focus, .modal-form textarea:focus, .modal-form select:focus {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(197, 154, 74, 0.15);
+}
+
+.modal-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.modal-actions .btn-primary {
+  flex: 1;
+}
+
+.modal-wa-btn {
+  color: #25D366 !important;
+  border-color: rgba(37, 211, 102, 0.4) !important;
+}
+
+.modal-wa-btn:hover {
+  background: #25D366 !important;
+  color: #fff !important;
 }
 
 /* Social Banner */
