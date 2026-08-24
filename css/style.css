@@ -2363,6 +2363,7 @@ body.lang-en .contact-form input, body.lang-en .contact-form textarea {
 /* UNIVERSAL BIDI LTR PROTECTION FOR PHONE NUMBERS & METRICS */
 .phone-num,
 .country-phones a,
+.phone-chip,
 .years-badge strong,
 .counter-num,
 .ltr-num,
@@ -2380,4 +2381,212 @@ bdi {
   direction: ltr !important;
   unicode-bidi: isolate !important;
   display: inline-block;
+}
+
+/* Country Phone Cards in Contact Section */
+.channels-title {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--gold);
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.country-phones-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.country-phone-item {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 12px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transition: border-color 0.25s ease, transform 0.25s ease;
+}
+
+.country-phone-item:hover {
+  border-color: var(--gold);
+  transform: translateY(-2px);
+}
+
+.c-phone-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.c-phone-info strong {
+  display: block;
+  font-size: 14.5px;
+  font-weight: 800;
+  color: var(--text);
+}
+
+.c-phone-info small {
+  display: block;
+  font-size: 11px;
+  color: var(--gold);
+  font-weight: 600;
+}
+
+.c-phone-btns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.phone-chip {
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+  border: 1px solid var(--line);
+  background: var(--card-bg);
+  color: var(--text);
+}
+
+.phone-chip.wa {
+  color: #25D366;
+  border-color: rgba(37, 211, 102, 0.3);
+}
+
+.phone-chip.wa:hover {
+  background: #25D366;
+  color: #ffffff;
+  border-color: #25D366;
+}
+
+.phone-chip.tel {
+  color: var(--gold);
+  border-color: rgba(197, 154, 74, 0.3);
+}
+
+.phone-chip.tel:hover {
+  background: var(--gold);
+  color: #071827;
+  border-color: var(--gold);
+}
+
+/* ==========================================================================
+   Bottom Animated Group Companies Ticker Carousel
+   ========================================================================== */
+.ticker-section {
+  padding: 60px 0 50px;
+  background: var(--paper);
+  border-top: 1px solid var(--line);
+  overflow: hidden;
+  position: relative;
+}
+
+.ticker-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.ticker-header h2 {
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--text);
+  margin-top: 6px;
+}
+
+.ticker-wrapper {
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  position: relative;
+  mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+}
+
+.ticker-track {
+  display: inline-flex;
+  align-items: center;
+  gap: 20px;
+  animation: marqueeScroll 28s linear infinite;
+  will-change: transform;
+}
+
+.ticker-wrapper:hover .ticker-track {
+  animation-play-state: paused;
+}
+
+.ticker-card {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 22px;
+  border-radius: 16px;
+  background: var(--card-bg);
+  border: 1px solid var(--line);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+  flex: none;
+}
+
+.ticker-card:hover {
+  transform: translateY(-4px) scale(1.02);
+  border-color: var(--gold);
+  box-shadow: 0 8px 24px rgba(197, 154, 74, 0.2);
+}
+
+.ticker-logo {
+  width: 48px;
+  height: 48px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 2px solid var(--gold);
+  flex: none;
+  background: #ffffff;
+}
+
+.ticker-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(197, 154, 74, 0.12);
+  border: 1.5px solid var(--gold);
+  display: grid;
+  place-items: center;
+  font-size: 20px;
+  color: var(--gold);
+  flex: none;
+}
+
+.ticker-info {
+  display: flex;
+  flex-direction: column;
+  text-align: right;
+}
+
+.ticker-info strong {
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--text);
+  white-space: nowrap;
+}
+
+.ticker-info span {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--gold);
+  white-space: nowrap;
+}
+
+@keyframes marqueeScroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
 }
