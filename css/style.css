@@ -619,29 +619,34 @@ h1 span, h2 span {
   color: var(--gold-light);
 }
 
-/* Orbit plane visual */
+/* Continuous 360 Smooth Airplane Orbit Animation Ring */
 .hero-orbit {
   position: absolute;
-  width: min(480px, 90vw);
+  width: min(440px, 85vw);
   aspect-ratio: 1;
-  border: 1px dashed rgba(197, 154, 74, 0.35);
+  border: 1.5px dashed rgba(197, 154, 74, 0.4);
   border-radius: 50%;
   pointer-events: none;
+  animation: orbitRotate 20s linear infinite;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@keyframes orbitRotate {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 
 .orbit-plane {
   position: absolute;
-  width: 28px;
-  height: 28px;
-  display: grid;
-  place-items: center;
+  top: -14px;
+  left: 50%;
+  transform: translateX(-50%) rotate(90deg);
   color: var(--gold-light);
-  font-size: 15px;
-  filter: drop-shadow(0 4px 10px rgba(0,0,0,0.15));
+  font-size: 18px;
+  filter: drop-shadow(0 0 10px rgba(197, 154, 74, 0.9));
 }
-
-.orbit-plane-a { top: 7%; right: 15%; transform: rotate(25deg); }
-.orbit-plane-b { bottom: 9%; left: 10%; transform: rotate(205deg); }
 
 .floating-chip {
   position: absolute;
@@ -1286,7 +1291,7 @@ body.dark .dest-tag-btn:hover {
 .map-glow-bg {
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle at 30% 60%, rgba(197, 154, 74, 0.18), transparent 55%);
+  background: radial-gradient(circle at 30% 60%, rgba(197, 154, 74, 0.22), transparent 60%);
 }
 
 .map-interactive-nodes {
@@ -1313,7 +1318,7 @@ body.dark .dest-tag-btn:hover {
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  background: rgba(197, 154, 74, 0.3);
+  background: rgba(197, 154, 74, 0.35);
   animation: pulseBeacon 2s infinite ease-out;
   pointer-events: none;
 }
@@ -1374,6 +1379,56 @@ body.dark .dest-tag-btn:hover {
   stroke: var(--gold);
   stroke-width: 3;
   stroke-dasharray: none;
+}
+
+/* Flying Jet Plane Indicators along paths */
+.map-flying-planes {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 4;
+}
+
+.flying-jet {
+  position: absolute;
+  color: var(--gold-light);
+  font-size: 14px;
+  filter: drop-shadow(0 0 8px var(--gold));
+  opacity: 0.85;
+}
+
+.jet-iraq {
+  top: 55%;
+  left: 42%;
+  transform: rotate(10deg);
+  animation: flyAlongPath 6s ease-in-out infinite alternate;
+}
+
+.jet-turkey {
+  top: 40%;
+  left: 38%;
+  transform: rotate(-35deg);
+  animation: flyAlongPath 7s ease-in-out infinite alternate;
+}
+
+.jet-iran {
+  top: 57%;
+  left: 55%;
+  transform: rotate(5deg);
+  animation: flyAlongPath 8s ease-in-out infinite alternate;
+}
+
+.jet-russia {
+  top: 30%;
+  left: 48%;
+  transform: rotate(-45deg);
+  animation: flyAlongPath 9s ease-in-out infinite alternate;
+}
+
+@keyframes flyAlongPath {
+  0% { transform: translate(0, 0) scale(0.9); opacity: 0.4; }
+  50% { transform: translate(25px, -15px) scale(1.15); opacity: 1; }
+  100% { transform: translate(50px, -30px) scale(0.9); opacity: 0.4; }
 }
 
 /* SERVICE QUICK REQUEST MODAL */
