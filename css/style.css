@@ -751,6 +751,54 @@ h1 span, h2 span {
   margin-top: 2px;
 }
 
+/* Group Subsidiaries Section */
+.subsidiary-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.subsidiary-card {
+  padding: 30px 24px;
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  background: var(--card-bg);
+  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.subsidiary-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--gold);
+  box-shadow: var(--shadow);
+}
+
+.sub-icon {
+  font-size: 32px;
+  color: var(--gold);
+  margin-bottom: 16px;
+}
+
+.subsidiary-card h3 {
+  font-size: 20px;
+  margin: 0 0 4px;
+  font-weight: 800;
+}
+
+.sub-tag {
+  display: block;
+  font: 700 10px var(--font-mono);
+  color: var(--gold);
+  letter-spacing: 1px;
+  margin-bottom: 12px;
+}
+
+.subsidiary-card p {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.85;
+  color: var(--muted);
+}
+
 /* General Two-Column Layout */
 .two-col {
   display: grid;
@@ -1822,6 +1870,20 @@ body.dark .why {
   color: var(--muted);
   font-size: 13px;
   line-height: 1.8;
+}
+
+.country-phones {
+  display: grid;
+  gap: 8px;
+  margin-top: 8px;
+  font-size: 13px;
+}
+
+.country-phones a {
+  color: var(--gold);
+  font-weight: 700;
+  text-decoration: none;
+  font-family: var(--font-mono);
 }
 
 .contact-form {

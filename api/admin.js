@@ -93,7 +93,13 @@ export default async function handler(req, res) {
       facebook: 'https://facebook.com/',
       instagram: 'https://instagram.com/',
       whatsapp: '201000000000',
-      maps: 'https://www.google.com/maps/search/?api=1&query=7+Okba+Ibn+Nafeh+St+Dokki+Giza+Egypt'
+      maps: 'https://www.google.com/maps/search/?api=1&query=7+Okba+Ibn+Nafeh+St+Dokki+Giza+Egypt',
+      phone_egypt: '+201000000000',
+      phone_iraq: '+9647700000000',
+      phone_turkey: '+905300000000',
+      whatsapp_egypt: 'https://wa.me/201000000000',
+      whatsapp_iraq: 'https://wa.me/9647700000000',
+      whatsapp_turkey: 'https://wa.me/905300000000'
     });
   }
 
@@ -179,11 +185,22 @@ export default async function handler(req, res) {
     const whatsapp = String(body.whatsapp || '').replace(/\D+/g, '');
     const maps = String(body.maps || '').trim();
 
-    if (!whatsapp) {
-      return res.status(422).json({ ok: false, error: 'رقم الواتساب مطلوب' });
-    }
+    const phone_egypt = String(body.phone_egypt || '').trim();
+    const phone_iraq = String(body.phone_iraq || '').trim();
+    const phone_turkey = String(body.phone_turkey || '').trim();
+    const whatsapp_egypt = String(body.whatsapp_egypt || '').trim();
+    const whatsapp_iraq = String(body.whatsapp_iraq || '').trim();
+    const whatsapp_turkey = String(body.whatsapp_turkey || '').trim();
 
-    memoryState.settings = { facebook, instagram, whatsapp, maps };
+    memoryState.settings = {
+      facebook, instagram, whatsapp, maps,
+      phone_egypt: phone_egypt || memoryState.settings?.phone_egypt || '+201000000000',
+      phone_iraq: phone_iraq || memoryState.settings?.phone_iraq || '+9647700000000',
+      phone_turkey: phone_turkey || memoryState.settings?.phone_turkey || '+905300000000',
+      whatsapp_egypt: whatsapp_egypt || memoryState.settings?.whatsapp_egypt || 'https://wa.me/201000000000',
+      whatsapp_iraq: whatsapp_iraq || memoryState.settings?.whatsapp_iraq || 'https://wa.me/9647700000000',
+      whatsapp_turkey: whatsapp_turkey || memoryState.settings?.whatsapp_turkey || 'https://wa.me/905300000000'
+    };
     writeJson('settings.json', memoryState.settings);
     return res.status(200).json({ ok: true, settings: memoryState.settings });
   }

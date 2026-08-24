@@ -19,6 +19,7 @@ body.lang-en .contact-form,
 body.lang-en .service-card,
 body.lang-en .program-item,
 body.lang-en .destination-card,
+body.lang-en .subsidiary-card,
 body.lang-en .trust-item,
 body.lang-en .social-banner-inner,
 body.lang-en .why-list,
@@ -75,6 +76,10 @@ body.lang-en .boarding-pass .bp-stub p {
     grid-template-columns: minmax(0, 1fr) minmax(340px, 0.9fr);
   }
   .service-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .subsidiary-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 
@@ -215,6 +220,10 @@ body.lang-en .boarding-pass .bp-stub p {
   .stats-counter-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 16px;
+  }
+
+  .subsidiary-grid {
+    grid-template-columns: repeat(2, 1fr);
   }
 
   .destinations-map-wrap {
@@ -375,6 +384,10 @@ body.lang-en .boarding-pass .bp-stub p {
   .stats-counter-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 10px;
+  }
+
+  .subsidiary-grid {
+    grid-template-columns: 1fr;
   }
 
   .counter-card {

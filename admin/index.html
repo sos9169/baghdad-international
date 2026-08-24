@@ -133,16 +133,17 @@
           <div class="form-grid">
             <label>
               <span>اسم الخدمة بالعربية *</span>
-              <input type="text" name="title_ar" required placeholder="مثال: الاستشارات الدولية">
+              <input type="text" name="title_ar" required placeholder="مثال: خدمات الذكاء الاصطناعي">
             </label>
             <label>
               <span>اسم الخدمة بالإنجليزي</span>
-              <input type="text" name="title_en" placeholder="Example: International Consulting">
+              <input type="text" name="title_en" placeholder="Example: AI & Software Solutions">
             </label>
             <label>
               <span>أيقونة / رمز الخدمة</span>
               <select name="icon">
                 <option value="✦">✦ نجمة ذهبية</option>
+                <option value="🤖">🤖 ذكاء اصطناعي وبرمجيات</option>
                 <option value="↗">↗ سهم انطلاق</option>
                 <option value="◇">◇ ماسة</option>
                 <option value="◎">◎ دائرة مركزية</option>
@@ -175,12 +176,14 @@
       <section class="panel-grid">
         <form class="panel" id="settingsForm">
           <div class="panel-head">
-            <h2><i class="fa-solid fa-sliders"></i> روابط التواصل ورقم الهاتف</h2>
-            <p>أي تعديل هنا ينعكس على الموقع مباشرة بعد الحفظ.</p>
+            <h2><i class="fa-solid fa-sliders"></i> روابط التواصل وأرقام الهاتف والدول</h2>
+            <p>أي تعديل هنا ينعكس على أرقام الواتساب وروابط التواصل بالموقع مباشرة بعد الحفظ.</p>
           </div>
           <label><span>Facebook</span><input type="url" name="facebook" placeholder="https://facebook.com/..."></label>
           <label><span>Instagram</span><input type="url" name="instagram" placeholder="https://instagram.com/..."></label>
-          <label><span>رقم واتساب الدولي</span><input type="tel" name="whatsapp" placeholder="201000000000" required></label>
+          <label><span>🇪🇬 رقم الواتساب / هاتف مصر</span><input type="tel" name="phone_egypt" placeholder="+201000000000"></label>
+          <label><span>🇮🇶 رقم الواتساب / هاتف العراق</span><input type="tel" name="phone_iraq" placeholder="+9647700000000"></label>
+          <label><span>🇹🇷 رقم الواتساب / هاتف تركيا</span><input type="tel" name="phone_turkey" placeholder="+905300000000"></label>
           <label><span>رابط خرائط Google</span><input type="url" name="maps" placeholder="https://www.google.com/maps/..."></label>
           <button type="submit"><i class="fa-solid fa-floppy-disk"></i> حفظ التعديلات</button>
           <small id="settingsStatus"></small>

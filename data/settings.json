@@ -1,6 +1,12 @@
 {
   "facebook": "https://facebook.com/",
   "instagram": "https://instagram.com/",
-  "whatsapp": "201000000000",
-  "maps": "https://www.google.com/maps/search/?api=1&query=7+Okba+Ibn+Nafeh+St+Dokki+Giza+Egypt"
+  "whatsapp": "https://wa.me/201000000000",
+  "phone": "+201000000000",
+  "phone_egypt": "+201000000000",
+  "phone_iraq": "+9647700000000",
+  "phone_turkey": "+905300000000",
+  "whatsapp_egypt": "https://wa.me/201000000000",
+  "whatsapp_iraq": "https://wa.me/9647700000000",
+  "whatsapp_turkey": "https://wa.me/905300000000"
 }

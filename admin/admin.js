@@ -82,10 +82,13 @@
 
   function fillSettings(settings) {
     if (!settings) return;
-    settingsForm.facebook.value = settings.facebook || "";
-    settingsForm.instagram.value = settings.instagram || "";
-    settingsForm.whatsapp.value = settings.whatsapp || "";
-    settingsForm.maps.value = settings.maps || "";
+    if (settingsForm.facebook) settingsForm.facebook.value = settings.facebook || "";
+    if (settingsForm.instagram) settingsForm.instagram.value = settings.instagram || "";
+    if (settingsForm.whatsapp) settingsForm.whatsapp.value = settings.whatsapp || "";
+    if (settingsForm.maps) settingsForm.maps.value = settings.maps || "";
+    if (settingsForm.phone_egypt) settingsForm.phone_egypt.value = settings.phone_egypt || "+201000000000";
+    if (settingsForm.phone_iraq) settingsForm.phone_iraq.value = settings.phone_iraq || "+9647700000000";
+    if (settingsForm.phone_turkey) settingsForm.phone_turkey.value = settings.phone_turkey || "+905300000000";
   }
 
   function fillMetrics(metrics, orders) {
@@ -312,10 +315,13 @@
     setStatus("#settingsStatus", "جار الحفظ...");
     try {
       const data = await request("settings", {
-        facebook: settingsForm.facebook.value,
-        instagram: settingsForm.instagram.value,
-        whatsapp: settingsForm.whatsapp.value,
-        maps: settingsForm.maps.value
+        facebook: settingsForm.facebook ? settingsForm.facebook.value : "",
+        instagram: settingsForm.instagram ? settingsForm.instagram.value : "",
+        whatsapp: settingsForm.whatsapp ? settingsForm.whatsapp.value : "",
+        maps: settingsForm.maps ? settingsForm.maps.value : "",
+        phone_egypt: settingsForm.phone_egypt ? settingsForm.phone_egypt.value : "",
+        phone_iraq: settingsForm.phone_iraq ? settingsForm.phone_iraq.value : "",
+        phone_turkey: settingsForm.phone_turkey ? settingsForm.phone_turkey.value : ""
       });
       fillSettings(data.settings);
       setStatus("#settingsStatus", "تم حفظ التعديلات بنجاح.", false, true);
