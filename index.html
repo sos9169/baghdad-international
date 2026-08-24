@@ -471,7 +471,7 @@
         <div class="map-grid-overlay"></div>
         <div class="map-glow-bg"></div>
 
-        <!-- SVG Flight Curved Arcs Radiating Cleanly from Baghdad HQ -->
+        <!-- SVG Flight Curved Arcs Connecting Baghdad HQ Directly to Country Beacons -->
         <div class="map-routes-svg">
           <svg viewBox="0 0 600 480" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
             <defs>
@@ -485,26 +485,37 @@
               </filter>
             </defs>
 
-            <!-- Flight Arc to Cairo (Egypt) -->
-            <path d="M 280 270 Q 190 320 110 330" class="route-line active" id="route-egypt" filter="url(#glow)" />
-            <!-- Flight Arc to Turkey (Yalova) -->
-            <path d="M 280 270 Q 240 160 210 130" class="route-line active" id="route-turkey" filter="url(#glow)" />
-            <!-- Flight Arc to Tehran (Iran) -->
-            <path d="M 280 270 Q 360 270 440 285" class="route-line active" id="route-iran" filter="url(#glow)" />
-            <!-- Flight Arc to Moscow (Russia) -->
-            <path d="M 280 270 Q 350 140 430 90" class="route-line active" id="route-russia" filter="url(#glow)" />
+            <!-- Precise Arc to Cairo (Egypt) at (72, 321) from Baghdad HQ at (252, 250) -->
+            <path d="M 252 250 Q 160 310 72 321" class="route-line active" id="route-egypt" filter="url(#glow)" />
+            <!-- Precise Arc to Turkey (Yalova) at (168, 100) from Baghdad HQ at (252, 250) -->
+            <path d="M 252 250 Q 200 160 168 100" class="route-line active" id="route-turkey" filter="url(#glow)" />
+            <!-- Precise Arc to Tehran (Iran) at (426, 268) from Baghdad HQ at (252, 250) -->
+            <path d="M 252 250 Q 340 240 426 268" class="route-line active" id="route-iran" filter="url(#glow)" />
+            <!-- Precise Arc to Moscow (Russia) at (408, 62) from Baghdad HQ at (252, 250) -->
+            <path d="M 252 250 Q 320 140 408 62" class="route-line active" id="route-russia" filter="url(#glow)" />
           </svg>
         </div>
 
-        <!-- Flying jet icons smoothly along flight paths -->
+        <!-- Flying jet icons smoothly performing round-trips along exact flight paths -->
         <div class="map-flying-planes" aria-hidden="true">
-          <span class="flying-jet jet-egypt"><i class="fa-solid fa-plane"></i></span>
-          <span class="flying-jet jet-turkey"><i class="fa-solid fa-plane"></i></span>
-          <span class="flying-jet jet-iran"><i class="fa-solid fa-plane"></i></span>
-          <span class="flying-jet jet-russia"><i class="fa-solid fa-plane"></i></span>
+          <!-- Cairo Outbound & Inbound Jets -->
+          <span class="flying-jet jet-egypt-out"><i class="fa-solid fa-plane"></i></span>
+          <span class="flying-jet jet-egypt-in"><i class="fa-solid fa-plane"></i></span>
+
+          <!-- Turkey Outbound & Inbound Jets -->
+          <span class="flying-jet jet-turkey-out"><i class="fa-solid fa-plane"></i></span>
+          <span class="flying-jet jet-turkey-in"><i class="fa-solid fa-plane"></i></span>
+
+          <!-- Iran Outbound & Inbound Jets -->
+          <span class="flying-jet jet-iran-out"><i class="fa-solid fa-plane"></i></span>
+          <span class="flying-jet jet-iran-in"><i class="fa-solid fa-plane"></i></span>
+
+          <!-- Russia Outbound & Inbound Jets -->
+          <span class="flying-jet jet-russia-out"><i class="fa-solid fa-plane"></i></span>
+          <span class="flying-jet jet-russia-in"><i class="fa-solid fa-plane"></i></span>
         </div>
 
-        <!-- Interactive Map Nodes cleanly positioned with glass badges & real flag images -->
+        <!-- Interactive Map Nodes with Pulsating Beacons positioned with 100% precision -->
         <div class="map-interactive-nodes">
           <!-- BAGHDAD (PRIMARY HQ HUB) -->
           <div class="map-node node-baghdad active" data-node="iraq">
@@ -524,7 +535,10 @@
 
           <!-- CAIRO (EGYPT) -->
           <div class="map-node node-cairo" data-node="egypt">
-            <span class="node-dot"></span>
+            <div class="beacon-pin">
+              <span class="pulse-ring r1"></span>
+              <span class="node-dot"></span>
+            </div>
             <div class="node-glass-card">
               <img src="https://flagcdn.com/w40/eg.png" width="22" height="15" alt="مصر" class="node-flag-img">
               <div>
@@ -536,7 +550,10 @@
 
           <!-- TURKEY (YALOVA / ISTANBUL) -->
           <div class="map-node node-turkey" data-node="turkey">
-            <span class="node-dot"></span>
+            <div class="beacon-pin">
+              <span class="pulse-ring r1"></span>
+              <span class="node-dot"></span>
+            </div>
             <div class="node-glass-card">
               <img src="https://flagcdn.com/w40/tr.png" width="22" height="15" alt="تركيا" class="node-flag-img">
               <div>
@@ -548,7 +565,10 @@
 
           <!-- TEHRAN (IRAN) -->
           <div class="map-node node-iran" data-node="iran">
-            <span class="node-dot"></span>
+            <div class="beacon-pin">
+              <span class="pulse-ring r1"></span>
+              <span class="node-dot"></span>
+            </div>
             <div class="node-glass-card">
               <img src="https://flagcdn.com/w40/ir.png" width="22" height="15" alt="إيران" class="node-flag-img">
               <div>
@@ -560,7 +580,10 @@
 
           <!-- MOSCOW (RUSSIA) -->
           <div class="map-node node-moscow" data-node="russia">
-            <span class="node-dot"></span>
+            <div class="beacon-pin">
+              <span class="pulse-ring r1"></span>
+              <span class="node-dot"></span>
+            </div>
             <div class="node-glass-card">
               <img src="https://flagcdn.com/w40/ru.png" width="22" height="15" alt="روسيا" class="node-flag-img">
               <div>
@@ -698,7 +721,7 @@
             <option value="الدورات والبرامج التدريبية (كافة المجالات)">🎯 الدورات والبرامج التدريبية (كافة المجالات)</option>
             <option value="خدمات الذكاء الاصطناعي وتطوير البرمجيات">🤖 الذكاء الاصطناعي وتطوير البرمجيات</option>
             <option value="إقامة وسكن">إقامة وسكن</option>
-            <option value="خدمات رجال أعمال">خدمات رجال أعمال</option>
+            <option value="خدماترجال أعمال">خدمات رجال أعمال</option>
             <option value="متابعة طلابية">متابعة طلابية</option>
             <option value="تجارة عامة">تجارة عامة</option>
             <option value="تأشيرات رحلات">تأشيرات رحلات</option>

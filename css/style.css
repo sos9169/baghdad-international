@@ -1424,7 +1424,7 @@ body.dark .dest-tag-btn:hover {
   to { stroke-dashoffset: -200; }
 }
 
-/* Flying Jet Plane Indicators along paths */
+/* Flying Jet Plane Indicators along exact curved paths (Outbound & Inbound Round-Trips) */
 .map-flying-planes {
   position: absolute;
   inset: 0;
@@ -1439,56 +1439,120 @@ body.dark .dest-tag-btn:hover {
   filter: drop-shadow(0 0 8px var(--gold));
 }
 
-.jet-egypt {
-  top: 61%;
-  left: 31%;
-  transform: rotate(-160deg);
-  animation: jetFlyEgypt 7s ease-in-out infinite alternate;
+/* CAIRO ROUND-TRIP FLIGHTS */
+.jet-egypt-out {
+  top: 54%;
+  left: 40%;
+  transform: rotate(-155deg);
+  animation: jetFlyEgyptOut 7s linear infinite;
 }
 
-.jet-turkey {
-  top: 41%;
-  left: 42%;
-  transform: rotate(-130deg);
-  animation: jetFlyTurkey 8s ease-in-out infinite alternate;
+.jet-egypt-in {
+  top: 65%;
+  left: 14%;
+  transform: rotate(25deg);
+  animation: jetFlyEgyptIn 7s linear infinite 3.5s;
 }
 
-.jet-iran {
-  top: 57%;
-  left: 60%;
+@keyframes jetFlyEgyptOut {
+  0% { transform: translate(0, 0) scale(0.9) rotate(-155deg); opacity: 0; }
+  15% { opacity: 1; }
+  85% { opacity: 1; }
+  100% { transform: translate(-165px, 75px) scale(0.9) rotate(-155deg); opacity: 0; }
+}
+
+@keyframes jetFlyEgyptIn {
+  0% { transform: translate(0, 0) scale(0.9) rotate(25deg); opacity: 0; }
+  15% { opacity: 1; }
+  85% { opacity: 1; }
+  100% { transform: translate(165px, -75px) scale(0.9) rotate(25deg); opacity: 0; }
+}
+
+/* TURKEY ROUND-TRIP FLIGHTS */
+.jet-turkey-out {
+  top: 48%;
+  left: 39%;
+  transform: rotate(-135deg);
+  animation: jetFlyTurkeyOut 6.5s linear infinite;
+}
+
+.jet-turkey-in {
+  top: 24%;
+  left: 30%;
+  transform: rotate(45deg);
+  animation: jetFlyTurkeyIn 6.5s linear infinite 3.25s;
+}
+
+@keyframes jetFlyTurkeyOut {
+  0% { transform: translate(0, 0) scale(0.9) rotate(-135deg); opacity: 0; }
+  15% { opacity: 1; }
+  85% { opacity: 1; }
+  100% { transform: translate(-80px, -150px) scale(0.9) rotate(-135deg); opacity: 0; }
+}
+
+@keyframes jetFlyTurkeyIn {
+  0% { transform: translate(0, 0) scale(0.9) rotate(45deg); opacity: 0; }
+  15% { opacity: 1; }
+  85% { opacity: 1; }
+  100% { transform: translate(80px, 150px) scale(0.9) rotate(45deg); opacity: 0; }
+}
+
+/* IRAN ROUND-TRIP FLIGHTS */
+.jet-iran-out {
+  top: 52%;
+  left: 44%;
   transform: rotate(10deg);
-  animation: jetFlyIran 7.5s ease-in-out infinite alternate;
+  animation: jetFlyIranOut 6s linear infinite;
 }
 
-.jet-russia {
-  top: 36%;
-  left: 58%;
+.jet-iran-in {
+  top: 55%;
+  left: 68%;
+  transform: rotate(-170deg);
+  animation: jetFlyIranIn 6s linear infinite 3s;
+}
+
+@keyframes jetFlyIranOut {
+  0% { transform: translate(0, 0) scale(0.9) rotate(10deg); opacity: 0; }
+  15% { opacity: 1; }
+  85% { opacity: 1; }
+  100% { transform: translate(160px, 18px) scale(0.9) rotate(10deg); opacity: 0; }
+}
+
+@keyframes jetFlyIranIn {
+  0% { transform: translate(0, 0) scale(0.9) rotate(-170deg); opacity: 0; }
+  15% { opacity: 1; }
+  85% { opacity: 1; }
+  100% { transform: translate(-160px, -18px) scale(0.9) rotate(-170deg); opacity: 0; }
+}
+
+/* RUSSIA ROUND-TRIP FLIGHTS */
+.jet-russia-out {
+  top: 46%;
+  left: 44%;
   transform: rotate(-50deg);
-  animation: jetFlyRussia 9s ease-in-out infinite alternate;
+  animation: jetFlyRussiaOut 7.5s linear infinite;
 }
 
-@keyframes jetFlyEgypt {
-  0% { transform: translate(0, 0) scale(0.9) rotate(-160deg); opacity: 0.3; }
-  50% { transform: translate(-70px, 20px) scale(1.15) rotate(-160deg); opacity: 1; }
-  100% { transform: translate(-140px, 40px) scale(0.9) rotate(-160deg); opacity: 0.3; }
+.jet-russia-in {
+  top: 16%;
+  left: 65%;
+  transform: rotate(130deg);
+  animation: jetFlyRussiaIn 7.5s linear infinite 3.75s;
 }
 
-@keyframes jetFlyTurkey {
-  0% { transform: translate(0, 0) scale(0.9) rotate(-130deg); opacity: 0.3; }
-  50% { transform: translate(-30px, -60px) scale(1.15) rotate(-130deg); opacity: 1; }
-  100% { transform: translate(-60px, -110px) scale(0.9) rotate(-130deg); opacity: 0.3; }
+@keyframes jetFlyRussiaOut {
+  0% { transform: translate(0, 0) scale(0.9) rotate(-50deg); opacity: 0; }
+  15% { opacity: 1; }
+  85% { opacity: 1; }
+  100% { transform: translate(150px, -180px) scale(0.9) rotate(-50deg); opacity: 0; }
 }
 
-@keyframes jetFlyIran {
-  0% { transform: translate(0, 0) scale(0.9) rotate(10deg); opacity: 0.3; }
-  50% { transform: translate(70px, 6px) scale(1.15) rotate(10deg); opacity: 1; }
-  100% { transform: translate(140px, 12px) scale(0.9) rotate(10deg); opacity: 0.3; }
-}
-
-@keyframes jetFlyRussia {
-  0% { transform: translate(0, 0) scale(0.9) rotate(-50deg); opacity: 0.3; }
-  50% { transform: translate(70px, -90px) scale(1.15) rotate(-50deg); opacity: 1; }
-  100% { transform: translate(140px, -170px) scale(0.9) rotate(-50deg); opacity: 0.3; }
+@keyframes jetFlyRussiaIn {
+  0% { transform: translate(0, 0) scale(0.9) rotate(130deg); opacity: 0; }
+  15% { opacity: 1; }
+  85% { opacity: 1; }
+  100% { transform: translate(-150px, 180px) scale(0.9) rotate(130deg); opacity: 0; }
 }
 
 /* Map Nodes & Glass Cards Layout */
@@ -1511,6 +1575,23 @@ body.dark .dest-tag-btn:hover {
 .map-node:hover, .map-node.active {
   transform: scale(1.08);
   z-index: 10;
+}
+
+.beacon-pin {
+  position: relative;
+  width: 20px;
+  height: 20px;
+  display: grid;
+  place-items: center;
+  flex: none;
+}
+
+.beacon-pin .pulse-ring {
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  border: 1.5px solid var(--gold);
+  animation: hqBeaconPulse 2.4s infinite ease-out;
 }
 
 .node-baghdad {
