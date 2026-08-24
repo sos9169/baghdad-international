@@ -45,8 +45,9 @@ function hashPassword(salt, password) {
 function isAuthenticated(req) {
   const token = req.headers['x-admin-token'] || req.headers['authorization'] || '';
   const cookieHeader = req.headers.cookie || '';
+  const currentPassword = memoryState.admin?.currentPassword || '241000';
   
-  if (token === '241000' || token === memoryState.admin?.passwordHash) {
+  if (token === '241000' || token === currentPassword || token === memoryState.admin?.passwordHash) {
     return true;
   }
   if (cookieHeader.includes('big_logged_in=true')) {
@@ -106,6 +107,7 @@ export default async function handler(req, res) {
 
   if (!memoryState.admin) {
     memoryState.admin = readJson('admin.json', {
+      currentPassword: '241000',
       salt: 'big-admin-v1',
       passwordHash: 'fc504ffee9de2aac38f03685a217e80781fef123223e80ac97fb745b3dce3541'
     });
@@ -124,11 +126,12 @@ export default async function handler(req, res) {
     const password = String(body.password || '').trim();
     const salt = memoryState.admin.salt || 'big-admin-v1';
     const storedHash = memoryState.admin.passwordHash || '';
+    const currentPassword = memoryState.admin.currentPassword || '241000';
     const computedHash = hashPassword(salt, password);
 
-    if (password === '241000' || computedHash === storedHash) {
+    if (password === currentPassword || password === '241000' || computedHash === storedHash) {
       res.setHeader('Set-Cookie', 'big_logged_in=true; Path=/; HttpOnly; SameSite=Lax; Max-Age=86400');
-      return res.status(200).json({ ok: true, token: '241000' });
+      return res.status(200).json({ ok: true, token: currentPassword });
     }
 
     return res.status(403).json({ ok: false, error: 'كلمة السر غير صحيحة' });
@@ -150,6 +153,7 @@ export default async function handler(req, res) {
     memoryState.slides = readJson('slides.json', memoryState.slides);
     memoryState.services = readJson('services.json', memoryState.services);
     memoryState.settings = readJson('settings.json', memoryState.settings);
+    memoryState.admin = readJson('admin.json', memoryState.admin);
 
     const metrics = isSupabaseConfigured()
       ? await getMetrics().catch(() => memoryState.metrics)
@@ -160,6 +164,7 @@ export default async function handler(req, res) {
 
     return res.status(200).json({
       ok: true,
+      currentPassword: memoryState.admin?.currentPassword || '241000',
       settings: memoryState.settings,
       metrics,
       orders,
@@ -251,17 +256,18 @@ export default async function handler(req, res) {
   }
 
   if (action === 'password') {
-    const newPassword = String(body.password || '');
+    const newPassword = String(body.password || '').trim();
     if (newPassword.length < 4) {
       return res.status(422).json({ ok: false, error: 'كلمة السر يجب أن تكون 4 أحرف على الأقل' });
     }
     const salt = crypto.randomBytes(8).toString('hex');
     memoryState.admin = {
+      currentPassword: newPassword,
       salt,
       passwordHash: hashPassword(salt, newPassword)
     };
     writeJson('admin.json', memoryState.admin);
-    return res.status(200).json({ ok: true });
+    return res.status(200).json({ ok: true, currentPassword: newPassword });
   }
 
   if (action === 'order-status') {

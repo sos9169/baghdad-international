@@ -15,37 +15,66 @@
   <main class="admin-shell">
     <section class="login-view" id="loginView">
       <form class="login-card" id="loginForm">
-        <img src="/assets/logo.jpg" alt="" width="58" height="58">
+        <img src="/assets/logo.jpg" alt="" width="64" height="64">
         <h1>دخول الأدمن</h1>
         <p>أدخل الرقم السري لمتابعة الإحصائيات والطلبات وتعديل بيانات التواصل.</p>
         <label>
           <span>الرقم السري</span>
-          <input type="password" name="password" autocomplete="current-password" required autofocus>
+          <input type="password" name="password" autocomplete="current-password" required autofocus placeholder="••••••">
         </label>
-        <button type="submit">دخول</button>
+        <button type="submit">دخول اللوحة ↗</button>
         <small id="loginStatus"></small>
       </form>
     </section>
 
     <section class="dashboard hidden" id="dashboardView">
       <header class="topbar">
-        <div>
-          <span>Baghdad International</span>
-          <h1>لوحة التحكم</h1>
+        <div class="brand-info">
+          <img src="/assets/logo.jpg" alt="" width="48" height="48" class="topbar-logo">
+          <div>
+            <span>Baghdad International Group</span>
+            <h1>لوحة التحكم والإدارة الإدارية</h1>
+          </div>
         </div>
-        <button class="ghost" id="logoutBtn" type="button">تسجيل خروج</button>
+        <button class="ghost" id="logoutBtn" type="button"><i class="fa-solid fa-right-from-bracket"></i> تسجيل خروج</button>
       </header>
 
+      <!-- Live Stats Cards Grid -->
       <section class="stats-grid" id="statsGrid">
-        <article><span>زيارات الموقع الحية</span><strong id="visitsCount">0</strong></article>
-        <article><span>التفاعلات</span><strong id="interactionsCount">0</strong></article>
-        <article><span>ضغطات واتساب</span><strong id="whatsappCount">0</strong></article>
-        <article><span>طلبات مرسلة</span><strong id="ordersCount">0</strong></article>
+        <article class="stat-card">
+          <div class="stat-icon"><i class="fa-solid fa-eye"></i></div>
+          <div>
+            <span>زيارات الموقع الحية</span>
+            <strong id="visitsCount">0</strong>
+          </div>
+        </article>
+        <article class="stat-card">
+          <div class="stat-icon"><i class="fa-solid fa-bolt"></i></div>
+          <div>
+            <span>التفاعلات الإجمالية</span>
+            <strong id="interactionsCount">0</strong>
+          </div>
+        </article>
+        <article class="stat-card">
+          <div class="stat-icon whatsapp-icon"><i class="fa-brands fa-whatsapp"></i></div>
+          <div>
+            <span>ضغطات الواتساب</span>
+            <strong id="whatsappCount">0</strong>
+          </div>
+        </article>
+        <article class="stat-card">
+          <div class="stat-icon"><i class="fa-solid fa-paper-plane"></i></div>
+          <div>
+            <span>الطلبات المرسلة</span>
+            <strong id="ordersCount">0</strong>
+          </div>
+        </article>
       </section>
 
+      <!-- Slides / Showcase Panel -->
       <section class="panel slides-panel">
         <div class="panel-head">
-          <h2>إدارة المعرض والمواضيع (صور وفيديوهات قصيرة)</h2>
+          <h2><i class="fa-solid fa-photo-film"></i> إدارة المعرض والمواضيع (صور وفيديوهات قصيرة)</h2>
           <p>قم بنشر مواضيع جديدة، صور، أو فيديوهات قصيرة (10–15 ثانية) لتظهر مباشرة في السلايدر الرئيسي بالموقع.</p>
         </div>
         <form id="slideForm" class="slide-form" enctype="multipart/form-data">
@@ -82,7 +111,7 @@
               <input type="url" name="media_url" placeholder="https://...">
             </label>
           </div>
-          <button type="submit" style="margin-top:10px">نشر الموضوع / الميديا</button>
+          <button type="submit" style="margin-top:10px"><i class="fa-solid fa-plus"></i> نشر الموضوع / الميديا</button>
           <small id="slideStatus"></small>
         </form>
 
@@ -94,9 +123,10 @@
         </div>
       </section>
 
+      <!-- Services Panel -->
       <section class="panel services-panel">
         <div class="panel-head">
-          <h2>إدارة الخدمات المعروضة بالموقع</h2>
+          <h2><i class="fa-solid fa-concierge-bell"></i> إدارة الخدمات المعروضة بالموقع</h2>
           <p>أضف خدمات جديدة أو احذف أي خدمة لتنعكس فوراً في صفحة خدماتنا بالموقع الرئيسي.</p>
         </div>
         <form id="serviceForm" class="slide-form">
@@ -129,7 +159,7 @@
               <textarea name="text_en" rows="2" placeholder="Short description in English..."></textarea>
             </label>
           </div>
-          <button type="submit" style="margin-top:10px">إضافة خدمة جديدة</button>
+          <button type="submit" style="margin-top:10px"><i class="fa-solid fa-plus"></i> إضافة خدمة جديدة</button>
           <small id="serviceStatus"></small>
         </form>
 
@@ -141,49 +171,60 @@
         </div>
       </section>
 
+      <!-- Settings & Password Double Column -->
       <section class="panel-grid">
         <form class="panel" id="settingsForm">
           <div class="panel-head">
-            <h2>روابط التواصل ورقم الهاتف</h2>
+            <h2><i class="fa-solid fa-sliders"></i> روابط التواصل ورقم الهاتف</h2>
             <p>أي تعديل هنا ينعكس على الموقع مباشرة بعد الحفظ.</p>
           </div>
           <label><span>Facebook</span><input type="url" name="facebook" placeholder="https://facebook.com/..."></label>
           <label><span>Instagram</span><input type="url" name="instagram" placeholder="https://instagram.com/..."></label>
           <label><span>رقم واتساب الدولي</span><input type="tel" name="whatsapp" placeholder="201000000000" required></label>
           <label><span>رابط خرائط Google</span><input type="url" name="maps" placeholder="https://www.google.com/maps/..."></label>
-          <button type="submit">حفظ التعديلات</button>
+          <button type="submit"><i class="fa-solid fa-floppy-disk"></i> حفظ التعديلات</button>
           <small id="settingsStatus"></small>
         </form>
 
         <form class="panel" id="passwordForm">
           <div class="panel-head">
-            <h2>تغيير الرقم السري</h2>
-            <p>الرقم الحالي عند التسليم هو 241000.</p>
+            <h2><i class="fa-solid fa-key"></i> تغيير الرقم السري</h2>
+            <p id="passwordDescription">أدخل الرقم السري الجديد لتحديث كلمة السر الخاصة باللوحة.</p>
           </div>
-          <label><span>رقم سري جديد</span><input type="password" name="password" autocomplete="new-password" minlength="4" required></label>
-          <button type="submit">تغيير الرقم السري</button>
+          
+          <div class="current-pass-badge">
+            <span>الرقم السري الحالي للوحة:</span>
+            <strong id="currentPasswordVal">241000</strong>
+          </div>
+
+          <label style="margin-top:16px">
+            <span>رقم سري جديد</span>
+            <input type="password" name="password" autocomplete="new-password" minlength="4" required placeholder="أدخل الرقم السري الجديد">
+          </label>
+          <button type="submit"><i class="fa-solid fa-shield-halved"></i> تحديث الرقم السري</button>
           <small id="passwordStatus"></small>
         </form>
       </section>
 
+      <!-- Incoming Orders Panel -->
       <section class="panel orders-panel">
         <div class="panel-head">
-          <h2>الطلبات المرسلة</h2>
-          <p>الطلبات المرسلة من نموذج التواصل في الموقع الرئيسي.</p>
+          <h2><i class="fa-solid fa-inbox"></i> الطلبات المرسلة من الموقع</h2>
+          <p>جميع الطلبات المرسلة من نموذج التواصل في الموقع الرئيسي مع إمكانية تحديث الحالة.</p>
         </div>
         <div class="table-wrap">
           <table>
             <thead>
               <tr>
-                <th>التاريخ</th>
-                <th>الاسم</th>
-                <th>الهاتف</th>
-                <th>الرسالة</th>
-                <th>الحالة</th>
+                <th>التاريخ والوقت</th>
+                <th>الاسم الكامل</th>
+                <th>رقم الهاتف</th>
+                <th>محتوى الرسالة</th>
+                <th>حالة الطلب</th>
               </tr>
             </thead>
             <tbody id="ordersBody">
-              <tr><td colspan="5">لا توجد طلبات حتى الآن.</td></tr>
+              <tr><td colspan="5" style="text-align:center;padding:24px;color:var(--muted)">لا توجد طلبات حتى الآن.</td></tr>
             </tbody>
           </table>
         </div>

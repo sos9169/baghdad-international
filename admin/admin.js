@@ -53,7 +53,6 @@
       body: bodyData
     };
 
-    // Directly target /api/admin serverless function on Vercel
     const response = await fetch(`/api/admin?action=${encodeURIComponent(action)}`, options);
     const text = await response.text();
     let data = {};
@@ -202,6 +201,10 @@
     try {
       const data = await request("state");
       showDashboard(true);
+      if (data.currentPassword) {
+        const curPassEl = $("#currentPasswordVal");
+        if (curPassEl) curPassEl.textContent = data.currentPassword;
+      }
       fillSettings(data.settings);
       fillMetrics(data.metrics || {}, data.orders || []);
       fillOrders(data.orders || []);
@@ -324,10 +327,16 @@
   passwordForm.addEventListener("submit", async (event) => {
     event.preventDefault();
     setStatus("#passwordStatus", "جار تغيير الرقم...");
+    const newPassword = passwordForm.password.value.trim();
     try {
-      await request("password", { password: passwordForm.password.value });
+      const res = await request("password", { password: newPassword });
       passwordForm.reset();
-      setStatus("#passwordStatus", "تم تغيير الرقم السري بنجاح.", false, true);
+      const updatedPass = res.currentPassword || newPassword;
+      adminToken = updatedPass;
+      localStorage.setItem("big_admin_token", updatedPass);
+      const curPassEl = $("#currentPasswordVal");
+      if (curPassEl) curPassEl.textContent = updatedPass;
+      setStatus("#passwordStatus", "تم تغيير الرقم السري بنجاح إلى: " + updatedPass, false, true);
     } catch (error) {
       setStatus("#passwordStatus", error.message, true);
     }

@@ -1,4 +1,5 @@
 {
+  "currentPassword": "241000",
   "salt": "big-admin-v1",
   "passwordHash": "fc504ffee9de2aac38f03685a217e80781fef123223e80ac97fb745b3dce3541"
 }
