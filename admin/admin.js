@@ -53,13 +53,22 @@
       body: bodyData
     };
 
-    const response = await fetch(`/admin/api.php?action=${encodeURIComponent(action)}`, options);
-    const data = await response.json().catch(() => ({}));
+    // Directly target /api/admin serverless function on Vercel
+    const response = await fetch(`/api/admin?action=${encodeURIComponent(action)}`, options);
+    const text = await response.text();
+    let data = {};
+    try {
+      data = JSON.parse(text);
+    } catch (e) {
+      throw new Error("خطأ في الاتصال بالسيرفر — يرجى إعادة المحاولة");
+    }
+
     if (!response.ok || !data.ok) {
-      const err = new Error(data.error || "حدث خطأ غير متوقع");
+      const err = new Error(data.error || "كلمة السر غير صحيحة");
       err.status = response.status;
       throw err;
     }
+
     if (data.token) {
       adminToken = data.token;
       localStorage.setItem("big_admin_token", data.token);
