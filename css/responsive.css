@@ -350,19 +350,27 @@ body.lang-en .boarding-pass .bp-stub p {
     padding: 18px 16px;
   }
 
+  /* DESTINATIONS MOBILE SECTION LAYOUT */
+  .destinations-showcase {
+    grid-template-columns: 1fr !important;
+    gap: 28px;
+  }
+
   /* MOBILE MAP COMPACT NON-OVERLAPPING LAYOUT */
   .destinations-map-wrap {
-    min-height: 420px;
+    width: 100% !important;
+    min-height: 440px !important;
+    border-radius: 22px;
   }
 
   .node-glass-card {
-    padding: 5px 10px;
-    border-radius: 10px;
-    gap: 6px;
+    padding: 5px 9px !important;
+    border-radius: 10px !important;
+    gap: 5px !important;
   }
 
   .node-glass-card strong {
-    font-size: 11px;
+    font-size: 11px !important;
   }
 
   .node-glass-card small {
@@ -370,21 +378,21 @@ body.lang-en .boarding-pass .bp-stub p {
   }
 
   .hq-star {
-    font-size: 8px;
-    padding: 1px 4px;
+    font-size: 8px !important;
+    padding: 1px 4px !important;
   }
 
   .node-flag-img {
-    width: 18px;
-    height: 12px;
+    width: 18px !important;
+    height: 12px !important;
   }
 
-  /* Non-overlapping Spread Coordinates on Mobile Screen */
-  .node-baghdad { top: 48%; left: 34%; }
-  .node-cairo { top: 76%; left: 3%; }
-  .node-turkey { top: 12%; left: 5%; }
-  .node-iran { top: 62%; left: 65%; }
-  .node-moscow { top: 10%; left: 62%; }
+  /* Perfectly Spread Mobile Coordinates - Zero Overlap */
+  .node-baghdad { top: 44% !important; left: 22% !important; }
+  .node-cairo { top: 78% !important; left: 3% !important; }
+  .node-turkey { top: 10% !important; left: 3% !important; }
+  .node-iran { top: 70% !important; left: 60% !important; }
+  .node-moscow { top: 10% !important; left: 60% !important; }
 
   .social-banner-inner {
     align-items: flex-start;
@@ -451,16 +459,16 @@ body.lang-en .boarding-pass .bp-stub p {
 
   /* Ultra compact mobile map badges */
   .node-glass-card {
-    padding: 4px 7px;
+    padding: 4px 7px !important;
   }
   .node-glass-card strong {
-    font-size: 10px;
+    font-size: 10px !important;
   }
-  .node-baghdad { top: 48%; left: 28%; }
-  .node-cairo { top: 78%; left: 2%; }
-  .node-turkey { top: 10%; left: 2%; }
-  .node-iran { top: 62%; left: 62%; }
-  .node-moscow { top: 8%; left: 58%; }
+  .node-baghdad { top: 44% !important; left: 18% !important; }
+  .node-cairo { top: 78% !important; left: 2% !important; }
+  .node-turkey { top: 8% !important; left: 2% !important; }
+  .node-iran { top: 70% !important; left: 56% !important; }
+  .node-moscow { top: 8% !important; left: 56% !important; }
 }
 
 /* iOS Safe Areas */
