@@ -13,7 +13,7 @@
       "nav.why": "لماذا نحن",
       "nav.contact": "تواصل معنا",
       "hero.eyebrow": "BAGHDAD INTERNATIONAL GROUP",
-      "hero.title": "نفتح لك الطريق<br><span id=\"heroDynamicText\" class=\"dynamic-typewriter\">إلى فرص أكبر ✦</span>",
+      "hero.title": "نفتح لك الطريق<br><span>إلى فرص أكبر</span>",
       "hero.text": "حلول متكاملة في التعليم والسفر والخدمات الدولية، بتجربة احترافية تبدأ من أول تواصل وحتى إنجاز التفاصيل.",
       "hero.primary": "اكتشف خدماتنا <span>↙</span>",
       "hero.secondary": "تواصل معنا",
@@ -155,7 +155,7 @@
       "nav.why": "Why Us",
       "nav.contact": "Contact",
       "hero.eyebrow": "BAGHDAD INTERNATIONAL GROUP",
-      "hero.title": "We open the way<br><span id=\"heroDynamicText\" class=\"dynamic-typewriter\">to bigger opportunities ✦</span>",
+      "hero.title": "We open the way<br><span>to bigger opportunities</span>",
       "hero.text": "Integrated education, travel and international services — with a professional experience from the first conversation to the final detail.",
       "hero.primary": "Explore our services <span>↙</span>",
       "hero.secondary": "Contact us",
@@ -301,85 +301,6 @@
 
   let slidesData = [];
   let servicesData = [];
-
-  // --- Dynamic Hero Typewriter Rotating Text ---
-  const heroDynamicEl = document.getElementById("heroDynamicText");
-  const dynamicPhrasesAr = [
-    "إلى فرص أكبر ✦",
-    "إلى قبولات جامعية 🎓",
-    "إلى سفر وإقامة ✈️",
-    "إلى استيراد وتجارة 🌐",
-    "إلى برمجيات وذكاء اصطناعي 🤖"
-  ];
-  const dynamicPhrasesEn = [
-    "to bigger opportunities ✦",
-    "to university admissions 🎓",
-    "to travel & residency ✈️",
-    "to general trade & imports 🌐",
-    "to AI & software solutions 🤖"
-  ];
-  let dynamicPhraseIndex = 0;
-
-  function rotateHeroText() {
-    if (!heroDynamicEl) return;
-    const isEn = body.classList.contains("lang-en");
-    const phrases = isEn ? dynamicPhrasesEn : dynamicPhrasesAr;
-    dynamicPhraseIndex = (dynamicPhraseIndex + 1) % phrases.length;
-
-    heroDynamicEl.style.opacity = "0";
-    heroDynamicEl.style.transform = "translateY(8px)";
-
-    setTimeout(() => {
-      heroDynamicEl.textContent = phrases[dynamicPhraseIndex];
-      heroDynamicEl.style.opacity = "1";
-      heroDynamicEl.style.transform = "translateY(0)";
-    }, 350);
-  }
-
-  setInterval(rotateHeroText, 3200);
-
-  // --- Quick Multi-Country Dial Bar Interactive Switcher ---
-  const dialTabs = document.querySelectorAll(".dial-tab");
-  const dialTag = document.getElementById("dialTag");
-  const dialCity = document.getElementById("dialCity");
-  const dialPhoneList = document.getElementById("dialPhoneList");
-  const dialActionBtn = document.getElementById("dialActionBtn");
-
-  const countryDialData = {
-    iraq: {
-      tag: "المقر الرئيسي ⭐",
-      city: "بغداد — زيونة — شارع الربيعي — بداية كوين",
-      phonesHtml: '<a href="https://wa.me/9647742881766" target="_blank" rel="noopener" class="phone-num" dir="ltr"><bdi>+964 774 288 1766</bdi></a> / <a href="tel:01507501547" class="phone-num" dir="ltr"><bdi>01507501547</bdi></a>',
-      waLink: "https://wa.me/9647742881766?text=" + encodeURIComponent("مرحباً المقر الرئيسي في بغداد، أرغب في الاستفسار والتقديم على خدماتكم.")
-    },
-    egypt: {
-      tag: "مقر القاهرة (مصر) 🇪🇬",
-      city: "عمارة رقم ٧، شارع عقبة بن نافع، الدور الأول، مكتب ٣ — أمام البيت الثقافي الروسي، الدقي، الجيزة",
-      phonesHtml: '<a href="https://wa.me/201505502339" target="_blank" rel="noopener" class="phone-num" dir="ltr"><bdi>+20 150 550 2339</bdi></a> / <a href="https://wa.me/201505502337" target="_blank" rel="noopener" class="phone-num" dir="ltr"><bdi>+20 150 550 2337</bdi></a>',
-      waLink: "https://wa.me/201505502339?text=" + encodeURIComponent("مرحباً فرع مصر / شركة الليل، أرغب في الاستفسار والتنسيق معكم.")
-    },
-    turkey: {
-      tag: "فرع تركيا (يالوفا) 🇹🇷",
-      city: "Rüstem Paşa, Şahin Sk. No:13, 77200 Yalova Merkez/Yalova, تركيا",
-      phonesHtml: '<a href="https://wa.me/905011263577" target="_blank" rel="noopener" class="phone-num" dir="ltr"><bdi>+90 501 126 3577</bdi></a>',
-      waLink: "https://wa.me/905011263577?text=" + encodeURIComponent("مرحباً فرع تركيا، أرغب في الاستفسار عن القبولات والخدمات المتاحة.")
-    }
-  };
-
-  dialTabs.forEach((tab) => {
-    tab.addEventListener("click", () => {
-      const countryKey = tab.dataset.dialCountry;
-      const data = countryDialData[countryKey];
-      if (!data) return;
-
-      dialTabs.forEach((t) => t.classList.toggle("active", t === tab));
-
-      if (dialTag) dialTag.textContent = data.tag;
-      if (dialCity) dialCity.textContent = data.city;
-      if (dialPhoneList) dialPhoneList.innerHTML = data.phonesHtml;
-      if (dialActionBtn) dialActionBtn.href = data.waLink;
-    });
-  });
 
   // --- i18n Language Switcher ---
   function setLanguage(lang) {
@@ -901,7 +822,7 @@
       const icon = srv.icon || "✦";
 
       return `
-        <article class="service-card glow-card reveal visible">
+        <article class="service-card reveal visible">
           <div class="service-icon">${escapeHtml(icon)}</div>
           <h3>${escapeHtml(title)}</h3>
           <p>${escapeHtml(text)}</p>

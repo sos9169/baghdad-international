@@ -62,10 +62,24 @@ body {
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
   transition: background-color 0.3s ease, color 0.3s ease;
+  letter-spacing: normal;
 }
 
 body.lang-en {
   font-family: var(--font-en);
+}
+
+/* Guarantee NO letter spacing breaking Arabic cursive text */
+body:not(.lang-en) *, 
+body:not(.lang-en) h1, 
+body:not(.lang-en) h2, 
+body:not(.lang-en) h3, 
+body:not(.lang-en) h4, 
+body:not(.lang-en) p, 
+body:not(.lang-en) span, 
+body:not(.lang-en) button, 
+body:not(.lang-en) label {
+  letter-spacing: normal !important;
 }
 
 img, svg, video {
@@ -205,7 +219,7 @@ body.dark .page-bg {
 .brand-copy small {
   font-family: var(--font-mono);
   font-size: 9px;
-  letter-spacing: 2.5px;
+  letter-spacing: 2.5px !important;
   color: var(--gold);
   text-transform: uppercase;
   margin-top: 5px;
@@ -379,8 +393,7 @@ body:not(.lang-en) h1, body:not(.lang-en) h2, body:not(.lang-en) h3, body:not(.l
 
 h1 {
   font-size: clamp(44px, 5.5vw, 76px);
-  line-height: 1.1;
-  letter-spacing: -1px;
+  line-height: 1.15;
   margin: 20px 0 24px;
   font-weight: 800;
 }
@@ -391,19 +404,13 @@ h1 span, h2 span {
   display: inline-block;
 }
 
-.dynamic-typewriter {
-  color: var(--gold) !important;
-  transition: opacity 0.35s ease, transform 0.35s ease;
-  display: inline-block;
-}
-
 .eyebrow {
   display: inline-flex;
   align-items: center;
   gap: 9px;
   color: var(--gold);
   font: 700 11px var(--font-mono);
-  letter-spacing: 2.4px;
+  letter-spacing: 2.4px !important;
   text-transform: uppercase;
 }
 
@@ -424,16 +431,6 @@ h1 span, h2 span {
   align-items: center;
   overflow: hidden;
   position: relative;
-}
-
-.hero-bg-glow {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background: 
-    radial-gradient(circle at 75% 30%, rgba(197, 154, 74, 0.18), transparent 45%),
-    radial-gradient(circle at 20% 70%, rgba(16, 59, 99, 0.14), transparent 50%);
-  z-index: 0;
 }
 
 .hero-grid {
@@ -460,65 +457,13 @@ h1 span, h2 span {
 .hero-actions {
   display: flex;
   gap: 12px;
-  margin: 30px 0 20px;
-}
-
-/* Quick Country Direct Contact Pills */
-.hero-quick-countries {
-  margin: 22px 0;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.quick-label {
-  font-size: 11px;
-  font-weight: 700;
-  color: var(--muted);
-  font-family: var(--font-mono);
-}
-
-.quick-country-pills {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-
-.quick-pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 16px;
-  border-radius: 999px;
-  background: rgba(197, 154, 74, 0.08);
-  border: 1px solid rgba(197, 154, 74, 0.25);
-  color: var(--text);
-  text-decoration: none;
-  font-size: 12.5px;
-  transition: all 0.25s ease;
-}
-
-.quick-pill:hover, .quick-pill.active {
-  background: var(--ink);
-  color: #fff;
-  border-color: var(--gold);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(8, 35, 61, 0.2);
-}
-
-body.dark .quick-pill:hover, body.dark .quick-pill.active {
-  background: var(--gold);
-  color: #071827;
-}
-
-.pill-flag {
-  font-size: 16px;
+  margin: 30px 0;
 }
 
 .hero-stats {
   display: flex;
   gap: 34px;
-  margin-top: 30px;
+  margin-top: 35px;
   font-family: var(--font-mono);
 }
 
@@ -593,7 +538,7 @@ body.dark .quick-pill:hover, body.dark .quick-pill.active {
 
 .bp-code {
   font: 500 11px var(--font-mono);
-  letter-spacing: 2px;
+  letter-spacing: 2px !important;
   color: var(--gold-light);
   opacity: 0.85;
 }
@@ -601,7 +546,7 @@ body.dark .quick-pill:hover, body.dark .quick-pill.active {
 .bp-label {
   display: block;
   font: 700 10px var(--font-mono);
-  letter-spacing: 2.2px;
+  letter-spacing: 2.2px !important;
   color: var(--gold-light);
   text-transform: uppercase;
   margin-bottom: 10px;
@@ -619,7 +564,7 @@ body.dark .quick-pill:hover, body.dark .quick-pill.active {
   align-items: center;
   gap: 10px;
   font: 700 12px var(--font-mono);
-  letter-spacing: 1px;
+  letter-spacing: 1px !important;
   color: #dce6f0;
   direction: ltr;
 }
@@ -686,7 +631,7 @@ body.dark .quick-pill:hover, body.dark .quick-pill.active {
 
 .bp-stamp b {
   font: 700 12px var(--font-mono);
-  letter-spacing: 1px;
+  letter-spacing: 1px !important;
   color: var(--gold-light);
 }
 
@@ -728,39 +673,12 @@ body.dark .quick-pill:hover, body.dark .quick-pill.active {
   padding: 11px 15px;
   box-shadow: var(--shadow);
   font: 700 10px var(--font-mono);
-  letter-spacing: 0.3px;
   color: var(--text);
   transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .chip-one { top: 10%; right: -1%; }
 .chip-two { bottom: 10%; left: -3%; }
-
-/* Dynamic Glowing Animated Border Class */
-.glow-card {
-  position: relative;
-  overflow: hidden;
-  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
-}
-
-.glow-card::before {
-  content: "";
-  position: absolute;
-  inset: -2px;
-  border-radius: inherit;
-  padding: 2px;
-  background: linear-gradient(135deg, transparent, rgba(197, 154, 74, 0.65), transparent);
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  opacity: 0;
-  transition: opacity 0.4s ease;
-  pointer-events: none;
-}
-
-.glow-card:hover::before {
-  opacity: 1;
-}
 
 /* Ticker Bar */
 .ticker {
@@ -783,7 +701,7 @@ body.dark .quick-pill:hover, body.dark .quick-pill.active {
   will-change: transform;
   animation: ticker 24s linear infinite;
   font: 700 12px var(--font-mono);
-  letter-spacing: 3px;
+  letter-spacing: 3px !important;
   color: var(--gold-light);
   direction: ltr !important;
   text-align: left !important;
@@ -885,7 +803,7 @@ body.dark .quick-pill:hover, body.dark .quick-pill.active {
   display: block;
   font: 700 10px var(--font-mono);
   color: var(--gold);
-  letter-spacing: 1px;
+  letter-spacing: 1px !important;
   margin-bottom: 12px;
 }
 
@@ -906,7 +824,6 @@ body.dark .quick-pill:hover, body.dark .quick-pill.active {
 .section-heading h2, .section-top h2, .why-content h2, .contact-box h2 {
   font-size: clamp(38px, 4.4vw, 60px);
   line-height: 1.15;
-  letter-spacing: -0.5px;
   margin: 17px 0 0;
   font-weight: 800;
 }
@@ -935,13 +852,13 @@ body.dark .quick-pill:hover, body.dark .quick-pill.active {
 .signature span {
   font: 700 23px var(--font-mono);
   color: var(--gold);
-  letter-spacing: 1px;
+  letter-spacing: 1px !important;
 }
 
 .signature small {
   color: var(--muted);
   font: 600 11px var(--font-en);
-  letter-spacing: 1px;
+  letter-spacing: 1px !important;
 }
 
 .years-badge {
@@ -1350,7 +1267,7 @@ body.dark .service-card:hover {
   color: var(--muted);
   font-family: var(--font-mono);
   font-size: 10px;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.5px !important;
   margin-top: 2px;
 }
 
@@ -1563,7 +1480,6 @@ body.dark .dest-tag-btn:hover {
   z-index: 10;
 }
 
-/* Coordinates spread out for maximum clarity & zero overlap */
 .node-baghdad {
   top: 52%;
   left: 42%;
@@ -1875,7 +1791,7 @@ body.lang-en .modal-close {
   display: block;
   margin-bottom: 10px;
   font: 700 10px var(--font-mono);
-  letter-spacing: 2.2px;
+  letter-spacing: 2.2px !important;
   color: var(--gold-light);
 }
 
@@ -1965,7 +1881,7 @@ body.dark .why {
 
 .why-caption small {
   font: 500 10px var(--font-en);
-  letter-spacing: 1.5px;
+  letter-spacing: 1.5px !important;
   color: #aebdcc;
 }
 
@@ -2004,98 +1920,6 @@ body.dark .why {
   line-height: 1.85;
 }
 
-/* Quick Interactive Multi-Country Dial Bar */
-.quick-dial-bar-container {
-  margin: 28px 0;
-  padding: 22px;
-  border-radius: 20px;
-  background: var(--card-bg);
-  border: 1.5px solid var(--gold);
-  box-shadow: 0 14px 35px rgba(197, 154, 74, 0.15);
-}
-
-.dial-bar-label {
-  display: block;
-  font: 700 11px var(--font-mono);
-  color: var(--gold);
-  margin-bottom: 12px;
-  letter-spacing: 1px;
-}
-
-.dial-tabs {
-  display: flex;
-  gap: 8px;
-  margin-bottom: 16px;
-}
-
-.dial-tab {
-  flex: 1;
-  padding: 10px 12px;
-  border-radius: 12px;
-  border: 1px solid var(--line);
-  background: transparent;
-  color: var(--text);
-  font-size: 13px;
-  font-weight: 700;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  transition: all 0.2s ease;
-}
-
-.dial-tab:hover, .dial-tab.active {
-  background: var(--ink);
-  color: #fff;
-  border-color: var(--ink);
-}
-
-body.dark .dial-tab:hover, body.dark .dial-tab.active {
-  background: var(--gold);
-  color: #071827;
-  border-color: var(--gold);
-}
-
-.dial-active-card {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  padding: 16px 20px;
-  border-radius: 14px;
-  background: rgba(197, 154, 74, 0.06);
-  border: 1px dashed rgba(197, 154, 74, 0.4);
-}
-
-.dial-tag {
-  display: inline-block;
-  font-size: 10px;
-  font-weight: 800;
-  color: var(--gold);
-  margin-bottom: 4px;
-}
-
-.dial-info h4 {
-  margin: 0 0 4px;
-  font-size: 14px;
-  font-weight: 800;
-}
-
-.dial-info p {
-  margin: 0;
-  font-size: 14px;
-  font-weight: 700;
-}
-
-.dial-wa-btn {
-  background: #25D366 !important;
-  color: #fff !important;
-  border-color: #25D366 !important;
-  box-shadow: 0 8px 20px rgba(37, 211, 102, 0.3) !important;
-  flex: none;
-}
-
 /* Contact Section */
 .contact {
   background: var(--cream);
@@ -2127,8 +1951,8 @@ body.dark .dial-tab:hover, body.dark .dial-tab.active {
   display: flex;
   align-items: flex-start;
   gap: 14px;
-  margin-top: 28px;
-  padding-top: 26px;
+  margin-top: 24px;
+  padding-top: 22px;
   border-top: 1px solid var(--line);
   max-width: 420px;
 }
@@ -2141,9 +1965,7 @@ body.dark .dial-tab:hover, body.dark .dial-tab.active {
 
 .contact-address span {
   display: block;
-  font: 700 10px var(--font-mono);
-  letter-spacing: 2px;
-  text-transform: uppercase;
+  font: 700 11px var(--font-mono);
   color: var(--gold);
   margin-bottom: 6px;
 }
@@ -2163,20 +1985,19 @@ body.dark .dial-tab:hover, body.dark .dial-tab.active {
 
 .contact-channels {
   max-width: 420px;
-  margin-top: 18px;
-  padding: 18px 20px;
-  border: 1px solid var(--line);
-  border-radius: 18px;
+  margin-top: 24px;
+  padding: 22px 24px;
+  border: 1px solid var(--gold);
+  border-radius: 20px;
   background: rgba(197, 154, 74, 0.08);
 }
 
 .contact-channels span {
   display: block;
-  margin-bottom: 6px;
-  font: 700 10px var(--font-mono);
-  letter-spacing: 2px;
+  margin-bottom: 10px;
+  font-size: 12px;
+  font-weight: 800;
   color: var(--gold);
-  text-transform: uppercase;
 }
 
 .contact-channels p {
@@ -2188,16 +2009,24 @@ body.dark .dial-tab:hover, body.dark .dial-tab.active {
 
 .country-phones {
   display: grid;
-  gap: 8px;
-  margin-top: 8px;
-  font-size: 13px;
+  gap: 12px;
+  margin-top: 12px;
+  font-size: 13.5px;
+}
+
+.country-phones > div {
+  line-height: 1.6;
 }
 
 .country-phones a {
-  color: var(--gold);
-  font-weight: 700;
+  color: var(--ink);
+  font-weight: 800;
   text-decoration: none;
   font-family: var(--font-mono);
+}
+
+body.dark .country-phones a {
+  color: var(--gold-light);
 }
 
 .contact-form {
@@ -2280,77 +2109,46 @@ body.lang-en .contact-form input, body.lang-en .contact-form textarea {
   white-space: nowrap;
 }
 
-/* Floating Utilities */
+/* PERFECT CLEAN FLOATING WHATSAPP BUTTON (NO OFFSET BUG) */
 .floating-whatsapp {
-  position: fixed;
-  z-index: 9999;
-  left: 28px;
-  bottom: 28px;
-  width: 58px;
-  height: 58px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #25D366, #1da851);
+  position: fixed !important;
+  z-index: 9999 !important;
+  left: max(24px, env(safe-area-inset-left)) !important;
+  bottom: max(24px, env(safe-area-inset-bottom)) !important;
+  width: 56px !important;
+  height: 56px !important;
+  border-radius: 50% !important;
+  background: #25D366 !important;
   color: #ffffff !important;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 12px 30px rgba(37, 211, 102, 0.45);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  overflow: visible;
-  text-decoration: none;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  box-shadow: 0 10px 25px rgba(37, 211, 102, 0.45) !important;
+  text-decoration: none !important;
+  transition: transform 0.25s ease, box-shadow 0.25s ease !important;
+  overflow: visible !important;
+  line-height: 1 !important;
   -webkit-tap-highlight-color: transparent;
 }
 
-.floating-whatsapp::before {
-  content: "";
-  position: absolute;
-  inset: -6px;
-  border-radius: 50%;
-  border: 2px solid rgba(37, 211, 102, 0.6);
-  animation: waPulseRing 2.2s infinite cubic-bezier(0.215, 0.61, 0.355, 1);
-  pointer-events: none;
-}
-
-@keyframes waPulseRing {
-  0% { transform: scale(0.85); opacity: 0.9; }
-  100% { transform: scale(1.6); opacity: 0; }
+.floating-whatsapp::before, .floating-whatsapp::after {
+  display: none !important;
 }
 
 .floating-whatsapp i {
-  font-size: 28px;
-  color: #ffffff;
-  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+  font-size: 32px !important;
+  color: #ffffff !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  line-height: 1 !important;
+  display: block !important;
+  width: auto !important;
+  height: auto !important;
 }
 
-.wa-tooltip {
-  position: absolute;
-  right: calc(100% + 14px);
-  top: 50%;
-  transform: translateY(-50%) translateX(10px);
-  background: rgba(7, 24, 39, 0.92);
-  color: #ffffff;
-  font-size: 12px;
-  font-weight: 700;
-  padding: 7px 14px;
-  border-radius: 12px;
-  white-space: nowrap;
-  pointer-events: none;
-  opacity: 0;
-  border: 1px solid var(--gold);
-  backdrop-filter: blur(8px);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
-  transition: opacity 0.3s ease, transform 0.3s ease;
-}
-
-body[dir="ltr"] .wa-tooltip {
-  right: auto;
-  left: calc(100% + 14px);
-  transform: translateY(-50%) translateX(-10px);
-}
-
-.floating-whatsapp:hover .wa-tooltip {
-  opacity: 1;
-  transform: translateY(-50%) translateX(0);
+.floating-whatsapp:hover {
+  transform: translateY(-3px) scale(1.05) !important;
+  box-shadow: 0 14px 32px rgba(37, 211, 102, 0.55) !important;
 }
 
 .floating-top {
@@ -2380,7 +2178,7 @@ body[dir="ltr"] .wa-tooltip {
   transform: none;
 }
 
-.floating-whatsapp:hover, .floating-top:hover {
+.floating-top:hover {
   transform: translateY(-3px);
   box-shadow: 0 16px 32px rgba(0, 0, 0, 0.24);
 }
