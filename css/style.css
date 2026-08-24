@@ -324,9 +324,10 @@ body.dark .control-btn:hover, body.dark .menu-btn:hover {
   border-color: var(--gold);
 }
 
-.theme-toggle .moon { display: none; }
+.theme-toggle .sun { display: inline-block; color: var(--gold); font-size: 15px; }
+.theme-toggle .moon { display: none; color: var(--gold); font-size: 15px; }
 body.dark .theme-toggle .sun { display: none; }
-body.dark .theme-toggle .moon { display: inline; }
+body.dark .theme-toggle .moon { display: inline-block; }
 
 #langToggle .lang-en { display: none; }
 body.lang-en #langToggle .lang-ar { display: none; }
