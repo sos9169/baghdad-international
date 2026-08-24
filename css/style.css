@@ -2509,6 +2509,7 @@ bdi {
   overflow: hidden;
   white-space: nowrap;
   position: relative;
+  direction: ltr !important;
   mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
   -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
 }
@@ -2517,6 +2518,7 @@ bdi {
   display: inline-flex;
   align-items: center;
   gap: 20px;
+  direction: ltr !important;
   animation: marqueeScroll 28s linear infinite;
   will-change: transform;
 }
