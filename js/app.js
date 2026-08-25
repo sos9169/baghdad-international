@@ -169,9 +169,13 @@
       "contact.turkeyBranch": "🇹🇷 فرع تركيا (يلوى واسطنبول — بلاتفورم والمدارس)",
       "contact.turkeySub": "الخدمات والمدارس بتركيا",
       "ticker.eyebrow": "GROUP SUBSIDIARIES & BRAND LOGOS",
-      "ticker.title": "المؤسسات والشركات المعتمدة في مجموعة بغداد الدولية"
+      "ticker.title": "المؤسسات والشركات المعتمدة في مجموعة بغداد الدولية",
+      "brand.title": "مجموعة بغداد الدولية",
+      "brand.sub": "BAGHDAD INTERNATIONAL GROUP"
     },
     en: {
+      "brand.title": "Baghdad International",
+      "brand.sub": "GROUP",
       "nav.home": "Home",
       "nav.about": "About Us",
       "nav.subsidiaries": "Subsidiaries",

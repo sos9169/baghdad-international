@@ -203,19 +203,35 @@ body.lang-en .boarding-pass .bp-stub p {
   }
 
   .header-actions {
-    gap: 4px;
+    gap: 6px;
     flex: none;
   }
 
   .header-actions .social-links {
-    display: flex !important;
-    gap: 4px;
+    display: none !important;
+  }
+
+  .brand {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .brand-copy strong {
+    font-size: 13.5px !important;
+    white-space: nowrap !important;
+    overflow: visible !important;
+    text-overflow: clip !important;
+    color: #ffffff;
+    display: block;
   }
 
   .social, .control-btn, .menu-btn {
-    width: 32px !important;
-    height: 32px !important;
-    font-size: 12px !important;
+    width: 34px !important;
+    height: 34px !important;
+    font-size: 13px !important;
     border-radius: 50% !important;
     border: 1px solid rgba(228, 196, 125, 0.35) !important;
     background: rgba(255, 255, 255, 0.08) !important;
