@@ -1,54 +1,69 @@
 (() => {
   "use strict";
 
-  // Comprehensive Multi-lingual Translation Dictionary
+  const apiUrl = window.location.hostname.endsWith(".vercel.app") ? "/api/public" : "api.php";
+
+  const body = document.body;
+  const nav = document.getElementById("mainNav");
+  const menuBtn = document.getElementById("menuBtn");
+  const themeToggle = document.getElementById("themeToggle");
+  const langToggle = document.getElementById("langToggle");
+  const topBtn = document.getElementById("floatingTop");
+  const contactForm = document.getElementById("contactForm");
+
+  // Dynamic state stores
+  let slidesData = [];
+  let servicesData = [];
+  let destinationsData = [];
+  let subsidiariesData = [];
+
   const translations = {
     ar: {
       "nav.home": "الرئيسية",
-      "nav.about": "من نحن",
-      "nav.subsidiaries": "مؤسسات المجموعة",
+      "nav.about": "عن المجموعة",
+      "nav.subsidiaries": "شركات المجموعة",
       "nav.services": "خدماتنا",
       "nav.education": "التعليم والتدريب",
-      "nav.destinations": "الدول",
-      "nav.why": "لماذا نحن",
+      "nav.destinations": "الدول والوجهات",
+      "nav.why": "لماذا بغداد الدولية",
       "nav.contact": "تواصل معنا",
-      "hero.eyebrow": "BAGHDAD INTERNATIONAL GROUP",
-      "hero.title": "نفتح لك الطريق<br><span>إلى فرص أكبر</span>",
-      "hero.text": "حلول متكاملة في التعليم والسفر والخدمات الدولية، بتجربة احترافية تبدأ من أول تواصل وحتى إنجاز التفاصيل.",
-      "hero.primary": "اكتشف خدماتنا <span>↙</span>",
-      "hero.secondary": "تواصل معنا",
-      "hero.stat1": "حلول متكاملة",
-      "hero.stat2": "خدمة احترافية",
-      "hero.stat3": "دعم مستمر",
-      "hero.cardLabel": "YOUR NEXT STEP",
-      "hero.cardTitle": "نرتب التفاصيل<br>وأنت تبدأ الرحلة",
+      "hero.eyebrow": "مجموعة بغداد الدولية | BAGHDAD INTERNATIONAL GROUP",
+      "hero.title": "نفتح لك الأفق<br><span>نحو فرص أوسع</span>",
+      "hero.text": "خدمات متكاملة في التعليم، السفر، والخدمات الدولية — بخبرة واحترافية تضمن لك الراحة والمتابعة الدقيقة من أول استشارة حتى إتمام خطواتك.",
+      "hero.primary": "استكشف خدماتنا <span>↙</span>",
+      "hero.secondary": "تواصل معنا مباشرة",
+      "hero.stat1": "حلول خيارات متكاملة",
+      "hero.stat2": "خدمة واحترافية دقيقة",
+      "hero.stat3": "متابعة مستمرة ومتواصلة",
+      "hero.cardLabel": "خطوتك القادمة تبدأ هنا",
+      "hero.cardTitle": "نرتّب التفاصيل<br>لتنطلق بثقة",
       "hero.cardText": "تعليم • سفر • خدمات دولية",
-      "hero.chip1": "Trusted Support",
-      "hero.chip2": "International",
-      "ticker.1": "EDUCATION",
-      "ticker.2": "TRAVEL",
-      "ticker.3": "GENERAL TRADE",
-      "ticker.4": "TRAINING",
-      "ticker.5": "LEGAL SUPPORT",
-      "ticker.6": "AI & SOFTWARE",
+      "hero.chip1": "متابعة موثوقة",
+      "hero.chip2": "تغطية دولية",
+      "ticker.1": "خدمات التعليم",
+      "ticker.2": "السفر والتنقل",
+      "ticker.3": "التجارة العامة",
+      "ticker.4": "التدريب والتطوير",
+      "ticker.5": "الإسناد الإجرائي",
+      "ticker.6": "الذكاء الاصطناعي والبرمجيات",
       "trust.1.title": "شراكات دولية",
       "trust.1.text": "جامعات ومؤسسات معتمدة",
-      "trust.2.title": "إسناد إجرائي قانوني",
-      "trust.2.text": "فريق محامين ومتابعة مرخصة",
-      "trust.3.title": "تراخيص رسمية",
+      "trust.2.title": "دعم وإسناد إجرائي",
+      "trust.2.text": "فريق قانوني ومستشارون",
+      "trust.3.title": "ترخيص ومقرات رسمية",
       "trust.3.text": "سجل تجاري ومقر موثق",
       "trust.4.title": "<bdi dir=\"ltr\">+9</bdi> سنوات خبرة",
-      "trust.4.text": "في سوق الخدمات الدولية",
+      "trust.4.text": "في تقديم الخدمات الدولية",
       "subsidiaries.eyebrow": "BIG GROUP SUBSIDIARIES",
-      "subsidiaries.title": "مؤسسات وشركات<br><span>المجموعة التابعة</span>",
-      "subsidiaries.note": "تضم Baghdad International Group منظومة متكاملة من الشركات والمؤسسات التعليمية والتجارية لتقديم أفضل دعم لعملائنا.",
+      "subsidiaries.title": "مؤسسات وشركات<br><span>المجموعة</span>",
+      "subsidiaries.note": "منظومة متكاملة من الأكاديميات والشركات المتخصصة لدعم الطلاب والأفراد في التعليم والسفر والتجارة الدولية.",
       "about.eyebrow": "ABOUT US",
-      "about.title": "خبرة تُحوّل<br><span>التفاصيل إلى نتائج</span>",
-      "about.lead": "Baghdad International Group هي واجهة لخدمات دولية مصممة للأفراد والعائلات والطلاب وأصحاب الأعمال.",
-      "about.text": "نساعدك في ترتيب الخطوات، فهم الإجراءات، واختيار الحل الأنسب لاحتياجك — بأسلوب واضح، سريع واحترافي، مع فريق دعم كامل بين المقر الرئيسي ببغداد ومصر وفريق محامين متخصص للحماية القانونية.",
-      "about.signature": "Baghdad International Group",
+      "about.title": "خبرة تحوّل التفاصيل<br><span>إلى نتائج</span>",
+      "about.lead": "مجموعة بغداد الدولية هي بوابتك للخدمات الدولية المصممة للأفراد، العائلات، والطلاب والأعمال.",
+      "about.text": "نساعدك في ترتيب خطواتك، فهم الإجراءات، واختيار الحل المناسب — بوضوح، سرعة، واحترافية مع فرق دعم متخصصة بين المقر الرئيسي في بغداد ومقر القاهرة.",
+      "about.signature": "مجموعة بغداد الدولية",
       "about.years": "<bdi dir=\"ltr\">+9</bdi>",
-      "about.yearsLabel": "سنوات خبرة في السوق",
+      "about.yearsLabel": "سنوات من الخبرة في السوق",
       "showcase.eyebrow": "OUR WORLD",
       "showcase.title": "من الفكرة إلى<br><span>الخطوة التالية</span>",
       "slide.1.title": "ابدأ مستقبلك التعليمي",
@@ -59,17 +74,17 @@
       "slide.3.text": "دعم عملي للأفراد والشركات في الخدمات التي تحتاج تنسيقاً ومتابعة دقيقة.",
       "education.eyebrow": "EDUCATION & TRAINING",
       "education.title": "الدراسة والتطوير<br><span>في مكان واحد</span>",
-      "education.note": "ننسق خدمات الدراسة والتعليم المدرسي (ابتدائي، إعدادي، وثانوي)، والقبولات الجامعية، والدورات التدريبية المتقدمة في كافة المجالات.",
+      "education.note": "ننسق خدمات الدراسة، التعليم المدرسي (ابتدائي، إعدادي، ثانوي)، القبولات الجامعية، والدورات التدريبية المتخصصة في كافة المجالات.",
       "program.1.title": "الدراسة والقبولات الجامعية",
-      "program.1.text": "التعليم المدرسي تشمل الدراسة من (ابتدائي، إعدادي، وثانوي)، والقبولات الجامعية بمختلف التخصصات.",
+      "program.1.text": "يشمل التعليم المدرسي للمراحل (ابتدائي، إعدادي، ثانوي)، بالإضافة إلى القبولات الجامعية.",
       "program.2.title": "الدورات والبرامج التدريبية",
-      "program.2.text": "برامج تدريبية متخصصة ومتقدمة لتطوير المهارات العملية والمهنية في كافة المجالات والقطاعات.",
-      "program.3.title": "مؤتمرات ودورات مهنية MBA",
-      "program.3.text": "مؤتمرات علمية ودورات مهنية متخصصة، بما يشمل برامج إدارة الأعمال MBA.",
-      "stats.clients": "عميل وطالب مخدوم",
+      "program.2.text": "برامج تدريبية متخصصة ومتقدمة لتطوير المهارات العملية والمهنية في كافة المجالات.",
+      "program.3.title": "المؤتمرات وبرامج الـ MBA",
+      "program.3.text": "المؤتمرات العلمية والدورات التخصصية الاحترافية وتشمل برامج الـ MBA.",
+      "stats.clients": "عميل وطالب تم خدمتهم",
       "stats.partners": "جامعة وشريك دولي",
-      "stats.success": "نسبة إنجاز المعاملات",
-      "stats.years": "سنوات خبرة متواصلة",
+      "stats.success": "نسبة نجاح وتسهيل المعاملات",
+      "stats.years": "سنوات من الخبرة المستمرة",
       "destinations.eyebrow": "DESTINATIONS & COVERAGE",
       "destinations.title": "شبكة خدماتنا الدولية<br><span>عبر أهم الوجهات</span>",
       "destinations.note": "نربط عملائنا بأحدث الفرص التعليمية، خيارات السفر والإقامة، والتسهيلات التجارية في الدول المستهدفة.",
@@ -104,20 +119,20 @@
       "dest.tag.scholar": "منح ومقاعد",
       "dest.tag.prep": "سنة تحضيرية",
       "dest.tag.med": "جامعات حكومية",
-      "banner.eyebrow": "BAGHDAD INTERNATIONAL GROUP",
+      "banner.eyebrow": "مجموعة بغداد الدولية",
       "banner.title": "خدمات دولية | سفر | تعليم | تجارة عامة",
       "services.eyebrow": "WHAT WE DO",
       "services.title": "خدماتنا، بشكل<br><span>أبسط وأوضح</span>",
       "service.ai.title": "الذكاء الاصطناعي والبرمجيات",
       "service.ai.text": "تطوير البرمجيات الحديثة، الحلول التقنية الذكية، وتوفير الاستشارات البرمجية للأعمال.",
-      "service.4.title": "الخدمات التعليمية والمدرسية",
-      "service.4.text": "القبولات الجامعية والتعليم المدرسي تشمل مراحل (ابتدائي، إعدادي، وثانوي).",
-      "service.5.title": "التدريب والتطوير في كافة المجالات",
-      "service.5.text": "برامج تدريبية ورعايات في كافة التخصصات (طبية، هندسية، إدارية، تقنية) ومؤتمرات MBA.",
+      "service.4.title": "التعليم والخدمات المدرسية",
+      "service.4.text": "تنسيق القبولات الجامعية والتعليم المدرسي للمراحل (ابتدائي، إعدادي، ثانوي).",
+      "service.5.title": "التدريب في كافة المجالات",
+      "service.5.text": "برامج تدريبية متخصصة في كل المجالات (طبي، هندسي، إداري، تقني) ومؤتمرات الـ MBA.",
       "service.more": "اعرف المزيد ↙",
       "why.eyebrow": "WHY BIG",
-      "why.title": "مش مجرد خدمة<br><span>دي تجربة كاملة</span>",
-      "why.caption": "Built around your next step.",
+      "why.title": "أكثر من مجرد خدمة<br><span>تجربة متكاملة</span>",
+      "why.caption": "مصممة حول خطوتك القادمة.",
       "why.1.title": "وضوح من البداية",
       "why.1.text": "نشرح لك الخطوات والمطلوب بدون تعقيد.",
       "why.2.title": "متابعة مستمرة",
@@ -144,10 +159,17 @@
       "contact.addressLabel3": "فرع تركيا (يالوفا)",
       "contact.address3": "Rüstem Paşa, Şahin Sk. No:13, 77200 Yalova Merkez/Yalova, تركيا",
       "contact.directions": "احصل على الاتجاهات ↗",
-      "contact.cairoBranch": "🇪🇬 فرع القاهرة (مصر)",
+      "contact.numbersTitle": "أرقام التواصل والواتساب المباشرة حسب الدولة",
+      "contact.iraqBranch": "🇮🇶 المقر الرئيسي (بغداد — العراق)",
+      "contact.iraqSub": "أرقام الإدارة والخدمات بالعراق",
+      "contact.cairoBranch": "🇪🇬 مقر القاهرة (مصر)",
       "contact.cairoSub": "خدمات الطلاب والسفر بمصر",
       "contact.academyBranch": "🎓 فرع أكاديمية بغداد وشركة الليل",
-      "contact.academySub": "الخدمات الأكاديمية والتنفيذية"
+      "contact.academySub": "الخدمات الأكاديمية والتنفيذية",
+      "contact.turkeyBranch": "🇹🇷 فرع تركيا (يلوى واسطنبول — بلاتفورم والمدارس)",
+      "contact.turkeySub": "الخدمات والمدارس بتركيا",
+      "ticker.eyebrow": "GROUP SUBSIDIARIES & BRAND LOGOS",
+      "ticker.title": "المؤسسات والشركات المعتمدة في مجموعة بغداد الدولية"
     },
     en: {
       "nav.home": "Home",
@@ -290,50 +312,77 @@
       "contact.addressLabel3": "Turkey Branch (Yalova)",
       "contact.address3": "Rüstem Paşa, Şahin Sk. No:13, 77200 Yalova Merkez/Yalova, Turkey",
       "contact.directions": "Get directions ↗",
+      "contact.numbersTitle": "Direct Contact & WhatsApp Numbers by Country",
+      "contact.iraqBranch": "🇮🇶 Primary HQ (Baghdad — Iraq)",
+      "contact.iraqSub": "Management & Services in Iraq",
       "contact.cairoBranch": "🇪🇬 Cairo Branch (Egypt)",
-      "contact.cairoSub": "Student and Travel Services in Egypt",
+      "contact.cairoSub": "Student & Travel Services in Egypt",
       "contact.academyBranch": "🎓 Baghdad Academy & Al-Lail Co.",
-      "contact.academySub": "Academic & Executive Services"
+      "contact.academySub": "Academic & Executive Services",
+      "contact.turkeyBranch": "🇹🇷 Turkey Branch (Yalova & Istanbul)",
+      "contact.turkeySub": "Services & Schools in Turkey",
+      "ticker.eyebrow": "GROUP SUBSIDIARIES & BRAND LOGOS",
+      "ticker.title": "Approved Subsidiaries & Companies in Baghdad International Group"
     }
   };
 
-  const body = document.body;
-  const root = document.documentElement;
-  const langToggle = document.getElementById("langToggle");
-  const themeToggle = document.getElementById("themeToggle");
-  const menuBtn = document.getElementById("menuBtn");
-  const nav = document.querySelector(".main-nav");
-  const topBtn = document.getElementById("floatingTop");
-  const contactForm = document.getElementById("contactForm");
-  const apiUrl = window.location.hostname.endsWith(".vercel.app") ? "/api/public" : "api.php";
+  // --- Saved Theme & Language Load ---
+  const savedTheme = localStorage.getItem("big-theme");
+  if (savedTheme === "dark" || (!savedTheme && window.matchMedia("(prefers-color-scheme: dark)").matches)) {
+    body.classList.add("dark");
+  }
 
-  let slidesData = [];
-  let servicesData = [];
+  const savedLang = localStorage.getItem("big-lang");
+  if (savedLang === "en") {
+    body.classList.remove("lang-ar");
+    body.classList.add("lang-en");
+    document.documentElement.lang = "en";
+    document.documentElement.dir = "ltr";
+  } else {
+    body.classList.remove("lang-en");
+    body.classList.add("lang-ar");
+    document.documentElement.lang = "ar";
+    document.documentElement.dir = "rtl";
+  }
 
-  // --- i18n Language Switcher ---
-  function setLanguage(lang) {
-    const currentLang = lang === "en" ? "en" : "ar";
-    const dict = translations[currentLang];
-
-    root.lang = currentLang;
-    root.dir = currentLang === "ar" ? "rtl" : "ltr";
-    body.classList.toggle("lang-en", currentLang === "en");
+  function updatePageLanguage() {
+    const isEn = body.classList.contains("lang-en");
+    const dict = translations[isEn ? "en" : "ar"];
 
     document.querySelectorAll("[data-i18n]").forEach((el) => {
-      const val = dict[el.dataset.i18n];
-      if (val !== undefined) el.innerHTML = val;
+      const key = el.getAttribute("data-i18n");
+      if (dict[key]) {
+        el.innerHTML = dict[key];
+      }
     });
 
     document.querySelectorAll("[data-placeholder]").forEach((el) => {
-      const val = dict[el.dataset.placeholder];
-      if (val !== undefined) el.placeholder = val;
+      const key = el.getAttribute("data-placeholder");
+      if (dict[key]) {
+        el.placeholder = dict[key];
+      }
     });
+  }
 
-    localStorage.setItem("big-lang", currentLang);
+  function setLanguage(lang) {
+    const isEn = lang === "en";
+    body.classList.toggle("lang-en", isEn);
+    body.classList.toggle("lang-ar", !isEn);
+    document.documentElement.lang = isEn ? "en" : "ar";
+    document.documentElement.dir = isEn ? "ltr" : "rtl";
+
+    updatePageLanguage();
+    localStorage.setItem("big-lang", isEn ? "en" : "ar");
 
     updateSlideTexts();
     if (servicesData.length) renderServices(servicesData);
-    rebuildTicker();
+    if (subsidiariesData.length) {
+      renderSubsidiaries(subsidiariesData);
+      renderTicker(subsidiariesData);
+    }
+    if (destinationsData.length) {
+      renderDestinations(destinationsData);
+    }
   }
 
   // --- Theme Switcher ---
@@ -360,306 +409,107 @@
     menuBtn.addEventListener("click", () => {
       nav.classList.toggle("open");
     });
-    nav.querySelectorAll("a").forEach((a) => {
-      a.addEventListener("click", () => nav.classList.remove("open"));
-    });
-  }
 
-  // --- INTERACTIVE COUNTER ANIMATION FOR STATISTICS ---
-  const counters = document.querySelectorAll(".counter-num");
-  let animatedStats = false;
-
-  function runCounters() {
-    if (animatedStats) return;
-    animatedStats = true;
-    counters.forEach((counter) => {
-      const target = +counter.dataset.target || 0;
-      const suffix = counter.dataset.suffix || "";
-      let count = 0;
-      const step = Math.max(1, Math.ceil(target / 40));
-
-      const timer = setInterval(() => {
-        count += step;
-        if (count >= target) {
-          count = target;
-          clearInterval(timer);
-        }
-        counter.textContent = `${count}${suffix}`;
-      }, 35);
-    });
-  }
-
-  const statsSection = document.querySelector(".stats-counter-section");
-  if (statsSection && "IntersectionObserver" in window) {
-    const statsObserver = new IntersectionObserver((entries) => {
-      if (entries[0].isIntersecting) {
-        runCounters();
-        statsObserver.unobserve(statsSection);
-      }
-    }, { threshold: 0.2 });
-    statsObserver.observe(statsSection);
-  } else {
-    runCounters();
-  }
-
-  // --- Interactive Destinations Country Cards & Map Node Sync ---
-  const destCards = document.querySelectorAll(".destination-card");
-  const mapNodes = document.querySelectorAll(".map-node");
-  const routeLines = document.querySelectorAll(".route-line");
-
-  function activateCountry(countryId) {
-    destCards.forEach((c) => c.classList.toggle("active", c.dataset.country === countryId));
-    mapNodes.forEach((n) => n.classList.toggle("active", n.dataset.node === countryId));
-    
-    routeLines.forEach((line) => {
-      if (countryId === "iraq") {
-        line.classList.add("active");
-      } else {
-        line.classList.toggle("active", line.id === `route-${countryId}`);
+    document.addEventListener("click", (e) => {
+      if (!nav.contains(e.target) && !menuBtn.contains(e.target)) {
+        nav.classList.remove("open");
       }
     });
   }
 
-  destCards.forEach((card) => {
-    card.addEventListener("click", (e) => {
-      if (e.target.closest(".dest-tag-btn")) return;
-      activateCountry(card.dataset.country);
-    });
-  });
+  // Initial Language Sync
+  updatePageLanguage();
 
-  mapNodes.forEach((node) => {
-    node.addEventListener("click", () => {
-      activateCountry(node.dataset.node);
-    });
-  });
-
-  // --- SERVICE QUICK REQUEST MODAL LOGIC WITH EDITABLE SELECTORS ---
-  const serviceModal = document.getElementById("serviceModal");
-  const closeServiceModalBtn = document.getElementById("closeServiceModal");
-  const serviceModalForm = document.getElementById("serviceModalForm");
-  const modalServiceName = document.getElementById("modalServiceName");
-  const modalServiceSelect = document.getElementById("modalServiceSelect");
-  const modalCountrySelect = document.getElementById("modalCountrySelect");
-  const modalWaBtn = document.getElementById("modalWaBtn");
-  const modalStatus = document.getElementById("modalStatus");
-
-  function getCountryWaNumber(countryVal) {
-    if (countryVal.includes("عراق") || countryVal.includes("Iraq")) return "9647742881766";
-    if (countryVal.includes("تركيا") || countryVal.includes("Turkey")) return "905011263577";
-    return "201505502339";
-  }
-
-  function updateModalHeaderAndWa() {
-    const sVal = modalServiceSelect ? modalServiceSelect.value : "";
-    const cVal = modalCountrySelect ? modalCountrySelect.value : "";
-
-    if (modalServiceName) modalServiceName.textContent = sVal;
-
-    const waNum = getCountryWaNumber(cVal);
-    const waText = encodeURIComponent(`مرحباً Baghdad International Group، أرغب في الاستفسار والتقديم على خدمة (${sVal}) الخاصة بدولة (${cVal}).`);
-    if (modalWaBtn) modalWaBtn.href = `https://wa.me/${waNum}?text=${waText}`;
-  }
-
-  if (modalServiceSelect) modalServiceSelect.addEventListener("change", updateModalHeaderAndWa);
-  if (modalCountrySelect) modalCountrySelect.addEventListener("change", updateModalHeaderAndWa);
-
-  function openModalForTag(serviceVal, countryVal) {
-    const isEn = body.classList.contains("lang-en");
-
-    if (modalServiceSelect && serviceVal) {
-      let matchFound = false;
-      for (let i = 0; i < modalServiceSelect.options.length; i++) {
-        if (modalServiceSelect.options[i].value === serviceVal || modalServiceSelect.options[i].text.includes(serviceVal)) {
-          modalServiceSelect.selectedIndex = i;
-          matchFound = true;
-          break;
-        }
-      }
-      if (!matchFound) modalServiceSelect.value = serviceVal;
+  // --- Helper to Resolve Image / Media URLs ---
+  function resolveMediaUrl(src) {
+    if (!src) return "";
+    if (src.startsWith("http://") || src.startsWith("https://") || src.startsWith("/") || src.startsWith("data:")) {
+      return src;
     }
-
-    if (modalCountrySelect && countryVal) {
-      let cMatchFound = false;
-      for (let i = 0; i < modalCountrySelect.options.length; i++) {
-        if (modalCountrySelect.options[i].value === countryVal || modalCountrySelect.options[i].text.includes(countryVal)) {
-          modalCountrySelect.selectedIndex = i;
-          cMatchFound = true;
-          break;
-        }
-      }
-      if (!cMatchFound) modalCountrySelect.value = countryVal;
-    }
-
-    updateModalHeaderAndWa();
-
-    if (modalStatus) {
-      modalStatus.textContent = "";
-      modalStatus.className = "form-status";
-    }
-
-    if (serviceModal) serviceModal.classList.remove("hidden");
+    return `/${src}`;
   }
 
-  document.querySelectorAll(".dest-tag-btn").forEach((btn) => {
-    btn.addEventListener("click", (e) => {
-      e.stopPropagation();
-      const serviceVal = btn.dataset.serviceVal || btn.textContent.replace("↗", "").trim();
-      const countryVal = btn.dataset.countryVal || "";
-      openModalForTag(serviceVal, countryVal);
-    });
-  });
-
-  if (closeServiceModalBtn) {
-    closeServiceModalBtn.addEventListener("click", () => {
-      if (serviceModal) serviceModal.classList.add("hidden");
-    });
+  function escapeHtml(value) {
+    return String(value).replace(/[&<>"']/g, (char) => ({
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      '"': "&quot;",
+      "'": "&#039;"
+    }[char]));
   }
 
-  if (serviceModal) {
-    serviceModal.addEventListener("click", (e) => {
-      if (e.target === serviceModal) {
-        serviceModal.classList.add("hidden");
-      }
-    });
-  }
-
-  if (serviceModalForm) {
-    serviceModalForm.addEventListener("submit", async (e) => {
-      e.preventDefault();
-      const isEn = body.classList.contains("lang-en");
-      const dict = translations[isEn ? "en" : "ar"];
-      const submitBtn = serviceModalForm.querySelector('button[type="submit"]');
-
-      const formData = new FormData(serviceModalForm);
-      const name = (formData.get("name") || "").toString().trim();
-      const phone = (formData.get("phone") || "").toString().trim();
-      const service = (formData.get("service_name") || "").toString().trim();
-      const country = (formData.get("country_name") || "").toString().trim();
-      const nationality = (formData.get("nationality") || "").toString().trim();
-      const details = (formData.get("details") || "").toString().trim();
-      const timeline = (formData.get("timeline") || "").toString().trim();
-      const notes = (formData.get("notes") || "").toString().trim();
-
-      if (!name || !phone) {
-        if (modalStatus) {
-          modalStatus.textContent = isEn ? "Please fill in your name and phone." : "يرجى كتابة الاسم ورقم الهاتف.";
-          modalStatus.className = "form-status error";
-        }
-        return;
-      }
-
-      if (modalStatus) {
-        modalStatus.textContent = dict["form.sending"];
-        modalStatus.className = "form-status";
-      }
-      if (submitBtn) submitBtn.disabled = true;
-
-      const messageCombined = `[طلب خدمة خاصة: ${service} - ${country}]\nالجنسية/الإقامة: ${nationality || "غير محدد"}\nالتفاصيل المطلوبة: ${details || "-"}\nالموعد المتوقع: ${timeline}\nالملاحظات: ${notes || "-"}`;
-
-      try {
-        const response = await fetch(`${apiUrl}?action=order`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ name, phone, message: messageCombined })
-        });
-
-        const data = await response.json().catch(() => ({}));
-
-        if (response.ok && data.ok) {
-          if (modalStatus) {
-            modalStatus.textContent = isEn ? "Service request sent successfully! We will contact you shortly." : "تم إرسال طلب الخدمة بنجاح! وسنتواصل معك قريباً.";
-            modalStatus.className = "form-status success";
-          }
-          serviceModalForm.reset();
-          setTimeout(() => {
-            if (serviceModal) serviceModal.classList.add("hidden");
-          }, 2500);
-        } else {
-          throw new Error(data.error || "Submission failed");
-        }
-      } catch (err) {
-        if (modalStatus) {
-          modalStatus.textContent = isEn ? "Service request sent successfully! We will contact you shortly." : "تم إرسال طلب الخدمة بنجاح! وسنتواصل معك قريباً.";
-          modalStatus.className = "form-status success";
-        }
-        serviceModalForm.reset();
-        setTimeout(() => {
-          if (serviceModal) serviceModal.classList.add("hidden");
-        }, 2500);
-      } finally {
-        if (submitBtn) submitBtn.disabled = false;
-      }
-    });
-  }
-
-  // --- Dynamic Showcase Slider (Images & Short Videos) ---
-  const prevBtn = document.getElementById("prevSlide");
-  const nextBtn = document.getElementById("nextSlide");
-  const slidesTrack = document.getElementById("slides");
-  const dotsTrack = document.getElementById("dots");
-  let slidesElements = [];
-  let dotsElements = [];
+  // --- Dynamic Showcase Slider Logic ---
+  let slidesTrack = document.getElementById("slides");
+  let dotsContainer = document.getElementById("dots");
+  let prevBtn = document.getElementById("prevSlide");
+  let nextBtn = document.getElementById("nextSlide");
   let slideIndex = 0;
-  let sliderTimer = null;
+  let slideTimer;
 
   function updateSlideTexts() {
-    const isEn = body.classList.contains("lang-en");
-    slidesElements.forEach((slideEl, index) => {
-      const item = slidesData[index];
-      if (!item) return;
-      const titleEl = slideEl.querySelector("h3");
-      const textEl = slideEl.querySelector("p");
-      if (titleEl) titleEl.textContent = isEn ? (item.title_en || item.title_ar) : (item.title_ar || item.title_en);
-      if (textEl) textEl.textContent = isEn ? (item.text_en || item.text_ar) : (item.text_ar || item.text_en);
-    });
-  }
-
-  function initStaticSlides() {
-    if (!slidesTrack) return;
-    slidesElements = [...slidesTrack.querySelectorAll(".slide")];
-    dotsElements = [...(dotsTrack ? dotsTrack.querySelectorAll(".dot") : [])];
-
-    if (slidesElements.length > 0) {
-      if (!slidesData.length) {
-        slidesData = slidesElements.map((s, i) => ({
-          badge: String(i + 1).padStart(2, "0"),
-          title_ar: s.querySelector("h3")?.textContent || "",
-          title_en: s.querySelector("h3")?.textContent || "",
-          text_ar: s.querySelector("p")?.textContent || "",
-          text_en: s.querySelector("p")?.textContent || ""
-        }));
-      }
-
-      dotsElements.forEach((d) => {
-        d.addEventListener("click", () => {
-          showSlide(+d.dataset.index);
-          restartSlider();
-        });
+    if (slidesData.length && slidesTrack) {
+      const isEn = body.classList.contains("lang-en");
+      const slideArticles = slidesTrack.querySelectorAll(".slide");
+      slideArticles.forEach((art, i) => {
+        const slide = slidesData[i];
+        if (!slide) return;
+        const titleEl = art.querySelector("h3");
+        const textEl = art.querySelector("p");
+        if (titleEl) titleEl.textContent = isEn ? (slide.title_en || slide.title_ar) : (slide.title_ar || slide.title_en);
+        if (textEl) textEl.textContent = isEn ? (slide.text_en || slide.text_ar) : (slide.text_ar || slide.text_en);
       });
-
-      slideIndex = 0;
-      showSlide(0);
-      restartSlider();
     }
   }
 
-  function renderSlides(items) {
-    if (!slidesTrack || !items || !items.length) return;
-    slidesData = items;
+  function showSlide(index) {
+    if (!slidesTrack) return;
+    const slides = slidesTrack.children;
+    const dots = dotsContainer ? dotsContainer.children : [];
+    if (!slides.length) return;
+
+    slideIndex = (index + slides.length) % slides.length;
+    slidesTrack.style.transform = `translateX(${-slideIndex * 100}%)`;
+
+    for (let i = 0; i < slides.length; i++) {
+      slides[i].classList.toggle("active", i === slideIndex);
+    }
+    for (let i = 0; i < dots.length; i++) {
+      dots[i].classList.toggle("active", i === slideIndex);
+    }
+  }
+
+  function startSlider() {
+    stopSlider();
+    slideTimer = setInterval(() => showSlide(slideIndex + 1), 6000);
+  }
+
+  function stopSlider() {
+    if (slideTimer) clearInterval(slideTimer);
+  }
+
+  function restartSlider() {
+    startSlider();
+  }
+
+  function renderSlides(slides) {
+    if (!slidesTrack || !Array.isArray(slides) || !slides.length) return;
+    slidesData = slides;
     const isEn = body.classList.contains("lang-en");
 
-    slidesTrack.innerHTML = items.map((item, i) => {
-      const isVideo = item.type === "video" || (item.src && item.src.match(/\.(mp4|webm)$/i));
-      const badge = item.badge || strPad(i + 1);
-      const title = isEn ? (item.title_en || item.title_ar) : (item.title_ar || item.title_en);
-      const text = isEn ? (item.text_en || item.text_ar) : (item.text_ar || item.text_en);
+    slidesTrack.innerHTML = slides.map((slide, i) => {
+      const isVideo = slide.type === "video" || (slide.src && slide.src.match(/\.(mp4|webm)$/i));
+      const title = isEn ? (slide.title_en || slide.title_ar) : (slide.title_ar || slide.title_en);
+      const text = isEn ? (slide.text_en || slide.text_ar) : (slide.text_ar || slide.text_en);
+      const badge = slide.badge || String(i + 1).padStart(2, "0");
+      const mediaSrc = resolveMediaUrl(slide.src);
 
       const mediaHtml = isVideo
-        ? `<video src="${escapeAttr(item.src)}" autoplay loop muted playsinline class="slide-media"></video>`
-        : `<img src="${escapeAttr(item.src)}" alt="${escapeAttr(title)}" ${i === 0 ? 'fetchpriority="high"' : 'loading="lazy"'}>`;
+        ? `<video src="${escapeHtml(mediaSrc)}" autoplay loop muted playsinline width="1200" height="800"></video>`
+        : `<img src="${escapeHtml(mediaSrc)}" width="1200" height="800" alt="${escapeHtml(title)}" ${i === 0 ? 'fetchpriority="high"' : 'loading="lazy"'}>`;
 
       return `
-        <article class="slide ${i === 0 ? "active" : ""}">
+        <article class="slide${i === 0 ? " active" : ""}">
           ${mediaHtml}
           <div class="slide-overlay">
             <span>${escapeHtml(badge)}</span>
@@ -672,137 +522,34 @@
       `;
     }).join("");
 
-    if (dotsTrack) {
-      dotsTrack.innerHTML = items.map((_, i) => `
-        <button class="dot ${i === 0 ? "active" : ""}" data-index="${i}" aria-label="Slide ${i + 1}"></button>
-      `).join("");
+    if (dotsContainer) {
+      dotsContainer.innerHTML = slides.map((_, i) =>
+        `<button class="dot${i === 0 ? " active" : ""}" data-index="${i}" aria-label="Slide ${i + 1}"></button>`
+      ).join("");
     }
-
-    slidesElements = [...slidesTrack.querySelectorAll(".slide")];
-    dotsElements = [...(dotsTrack ? dotsTrack.querySelectorAll(".dot") : [])];
-
-    dotsElements.forEach((d) => {
-      d.addEventListener("click", () => {
-        showSlide(+d.dataset.index);
-        restartSlider();
-      });
-    });
 
     slideIndex = 0;
     showSlide(0);
-    restartSlider();
+    startSlider();
   }
 
-  function strPad(num) {
-    return String(num).padStart(2, "0");
-  }
+  function initStaticSlides() {
+    if (!slidesTrack) return;
+    if (prevBtn) prevBtn.addEventListener("click", () => { showSlide(slideIndex - 1); restartSlider(); });
+    if (nextBtn) nextBtn.addEventListener("click", () => { showSlide(slideIndex + 1); restartSlider(); });
 
-  function escapeHtml(val) {
-    return String(val || "").replace(/[&<>"']/g, (c) => ({
-      "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;"
-    }[c]));
-  }
-
-  function escapeAttr(val) {
-    return escapeHtml(val).replace(/`/g, "&#096;");
-  }
-
-  function showSlide(index) {
-    if (!slidesElements.length) return;
-    slideIndex = (index + slidesElements.length) % slidesElements.length;
-    slidesElements.forEach((s, i) => s.classList.toggle("active", i === slideIndex));
-    dotsElements.forEach((d, i) => d.classList.toggle("active", i === slideIndex));
-
-    const activeVideo = slidesElements[slideIndex]?.querySelector("video");
-    if (activeVideo && activeVideo.paused) {
-      activeVideo.play().catch(() => {});
-    }
-  }
-
-  function restartSlider() {
-    clearInterval(sliderTimer);
-    sliderTimer = setInterval(() => showSlide(slideIndex + 1), 5000);
-  }
-
-  if (prevBtn) {
-    prevBtn.addEventListener("click", (e) => {
-      e.preventDefault();
-      showSlide(slideIndex - 1);
-      restartSlider();
-    });
-  }
-
-  if (nextBtn) {
-    nextBtn.addEventListener("click", (e) => {
-      e.preventDefault();
-      showSlide(slideIndex + 1);
-      restartSlider();
-    });
-  }
-
-  if (slidesTrack) {
-    let pointerDown = false;
-    let startX = 0;
-    let moved = false;
-
-    slidesTrack.addEventListener("pointerdown", (e) => {
-      if (e.pointerType === "mouse" && e.button !== 0) return;
-      pointerDown = true;
-      startX = e.clientX;
-      moved = false;
-      slidesTrack.classList.add("dragging");
-    });
-
-    slidesTrack.addEventListener("pointermove", (e) => {
-      if (pointerDown && Math.abs(e.clientX - startX) > 8) {
-        moved = true;
-      }
-    });
-
-    function endPointer(e) {
-      if (!pointerDown) return;
-      const dx = e.clientX - startX;
-      pointerDown = false;
-      slidesTrack.classList.remove("dragging");
-
-      if (Math.abs(dx) > 40) {
-        if (dx < 0) {
-          showSlide(slideIndex + 1);
-        } else {
-          showSlide(slideIndex - 1);
+    if (dotsContainer) {
+      dotsContainer.addEventListener("click", (e) => {
+        const dot = e.target.closest(".dot");
+        if (dot && dot.dataset.index !== undefined) {
+          showSlide(parseInt(dot.dataset.index, 10));
+          restartSlider();
         }
-        restartSlider();
-      }
+      });
     }
 
-    slidesTrack.addEventListener("pointerup", endPointer);
-    slidesTrack.addEventListener("pointercancel", () => {
-      pointerDown = false;
-      slidesTrack.classList.remove("dragging");
-    });
-
-    slidesTrack.addEventListener("click", (e) => {
-      if (moved) {
-        e.preventDefault();
-        e.stopPropagation();
-      }
-    }, true);
-
-    slidesTrack.addEventListener("dragstart", (e) => e.preventDefault());
+    startSlider();
   }
-
-  window.addEventListener("keydown", (e) => {
-    if (e.key === "Escape") {
-      if (serviceModal) serviceModal.classList.add("hidden");
-    }
-    if (e.key === "ArrowLeft") {
-      showSlide(slideIndex - 1);
-      restartSlider();
-    } else if (e.key === "ArrowRight") {
-      showSlide(slideIndex + 1);
-      restartSlider();
-    }
-  });
 
   initStaticSlides();
 
@@ -816,7 +563,7 @@
     })
     .catch(() => {});
 
-  // Dynamic Services Rendering
+  // --- Dynamic Services Rendering ---
   function renderServices(services) {
     const serviceGrid = document.querySelector(".service-grid");
     if (!serviceGrid || !Array.isArray(services) || !services.length) return;
@@ -845,6 +592,142 @@
     .then((data) => {
       if (data && Array.isArray(data.services) && data.services.length) {
         renderServices(data.services);
+      }
+    })
+    .catch(() => {});
+
+  // --- Dynamic Subsidiaries & Marquee Rendering ---
+  function renderSubsidiaries(list) {
+    const grid = document.querySelector(".subsidiary-grid");
+    if (!grid || !Array.isArray(list) || !list.length) return;
+    subsidiariesData = list;
+    const isEn = body.classList.contains("lang-en");
+    const fbLabel = isEn ? "Official Facebook Page" : "صفحة الفيسبوك الرسمية";
+
+    grid.innerHTML = list.map((sub) => {
+      const title = isEn ? (sub.title_en || sub.title_ar) : (sub.title_ar || sub.title_en);
+      const tag = isEn ? (sub.tag_en || sub.tag_ar) : (sub.tag_ar || sub.tag_en);
+      const desc = isEn ? (sub.desc_en || sub.desc_ar) : (sub.desc_ar || sub.desc_en);
+      const logoSrc = sub.logo ? resolveMediaUrl(sub.logo) : "";
+
+      const logoHtml = logoSrc
+        ? `<img src="${escapeHtml(logoSrc)}" width="56" height="56" alt="${escapeHtml(title)}" class="sub-logo-img" loading="lazy">`
+        : `<div class="sub-icon"><i class="fa-solid fa-briefcase"></i></div>`;
+
+      const fbHtml = sub.fb
+        ? `<a href="${escapeHtml(sub.fb)}" target="_blank" rel="noopener noreferrer" class="sub-fb-link"><i class="fa-brands fa-facebook"></i> <span>${fbLabel}</span> <span>↗</span></a>`
+        : "";
+
+      return `
+        <article class="subsidiary-card reveal visible">
+          <div class="sub-header">
+            ${logoHtml}
+            <div>
+              <h3>${escapeHtml(title)}</h3>
+              <span class="sub-tag">${escapeHtml(tag)}</span>
+            </div>
+          </div>
+          <p>${escapeHtml(desc)}</p>
+          ${fbHtml}
+        </article>
+      `;
+    }).join("");
+  }
+
+  function renderTicker(list) {
+    const track = document.getElementById("tickerTrack");
+    if (!track || !Array.isArray(list) || !list.length) return;
+    const isEn = body.classList.contains("lang-en");
+
+    const cardsHtml = list.map((sub) => {
+      const title = isEn ? (sub.title_en || sub.title_ar) : (sub.title_ar || sub.title_en);
+      const tag = isEn ? (sub.tag_en || sub.tag_ar) : (sub.tag_ar || sub.tag_en);
+      const logoSrc = sub.logo ? resolveMediaUrl(sub.logo) : "";
+      const logoHtml = logoSrc
+        ? `<img src="${escapeHtml(logoSrc)}" width="56" height="56" alt="${escapeHtml(title)}" class="ticker-logo" loading="lazy">`
+        : `<div class="ticker-logo-icon" style="width:56px;height:56px;border-radius:50%;background:rgba(228,196,125,0.15);display:grid;place-items:center;color:var(--gold-light);font-size:22px;flex:none;"><i class="fa-solid fa-briefcase"></i></div>`;
+
+      return `
+        <div class="ticker-card">
+          ${logoHtml}
+          <div class="ticker-info">
+            <strong>${escapeHtml(title)}</strong>
+            <span>${escapeHtml(tag)}</span>
+          </div>
+        </div>
+      `;
+    }).join("");
+
+    track.innerHTML = `<div class="ticker-unit">${cardsHtml}</div>`;
+    rebuildTicker();
+  }
+
+  fetch(`${apiUrl}?action=subsidiaries`, { cache: "no-store" })
+    .then((res) => (res.ok ? res.json() : null))
+    .then((data) => {
+      if (data && Array.isArray(data.subsidiaries) && data.subsidiaries.length) {
+        renderSubsidiaries(data.subsidiaries);
+        renderTicker(data.subsidiaries);
+      }
+    })
+    .catch(() => {});
+
+  // --- Dynamic Destinations Rendering ---
+  function renderDestinations(list) {
+    const grid = document.querySelector(".destinations-grid");
+    if (!grid || !Array.isArray(list) || !list.length) return;
+    destinationsData = list;
+    const isEn = body.classList.contains("lang-en");
+
+    grid.innerHTML = list.map((dest, index) => {
+      const name = isEn ? (dest.name_en || dest.name_ar) : (dest.name_ar || dest.name_en);
+      const badge = isEn ? (dest.badge_en || dest.badge_ar) : (dest.badge_ar || dest.badge_en);
+      const desc = isEn ? (dest.desc_en || dest.desc_ar) : (dest.desc_ar || dest.desc_en);
+      const code = dest.code || `${name} • Coverage`;
+      const flagSrc = dest.flag ? resolveMediaUrl(dest.flag) : "https://flagcdn.com/w40/un.png";
+      const isActive = index === 0 ? " active" : "";
+
+      const tagsHtml = (Array.isArray(dest.tags) ? dest.tags : []).map((t) => {
+        const tagVal = isEn ? (t.val_en || t.val_ar || t) : (t.val_ar || t.val_en || t);
+        return `
+          <button type="button" class="dest-tag-btn" data-country-val="${escapeHtml(name)}" data-service-val="${escapeHtml(tagVal)}">
+            <span>${escapeHtml(tagVal)}</span> <span>↗</span>
+          </button>
+        `;
+      }).join("");
+
+      return `
+        <article class="destination-card${isActive} reveal visible" data-country="${escapeHtml(dest.id || '')}">
+          <div class="dest-card-header">
+            <img src="${escapeHtml(flagSrc)}" width="24" height="16" alt="${escapeHtml(name)}" class="dest-flag-img">
+            <div>
+              <h3>${escapeHtml(name)}</h3>
+              <small>${escapeHtml(code)}</small>
+            </div>
+            <span class="dest-badge">${escapeHtml(badge)}</span>
+          </div>
+          <p>${escapeHtml(desc)}</p>
+          <div class="dest-tags">
+            ${tagsHtml}
+          </div>
+        </article>
+      `;
+    }).join("");
+
+    const cards = grid.querySelectorAll(".destination-card");
+    cards.forEach((card) => {
+      card.addEventListener("click", () => {
+        cards.forEach((c) => c.classList.remove("active"));
+        card.classList.add("active");
+      });
+    });
+  }
+
+  fetch(`${apiUrl}?action=destinations`, { cache: "no-store" })
+    .then((res) => (res.ok ? res.json() : null))
+    .then((data) => {
+      if (data && Array.isArray(data.destinations) && data.destinations.length) {
+        renderDestinations(data.destinations);
       }
     })
     .catch(() => {});
@@ -948,22 +831,14 @@
 
       const formData = new FormData(contactForm);
       const payload = {
-        name: (formData.get("name") || "").toString().trim(),
-        phone: (formData.get("phone") || "").toString().trim(),
-        message: (formData.get("message") || "").toString().trim()
+        name: formData.get("name") || "",
+        phone: formData.get("phone") || "",
+        message: formData.get("message") || ""
       };
-
-      if (!payload.name || !payload.phone) {
-        if (statusEl) {
-          statusEl.textContent = isEn ? "Please fill in your name and phone number." : "يرجى كتابة الاسم ورقم الهاتف.";
-          statusEl.className = "form-status error";
-        }
-        return;
-      }
 
       if (statusEl) {
         statusEl.textContent = dict["form.sending"];
-        statusEl.className = "form-status";
+        statusEl.className = "form-status info";
       }
 
       if (submitBtn) submitBtn.disabled = true;
@@ -984,21 +859,16 @@
           }
           contactForm.reset();
         } else {
-          throw new Error(data.error || "Submission failed");
+          throw new Error(data.error || dict["form.error"]);
         }
       } catch (err) {
         if (statusEl) {
-          statusEl.textContent = dict["form.success"];
-          statusEl.className = "form-status success";
+          statusEl.textContent = err.message || dict["form.error"];
+          statusEl.className = "form-status error";
         }
-        contactForm.reset();
       } finally {
         if (submitBtn) submitBtn.disabled = false;
       }
     });
   }
-
-  // --- Initial state loading from localStorage ---
-  setLanguage(localStorage.getItem("big-lang") || "ar");
-  setTheme(localStorage.getItem("big-theme") === "dark");
 })();
