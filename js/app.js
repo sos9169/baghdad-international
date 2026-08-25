@@ -143,7 +143,11 @@
       "contact.address2": "عمارة رقم ٧، شارع عقبة بن نافع، الدور الأول، مكتب رقم ٣ — أمام البيت الثقافي الروسي، الدقي، الجيزة",
       "contact.addressLabel3": "فرع تركيا (يالوفا)",
       "contact.address3": "Rüstem Paşa, Şahin Sk. No:13, 77200 Yalova Merkez/Yalova, تركيا",
-      "contact.directions": "احصل على الاتجاهات ↗"
+      "contact.directions": "احصل على الاتجاهات ↗",
+      "contact.cairoBranch": "🇪🇬 فرع القاهرة (مصر)",
+      "contact.cairoSub": "خدمات الطلاب والسفر بمصر",
+      "contact.academyBranch": "🎓 فرع أكاديمية بغداد وشركة الليل",
+      "contact.academySub": "الخدمات الأكاديمية والتنفيذية"
     },
     en: {
       "nav.home": "Home",
@@ -285,7 +289,11 @@
       "contact.address2": "Building 7, Okba Ibn Nafeh St., 1st Floor, Office 3 — In front of the Russian Cultural Centre, Dokki, Giza",
       "contact.addressLabel3": "Turkey Branch (Yalova)",
       "contact.address3": "Rüstem Paşa, Şahin Sk. No:13, 77200 Yalova Merkez/Yalova, Turkey",
-      "contact.directions": "Get directions ↗"
+      "contact.directions": "Get directions ↗",
+      "contact.cairoBranch": "🇪🇬 Cairo Branch (Egypt)",
+      "contact.cairoSub": "Student and Travel Services in Egypt",
+      "contact.academyBranch": "🎓 Baghdad Academy & Al-Lail Co.",
+      "contact.academySub": "Academic & Executive Services"
     }
   };
 

@@ -116,36 +116,50 @@ body.lang-en .boarding-pass .bp-stub p {
 
   .nav-wrap {
     height: 72px;
-    gap: 12px;
+    gap: 10px;
   }
 
   .brand {
-    flex: none;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .brand-mark {
+    width: 38px;
+    height: 38px;
   }
 
   .brand-copy strong {
-    font-size: 13px;
+    font-size: 13.5px;
     white-space: nowrap;
-    overflow: visible;
-    text-overflow: clip;
-    max-width: none;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: #ffffff;
+  }
+
+  .brand-copy small {
+    font-size: 7.5px;
+    letter-spacing: 1.5px !important;
   }
 
   .main-nav {
     position: absolute;
-    top: calc(100% + 8px);
-    left: 14px;
-    right: 14px;
+    top: calc(100% + 6px);
+    left: 12px;
+    right: 12px;
     width: auto;
-    padding: 12px;
+    padding: 16px 14px;
     display: none;
     flex-direction: column;
     align-items: stretch;
-    gap: 4px;
-    background: var(--paper);
-    border: 1px solid var(--line);
-    border-radius: 18px;
-    box-shadow: var(--shadow);
+    gap: 6px;
+    background: rgba(7, 24, 39, 0.98);
+    border: 1px solid rgba(228, 196, 125, 0.3);
+    border-radius: 20px;
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    z-index: 200;
   }
 
   .main-nav.open {
@@ -153,36 +167,59 @@ body.lang-en .boarding-pass .bp-stub p {
   }
 
   .main-nav a {
-    padding: 10px 14px;
-    border-radius: 10px;
-    font-size: 13.5px;
+    padding: 12px 16px;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 700;
+    color: #e4ebf2;
+    border: 1px solid transparent;
   }
 
   .main-nav a:hover {
-    background: rgba(197, 154, 74, 0.12);
+    background: rgba(197, 154, 74, 0.15);
+    color: var(--gold-light);
+    border-color: rgba(197, 154, 74, 0.3);
+  }
+
+  .mobile-nav-socials {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    margin-top: 10px;
+    padding-top: 14px;
+    border-top: 1px solid rgba(228, 196, 125, 0.2);
+  }
+
+  .mobile-nav-socials .social {
+    width: 42px !important;
+    height: 42px !important;
+    font-size: 16px !important;
   }
 
   .menu-btn {
-    display: grid;
+    display: inline-flex !important;
     flex: none;
   }
 
   .header-actions {
     gap: 6px;
+    flex: none;
   }
 
-  .social-links {
-    gap: 6px;
-    margin-inline-end: 2px;
+  /* Hide topbar social buttons on mobile header to prevent cramming/overflow */
+  .header-actions .social-links {
+    display: none !important;
   }
 
   .social, .control-btn, .menu-btn {
-    width: 36px !important;
-    height: 36px !important;
-    font-size: 13px !important;
+    width: 38px !important;
+    height: 38px !important;
+    font-size: 13.5px !important;
     border-radius: 50% !important;
-    border: 1px solid var(--line) !important;
-    background: var(--card-bg) !important;
+    border: 1px solid rgba(228, 196, 125, 0.35) !important;
+    background: rgba(255, 255, 255, 0.08) !important;
+    color: #ffffff !important;
     display: inline-flex !important;
     align-items: center !important;
     justify-content: center !important;
