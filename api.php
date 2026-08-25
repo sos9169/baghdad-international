@@ -105,6 +105,14 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 if ($action === 'track') {
     $input = input_json();
     $type = clean_text($input['type'] ?? 'interaction', 60);
+    $device = clean_text($input['device'] ?? '', 50);
+    if ($device === '') {
+        $ua = $_SERVER['HTTP_USER_AGENT'] ?? '';
+        if (preg_match('/tablet|ipad/i', $ua)) $device = 'تابلت 📱';
+        elseif (preg_match('/mobile|iphone|android/i', $ua)) $device = 'هاتف جوال 📱';
+        else $device = 'كمبيوتر 💻';
+    }
+
     $metricsPath = $dataDir . DIRECTORY_SEPARATOR . 'metrics.json';
     $metrics = read_json_file($metricsPath, [
         'visits' => 0,
@@ -129,15 +137,16 @@ if ($action === 'track') {
     }
 
     $events = is_array($metrics['events'] ?? null) ? $metrics['events'] : [];
-    $events[] = [
+    array_unshift($events, [
         'type' => $type,
-        'page' => clean_text($input['page'] ?? ($_SERVER['HTTP_REFERER'] ?? ''), 250),
-        'createdAt' => date('c')
-    ];
-    $metrics['events'] = array_slice($events, -200);
+        'page' => clean_text($input['page'] ?? ($_SERVER['HTTP_REFERER'] ?? '/'), 250),
+        'device' => $device,
+        'createdAt' => clean_text($input['createdAt'] ?? date('c'), 40)
+    ]);
+    $metrics['events'] = array_slice($events, 0, 200);
 
     write_json_file($metricsPath, $metrics);
-    json_response(['ok' => true]);
+    json_response(['ok' => true, 'metrics' => $metrics]);
 }
 
 if ($action === 'order') {

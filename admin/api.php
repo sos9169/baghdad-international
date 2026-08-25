@@ -113,10 +113,25 @@ if ($action === 'state') {
     json_response([
         'ok' => true,
         'settings' => read_json_file($dataDir . DIRECTORY_SEPARATOR . 'settings.json', []),
-        'metrics' => read_json_file($dataDir . DIRECTORY_SEPARATOR . 'metrics.json', []),
+        'metrics' => read_json_file($dataDir . DIRECTORY_SEPARATOR . 'metrics.json', [
+            'visits' => 0, 'interactions' => 0, 'whatsappClicks' => 0, 'formSubmits' => 0, 'lastVisit' => '', 'events' => []
+        ]),
         'orders' => read_json_file($dataDir . DIRECTORY_SEPARATOR . 'orders.json', []),
         'slides' => read_json_file($slidesPath, [])
     ]);
+}
+
+if ($action === 'reset-metrics') {
+    $emptyMetrics = [
+        'visits' => 0,
+        'interactions' => 0,
+        'whatsappClicks' => 0,
+        'formSubmits' => 0,
+        'lastVisit' => date('c'),
+        'events' => []
+    ];
+    write_json_file($dataDir . DIRECTORY_SEPARATOR . 'metrics.json', $emptyMetrics);
+    json_response(['ok' => true, 'metrics' => $emptyMetrics]);
 }
 
 if ($action === 'settings') {

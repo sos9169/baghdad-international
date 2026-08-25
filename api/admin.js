@@ -3,6 +3,7 @@ import {
   getMetrics,
   getOrders,
   isSupabaseConfigured,
+  resetMetrics,
   updateOrderStatus
 } from './supabase-store.js';
 import { getGlobalStore, saveGlobalStore } from './store.js';
@@ -102,6 +103,16 @@ export default async function handler(req, res) {
   }
 
   if (action === 'reset-metrics') {
+    if (isSupabaseConfigured()) {
+      const metrics = await resetMetrics().catch(() => null);
+      if (metrics) {
+        store.metrics = metrics;
+        store.metrics.events = [];
+        saveGlobalStore();
+        return res.status(200).json({ ok: true, metrics: store.metrics });
+      }
+    }
+
     store.metrics = {
       visits: 0,
       interactions: 0,
@@ -385,26 +396,26 @@ export default async function handler(req, res) {
 
   // --- Settings ---
   if (action === 'settings') {
-    const facebook = String(body.facebook || '').trim();
-    const instagram = String(body.instagram || '').trim();
-    const whatsapp = String(body.whatsapp || '').replace(/\D+/g, '');
-    const maps = String(body.maps || '').trim();
+    const facebook = String(body.facebook || store.settings?.facebook || '').trim();
+    const instagram = String(body.instagram || store.settings?.instagram || '').trim();
+    const maps = String(body.maps || store.settings?.maps || '').trim();
 
-    const phone_egypt = String(body.phone_egypt || '').trim();
-    const phone_iraq = String(body.phone_iraq || '').trim();
-    const phone_turkey = String(body.phone_turkey || '').trim();
-    const whatsapp_egypt = String(body.whatsapp_egypt || '').trim();
-    const whatsapp_iraq = String(body.whatsapp_iraq || '').trim();
-    const whatsapp_turkey = String(body.whatsapp_turkey || '').trim();
+    const phone_egypt = String(body.phone_egypt || store.settings?.phone_egypt || '+201505502339').trim();
+    const phone_iraq = String(body.phone_iraq || store.settings?.phone_iraq || '+9647742881766').trim();
+    const phone_turkey = String(body.phone_turkey || store.settings?.phone_turkey || '+905011263577').trim();
+    const whatsapp = String(body.whatsapp || phone_iraq || store.settings?.whatsapp || '').replace(/\D+/g, '');
+    const whatsapp_egypt = String(body.whatsapp_egypt || `https://wa.me/${phone_egypt.replace(/\D+/g, '')}`).trim();
+    const whatsapp_iraq = String(body.whatsapp_iraq || `https://wa.me/${phone_iraq.replace(/\D+/g, '')}`).trim();
+    const whatsapp_turkey = String(body.whatsapp_turkey || `https://wa.me/${phone_turkey.replace(/\D+/g, '')}`).trim();
 
     store.settings = {
       facebook, instagram, whatsapp, maps,
-      phone_egypt: phone_egypt || store.settings?.phone_egypt || '+201505502339',
-      phone_iraq: phone_iraq || store.settings?.phone_iraq || '+9647742881766',
-      phone_turkey: phone_turkey || store.settings?.phone_turkey || '+905011263577',
-      whatsapp_egypt: whatsapp_egypt || store.settings?.whatsapp_egypt || 'https://wa.me/201505502339',
-      whatsapp_iraq: whatsapp_iraq || store.settings?.whatsapp_iraq || 'https://wa.me/9647742881766',
-      whatsapp_turkey: whatsapp_turkey || store.settings?.whatsapp_turkey || 'https://wa.me/905011263577'
+      phone_egypt,
+      phone_iraq,
+      phone_turkey,
+      whatsapp_egypt,
+      whatsapp_iraq,
+      whatsapp_turkey
     };
     saveGlobalStore();
     return res.status(200).json({ ok: true, settings: store.settings });

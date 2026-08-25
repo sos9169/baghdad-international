@@ -123,6 +123,12 @@
       "banner.title": "خدمات دولية | سفر | تعليم | تجارة عامة",
       "services.eyebrow": "WHAT WE DO",
       "services.title": "خدماتنا، بشكل<br><span>أبسط وأوضح</span>",
+      "service.1.title": "خدمات السفر والإقامة",
+      "service.1.text": "تنسيق الفيزا، تذاكر السفر، ترتيبات السكن الإيجاري، والإقامة بخطوات واضحة ومتابعة مستمرة.",
+      "service.3.title": "التجارة العامة والاستيراد",
+      "service.3.text": "دعم خدمات الاستيراد والتصدير والمتابعة التجارية بين الأسواق المستهدفة.",
+      "service.6.title": "الدعم والإسناد القانوني",
+      "service.6.text": "فريق محامين متخصص للمساندة وحماية العملاء في الحالات القانونية والإجرائية.",
       "service.ai.title": "الذكاء الاصطناعي والبرمجيات",
       "service.ai.text": "تطوير البرمجيات الحديثة، الحلول التقنية الذكية، وتوفير الاستشارات البرمجية للأعمال.",
       "service.4.title": "التعليم والخدمات المدرسية",
@@ -152,6 +158,24 @@
       "form.sending": "جار إرسال طلبك...",
       "form.success": "تم إرسال طلبك بنجاح! وسنتواصل معك قريباً.",
       "form.error": "حدث خطأ أثناء الإرسال، يرجى المحاولة لاحقاً.",
+      "modal.titlePrefix": "طلب خدمة:",
+      "modal.subtext": "يمكنك تعديل الخدمة أو الدولة المختارة وملء البيانات للتواصل والمتابعة.",
+      "modal.serviceLabel": "نوع الخدمة المطلوبة *",
+      "modal.countryLabel": "الدولة المستهدفة *",
+      "modal.fullName": "الاسم الكامل *",
+      "modal.phone": "رقم الواتساب / الهاتف *",
+      "modal.nationality": "الجنسية / الإقامة الحالية",
+      "modal.details": "التخصص أو التفاصيل المطلوبة",
+      "modal.timeline": "الموعد المتوقع للبدء",
+      "modal.notes": "ملاحظات إضافية",
+      "modal.submit": "إرسال طلب الخدمة ↗",
+      "modal.waDirect": "واتساب مباشر",
+      "modal.namePlaceholder": "اكتب اسمك الثلاثي",
+      "modal.nationalityPlaceholder": "مثال: عراقي، مقيم بمصر...",
+      "modal.detailsPlaceholder": "مثال: طب بشرى، ابتدائي، تأشيرة...",
+      "modal.notesPlaceholder": "أي تفاصيل أخرى ترغب في إضافتها...",
+      "modal.success": "تم إرسال طلب الخدمة بنجاح! وسنتواصل معك قريباً.",
+      "modal.validation": "يرجى كتابة الاسم ورقم الهاتف.",
       "contact.addressLabel1": "المقر الرئيسي (بغداد - العراق) ⭐",
       "contact.address1": "بغداد — زيونة — شارع الربيعي — بداية كوين",
       "contact.addressLabel2": "مقر القاهرة (مصر)",
@@ -280,6 +304,12 @@
       "banner.title": "International Services | Travel | Education | General Trade",
       "services.eyebrow": "WHAT WE DO",
       "services.title": "Our services,<br><span>simple and clear</span>",
+      "service.1.title": "Travel & Residency Services",
+      "service.1.text": "Visa coordination, flight tickets, rental housing arrangements, and residency with clear steps and continuous follow-up.",
+      "service.3.title": "General Trade & Import",
+      "service.3.text": "Import/export services and commercial follow-up between target markets.",
+      "service.6.title": "Legal Support & Advocacy",
+      "service.6.text": "A specialized legal team to support and protect clients in legal and procedural cases.",
       "service.ai.title": "AI & Software Development",
       "service.ai.text": "Modern software development, smart AI solutions, and technology consulting for business.",
       "service.4.title": "Education & Schooling Services",
@@ -309,6 +339,24 @@
       "form.sending": "Sending your request...",
       "form.success": "Your request has been submitted successfully! We will contact you soon.",
       "form.error": "An error occurred while sending. Please try again later.",
+      "modal.titlePrefix": "Service request:",
+      "modal.subtext": "You can adjust the service or country and fill in your details for follow-up.",
+      "modal.serviceLabel": "Required service type *",
+      "modal.countryLabel": "Target country *",
+      "modal.fullName": "Full name *",
+      "modal.phone": "WhatsApp / phone number *",
+      "modal.nationality": "Nationality / current residency",
+      "modal.details": "Specialization or required details",
+      "modal.timeline": "Expected start date",
+      "modal.notes": "Additional notes",
+      "modal.submit": "Send service request ↗",
+      "modal.waDirect": "Direct WhatsApp",
+      "modal.namePlaceholder": "Your full name",
+      "modal.nationalityPlaceholder": "e.g. Iraqi, resident in Egypt...",
+      "modal.detailsPlaceholder": "e.g. Medicine, primary school, visa...",
+      "modal.notesPlaceholder": "Any other details you would like to add...",
+      "modal.success": "Your service request was sent successfully! We will contact you soon.",
+      "modal.validation": "Please enter your name and phone number.",
       "contact.addressLabel1": "Main HQ (Baghdad - Iraq) ⭐",
       "contact.address1": "Baghdad — Zeyouna — Al Rubaie St — Beginning of Queen",
       "contact.addressLabel2": "Cairo Office (Egypt)",
@@ -387,7 +435,235 @@
     if (destinationsData.length) {
       renderDestinations(destinationsData);
     }
+    updateModalLanguage();
   }
+
+  const modalServiceOptions = [
+    { value: "جامعات دولية", ar: "جامعات دولية", en: "International Universities" },
+    { value: "التعليم المدرسي (ابتدائي، إعدادي، ثانوي)", ar: "🎒 التعليم المدرسي (ابتدائي، إعدادي، ثانوي)", en: "🎒 School Education (Primary, Preparatory & Secondary)" },
+    { value: "الدورات والبرامج التدريبية (كافة المجالات)", ar: "🎯 الدورات والبرامج التدريبية (كافة المجالات)", en: "🎯 Training Courses (All Fields)" },
+    { value: "خدمات الذكاء الاصطناعي وتطوير البرمجيات", ar: "🤖 الذكاء الاصطناعي وتطوير البرمجيات", en: "🤖 AI & Software Development" },
+    { value: "إقامة وسكن", ar: "إقامة وسكن", en: "Housing & Residency" },
+    { value: "خدمات رجال أعمال", ar: "خدمات رجال أعمال", en: "Business Services" },
+    { value: "متابعة طلابية", ar: "متابعة طلابية", en: "Student Support" },
+    { value: "تجارة عامة", ar: "تجارة عامة", en: "General Trade" },
+    { value: "تأشيرات رحلات", ar: "تأشيرات رحلات", en: "Travel Visas" },
+    { value: "جامعات خاصة", ar: "جامعات خاصة", en: "Private Universities" },
+    { value: "استيراد وتصدير", ar: "استيراد وتصدير", en: "Import & Export" },
+    { value: "سفر ومعارض", ar: "سفر ومعارض", en: "Travel & Exhibitions" },
+    { value: "طب وهندسة", ar: "طب وهندسة", en: "Medicine & Engineering" },
+    { value: "منح ومقاعد", ar: "منح ومقاعد", en: "Scholarships" },
+    { value: "سنة تحضيرية", ar: "سنة تحضيرية", en: "Preparatory Year" },
+    { value: "جامعات حكومية", ar: "جامعات حكومية", en: "State Universities" },
+    { value: "خدمة أخرى / استفسار عام", ar: "خدمة أخرى / استفسار عام", en: "Other service / general inquiry" }
+  ];
+
+  const modalCountryOptions = [
+    { value: "جمهورية العراق", ar: "🇮🇶 العراق (المقر الرئيسي)", en: "🇮🇶 Iraq (Main HQ)" },
+    { value: "جمهورية مصر العربية", ar: "🇪🇬 مصر", en: "🇪🇬 Egypt" },
+    { value: "تركيا", ar: "🇹🇷 تركيا", en: "🇹🇷 Turkey" },
+    { value: "إيران", ar: "🇮🇷 إيران", en: "🇮🇷 Iran" },
+    { value: "روسيا الاتحادية", ar: "🇷🇺 روسيا", en: "🇷🇺 Russia" },
+    { value: "وجهة أخرى", ar: "🌐 وجهة أخرى", en: "🌐 Other destination" }
+  ];
+
+  const modalTimelineOptions = [
+    { value: "urgent", ar: "عاجل جداً (خلال أيام)", en: "Very urgent (within days)" },
+    { value: "month", ar: "خلال هذا الشهر", en: "Within this month" },
+    { value: "season", ar: "بداية التيرم / الموسم القادم", en: "Next term / season start" },
+    { value: "inquiry", ar: "استفسار عام فقط", en: "General inquiry only" }
+  ];
+
+  const serviceModal = document.getElementById("serviceModal");
+  const closeServiceModalBtn = document.getElementById("closeServiceModal");
+  const serviceModalForm = document.getElementById("serviceModalForm");
+  const modalServiceName = document.getElementById("modalServiceName");
+  const modalServiceSelect = document.getElementById("modalServiceSelect");
+  const modalCountrySelect = document.getElementById("modalCountrySelect");
+  const modalWaBtn = document.getElementById("modalWaBtn");
+  const modalStatus = document.getElementById("modalStatus");
+
+  function findServiceOptionByLabel(label) {
+    const text = String(label || "").trim();
+    if (!text) return null;
+    return modalServiceOptions.find((opt) =>
+      opt.value === text || opt.ar === text || opt.en === text ||
+      text.includes(opt.value) || opt.ar.includes(text) || opt.en.includes(text)
+    ) || null;
+  }
+
+  function findCountryOptionByLabel(label) {
+    const text = String(label || "").trim();
+    if (!text) return null;
+    return modalCountryOptions.find((opt) =>
+      opt.value === text || opt.ar.includes(text) || opt.en.includes(text) ||
+      text.includes(opt.value)
+    ) || null;
+  }
+
+  function rebuildModalSelect(selectEl, options, selectedValue) {
+    if (!selectEl) return;
+    const isEn = body.classList.contains("lang-en");
+    selectEl.innerHTML = options.map((opt) => {
+      const label = isEn ? opt.en : opt.ar;
+      const selected = opt.value === selectedValue ? " selected" : "";
+      return `<option value="${escapeHtml(opt.value)}"${selected}>${escapeHtml(label)}</option>`;
+    }).join("");
+  }
+
+  function updateModalLanguage() {
+    const isEn = body.classList.contains("lang-en");
+    const dict = translations[isEn ? "en" : "ar"];
+    const selectedService = modalServiceSelect ? modalServiceSelect.value : "";
+    const selectedCountry = modalCountrySelect ? modalCountrySelect.value : "";
+    const selectedTimeline = serviceModalForm ? (serviceModalForm.querySelector('[name="timeline"]') || {}).value : "inquiry";
+
+    rebuildModalSelect(modalServiceSelect, modalServiceOptions, selectedService);
+    rebuildModalSelect(modalCountrySelect, modalCountryOptions, selectedCountry);
+
+    const timelineSelect = serviceModalForm ? serviceModalForm.querySelector('[name="timeline"]') : null;
+    if (timelineSelect) {
+      timelineSelect.innerHTML = modalTimelineOptions.map((opt) => {
+        const label = isEn ? opt.en : opt.ar;
+        const selected = opt.value === selectedTimeline ? " selected" : "";
+        return `<option value="${escapeHtml(opt.value)}"${selected}>${escapeHtml(label)}</option>`;
+      }).join("");
+    }
+
+    if (modalServiceName && selectedService) {
+      const match = findServiceOptionByLabel(selectedService);
+      modalServiceName.textContent = match ? (isEn ? match.en : match.ar) : selectedService;
+    }
+  }
+
+  function openServiceModal(serviceLabel, countryLabel) {
+    const isEn = body.classList.contains("lang-en");
+    const serviceOpt = findServiceOptionByLabel(serviceLabel) || modalServiceOptions[0];
+    const countryOpt = findCountryOptionByLabel(countryLabel) || modalCountryOptions[0];
+    const serviceValue = serviceOpt.value;
+    const countryValue = countryOpt.value;
+    const displayService = isEn ? serviceOpt.en : serviceOpt.ar;
+    const displayCountry = isEn ? countryOpt.en : countryOpt.ar;
+
+    if (modalServiceName) modalServiceName.textContent = displayService;
+    rebuildModalSelect(modalServiceSelect, modalServiceOptions, serviceValue);
+    rebuildModalSelect(modalCountrySelect, modalCountryOptions, countryValue);
+
+    const waText = encodeURIComponent(
+      isEn
+        ? `Hello Baghdad International Group, I would like to inquire about (${displayService}) in (${displayCountry}).`
+        : `مرحباً Baghdad International Group، أرغب في الاستفسار والتقديم على خدمة (${displayService}) الخاصة بدولة (${displayCountry}).`
+    );
+    if (modalWaBtn) {
+      const waBase = modalWaBtn.href.split("?")[0] || "https://wa.me/9647742881766";
+      modalWaBtn.href = `${waBase}?text=${waText}`;
+    }
+
+    if (modalStatus) {
+      modalStatus.textContent = "";
+      modalStatus.className = "form-status";
+    }
+
+    if (serviceModal) {
+      serviceModal.classList.remove("hidden");
+      document.body.style.overflow = "hidden";
+    }
+  }
+
+  function closeServiceModal() {
+    if (serviceModal) serviceModal.classList.add("hidden");
+    document.body.style.overflow = "";
+  }
+
+  document.addEventListener("click", (e) => {
+    const tagBtn = e.target.closest(".dest-tag-btn");
+    if (tagBtn) {
+      e.preventDefault();
+      e.stopPropagation();
+      const serviceKey = tagBtn.dataset.serviceKey;
+      const countryKey = tagBtn.dataset.countryKey;
+      const isEn = body.classList.contains("lang-en");
+      const dict = translations[isEn ? "en" : "ar"];
+      const serviceLabel = tagBtn.dataset.serviceVal || (serviceKey && dict[serviceKey]) || "";
+      const countryLabel = tagBtn.dataset.countryVal || (countryKey && dict[countryKey]) || "";
+      openServiceModal(serviceLabel, countryLabel);
+      return;
+    }
+
+    if (serviceModal && e.target === serviceModal) {
+      closeServiceModal();
+    }
+  });
+
+  if (closeServiceModalBtn) {
+    closeServiceModalBtn.addEventListener("click", closeServiceModal);
+  }
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && serviceModal && !serviceModal.classList.contains("hidden")) {
+      closeServiceModal();
+    }
+  });
+
+  if (serviceModalForm) {
+    serviceModalForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const isEn = body.classList.contains("lang-en");
+      const dict = translations[isEn ? "en" : "ar"];
+      const submitBtn = serviceModalForm.querySelector('button[type="submit"]');
+      const formData = new FormData(serviceModalForm);
+      const name = String(formData.get("name") || "").trim();
+      const phone = String(formData.get("phone") || "").trim();
+      const service = String(formData.get("service_name") || "").trim();
+      const country = String(formData.get("country_name") || "").trim();
+      const nationality = String(formData.get("nationality") || "").trim();
+      const details = String(formData.get("details") || "").trim();
+      const timeline = String(formData.get("timeline") || "").trim();
+      const notes = String(formData.get("notes") || "").trim();
+
+      if (!name || !phone) {
+        if (modalStatus) {
+          modalStatus.textContent = dict["modal.validation"];
+          modalStatus.className = "form-status error";
+        }
+        return;
+      }
+
+      if (modalStatus) {
+        modalStatus.textContent = dict["form.sending"];
+        modalStatus.className = "form-status info";
+      }
+      if (submitBtn) submitBtn.disabled = true;
+
+      const messageCombined = `[${dict["modal.titlePrefix"]} ${service} - ${country}]\n${dict["modal.nationality"]}: ${nationality || "-"}\n${dict["modal.details"]}: ${details || "-"}\n${dict["modal.timeline"]}: ${timeline}\n${dict["modal.notes"]}: ${notes || "-"}`;
+
+      try {
+        const response = await fetch(`${apiUrl}?action=order`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ name, phone, message: messageCombined, page: "/service-modal" })
+        });
+        const data = await response.json().catch(() => ({}));
+        if (!response.ok || !data.ok) throw new Error(data.error || dict["form.error"]);
+
+        if (modalStatus) {
+          modalStatus.textContent = dict["modal.success"];
+          modalStatus.className = "form-status success";
+        }
+        serviceModalForm.reset();
+        setTimeout(closeServiceModal, 2200);
+      } catch (err) {
+        if (modalStatus) {
+          modalStatus.textContent = err.message || dict["form.error"];
+          modalStatus.className = "form-status error";
+        }
+      } finally {
+        if (submitBtn) submitBtn.disabled = false;
+      }
+    });
+  }
+
+  updateModalLanguage();
 
   // --- Theme Switcher ---
   function setTheme(dark) {
@@ -577,7 +853,7 @@
   // --- Dynamic Services Rendering ---
   function renderServices(services) {
     const serviceGrid = document.querySelector(".service-grid");
-    if (!serviceGrid || !Array.isArray(services) || !services.length) return;
+    if (!serviceGrid || !Array.isArray(services) || services.length < 6) return;
     servicesData = services;
     const isEn = body.classList.contains("lang-en");
     const moreText = isEn ? "Learn more ↙" : "اعرف المزيد ↙";
@@ -699,9 +975,13 @@
       const isActive = index === 0 ? " active" : "";
 
       const tagsHtml = (Array.isArray(dest.tags) ? dest.tags : []).map((t) => {
-        const tagVal = isEn ? (t.val_en || t.val_ar || t) : (t.val_ar || t.val_en || t);
+        const tagValAr = t.val_ar || t.val_en || t;
+        const tagValEn = t.val_en || t.val_ar || t;
+        const tagVal = isEn ? tagValEn : tagValAr;
         return `
-          <button type="button" class="dest-tag-btn" data-country-val="${escapeHtml(name)}" data-service-val="${escapeHtml(tagVal)}">
+          <button type="button" class="dest-tag-btn"
+            data-service-val="${escapeHtml(tagValAr)}"
+            data-country-val="${escapeHtml(isEn ? (dest.name_en || dest.name_ar) : (dest.name_ar || dest.name_en))}">
             <span>${escapeHtml(tagVal)}</span> <span>↗</span>
           </button>
         `;
@@ -727,7 +1007,8 @@
 
     const cards = grid.querySelectorAll(".destination-card");
     cards.forEach((card) => {
-      card.addEventListener("click", () => {
+      card.addEventListener("click", (e) => {
+        if (e.target.closest(".dest-tag-btn")) return;
         cards.forEach((c) => c.classList.remove("active"));
         card.classList.add("active");
       });
@@ -742,32 +1023,6 @@
       }
     })
     .catch(() => {});
-
-  // --- Comprehensive Event & Leads Tracking ---
-  function trackEventSignal(type) {
-    fetch(`${apiUrl}?action=track`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ type, page: window.location.pathname })
-    }).catch(() => {});
-  }
-
-  // Track Page Visit
-  trackEventSignal("visit");
-
-  // Track WhatsApp, Phone, and Interactive Tag Clicks
-  document.addEventListener("click", (e) => {
-    const link = e.target.closest('a[href*="wa.me"], a[href^="tel:"], .floating-whatsapp, .phone-chip, .dest-tag-btn');
-    if (!link) return;
-    const href = link.getAttribute("href") || "";
-    if (href.includes("wa.me") || link.classList.contains("wa") || link.classList.contains("floating-whatsapp")) {
-      trackEventSignal("whatsapp");
-    } else if (href.startsWith("tel:") || link.classList.contains("tel")) {
-      trackEventSignal("phone");
-    } else if (link.classList.contains("dest-tag-btn")) {
-      trackEventSignal("tag_click");
-    }
-  });
 
   // --- Gapless Infinite Marquee Ticker ---
   function rebuildTicker() {

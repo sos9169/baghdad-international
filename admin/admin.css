@@ -268,11 +268,33 @@ small.success { color: var(--success); }
   box-shadow: var(--shadow);
 }
 
+.stats-grid article,
 .stat-card {
   padding: 22px 20px;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 16px;
+}
+
+.split-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.activity-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+button.warning,
+.ghost.warning {
+  color: var(--gold);
+  border-color: rgba(197, 154, 74, 0.45);
+  background: rgba(197, 154, 74, 0.08);
 }
 
 .stat-icon {
@@ -570,6 +592,18 @@ select {
   .topbar {
     align-items: flex-start;
     flex-direction: column;
+  }
+
+  .split-head {
+    flex-direction: column;
+  }
+
+  .activity-actions {
+    width: 100%;
+  }
+
+  .activity-actions .ghost {
+    flex: 1 1 180px;
   }
 
   .stats-grid, .panel-grid, .form-grid {

@@ -1,34 +1,50 @@
 [
   {
     "id": "service-01",
-    "icon": "✦",
-    "title_ar": "الخدمات التعليمية",
-    "title_en": "Education Services",
-    "text_ar": "مساعدة الطلاب في إجراءات الدراسة، الاختيارات التعليمية، والتنسيق للخطوات المطلوبة.",
-    "text_en": "Support with study procedures, education choices and coordinating the required steps."
+    "icon": "✈",
+    "title_ar": "خدمات السفر والإقامة",
+    "title_en": "Travel & Residency Services",
+    "text_ar": "تنسيق الفيزا، تذاكر السفر، ترتيبات السكن الإيجاري، والإقامة بخطوات واضحة ومتابعة مستمرة.",
+    "text_en": "Visa coordination, flight tickets, rental housing arrangements, and residency with clear steps and continuous follow-up."
   },
   {
     "id": "service-02",
-    "icon": "↗",
-    "title_ar": "السفر والتنقل",
-    "title_en": "Travel & Mobility",
-    "text_ar": "مساندة في السفر والتنقل والإجراءات المرتبطة بمصر وخارجها.",
-    "text_en": "Support for travel, mobility and related procedures for Egypt and beyond."
+    "icon": "🤖",
+    "title_ar": "الذكاء الاصطناعي والبرمجيات",
+    "title_en": "AI & Software Development",
+    "text_ar": "تطوير البرمجيات الحديثة، الحلول التقنية الذكية، وتوفير الاستشارات البرمجية للأعمال.",
+    "text_en": "Modern software development, smart AI solutions, and technology consulting for business."
   },
   {
     "id": "service-03",
     "icon": "◇",
-    "title_ar": "خدمات الأعمال",
-    "title_en": "Business Services",
-    "text_ar": "حلول ودعم للأفراد والشركات التي تحتاج إلى خدمات دولية منسقة.",
-    "text_en": "Solutions and support for individuals and businesses that need coordinated international services."
+    "title_ar": "التجارة العامة والاستيراد",
+    "title_en": "General Trade & Import",
+    "text_ar": "دعم خدمات الاستيراد والتصدير والمتابعة التجارية بين الأسواق المستهدفة.",
+    "text_en": "Import/export services and commercial follow-up between target markets."
   },
   {
     "id": "service-04",
+    "icon": "🎓",
+    "title_ar": "الخدمات التعليمية والمدرسية",
+    "title_en": "Education & Schooling Services",
+    "text_ar": "القبولات الجامعية والتعليم المدرسي تشمل مراحل (ابتدائي، إعدادي، وثانوي).",
+    "text_en": "University admissions and school education covering Primary, Preparatory & Secondary stages."
+  },
+  {
+    "id": "service-05",
     "icon": "◎",
-    "title_ar": "خدمات المقيمين",
-    "title_en": "Resident Services",
-    "text_ar": "مساندة وخدمات للأشخاص المقيمين في مصر، مع تركيز على الوضوح وسهولة الإجراءات.",
-    "text_en": "Practical support for people living in Egypt, focused on clarity and easier procedures."
+    "title_ar": "التدريب والتطوير في كافة المجالات",
+    "title_en": "Training Across All Fields",
+    "text_ar": "برامج تدريبية ورعايات في كافة التخصصات (طبية، هندسية، إدارية، تقنية) ومؤتمرات MBA.",
+    "text_en": "Specialized training programs across all disciplines and MBA conferences."
+  },
+  {
+    "id": "service-06",
+    "icon": "⚖",
+    "title_ar": "الدعم والإسناد القانوني",
+    "title_en": "Legal Support & Advocacy",
+    "text_ar": "فريق محامين متخصص للمساندة وحماية العملاء في الحالات القانونية والإجرائية.",
+    "text_en": "A specialized legal team to support and protect clients in legal and procedural cases."
   }
 ]

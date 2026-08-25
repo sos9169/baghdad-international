@@ -57,12 +57,15 @@ export default async function handler(req, res) {
     const page = String(body.page || '/');
     const userAgent = req.headers['user-agent'] || '';
 
-    let device = 'كمبيوتر 💻';
-    if (/mobile/i.test(userAgent)) device = 'هاتف جوال 📱';
-    else if (/tablet|ipad/i.test(userAgent)) device = 'تابلت 📱';
+    let device = String(body.device || '');
+    if (!device) {
+      if (/tablet|ipad/i.test(userAgent)) device = 'تابلت 📱';
+      else if (/mobile|iphone|android/i.test(userAgent)) device = 'هاتف جوال 📱';
+      else device = 'كمبيوتر 💻';
+    }
 
     if (isSupabaseConfigured()) {
-      await trackEvent(type, page).catch(() => null);
+      await trackEvent(type, page, device).catch(() => null);
     }
 
     if (!store.metrics) {
@@ -84,7 +87,7 @@ export default async function handler(req, res) {
       type,
       page,
       device,
-      createdAt: new Date().toISOString()
+      createdAt: body.createdAt || new Date().toISOString()
     });
     if (store.metrics.events.length > 200) {
       store.metrics.events = store.metrics.events.slice(0, 200);
@@ -98,6 +101,13 @@ export default async function handler(req, res) {
     const name = String(body.name || '').trim();
     const phone = String(body.phone || '').trim();
     const message = String(body.message || '').trim();
+    const page = String(body.page || '/contact');
+    const userAgent = req.headers['user-agent'] || '';
+    const device = body.device
+      ? String(body.device)
+      : (/tablet|ipad/i.test(userAgent)
+        ? 'تابلت 📱'
+        : (/mobile|iphone|android/i.test(userAgent) ? 'هاتف جوال 📱' : 'كمبيوتر 💻'));
 
     if (!name || !phone) {
       return res.status(422).json({ ok: false, error: 'الاسم ورقم الهاتف مطلوبان' });
@@ -113,7 +123,7 @@ export default async function handler(req, res) {
     };
 
     const order = isSupabaseConfigured()
-      ? await createOrder({ name, phone, message }).catch(() => fallbackOrder)
+      ? await createOrder({ name, phone, message, page, device }).catch(() => fallbackOrder)
       : fallbackOrder;
 
     if (!Array.isArray(store.orders)) store.orders = [];
@@ -124,6 +134,16 @@ export default async function handler(req, res) {
     }
     store.metrics.formSubmits = (store.metrics.formSubmits || 0) + 1;
     store.metrics.interactions = (store.metrics.interactions || 0) + 1;
+    if (!Array.isArray(store.metrics.events)) store.metrics.events = [];
+    store.metrics.events.unshift({
+      type: 'form_submit',
+      page,
+      device,
+      createdAt: new Date().toISOString()
+    });
+    if (store.metrics.events.length > 200) {
+      store.metrics.events = store.metrics.events.slice(0, 200);
+    }
 
     saveGlobalStore();
     return res.status(200).json({ ok: true, order });

@@ -256,8 +256,10 @@ body.lang-en .boarding-pass .bp-stub p {
 
     .brand-copy strong {
       font-size: 12px !important;
-      white-space: nowrap !important;
+      max-width: 96px;
+      white-space: normal !important;
       overflow: visible !important;
+      line-height: 1.08;
     }
 
     .brand-copy small {
@@ -290,11 +292,13 @@ body.lang-en .boarding-pass .bp-stub p {
 
   .brand-copy strong {
     font-size: 13.5px !important;
-    white-space: nowrap !important;
+    white-space: normal !important;
     overflow: visible !important;
     text-overflow: clip !important;
     color: #ffffff;
     display: block;
+    line-height: 1.08;
+    max-width: 120px;
   }
 
   .social, .control-btn, .menu-btn {
@@ -556,6 +560,20 @@ body.lang-en .boarding-pass .bp-stub p {
   .floating-whatsapp, .floating-top {
     width: 48px;
     height: 48px;
+  }
+
+  body.lang-en .floating-whatsapp {
+    left: auto !important;
+    right: max(16px, env(safe-area-inset-right)) !important;
+  }
+
+  .hero-visual {
+    margin-bottom: 8px;
+  }
+
+  .chip-two {
+    bottom: 6% !important;
+    left: 4% !important;
   }
 }
 

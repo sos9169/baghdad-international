@@ -18,8 +18,12 @@ create table if not exists public.site_events (
   id bigint generated always as identity primary key,
   event_type text not null,
   page text,
+  device text,
   created_at timestamptz not null default now()
 );
+
+alter table public.site_events
+add column if not exists device text;
 
 alter table public.site_events enable row level security;
 
@@ -42,7 +46,8 @@ on public.site_orders (created_at desc);
 
 create or replace function public.big_track_event(
   event_type text,
-  event_page text default ''
+  event_page text default '',
+  event_device text default ''
 )
 returns public.site_metrics
 language plpgsql
@@ -67,8 +72,8 @@ begin
   where id = 'main'
   returning * into updated_metrics;
 
-  insert into public.site_events (event_type, page)
-  values (event_type, event_page);
+  insert into public.site_events (event_type, page, device)
+  values (event_type, event_page, event_device);
 
   return updated_metrics;
 end;

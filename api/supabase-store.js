@@ -64,9 +64,25 @@ function toOrder(row) {
   };
 }
 
+function toEvent(row) {
+  return {
+    type: row.event_type || row.type || 'interaction',
+    page: row.page || '/',
+    device: row.device || '',
+    createdAt: row.created_at || row.createdAt || ''
+  };
+}
+
 export async function getMetrics() {
   const rows = await supabaseRequest('site_metrics?id=eq.main&select=*');
-  return toMetrics(Array.isArray(rows) ? rows[0] : null);
+  const metrics = toMetrics(Array.isArray(rows) ? rows[0] : null);
+  metrics.events = await getEvents().catch(() => []);
+  return metrics;
+}
+
+export async function getEvents() {
+  const rows = await supabaseRequest('site_events?select=*&order=created_at.desc&limit=200');
+  return Array.isArray(rows) ? rows.map(toEvent) : [];
 }
 
 export async function getOrders() {
@@ -74,18 +90,52 @@ export async function getOrders() {
   return Array.isArray(rows) ? rows.map(toOrder) : [];
 }
 
-export async function trackEvent(type, page) {
+export async function trackEvent(type, page, device = '') {
   const eventType = String(type || 'interaction').slice(0, 60);
   const eventPage = String(page || '').slice(0, 250);
-  const rows = await supabaseRequest('rpc/big_track_event', {
-    method: 'POST',
+  const eventDevice = String(device || '').slice(0, 80);
+  let rows;
+
+  try {
+    rows = await supabaseRequest('rpc/big_track_event', {
+      method: 'POST',
+      body: JSON.stringify({
+        event_type: eventType,
+        event_page: eventPage,
+        event_device: eventDevice
+      })
+    });
+  } catch (err) {
+    rows = await supabaseRequest('rpc/big_track_event', {
+      method: 'POST',
+      body: JSON.stringify({
+        event_type: eventType,
+        event_page: eventPage
+      })
+    });
+  }
+
+  return toMetrics(Array.isArray(rows) ? rows[0] : rows);
+}
+
+export async function resetMetrics() {
+  await supabaseRequest('site_events?id=gte.0', {
+    method: 'DELETE'
+  }).catch(() => null);
+
+  const rows = await supabaseRequest('site_metrics?id=eq.main', {
+    method: 'PATCH',
+    headers: { Prefer: 'return=representation' },
     body: JSON.stringify({
-      event_type: eventType,
-      event_page: eventPage
+      visits: 0,
+      interactions: 0,
+      whatsapp_clicks: 0,
+      form_submits: 0,
+      last_visit: new Date().toISOString()
     })
   });
 
-  return toMetrics(Array.isArray(rows) ? rows[0] : rows);
+  return toMetrics(Array.isArray(rows) ? rows[0] : null);
 }
 
 export async function createOrder(input) {
@@ -104,7 +154,7 @@ export async function createOrder(input) {
     body: JSON.stringify(order)
   });
 
-  await trackEvent('form_submit', '/contact').catch(() => null);
+  await trackEvent('form_submit', input.page || '/contact', input.device || '').catch(() => null);
   return toOrder(Array.isArray(rows) ? rows[0] : order);
 }
 

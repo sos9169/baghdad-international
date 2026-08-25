@@ -218,6 +218,10 @@ body.dark .page-bg {
   color: #ffffff;
 }
 
+body:not(.lang-en) .brand-copy strong {
+  font-family: var(--font-ar);
+}
+
 .brand-copy small {
   font-family: var(--font-mono);
   font-size: 9px;
@@ -231,7 +235,7 @@ body.dark .page-bg {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 27px;
+  gap: 20px;
   background: transparent;
 }
 
@@ -2359,6 +2363,11 @@ body.lang-en .contact-form input, body.lang-en .contact-form textarea {
 .floating-whatsapp:hover {
   transform: translateY(-3px) scale(1.05) !important;
   box-shadow: 0 14px 32px rgba(37, 211, 102, 0.55) !important;
+}
+
+body.lang-en .floating-whatsapp {
+  left: auto !important;
+  right: max(24px, env(safe-area-inset-right)) !important;
 }
 
 .floating-top {

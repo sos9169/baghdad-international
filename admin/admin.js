@@ -85,13 +85,27 @@
       body: bodyData
     };
 
-    const response = await fetch(`/api/admin?action=${encodeURIComponent(action)}`, options);
+    // Try Vercel endpoint first, then PHP endpoint fallback
+    const primaryUrl = `/api/admin?action=${encodeURIComponent(action)}`;
+    const phpUrl = window.location.pathname.startsWith("/admin")
+      ? `api.php?action=${encodeURIComponent(action)}`
+      : `admin/api.php?action=${encodeURIComponent(action)}`;
+
+    let response = await fetch(primaryUrl, options).catch(() => null);
+    if (!response || response.status === 404) {
+      response = await fetch(phpUrl, options).catch(() => null);
+    }
+
+    if (!response) {
+      throw new Error("خطأ في الاتصال بالسيرفر — تعذر الوصول لخدمة الإدارة");
+    }
+
     const text = await response.text();
     let data = {};
     try {
       data = JSON.parse(text);
     } catch (e) {
-      throw new Error("خطأ في الاتصال بالسيرفر — يرجى إعادة المحاولة");
+      throw new Error("خطأ في استجابة السيرفر — يرجى إعادة المحاولة");
     }
 
     if (!response.ok || !data.ok) {
@@ -123,16 +137,44 @@
     if (settingsForm.phone_turkey) settingsForm.phone_turkey.value = settings.phone_turkey || "+905011263577";
   }
 
-  function fillMetrics(metrics, orders) {
-    if (!metrics) metrics = {};
-    $("#visitsCount").textContent = metrics.visits || 0;
-    $("#interactionsCount").textContent = metrics.interactions || 0;
-    $("#whatsappCount").textContent = metrics.whatsappClicks || 0;
-    $("#ordersCount").textContent = Array.isArray(orders) ? orders.length : (metrics.formSubmits || 0);
+  function getMergedEvents(serverEvents) {
+    let events = Array.isArray(serverEvents) ? serverEvents.slice() : [];
+    try {
+      const localEvents = JSON.parse(localStorage.getItem("big_live_events") || "[]");
+      if (Array.isArray(localEvents) && localEvents.length > 0) {
+        // Merge without duplicates based on createdAt & type
+        const existingKeys = new Set(events.map((e) => (e.createdAt || "") + "_" + (e.type || "")));
+        for (const lev of localEvents) {
+          const key = (lev.createdAt || "") + "_" + (lev.type || "");
+          if (!existingKeys.has(key)) {
+            events.push(lev);
+            existingKeys.add(key);
+          }
+        }
+      }
+    } catch (e) {}
+    events.sort((a, b) => new Date(b.createdAt || 0) - new Date(a.createdAt || 0));
+    return events;
   }
 
-  function fillActivityLog(events) {
+  function fillMetrics(metrics, orders) {
+    if (!metrics) metrics = {};
+    const events = getMergedEvents(metrics.events);
+    const visits = Math.max(metrics.visits || 0, events.filter((e) => e.type === "visit").length);
+    const whatsapp = Math.max(metrics.whatsappClicks || 0, events.filter((e) => e.type === "whatsapp").length);
+    const interactions = Math.max(metrics.interactions || 0, events.length);
+    const formSubmits = Array.isArray(orders) ? orders.length : (metrics.formSubmits || 0);
+
+    $("#visitsCount").textContent = visits;
+    $("#interactionsCount").textContent = interactions;
+    $("#whatsappCount").textContent = whatsapp;
+    $("#ordersCount").textContent = formSubmits;
+  }
+
+  function fillActivityLog(serverEvents) {
     if (!activityBody) return;
+    const events = getMergedEvents(serverEvents);
+
     if (!Array.isArray(events) || events.length === 0) {
       activityBody.innerHTML = '<tr><td colspan="4" style="text-align:center;padding:24px;color:var(--muted)">لا توجد زيارات أو تفاعلات حية مسجلة حتى الآن.</td></tr>';
       return;
@@ -578,14 +620,18 @@
     resetBtn.addEventListener("click", async () => {
       if (!confirm("هل أنت تأكد من رغبتك في تصفير وإعادة ضبط عداد الإحصائيات وسجل الزيارات؟")) return;
       try {
+        localStorage.removeItem("big_live_events");
         const res = await request("reset-metrics", {});
-        if (res.metrics) {
-          fillMetrics(res.metrics, currentState.orders);
-          fillActivityLog(res.metrics.events || []);
-          alert("تم تصفير وإعادة ضبط عداد الإحصائيات وسجل الزيارات الحية بنجاح!");
-        }
+        currentState.metrics = res.metrics || {};
+        fillMetrics(currentState.metrics, currentState.orders);
+        fillActivityLog([]);
+        alert("تم تصفير وإعادة ضبط عداد الإحصائيات وسجل الزيارات الحية بنجاح!");
       } catch (err) {
-        alert(err.message);
+        localStorage.removeItem("big_live_events");
+        currentState.metrics = { visits: 0, interactions: 0, whatsappClicks: 0, formSubmits: 0, events: [] };
+        fillMetrics(currentState.metrics, currentState.orders);
+        fillActivityLog([]);
+        alert("تم تصفير السجل الحي المحلي بنجاح!");
       }
     });
   }
@@ -596,6 +642,58 @@
       await loadState();
     });
   }
+
+  const simulateBtn = $("#simulateVisitBtn");
+  if (simulateBtn) {
+    simulateBtn.addEventListener("click", async () => {
+      const types = [
+        { type: "visit", label: "زيارة موقع جديدة" },
+        { type: "whatsapp", label: "ضغطة واتساب حية" },
+        { type: "tag_click", label: "تفاعل مع دولة/خدمة" }
+      ];
+      const pages = ["/index.html", "/#services", "/#destinations", "/#contact"];
+      const devices = ["هاتف جوال 📱", "كمبيوتر 💻", "تابلت 📱"];
+
+      const randomType = types[Math.floor(Math.random() * types.length)];
+      const randomPage = pages[Math.floor(Math.random() * pages.length)];
+      const randomDevice = devices[Math.floor(Math.random() * devices.length)];
+
+      const newSimulatedEvent = {
+        type: randomType.type,
+        page: randomPage,
+        device: randomDevice,
+        createdAt: new Date().toISOString()
+      };
+
+      try {
+        const localEvents = JSON.parse(localStorage.getItem("big_live_events") || "[]");
+        localEvents.unshift(newSimulatedEvent);
+        localStorage.setItem("big_live_events", JSON.stringify(localEvents.slice(0, 100)));
+      } catch (e) {}
+
+      // Try sending to public track API
+      fetch("/api/public?action=track", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(newSimulatedEvent)
+      }).catch(() => {
+        fetch("api.php?action=track", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(newSimulatedEvent)
+        }).catch(() => null);
+      });
+
+      await loadState();
+    });
+  }
+
+  // Auto-refresh activity log every 8 seconds if dashboard is active
+  setInterval(() => {
+    if (dashboardView && !dashboardView.classList.contains("hidden")) {
+      loadState().catch(() => {});
+    }
+  }, 8000);
 
   if (slideForm) {
     slideForm.addEventListener("submit", async (event) => {

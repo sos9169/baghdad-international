@@ -686,14 +686,14 @@
   <div class="modal-card">
     <button class="modal-close" id="closeServiceModal" type="button" aria-label="Close modal">✕</button>
     <div class="modal-header">
-      <h3 id="modalTitle">طلب خدمة: <span id="modalServiceName">جامعات دولية</span></h3>
-      <p id="modalSubtext">يمكنك تعديل الخدمة أو الدولة المختارة وملء البيانات للتواصل والمتابعة.</p>
+      <h3 id="modalTitle"><span data-i18n="modal.titlePrefix">طلب خدمة:</span> <span id="modalServiceName">جامعات دولية</span></h3>
+      <p id="modalSubtext" data-i18n="modal.subtext">يمكنك تعديل الخدمة أو الدولة المختارة وملء البيانات للتواصل والمتابعة.</p>
     </div>
     
     <form id="serviceModalForm" class="modal-form">
       <div class="form-row modal-selectors">
         <label>
-          <span>نوع الخدمة المطلوبة *</span>
+          <span data-i18n="modal.serviceLabel">نوع الخدمة المطلوبة *</span>
           <select name="service_name" id="modalServiceSelect" required>
             <option value="جامعات دولية">جامعات دولية</option>
             <option value="التعليم المدرسي (ابتدائي، إعدادي، ثانوي)">🎒 التعليم المدرسي (ابتدائي، إعدادي، ثانوي)</option>
@@ -716,7 +716,7 @@
         </label>
 
         <label>
-          <span>الدولة المستهدفة *</span>
+          <span data-i18n="modal.countryLabel">الدولة المستهدفة *</span>
           <select name="country_name" id="modalCountrySelect" required>
             <option value="جمهورية العراق">🇮🇶 العراق (المقر الرئيسي)</option>
             <option value="جمهورية مصر العربية">🇪🇬 مصر</option>
@@ -729,28 +729,28 @@
       </div>
 
       <label>
-        <span>الاسم الكامل *</span>
-        <input type="text" name="name" required placeholder="اكتب اسمك الثلاثي">
+        <span data-i18n="modal.fullName">الاسم الكامل *</span>
+        <input type="text" name="name" required data-placeholder="modal.namePlaceholder" placeholder="اكتب اسمك الثلاثي">
       </label>
       
       <div class="form-row">
         <label>
-          <span>رقم الواتساب / الهاتف *</span>
+          <span data-i18n="modal.phone">رقم الواتساب / الهاتف *</span>
           <input type="tel" name="phone" required placeholder="01xxxxxxxxx" inputmode="tel" dir="ltr">
         </label>
         <label>
-          <span>الجنسية / الإقامة الحالية</span>
-          <input type="text" name="nationality" placeholder="مثال: عراقي، مقيم بمصر...">
+          <span data-i18n="modal.nationality">الجنسية / الإقامة الحالية</span>
+          <input type="text" name="nationality" data-placeholder="modal.nationalityPlaceholder" placeholder="مثال: عراقي، مقيم بمصر...">
         </label>
       </div>
 
       <div class="form-row">
         <label>
-          <span>التخصص أو التفاصيل المطلوبة</span>
-          <input type="text" name="details" placeholder="مثال: طب بشرى، ابتدائي، تأشيرة...">
+          <span data-i18n="modal.details">التخصص أو التفاصيل المطلوبة</span>
+          <input type="text" name="details" data-placeholder="modal.detailsPlaceholder" placeholder="مثال: طب بشرى، ابتدائي، تأشيرة...">
         </label>
         <label>
-          <span>الموعد المتوقع للبدء</span>
+          <span data-i18n="modal.timeline">الموعد المتوقع للبدء</span>
           <select name="timeline">
             <option value="urgent">عاجل جداً (خلال أيام)</option>
             <option value="month">خلال هذا الشهر</option>
@@ -761,13 +761,13 @@
       </div>
 
       <label>
-        <span>ملاحظات إضافية</span>
-        <textarea name="notes" rows="2" placeholder="أي تفاصيل أخرى ترغب في إضافتها..."></textarea>
+        <span data-i18n="modal.notes">ملاحظات إضافية</span>
+        <textarea name="notes" rows="2" data-placeholder="modal.notesPlaceholder" placeholder="أي تفاصيل أخرى ترغب في إضافتها..."></textarea>
       </label>
 
       <div class="modal-actions">
-        <button class="btn btn-primary" type="submit">إرسال طلب الخدمة ↗</button>
-        <a class="btn btn-ghost modal-wa-btn" id="modalWaBtn" href="https://wa.me/9647742881766" target="_blank" rel="noopener noreferrer" dir="ltr"><i class="fa-brands fa-whatsapp"></i> واتساب مباشر</a>
+        <button class="btn btn-primary" type="submit" data-i18n="modal.submit">إرسال طلب الخدمة ↗</button>
+        <a class="btn btn-ghost modal-wa-btn" id="modalWaBtn" href="https://wa.me/9647742881766" target="_blank" rel="noopener noreferrer" dir="ltr"><i class="fa-brands fa-whatsapp"></i> <span data-i18n="modal.waDirect">واتساب مباشر</span></a>
       </div>
       <small id="modalStatus" class="form-status"></small>
     </form>
@@ -777,8 +777,8 @@
 <!-- Bottom Animated Group Companies Ticker Carousel -->
 <section class="ticker-section" aria-label="Group Companies Carousel">
   <div class="container ticker-header reveal">
-    <span class="eyebrow"><i class="fa-solid fa-layer-group"></i> GROUP SUBSIDIARIES & BRAND LOGOS</span>
-    <h2>المؤسسات والشركات المعتمدة في مجموعة بغداد الدولية</h2>
+    <span class="eyebrow" data-i18n="ticker.eyebrow"><i class="fa-solid fa-layer-group"></i> GROUP SUBSIDIARIES & BRAND LOGOS</span>
+    <h2 data-i18n="ticker.title">المؤسسات والشركات المعتمدة في مجموعة بغداد الدولية</h2>
   </div>
 
   <div class="ticker-wrapper">

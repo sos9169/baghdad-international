@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="robots" content="noindex,nofollow">
   <title>لوحة إدارة Baghdad International</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -37,55 +37,54 @@
           </div>
         </div>
         <div style="display:flex;align-items:center;gap:10px;">
-          <button class="ghost" id="resetMetricsBtn" type="button" style="font-size:12px;padding:6px 12px;color:var(--gold-light);border-color:rgba(197,154,74,0.4);"><i class="fa-solid fa-rotate-right"></i> تصفير / بدء من الصفر</button>
           <button class="ghost" id="logoutBtn" type="button"><i class="fa-solid fa-right-from-bracket"></i> تسجيل خروج</button>
         </div>
       </header>
 
-      <!-- Live Stats Cards Grid -->
-      <section class="stats-grid" id="statsGrid">
-        <article class="stat-card">
-          <div class="stat-icon"><i class="fa-solid fa-eye"></i></div>
+      <section class="stats-grid" aria-label="إحصائيات الموقع الحية">
+        <article>
           <div>
             <span>زيارات الموقع الحية (الحقيقية)</span>
             <strong id="visitsCount">0</strong>
           </div>
+          <i class="fa-solid fa-eye stat-icon"></i>
         </article>
-        <article class="stat-card">
-          <div class="stat-icon"><i class="fa-solid fa-bolt"></i></div>
+        <article>
           <div>
             <span>التفاعلات والنقرات الحية</span>
             <strong id="interactionsCount">0</strong>
           </div>
+          <i class="fa-solid fa-bolt stat-icon"></i>
         </article>
-        <article class="stat-card">
-          <div class="stat-icon whatsapp-icon"><i class="fa-brands fa-whatsapp"></i></div>
+        <article>
           <div>
             <span>ضغطات الواتساب الحية</span>
             <strong id="whatsappCount">0</strong>
           </div>
+          <i class="fa-brands fa-whatsapp stat-icon whatsapp-icon"></i>
         </article>
-        <article class="stat-card">
-          <div class="stat-icon"><i class="fa-solid fa-paper-plane"></i></div>
+        <article>
           <div>
             <span>الطلبات المرسلة</span>
             <strong id="ordersCount">0</strong>
           </div>
+          <i class="fa-solid fa-paper-plane stat-icon"></i>
         </article>
       </section>
 
-      <!-- Real-Time Live Visitor Log Panel -->
-      <section class="panel" style="margin-bottom:24px;">
-        <div class="panel-head" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
+      <section class="panel activity-panel">
+        <div class="panel-head split-head">
           <div>
             <h2><i class="fa-solid fa-chart-line"></i> سجل الزيارات والنشاط الحي المباشر (Real-Time Live Activity)</h2>
-            <p>مراقبة تفصيلية حية لكل زيارة جديدة، ضغطة واتساب، أو تفاعل يحدث بالموقع لحظة بلحظة مع الوقت ونوع الجهاز.</p>
+            <p>مراقبة تفصيلية لكل زيارة جديدة، ضغطة واتساب، أو تفاعل يحدث بالموقع لحظة بلحظة مع الوقت ونوع الجهاز.</p>
           </div>
-          <button id="refreshActivityBtn" type="button" class="edit-btn" style="font-size:12px;padding:8px 14px;"><i class="fa-solid fa-arrows-rotate"></i> تحديث السجل الحي</button>
+          <div class="activity-actions">
+            <button class="ghost" id="refreshActivityBtn" type="button"><i class="fa-solid fa-rotate"></i> تحديث السجل الحي</button>
+            <button class="ghost warning" id="resetMetricsBtn" type="button"><i class="fa-solid fa-rotate-left"></i> تصفير / بدء من الصفر</button>
+          </div>
         </div>
-
         <div class="table-wrap">
-          <table class="orders-table">
+          <table>
             <thead>
               <tr>
                 <th>الوقت والتاريخ</th>
@@ -95,13 +94,12 @@
               </tr>
             </thead>
             <tbody id="activityBody">
-              <!-- Dynamic live events -->
+              <tr><td colspan="4" style="text-align:center;padding:24px;color:var(--muted)">لا توجد زيارات أو تفاعلات حية مسجلة حتى الآن.</td></tr>
             </tbody>
           </table>
         </div>
       </section>
 
-      <!-- Slides / Showcase Panel -->
       <section class="panel slides-panel">
         <div class="panel-head">
           <h2><i class="fa-solid fa-photo-film"></i> إدارة المعرض والمواضيع (صور وفيديوهات قصيرة)</h2>
@@ -360,6 +358,9 @@
             </tbody>
           </table>
         </div>
+      </section>
+    </section>
+
   <!-- Dynamic Edit Modal Overlay -->
   <div class="modal-overlay hidden" id="editModalOverlay">
     <div class="modal-card">
