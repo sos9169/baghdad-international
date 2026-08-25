@@ -1,26 +1,5 @@
-import fs from 'fs';
-import path from 'path';
 import { createOrder, isSupabaseConfigured, trackEvent } from './supabase-store.js';
-
-const dataDir = path.join(process.cwd(), 'data');
-
-function readJson(filename, fallback) {
-  try {
-    const filePath = path.join(dataDir, filename);
-    if (!fs.existsSync(filePath)) return fallback;
-    const raw = fs.readFileSync(filePath, 'utf8');
-    return JSON.parse(raw);
-  } catch (err) {
-    return fallback;
-  }
-}
-
-function writeJson(filename, data) {
-  try {
-    const filePath = path.join(dataDir, filename);
-    fs.writeFileSync(filePath, JSON.stringify(data, null, 2), 'utf8');
-  } catch (err) {}
-}
+import { getGlobalStore, saveGlobalStore } from './store.js';
 
 export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -30,6 +9,8 @@ export default async function handler(req, res) {
   if (req.method === 'OPTIONS') {
     return res.status(200).end();
   }
+
+  const store = getGlobalStore();
 
   // Parse Body safely
   let body = {};
@@ -54,23 +35,15 @@ export default async function handler(req, res) {
   action = action || 'slides';
 
   if (action === 'settings') {
-    const settings = readJson('settings.json', {
-      facebook: 'https://facebook.com/',
-      instagram: 'https://instagram.com/',
-      whatsapp: '201000000000',
-      maps: 'https://www.google.com/maps/search/?api=1&query=7+Okba+Ibn+Nafeh+St+Dokki+Giza+Egypt'
-    });
-    return res.status(200).json({ ok: true, settings });
+    return res.status(200).json({ ok: true, settings: store.settings });
   }
 
   if (action === 'slides') {
-    const slides = readJson('slides.json', []);
-    return res.status(200).json({ ok: true, slides });
+    return res.status(200).json({ ok: true, slides: store.slides });
   }
 
   if (action === 'services') {
-    const services = readJson('services.json', []);
-    return res.status(200).json({ ok: true, services });
+    return res.status(200).json({ ok: true, services: store.services });
   }
 
   if (action === 'track') {
@@ -81,18 +54,32 @@ export default async function handler(req, res) {
       await trackEvent(type, page).catch(() => null);
     }
 
-    const metrics = readJson('metrics.json', { visits: 0, interactions: 0, whatsappClicks: 0, formSubmits: 0 });
-    if (type === 'visit') {
-      metrics.visits = (metrics.visits || 0) + 1;
-    } else if (type === 'whatsapp') {
-      metrics.whatsappClicks = (metrics.whatsappClicks || 0) + 1;
-      metrics.interactions = (metrics.interactions || 0) + 1;
-    } else {
-      metrics.interactions = (metrics.interactions || 0) + 1;
+    if (!store.metrics) {
+      store.metrics = { visits: 0, interactions: 0, whatsappClicks: 0, formSubmits: 0, lastVisit: '', events: [] };
     }
-    writeJson('metrics.json', metrics);
 
-    return res.status(200).json({ ok: true, metrics });
+    if (type === 'visit') {
+      store.metrics.visits = (store.metrics.visits || 0) + 1;
+      store.metrics.lastVisit = new Date().toISOString();
+    } else if (type === 'whatsapp') {
+      store.metrics.whatsappClicks = (store.metrics.whatsappClicks || 0) + 1;
+      store.metrics.interactions = (store.metrics.interactions || 0) + 1;
+    } else {
+      store.metrics.interactions = (store.metrics.interactions || 0) + 1;
+    }
+
+    if (!Array.isArray(store.metrics.events)) store.metrics.events = [];
+    store.metrics.events.push({
+      type,
+      page,
+      createdAt: new Date().toISOString()
+    });
+    if (store.metrics.events.length > 200) {
+      store.metrics.events = store.metrics.events.slice(-200);
+    }
+
+    saveGlobalStore();
+    return res.status(200).json({ ok: true, metrics: store.metrics });
   }
 
   if (action === 'order') {
@@ -112,19 +99,21 @@ export default async function handler(req, res) {
       status: 'new',
       createdAt: new Date().toISOString()
     };
+
     const order = isSupabaseConfigured()
       ? await createOrder({ name, phone, message }).catch(() => fallbackOrder)
       : fallbackOrder;
 
-    const orders = readJson('orders.json', []);
-    orders.unshift(order);
-    writeJson('orders.json', orders);
+    if (!Array.isArray(store.orders)) store.orders = [];
+    store.orders.unshift(order);
 
-    const metrics = readJson('metrics.json', { visits: 0, interactions: 0, whatsappClicks: 0, formSubmits: 0 });
-    metrics.formSubmits = (metrics.formSubmits || 0) + 1;
-    metrics.interactions = (metrics.interactions || 0) + 1;
-    writeJson('metrics.json', metrics);
+    if (!store.metrics) {
+      store.metrics = { visits: 0, interactions: 0, whatsappClicks: 0, formSubmits: 0, lastVisit: '', events: [] };
+    }
+    store.metrics.formSubmits = (store.metrics.formSubmits || 0) + 1;
+    store.metrics.interactions = (store.metrics.interactions || 0) + 1;
 
+    saveGlobalStore();
     return res.status(200).json({ ok: true, order });
   }
 

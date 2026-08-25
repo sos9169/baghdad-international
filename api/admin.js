@@ -1,53 +1,22 @@
-import fs from 'fs';
-import path from 'path';
 import crypto from 'crypto';
 import {
-  emptyMetrics,
   getMetrics,
   getOrders,
   isSupabaseConfigured,
   updateOrderStatus
 } from './supabase-store.js';
-
-const dataDir = path.join(process.cwd(), 'data');
-
-function readJson(filename, fallback) {
-  try {
-    const filePath = path.join(dataDir, filename);
-    if (!fs.existsSync(filePath)) return fallback;
-    const raw = fs.readFileSync(filePath, 'utf8');
-    return JSON.parse(raw);
-  } catch (err) {
-    return fallback;
-  }
-}
-
-function writeJson(filename, data) {
-  try {
-    const filePath = path.join(dataDir, filename);
-    fs.writeFileSync(filePath, JSON.stringify(data, null, 2), 'utf8');
-  } catch (err) {}
-}
-
-let memoryState = {
-  admin: null,
-  settings: null,
-  slides: null,
-  services: null,
-  orders: null,
-  metrics: null
-};
+import { getGlobalStore, saveGlobalStore } from './store.js';
 
 function hashPassword(salt, password) {
   return crypto.createHash('sha256').update(salt + password).digest('hex');
 }
 
-function isAuthenticated(req) {
+function isAuthenticated(req, adminData) {
   const token = req.headers['x-admin-token'] || req.headers['authorization'] || '';
   const cookieHeader = req.headers.cookie || '';
-  const currentPassword = memoryState.admin?.currentPassword || '241000';
-  
-  if (token === '241000' || token === currentPassword || token === memoryState.admin?.passwordHash) {
+  const currentPassword = adminData?.currentPassword || '241000';
+
+  if (token === '241000' || token === currentPassword || token === adminData?.passwordHash) {
     return true;
   }
   if (cookieHeader.includes('big_logged_in=true')) {
@@ -64,6 +33,8 @@ export default async function handler(req, res) {
   if (req.method === 'OPTIONS') {
     return res.status(200).end();
   }
+
+  const store = getGlobalStore();
 
   // Parse Body safely
   let body = {};
@@ -87,52 +58,12 @@ export default async function handler(req, res) {
   }
   action = action || 'state';
 
-  // Load initial JSON fallback if not initialized
-  if (!memoryState.settings) {
-    memoryState.settings = readJson('settings.json', {
-      facebook: 'https://facebook.com/',
-      instagram: 'https://instagram.com/',
-      whatsapp: '201000000000',
-      maps: 'https://www.google.com/maps/search/?api=1&query=7+Okba+Ibn+Nafeh+St+Dokki+Giza+Egypt',
-      phone_egypt: '+201000000000',
-      phone_iraq: '+9647700000000',
-      phone_turkey: '+905300000000',
-      whatsapp_egypt: 'https://wa.me/201000000000',
-      whatsapp_iraq: 'https://wa.me/9647700000000',
-      whatsapp_turkey: 'https://wa.me/905300000000'
-    });
-  }
-
-  if (!memoryState.slides) {
-    memoryState.slides = readJson('slides.json', []);
-  }
-
-  if (!memoryState.services) {
-    memoryState.services = readJson('services.json', []);
-  }
-
-  if (!memoryState.admin) {
-    memoryState.admin = readJson('admin.json', {
-      currentPassword: '241000',
-      salt: 'big-admin-v1',
-      passwordHash: 'fc504ffee9de2aac38f03685a217e80781fef123223e80ac97fb745b3dce3541'
-    });
-  }
-
-  if (!memoryState.metrics) {
-    memoryState.metrics = readJson('metrics.json', emptyMetrics);
-  }
-
-  if (!memoryState.orders) {
-    memoryState.orders = readJson('orders.json', []);
-  }
-
   // Unauthenticated action: login
   if (action === 'login') {
     const password = String(body.password || '').trim();
-    const salt = memoryState.admin.salt || 'big-admin-v1';
-    const storedHash = memoryState.admin.passwordHash || '';
-    const currentPassword = memoryState.admin.currentPassword || '241000';
+    const salt = store.admin?.salt || 'big-admin-v1';
+    const storedHash = store.admin?.passwordHash || '';
+    const currentPassword = store.admin?.currentPassword || '241000';
     const computedHash = hashPassword(salt, password);
 
     if (password === currentPassword || password === '241000' || computedHash === storedHash) {
@@ -149,33 +80,26 @@ export default async function handler(req, res) {
   }
 
   // ALL OTHER ACTIONS REQUIRE AUTHENTICATION!
-  if (!isAuthenticated(req)) {
+  if (!isAuthenticated(req, store.admin)) {
     return res.status(401).json({ ok: false, error: 'كلمة السر غير صحيحة أو انتهت الجلسة' });
   }
 
   if (action === 'state') {
-    memoryState.metrics = readJson('metrics.json', memoryState.metrics);
-    memoryState.orders = readJson('orders.json', memoryState.orders);
-    memoryState.slides = readJson('slides.json', memoryState.slides);
-    memoryState.services = readJson('services.json', memoryState.services);
-    memoryState.settings = readJson('settings.json', memoryState.settings);
-    memoryState.admin = readJson('admin.json', memoryState.admin);
-
     const metrics = isSupabaseConfigured()
-      ? await getMetrics().catch(() => memoryState.metrics)
-      : memoryState.metrics;
+      ? await getMetrics().catch(() => store.metrics)
+      : store.metrics;
     const orders = isSupabaseConfigured()
-      ? await getOrders().catch(() => memoryState.orders)
-      : memoryState.orders;
+      ? await getOrders().catch(() => store.orders)
+      : store.orders;
 
     return res.status(200).json({
       ok: true,
-      currentPassword: memoryState.admin?.currentPassword || '241000',
-      settings: memoryState.settings,
+      currentPassword: store.admin?.currentPassword || '241000',
+      settings: store.settings,
       metrics,
       orders,
-      slides: memoryState.slides,
-      services: memoryState.services
+      slides: store.slides,
+      services: store.services
     });
   }
 
@@ -192,17 +116,17 @@ export default async function handler(req, res) {
     const whatsapp_iraq = String(body.whatsapp_iraq || '').trim();
     const whatsapp_turkey = String(body.whatsapp_turkey || '').trim();
 
-    memoryState.settings = {
+    store.settings = {
       facebook, instagram, whatsapp, maps,
-      phone_egypt: phone_egypt || memoryState.settings?.phone_egypt || '+201000000000',
-      phone_iraq: phone_iraq || memoryState.settings?.phone_iraq || '+9647700000000',
-      phone_turkey: phone_turkey || memoryState.settings?.phone_turkey || '+905300000000',
-      whatsapp_egypt: whatsapp_egypt || memoryState.settings?.whatsapp_egypt || 'https://wa.me/201000000000',
-      whatsapp_iraq: whatsapp_iraq || memoryState.settings?.whatsapp_iraq || 'https://wa.me/9647700000000',
-      whatsapp_turkey: whatsapp_turkey || memoryState.settings?.whatsapp_turkey || 'https://wa.me/905300000000'
+      phone_egypt: phone_egypt || store.settings?.phone_egypt || '+201000000000',
+      phone_iraq: phone_iraq || store.settings?.phone_iraq || '+9647700000000',
+      phone_turkey: phone_turkey || store.settings?.phone_turkey || '+905300000000',
+      whatsapp_egypt: whatsapp_egypt || store.settings?.whatsapp_egypt || 'https://wa.me/201000000000',
+      whatsapp_iraq: whatsapp_iraq || store.settings?.whatsapp_iraq || 'https://wa.me/9647700000000',
+      whatsapp_turkey: whatsapp_turkey || store.settings?.whatsapp_turkey || 'https://wa.me/905300000000'
     };
-    writeJson('settings.json', memoryState.settings);
-    return res.status(200).json({ ok: true, settings: memoryState.settings });
+    saveGlobalStore();
+    return res.status(200).json({ ok: true, settings: store.settings });
   }
 
   if (action === 'add-slide') {
@@ -215,7 +139,8 @@ export default async function handler(req, res) {
 
     const src = media_url || 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1200&q=80';
 
-    const count = memoryState.slides.length + 1;
+    if (!Array.isArray(store.slides)) store.slides = [];
+    const count = store.slides.length + 1;
     const newSlide = {
       id: 'slide-' + Date.now(),
       type: isVideoUrl(src) ? 'video' : type,
@@ -228,16 +153,18 @@ export default async function handler(req, res) {
       createdAt: new Date().toISOString()
     };
 
-    memoryState.slides.unshift(newSlide);
-    writeJson('slides.json', memoryState.slides);
-    return res.status(200).json({ ok: true, slide: newSlide, slides: memoryState.slides });
+    store.slides.unshift(newSlide);
+    saveGlobalStore();
+    return res.status(200).json({ ok: true, slide: newSlide, slides: store.slides });
   }
 
   if (action === 'delete-slide') {
     const id = String(body.id || '');
-    memoryState.slides = memoryState.slides.filter((s) => s.id !== id);
-    writeJson('slides.json', memoryState.slides);
-    return res.status(200).json({ ok: true, slides: memoryState.slides });
+    if (Array.isArray(store.slides)) {
+      store.slides = store.slides.filter((s) => s.id !== id);
+    }
+    saveGlobalStore();
+    return res.status(200).json({ ok: true, slides: store.slides });
   }
 
   if (action === 'add-service') {
@@ -260,16 +187,19 @@ export default async function handler(req, res) {
       text_en
     };
 
-    memoryState.services.push(newService);
-    writeJson('services.json', memoryState.services);
-    return res.status(200).json({ ok: true, service: newService, services: memoryState.services });
+    if (!Array.isArray(store.services)) store.services = [];
+    store.services.push(newService);
+    saveGlobalStore();
+    return res.status(200).json({ ok: true, service: newService, services: store.services });
   }
 
   if (action === 'delete-service') {
     const id = String(body.id || '');
-    memoryState.services = memoryState.services.filter((s) => s.id !== id);
-    writeJson('services.json', memoryState.services);
-    return res.status(200).json({ ok: true, services: memoryState.services });
+    if (Array.isArray(store.services)) {
+      store.services = store.services.filter((s) => s.id !== id);
+    }
+    saveGlobalStore();
+    return res.status(200).json({ ok: true, services: store.services });
   }
 
   if (action === 'password') {
@@ -278,12 +208,12 @@ export default async function handler(req, res) {
       return res.status(422).json({ ok: false, error: 'كلمة السر يجب أن تكون 4 أحرف على الأقل' });
     }
     const salt = crypto.randomBytes(8).toString('hex');
-    memoryState.admin = {
+    store.admin = {
       currentPassword: newPassword,
       salt,
       passwordHash: hashPassword(salt, newPassword)
     };
-    writeJson('admin.json', memoryState.admin);
+    saveGlobalStore();
     return res.status(200).json({ ok: true, currentPassword: newPassword });
   }
 
@@ -297,11 +227,13 @@ export default async function handler(req, res) {
       }
     }
 
-    const order = memoryState.orders.find((o) => o.id === id);
-    if (order) {
-      order.status = status;
-      writeJson('orders.json', memoryState.orders);
-      return res.status(200).json({ ok: true, order });
+    if (Array.isArray(store.orders)) {
+      const order = store.orders.find((o) => o.id === id);
+      if (order) {
+        order.status = status;
+        saveGlobalStore();
+        return res.status(200).json({ ok: true, order });
+      }
     }
     return res.status(404).json({ ok: false, error: 'الطلب غير موجود' });
   }

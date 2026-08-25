@@ -849,23 +849,31 @@
     })
     .catch(() => {});
 
-  // Track page visit & clicks
-  fetch(`${apiUrl}?action=track`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ type: "visit", page: window.location.pathname })
-  }).catch(() => {});
-
-  const waBtn = document.querySelector(".floating-whatsapp");
-  if (waBtn) {
-    waBtn.addEventListener("click", () => {
-      fetch(`${apiUrl}?action=track`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ type: "whatsapp", page: window.location.pathname })
-      }).catch(() => {});
-    });
+  // --- Comprehensive Event & Leads Tracking ---
+  function trackEventSignal(type) {
+    fetch(`${apiUrl}?action=track`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ type, page: window.location.pathname })
+    }).catch(() => {});
   }
+
+  // Track Page Visit
+  trackEventSignal("visit");
+
+  // Track WhatsApp, Phone, and Interactive Tag Clicks
+  document.addEventListener("click", (e) => {
+    const link = e.target.closest('a[href*="wa.me"], a[href^="tel:"], .floating-whatsapp, .phone-chip, .dest-tag-btn');
+    if (!link) return;
+    const href = link.getAttribute("href") || "";
+    if (href.includes("wa.me") || link.classList.contains("wa") || link.classList.contains("floating-whatsapp")) {
+      trackEventSignal("whatsapp");
+    } else if (href.startsWith("tel:") || link.classList.contains("tel")) {
+      trackEventSignal("phone");
+    } else if (link.classList.contains("dest-tag-btn")) {
+      trackEventSignal("tag_click");
+    }
+  });
 
   // --- Gapless Infinite Marquee Ticker ---
   function rebuildTicker() {
