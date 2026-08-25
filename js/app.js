@@ -4,7 +4,7 @@
   const apiUrl = window.location.hostname.endsWith(".vercel.app") ? "/api/public" : "api.php";
 
   const body = document.body;
-  const nav = document.getElementById("mainNav");
+  const nav = document.getElementById("mainNav") || document.querySelector(".main-nav");
   const menuBtn = document.getElementById("menuBtn");
   const themeToggle = document.getElementById("themeToggle");
   const langToggle = document.getElementById("langToggle");
