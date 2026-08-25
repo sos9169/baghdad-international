@@ -107,10 +107,10 @@ body.lang-en .boarding-pass .bp-stub p {
   }
 }
 
-/* Tablets & Mobile Navigation Trigger (<= 800px) */
-@media (max-width: 800px) {
+/* Tablets & Mobile Navigation Trigger (<= 1024px) */
+@media (max-width: 1024px) {
   .container {
-    width: min(100% - 28px, 640px);
+    width: min(100% - 28px, 940px);
     margin-inline: auto;
   }
 

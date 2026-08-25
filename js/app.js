@@ -410,7 +410,9 @@
 
   // Mobile Menu Toggle
   if (menuBtn && nav) {
-    menuBtn.addEventListener("click", () => {
+    menuBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
       nav.classList.toggle("open");
     });
 
@@ -418,6 +420,12 @@
       if (!nav.contains(e.target) && !menuBtn.contains(e.target)) {
         nav.classList.remove("open");
       }
+    });
+
+    nav.querySelectorAll("a").forEach((link) => {
+      link.addEventListener("click", () => {
+        nav.classList.remove("open");
+      });
     });
   }
 
