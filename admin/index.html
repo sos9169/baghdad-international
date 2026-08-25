@@ -143,12 +143,13 @@
               <span>أيقونة / رمز الخدمة</span>
               <select name="icon">
                 <option value="✦">✦ نجمة ذهبية</option>
+                <option value="🎓">🎓 خدمات تعليمية ومدرسية</option>
+                <option value="✈️">✈️ سفر وتأشيرات</option>
                 <option value="🤖">🤖 ذكاء اصطناعي وبرمجيات</option>
+                <option value="🚢">🚢 استيراد وتجارة عامة</option>
+                <option value="🎯">🎯 تدريب وتطوير</option>
+                <option value="⚖️">⚖️ دعم قانوني</option>
                 <option value="↗">↗ سهم انطلاق</option>
-                <option value="◇">◇ ماسة</option>
-                <option value="◎">◎ دائرة مركزية</option>
-                <option value="⚡">⚡ سرعة</option>
-                <option value="🌐">🌐 عالمي</option>
               </select>
             </label>
             <label class="full-width">
@@ -168,6 +169,96 @@
           <h3>الخدمات المعروضة حالياً:</h3>
         </div>
         <div class="services-list" id="servicesList">
+          <!-- Dynamically filled -->
+        </div>
+      </section>
+
+      <!-- Destinations Panel (إدارة الدول والوجهات) -->
+      <section class="panel destinations-panel">
+        <div class="panel-head">
+          <h2><i class="fa-solid fa-earth-americas"></i> إدارة الدول والوجهات المتاحة</h2>
+          <p>تحكم كامل بإضافة دول جديدة، تعديل بيانات الدول المتاحة، الأعلام، الوصف، والخدمات الخاصة بكل دولة.</p>
+        </div>
+        <form id="destForm" class="slide-form">
+          <div class="form-grid">
+            <label>
+              <span>اسم الدولة بالعربية *</span>
+              <input type="text" name="name_ar" required placeholder="مثال: ماليزيا">
+            </label>
+            <label>
+              <span>اسم الدولة بالإنجليزي</span>
+              <input type="text" name="name_en" placeholder="Example: Malaysia">
+            </label>
+            <label>
+              <span>شارة / نوع المقر</span>
+              <input type="text" name="badge_ar" placeholder="مثال: فرع رسمي / خدمات منسقة">
+            </label>
+            <label>
+              <span>رابط صورة العلم (Flag Image URL)</span>
+              <input type="url" name="flag" placeholder="https://flagcdn.com/w40/my.png">
+            </label>
+            <label class="full-width">
+              <span>الخدمات المتاحة بهذه الدولة (مفصولة بفواصل)</span>
+              <input type="text" name="tags" placeholder="مثال: جامعات حكومية، إقامة وسكن، منح دراسية">
+            </label>
+            <label class="full-width">
+              <span>الوصف التفصيلي بالعربية</span>
+              <textarea name="desc_ar" rows="2" placeholder="شرح خدمات الدولة والجامعات المتاحة..."></textarea>
+            </label>
+          </div>
+          <button type="submit" style="margin-top:10px"><i class="fa-solid fa-plus"></i> إضافة دولة جديدة</button>
+          <small id="destStatus"></small>
+        </form>
+
+        <div class="slides-preview-head">
+          <h3>الدول والوجهات المعروضة حالياً:</h3>
+        </div>
+        <div class="services-list" id="destList">
+          <!-- Dynamically filled -->
+        </div>
+      </section>
+
+      <!-- Subsidiaries Panel (إدارة مؤسسات وشركات المجموعة) -->
+      <section class="panel subsidiaries-panel">
+        <div class="panel-head">
+          <h2><i class="fa-solid fa-building-columns"></i> إدارة مؤسسات وشركات المجموعة التابعة</h2>
+          <p>تحكم كامل بإضافة شركات أو مدارس جديدة للمجموعة، تعديل بياناتها، اللوجو، والشعارات الرسمية.</p>
+        </div>
+        <form id="subForm" class="slide-form">
+          <div class="form-grid">
+            <label>
+              <span>اسم المؤسسة / الشركة بالعربية *</span>
+              <input type="text" name="title_ar" required placeholder="مثال: مدارس بغداد الدولية">
+            </label>
+            <label>
+              <span>اسم المؤسسة بالإنجليزي</span>
+              <input type="text" name="title_en" placeholder="Example: Baghdad International Schools">
+            </label>
+            <label>
+              <span>الفرع / الدولة التابعة</span>
+              <input type="text" name="tag_ar" placeholder="مثال: تركيا (اسطنبول)">
+            </label>
+            <label>
+              <span>رابط الشعار / اللوجو (Logo URL)</span>
+              <input type="text" name="logo" placeholder="images/logo_baghdad_academy.png">
+            </label>
+            <label class="full-width">
+              <span>رابط صفحة الفيسبوك الرسمية</span>
+              <input type="url" name="fb" placeholder="https://www.facebook.com/...">
+            </label>
+            <label class="full-width">
+              <span>الوصف التوضيحي بالعربية</span>
+              <textarea name="desc_ar" rows="2" placeholder="وصف الخدمة والمراحل التعليمية..."></textarea>
+            </label>
+          </div>
+          <button type="submit" style="margin-top:10px"><i class="fa-solid fa-plus"></i> إضافة مؤسسة/شركة للمجموعة</button>
+          <small id="subStatus"></small>
+        </form>
+
+        <div class="slides-preview-head">
+          <h3>شركات ومؤسسات المجموعة المعروضة حالياً:</h3>
+        </div>
+        <div class="services-list" id="subList">
           <!-- Dynamically filled -->
         </div>
       </section>

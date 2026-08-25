@@ -11,6 +11,10 @@
   const slidesList = $("#slidesList");
   const serviceForm = $("#serviceForm");
   const servicesList = $("#servicesList");
+  const destForm = $("#destForm");
+  const destList = $("#destList");
+  const subForm = $("#subForm");
+  const subList = $("#subList");
   const ordersBody = $("#ordersBody");
 
   let adminToken = localStorage.getItem("big_admin_token") || "";
@@ -22,7 +26,6 @@
     el.className = isError ? "error" : (isSuccess ? "success" : "");
   }
 
-  // Detect file:// protocol local static viewing
   if (window.location.protocol === "file:") {
     const notice = document.createElement("p");
     notice.style.cssText = "color:#e4c47d;font-size:12px;margin-top:12px;line-height:1.6;background:rgba(197,154,74,0.1);padding:10px;border-radius:8px;border:1px solid rgba(197,154,74,0.3);text-align:center;";
@@ -86,9 +89,9 @@
     if (settingsForm.instagram) settingsForm.instagram.value = settings.instagram || "";
     if (settingsForm.whatsapp) settingsForm.whatsapp.value = settings.whatsapp || "";
     if (settingsForm.maps) settingsForm.maps.value = settings.maps || "";
-    if (settingsForm.phone_egypt) settingsForm.phone_egypt.value = settings.phone_egypt || "+201000000000";
-    if (settingsForm.phone_iraq) settingsForm.phone_iraq.value = settings.phone_iraq || "+9647700000000";
-    if (settingsForm.phone_turkey) settingsForm.phone_turkey.value = settings.phone_turkey || "+905300000000";
+    if (settingsForm.phone_egypt) settingsForm.phone_egypt.value = settings.phone_egypt || "+201505502339";
+    if (settingsForm.phone_iraq) settingsForm.phone_iraq.value = settings.phone_iraq || "+9647742881766";
+    if (settingsForm.phone_turkey) settingsForm.phone_turkey.value = settings.phone_turkey || "+905011263577";
   }
 
   function fillMetrics(metrics, orders) {
@@ -119,7 +122,7 @@
       const mediaHtml = isVideo
         ? `<video src="${escapeAttr(mediaSrc)}" autoplay loop muted playsinline></video>`
         : `<img src="${escapeAttr(mediaSrc)}" alt="${escapeAttr(slide.title_ar || "")}">`;
-      
+
       return `
         <div class="slide-card-admin">
           <div class="media-box">
@@ -153,6 +156,47 @@
           <p>${escapeHtml(srv.text_ar || srv.text_en || "-")}</p>
         </div>
         <button class="danger-btn" data-delete-service="${escapeAttr(srv.id || "")}">حذف الخدمة</button>
+      </div>
+    `).join("");
+  }
+
+  function fillDestinations(destinations) {
+    if (!destList) return;
+    if (!Array.isArray(destinations) || destinations.length === 0) {
+      destList.innerHTML = '<p style="color:var(--muted);grid-column:1/-1">لا توجد دول أو وجهات معروضة حالياً.</p>';
+      return;
+    }
+
+    destList.innerHTML = destinations.map((dest) => `
+      <div class="service-card-admin">
+        <div>
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+            <img src="${escapeAttr(dest.flag || '')}" alt="" width="28" height="20" style="border-radius:3px">
+            <span style="font-size:12px;color:var(--gold);font-weight:700">${escapeHtml(dest.badge_ar || 'وجهة مفعّلة')}</span>
+          </div>
+          <h4>${escapeHtml(dest.name_ar || dest.name_en || '')}</h4>
+          <p>${escapeHtml(dest.desc_ar || dest.desc_en || '-')}</p>
+        </div>
+        <button class="danger-btn" data-delete-dest="${escapeAttr(dest.id || "")}">حذف الدولة</button>
+      </div>
+    `).join("");
+  }
+
+  function fillSubsidiaries(subsidiaries) {
+    if (!subList) return;
+    if (!Array.isArray(subsidiaries) || subsidiaries.length === 0) {
+      subList.innerHTML = '<p style="color:var(--muted);grid-column:1/-1">لا توجد مؤسسات أو شركات مضافة حالياً.</p>';
+      return;
+    }
+
+    subList.innerHTML = subsidiaries.map((sub) => `
+      <div class="service-card-admin">
+        <div>
+          <span style="font-size:11px;color:var(--gold);font-weight:700;display:block;margin-bottom:4px">${escapeHtml(sub.tag_ar || sub.tag_en || 'مؤسسة إقليمية')}</span>
+          <h4>${escapeHtml(sub.title_ar || sub.title_en || '')}</h4>
+          <p>${escapeHtml(sub.desc_ar || sub.desc_en || '-')}</p>
+        </div>
+        <button class="danger-btn" data-delete-sub="${escapeAttr(sub.id || "")}">حذف المؤسسة</button>
       </div>
     `).join("");
   }
@@ -213,6 +257,8 @@
       fillOrders(data.orders || []);
       fillSlides(data.slides || []);
       fillServices(data.services || []);
+      fillDestinations(data.destinations || []);
+      fillSubsidiaries(data.subsidiaries || []);
     } catch (err) {
       showDashboard(false);
     }
@@ -304,6 +350,82 @@
       try {
         const data = await request("delete-service", { id: serviceId });
         fillServices(data.services);
+      } catch (error) {
+        alert(error.message);
+      }
+    });
+  }
+
+  if (destForm) {
+    destForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      setStatus("#destStatus", "جار إضافة الدولة/الوجهة...");
+      const name_ar = destForm.name_ar.value;
+      const name_en = destForm.name_en.value;
+      const badge_ar = destForm.badge_ar.value;
+      const flag = destForm.flag.value;
+      const tags = destForm.tags.value;
+      const desc_ar = destForm.desc_ar.value;
+
+      try {
+        const data = await request("add-destination", { name_ar, name_en, badge_ar, flag, tags, desc_ar });
+        destForm.reset();
+        setStatus("#destStatus", "تمت إضافة الدولة بنجاح!", false, true);
+        fillDestinations(data.destinations);
+      } catch (error) {
+        setStatus("#destStatus", error.message, true);
+      }
+    });
+  }
+
+  if (destList) {
+    destList.addEventListener("click", async (event) => {
+      const btn = event.target.closest("button[data-delete-dest]");
+      if (!btn) return;
+      const destId = btn.dataset.deleteDest;
+      if (!confirm("هل أنت تأكد من رغبتك في حذف هذه الدولة/الوجهة؟")) return;
+
+      try {
+        const data = await request("delete-destination", { id: destId });
+        fillDestinations(data.destinations);
+      } catch (error) {
+        alert(error.message);
+      }
+    });
+  }
+
+  if (subForm) {
+    subForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      setStatus("#subStatus", "جار إضافة المؤسسة/الشركة...");
+      const title_ar = subForm.title_ar.value;
+      const title_en = subForm.title_en.value;
+      const tag_ar = subForm.tag_ar.value;
+      const logo = subForm.logo.value;
+      const fb = subForm.fb.value;
+      const desc_ar = subForm.desc_ar.value;
+
+      try {
+        const data = await request("add-subsidiary", { title_ar, title_en, tag_ar, logo, fb, desc_ar });
+        subForm.reset();
+        setStatus("#subStatus", "تمت إضافة المؤسسة بنجاح!", false, true);
+        fillSubsidiaries(data.subsidiaries);
+      } catch (error) {
+        setStatus("#subStatus", error.message, true);
+      }
+    });
+  }
+
+  if (subList) {
+    subList.addEventListener("click", async (event) => {
+      const btn = event.target.closest("button[data-delete-sub]");
+      if (!btn) return;
+      const subId = btn.dataset.deleteSub;
+      if (!confirm("هل أنت تأكد من رغبتك في حذف هذه المؤسسة/الشركة؟")) return;
+
+      try {
+        const data = await request("delete-subsidiary", { id: subId });
+        fillSubsidiaries(data.subsidiaries);
       } catch (error) {
         alert(error.message);
       }

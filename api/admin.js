@@ -36,7 +36,6 @@ export default async function handler(req, res) {
 
   const store = getGlobalStore();
 
-  // Parse Body safely
   let body = {};
   if (req.body) {
     if (typeof req.body === 'string') {
@@ -48,7 +47,6 @@ export default async function handler(req, res) {
     }
   }
 
-  // Extract action from query or body or URL
   let action = req.query.action || body.action;
   if (!action && req.url) {
     try {
@@ -58,7 +56,6 @@ export default async function handler(req, res) {
   }
   action = action || 'state';
 
-  // Unauthenticated action: login
   if (action === 'login') {
     const password = String(body.password || '').trim();
     const salt = store.admin?.salt || 'big-admin-v1';
@@ -79,7 +76,6 @@ export default async function handler(req, res) {
     return res.status(200).json({ ok: true });
   }
 
-  // ALL OTHER ACTIONS REQUIRE AUTHENTICATION!
   if (!isAuthenticated(req, store.admin)) {
     return res.status(401).json({ ok: false, error: 'كلمة السر غير صحيحة أو انتهت الجلسة' });
   }
@@ -99,10 +95,101 @@ export default async function handler(req, res) {
       metrics,
       orders,
       slides: store.slides,
-      services: store.services
+      services: store.services,
+      destinations: store.destinations,
+      subsidiaries: store.subsidiaries
     });
   }
 
+  // --- Manage Destinations (Countries) ---
+  if (action === 'add-destination') {
+    const name_ar = String(body.name_ar || '').trim();
+    const name_en = String(body.name_en || name_ar).trim();
+    const code = String(body.code || '').trim();
+    const badge_ar = String(body.badge_ar || 'خدمات منسقة').trim();
+    const badge_en = String(body.badge_en || 'Coordinated Services').trim();
+    const flag = String(body.flag || 'https://flagcdn.com/w40/un.png').trim();
+    const desc_ar = String(body.desc_ar || '').trim();
+    const desc_en = String(body.desc_en || desc_ar).trim();
+    const tags_raw = String(body.tags || '').trim();
+
+    if (!name_ar) {
+      return res.status(422).json({ ok: false, error: 'اسم الدولة بالعربية مطلوب' });
+    }
+
+    const tags = tags_raw.split(/[,،\n]+/).map((t) => ({ val_ar: t.trim(), val_en: t.trim() })).filter((t) => t.val_ar);
+
+    const newDest = {
+      id: 'dest-' + Date.now(),
+      name_ar,
+      name_en,
+      code: code || `${name_en} • Services`,
+      badge_ar,
+      badge_en,
+      flag,
+      desc_ar,
+      desc_en,
+      tags: tags.length ? tags : [{ val_ar: 'خدمات منسقة', val_en: 'Coordinated Services' }]
+    };
+
+    if (!Array.isArray(store.destinations)) store.destinations = [];
+    store.destinations.unshift(newDest);
+    saveGlobalStore();
+    return res.status(200).json({ ok: true, destination: newDest, destinations: store.destinations });
+  }
+
+  if (action === 'delete-destination') {
+    const id = String(body.id || '');
+    if (Array.isArray(store.destinations)) {
+      store.destinations = store.destinations.filter((d) => d.id !== id);
+    }
+    saveGlobalStore();
+    return res.status(200).json({ ok: true, destinations: store.destinations });
+  }
+
+  // --- Manage Group Subsidiaries ---
+  if (action === 'add-subsidiary') {
+    const title_ar = String(body.title_ar || '').trim();
+    const title_en = String(body.title_en || title_ar).trim();
+    const tag_ar = String(body.tag_ar || '').trim();
+    const tag_en = String(body.tag_en || tag_ar).trim();
+    const logo = String(body.logo || '').trim();
+    const desc_ar = String(body.desc_ar || '').trim();
+    const desc_en = String(body.desc_en || desc_ar).trim();
+    const fb = String(body.fb || '').trim();
+
+    if (!title_ar) {
+      return res.status(422).json({ ok: false, error: 'اسم الشركة/المؤسسة بالعربية مطلوب' });
+    }
+
+    const newSub = {
+      id: 'sub-' + Date.now(),
+      title_ar,
+      title_en,
+      tag_ar: tag_ar || title_ar,
+      tag_en: tag_en || title_en,
+      logo,
+      desc_ar,
+      desc_en,
+      fb
+    };
+
+    if (!Array.isArray(store.subsidiaries)) store.subsidiaries = [];
+    store.subsidiaries.unshift(newSub);
+    saveGlobalStore();
+    return res.status(200).json({ ok: true, subsidiary: newSub, subsidiaries: store.subsidiaries });
+  }
+
+  if (action === 'delete-subsidiary') {
+    const id = String(body.id || '');
+    if (Array.isArray(store.subsidiaries)) {
+      store.subsidiaries = store.subsidiaries.filter((s) => s.id !== id);
+    }
+    saveGlobalStore();
+    return res.status(200).json({ ok: true, subsidiaries: store.subsidiaries });
+  }
+
+  // --- Settings ---
   if (action === 'settings') {
     const facebook = String(body.facebook || '').trim();
     const instagram = String(body.instagram || '').trim();
@@ -118,12 +205,12 @@ export default async function handler(req, res) {
 
     store.settings = {
       facebook, instagram, whatsapp, maps,
-      phone_egypt: phone_egypt || store.settings?.phone_egypt || '+201000000000',
-      phone_iraq: phone_iraq || store.settings?.phone_iraq || '+9647700000000',
-      phone_turkey: phone_turkey || store.settings?.phone_turkey || '+905300000000',
-      whatsapp_egypt: whatsapp_egypt || store.settings?.whatsapp_egypt || 'https://wa.me/201000000000',
-      whatsapp_iraq: whatsapp_iraq || store.settings?.whatsapp_iraq || 'https://wa.me/9647700000000',
-      whatsapp_turkey: whatsapp_turkey || store.settings?.whatsapp_turkey || 'https://wa.me/905300000000'
+      phone_egypt: phone_egypt || store.settings?.phone_egypt || '+201505502339',
+      phone_iraq: phone_iraq || store.settings?.phone_iraq || '+9647742881766',
+      phone_turkey: phone_turkey || store.settings?.phone_turkey || '+905011263577',
+      whatsapp_egypt: whatsapp_egypt || store.settings?.whatsapp_egypt || 'https://wa.me/201505502339',
+      whatsapp_iraq: whatsapp_iraq || store.settings?.whatsapp_iraq || 'https://wa.me/9647742881766',
+      whatsapp_turkey: whatsapp_turkey || store.settings?.whatsapp_turkey || 'https://wa.me/905011263577'
     };
     saveGlobalStore();
     return res.status(200).json({ ok: true, settings: store.settings });

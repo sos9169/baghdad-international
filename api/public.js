@@ -12,7 +12,6 @@ export default async function handler(req, res) {
 
   const store = getGlobalStore();
 
-  // Parse Body safely
   let body = {};
   if (req.body) {
     if (typeof req.body === 'string') {
@@ -24,7 +23,6 @@ export default async function handler(req, res) {
     }
   }
 
-  // Extract action from query or body or URL
   let action = req.query.action || body.action;
   if (!action && req.url) {
     try {
@@ -44,6 +42,14 @@ export default async function handler(req, res) {
 
   if (action === 'services') {
     return res.status(200).json({ ok: true, services: store.services });
+  }
+
+  if (action === 'destinations') {
+    return res.status(200).json({ ok: true, destinations: store.destinations });
+  }
+
+  if (action === 'subsidiaries') {
+    return res.status(200).json({ ok: true, subsidiaries: store.subsidiaries });
   }
 
   if (action === 'track') {
