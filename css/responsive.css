@@ -208,7 +208,13 @@ body.lang-en .boarding-pass .bp-stub p {
   }
 
   .header-actions .social-links {
-    display: none !important;
+    display: flex !important;
+  }
+
+  @media (max-width: 600px) {
+    .header-actions .social-links {
+      display: none !important;
+    }
   }
 
   .brand {
