@@ -34,7 +34,17 @@
     orders: []
   };
 
-  let currentEditItem = null; // { type: 'dest'|'sub'|'service'|'slide', id: string }
+  let currentEditItem = null;
+
+  function fileToDataUrl(file) {
+    return new Promise((resolve) => {
+      if (!file || !file.size) { resolve(""); return; }
+      const reader = new FileReader();
+      reader.onload = (e) => resolve(e.target.result);
+      reader.onerror = () => resolve("");
+      reader.readAsDataURL(file);
+    });
+  }
 
   function setStatus(id, message, isError, isSuccess) {
     const el = $(id);
@@ -120,7 +130,7 @@
 
   function resolveMediaUrl(src) {
     if (!src) return "";
-    if (src.startsWith("http://") || src.startsWith("https://") || src.startsWith("/")) {
+    if (src.startsWith("http://") || src.startsWith("https://") || src.startsWith("/") || src.startsWith("data:")) {
       return src;
     }
     return `/${src}`;
@@ -194,7 +204,7 @@
       <div class="service-card-admin">
         <div>
           <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
-            <img src="${escapeAttr(dest.flag || '')}" alt="" width="28" height="20" style="border-radius:3px">
+            <img src="${escapeAttr(resolveMediaUrl(dest.flag))}" alt="" width="28" height="20" style="border-radius:3px;object-fit:cover">
             <span style="font-size:12px;color:var(--gold);font-weight:700">${escapeHtml(dest.badge_ar || 'وجهة مفعّلة')}</span>
           </div>
           <h4>${escapeHtml(dest.name_ar || dest.name_en || '')}</h4>
@@ -215,19 +225,29 @@
       return;
     }
 
-    subList.innerHTML = subsidiaries.map((sub) => `
-      <div class="service-card-admin">
-        <div>
-          <span style="font-size:11px;color:var(--gold);font-weight:700;display:block;margin-bottom:4px">${escapeHtml(sub.tag_ar || sub.tag_en || 'مؤسسة إقليمية')}</span>
-          <h4>${escapeHtml(sub.title_ar || sub.title_en || '')}</h4>
-          <p>${escapeHtml(sub.desc_ar || sub.desc_en || '-')}</p>
+    subList.innerHTML = subsidiaries.map((sub) => {
+      const logoSrc = resolveMediaUrl(sub.logo);
+      const logoHtml = logoSrc
+        ? `<img src="${escapeAttr(logoSrc)}" alt="" width="32" height="32" style="border-radius:50%;object-fit:cover;border:1px solid var(--gold)">`
+        : '';
+
+      return `
+        <div class="service-card-admin">
+          <div>
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+              ${logoHtml}
+              <span style="font-size:11px;color:var(--gold);font-weight:700">${escapeHtml(sub.tag_ar || sub.tag_en || 'مؤسسة إقليمية')}</span>
+            </div>
+            <h4>${escapeHtml(sub.title_ar || sub.title_en || '')}</h4>
+            <p>${escapeHtml(sub.desc_ar || sub.desc_en || '-')}</p>
+          </div>
+          <div class="card-actions">
+            <button class="edit-btn" data-edit-sub="${escapeAttr(sub.id || "")}">✏️ تصحيح / تعديل</button>
+            <button class="danger-btn" data-delete-sub="${escapeAttr(sub.id || "")}">حذف المؤسسة</button>
+          </div>
         </div>
-        <div class="card-actions">
-          <button class="edit-btn" data-edit-sub="${escapeAttr(sub.id || "")}">✏️ تصحيح / تعديل</button>
-          <button class="danger-btn" data-delete-sub="${escapeAttr(sub.id || "")}">حذف المؤسسة</button>
-        </div>
-      </div>
-    `).join("");
+      `;
+    }).join("");
   }
 
   function formatDate(value) {
@@ -328,7 +348,11 @@
           <input type="text" name="badge_ar" value="${escapeAttr(dest.badge_ar || '')}">
         </label>
         <label>
-          <span>رابط صورة العلم (Flag Image URL)</span>
+          <span>تغيير صورة العلم من المعرض 📷</span>
+          <input type="file" name="flag_file" accept="image/*">
+        </label>
+        <label class="full-width">
+          <span>أو رابط مباشر لصورة العلم (Flag URL)</span>
           <input type="url" name="flag" value="${escapeAttr(dest.flag || '')}">
         </label>
         <label class="full-width">
@@ -359,7 +383,11 @@
           <input type="text" name="tag_ar" value="${escapeAttr(sub.tag_ar || '')}">
         </label>
         <label>
-          <span>رابط الشعار / اللوجو (Logo URL)</span>
+          <span>تغيير اللوجو/الشعار من المعرض 📷</span>
+          <input type="file" name="logo_file" accept="image/*">
+        </label>
+        <label class="full-width">
+          <span>أو رابط مباشر للشعار (Logo URL)</span>
           <input type="text" name="logo" value="${escapeAttr(sub.logo || '')}">
         </label>
         <label class="full-width">
@@ -413,7 +441,11 @@
           <input type="text" name="title_en" value="${escapeAttr(slide.title_en || '')}">
         </label>
         <label class="full-width">
-          <span>رابط الصورة أو الفيديو المباشر</span>
+          <span>تغيير الميديا (صورة أو فيديو) من المعرض 📷</span>
+          <input type="file" name="media_file" accept="image/*,video/mp4,video/webm">
+        </label>
+        <label class="full-width">
+          <span>أو رابط مباشر للميديا (Media URL)</span>
           <input type="url" name="media_url" value="${escapeAttr(slide.src || '')}">
         </label>
         <label class="full-width">
@@ -437,12 +469,32 @@
     e.preventDefault();
     if (!currentEditItem) return;
 
-    setStatus("#modalStatus", "جار حفظ التعديلات وتصحيح النص...");
+    setStatus("#modalStatus", "جار رفع الصورة وحفظ التعديلات...");
 
     const formData = new FormData(modalEditForm);
     const payload = { id: currentEditItem.id };
     for (let [key, val] of formData.entries()) {
-      payload[key] = val;
+      if (!(val instanceof File)) {
+        payload[key] = val;
+      }
+    }
+
+    const logoFile = modalEditForm.querySelector('input[name="logo_file"]');
+    if (logoFile && logoFile.files && logoFile.files[0]) {
+      const uploadedDataUrl = await fileToDataUrl(logoFile.files[0]);
+      if (uploadedDataUrl) payload.logo = uploadedDataUrl;
+    }
+
+    const flagFile = modalEditForm.querySelector('input[name="flag_file"]');
+    if (flagFile && flagFile.files && flagFile.files[0]) {
+      const uploadedDataUrl = await fileToDataUrl(flagFile.files[0]);
+      if (uploadedDataUrl) payload.flag = uploadedDataUrl;
+    }
+
+    const mediaFile = modalEditForm.querySelector('input[name="media_file"]');
+    if (mediaFile && mediaFile.files && mediaFile.files[0]) {
+      const uploadedDataUrl = await fileToDataUrl(mediaFile.files[0]);
+      if (uploadedDataUrl) payload.media_url = uploadedDataUrl;
     }
 
     let actionName = "";
@@ -453,7 +505,7 @@
 
     try {
       const data = await request(actionName, payload);
-      setStatus("#modalStatus", "تمت حفظ وتصحيح التعديلات بنجاح!", false, true);
+      setStatus("#modalStatus", "تمت حفظ والتعديلات بنجاح!", false, true);
 
       if (data.destinations) { currentState.destinations = data.destinations; fillDestinations(data.destinations); }
       if (data.subsidiaries) { currentState.subsidiaries = data.subsidiaries; fillSubsidiaries(data.subsidiaries); }
@@ -494,10 +546,23 @@
   if (slideForm) {
     slideForm.addEventListener("submit", async (event) => {
       event.preventDefault();
-      setStatus("#slideStatus", "جار نشر الموضوع...");
-      const formData = new FormData(slideForm);
+      setStatus("#slideStatus", "جار رفع الوسائط ونشر الموضوع...");
+
+      const title_ar = slideForm.title_ar.value;
+      const title_en = slideForm.title_en.value;
+      const text_ar = slideForm.text_ar.value;
+      const text_en = slideForm.text_en.value;
+      const type = slideForm.type.value;
+      let media_url = slideForm.media_url ? slideForm.media_url.value.trim() : "";
+
+      const fileInput = slideForm.querySelector('input[name="media_file"]');
+      if (fileInput && fileInput.files && fileInput.files[0]) {
+        const uploadedDataUrl = await fileToDataUrl(fileInput.files[0]);
+        if (uploadedDataUrl) media_url = uploadedDataUrl;
+      }
+
       try {
-        const data = await request("add-slide", formData);
+        const data = await request("add-slide", { title_ar, title_en, text_ar, text_en, type, media_url });
         slideForm.reset();
         setStatus("#slideStatus", "تم نشر الموضوع بنجاح!", false, true);
         currentState.slides = data.slides;
@@ -577,13 +642,19 @@
   if (destForm) {
     destForm.addEventListener("submit", async (event) => {
       event.preventDefault();
-      setStatus("#destStatus", "جار إضافة الدولة/الوجهة...");
+      setStatus("#destStatus", "جار اختيار العلم وإضافة الدولة...");
       const name_ar = destForm.name_ar.value;
       const name_en = destForm.name_en.value;
       const badge_ar = destForm.badge_ar.value;
-      const flag = destForm.flag.value;
+      let flag = destForm.flag ? destForm.flag.value.trim() : "";
       const tags = destForm.tags.value;
       const desc_ar = destForm.desc_ar.value;
+
+      const fileInput = destForm.querySelector('input[name="flag_file"]');
+      if (fileInput && fileInput.files && fileInput.files[0]) {
+        const uploadedDataUrl = await fileToDataUrl(fileInput.files[0]);
+        if (uploadedDataUrl) flag = uploadedDataUrl;
+      }
 
       try {
         const data = await request("add-destination", { name_ar, name_en, badge_ar, flag, tags, desc_ar });
@@ -622,18 +693,24 @@
   if (subForm) {
     subForm.addEventListener("submit", async (event) => {
       event.preventDefault();
-      setStatus("#subStatus", "جار إضافة المؤسسة/الشركة...");
+      setStatus("#subStatus", "جار رفع الشعار وإضافة المؤسسة...");
       const title_ar = subForm.title_ar.value;
       const title_en = subForm.title_en.value;
       const tag_ar = subForm.tag_ar.value;
-      const logo = subForm.logo.value;
-      const fb = subForm.fb.value;
-      const desc_ar = subForm.desc_ar.value;
+      let logo = subForm.logo ? subForm.logo.value.trim() : "";
+      const fb = subForm.fb ? subForm.fb.value : "";
+      const desc_ar = subForm.desc_ar ? subForm.desc_ar.value : "";
+
+      const fileInput = subForm.querySelector('input[name="logo_file"]');
+      if (fileInput && fileInput.files && fileInput.files[0]) {
+        const uploadedDataUrl = await fileToDataUrl(fileInput.files[0]);
+        if (uploadedDataUrl) logo = uploadedDataUrl;
+      }
 
       try {
         const data = await request("add-subsidiary", { title_ar, title_en, tag_ar, logo, fb, desc_ar });
         subForm.reset();
-        setStatus("#subStatus", "تمت إضافة المؤسسة بنجاح!", false, true);
+        setStatus("#subStatus", "تمت إضافة المؤسسة والشعار بنجاح!", false, true);
         currentState.subsidiaries = data.subsidiaries;
         fillSubsidiaries(data.subsidiaries);
       } catch (error) {

@@ -194,7 +194,11 @@
               <input type="text" name="badge_ar" placeholder="مثال: فرع رسمي / خدمات منسقة">
             </label>
             <label>
-              <span>رابط صورة العلم (Flag Image URL)</span>
+              <span>اختيار صورة العلم من جهازك/المعرض 📷</span>
+              <input type="file" name="flag_file" accept="image/*">
+            </label>
+            <label class="full-width">
+              <span>أو ضع رابط مباشر لصورة العلم (Flag URL)</span>
               <input type="url" name="flag" placeholder="https://flagcdn.com/w40/my.png">
             </label>
             <label class="full-width">
@@ -224,7 +228,7 @@
           <h2><i class="fa-solid fa-building-columns"></i> إدارة مؤسسات وشركات المجموعة التابعة</h2>
           <p>تحكم كامل بإضافة شركات أو مدارس جديدة للمجموعة، تعديل بياناتها، اللوجو، والشعارات الرسمية.</p>
         </div>
-        <form id="subForm" class="slide-form">
+        <form id="subForm" class="slide-form" enctype="multipart/form-data">
           <div class="form-grid">
             <label>
               <span>اسم المؤسسة / الشركة بالعربية *</span>
@@ -239,7 +243,11 @@
               <input type="text" name="tag_ar" placeholder="مثال: تركيا (اسطنبول)">
             </label>
             <label>
-              <span>رابط الشعار / اللوجو (Logo URL)</span>
+              <span>اختيار اللوجو / الشعار من المعرض 📷</span>
+              <input type="file" name="logo_file" accept="image/*">
+            </label>
+            <label class="full-width">
+              <span>أو ضع رابط مباشر للشعار (Logo URL)</span>
               <input type="text" name="logo" placeholder="images/logo_baghdad_academy.png">
             </label>
             <label class="full-width">
