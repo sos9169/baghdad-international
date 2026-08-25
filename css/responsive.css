@@ -203,19 +203,19 @@ body.lang-en .boarding-pass .bp-stub p {
   }
 
   .header-actions {
-    gap: 6px;
+    gap: 4px;
     flex: none;
   }
 
-  /* Hide topbar social buttons on mobile header to prevent cramming/overflow */
   .header-actions .social-links {
-    display: none !important;
+    display: flex !important;
+    gap: 4px;
   }
 
   .social, .control-btn, .menu-btn {
-    width: 38px !important;
-    height: 38px !important;
-    font-size: 13.5px !important;
+    width: 32px !important;
+    height: 32px !important;
+    font-size: 12px !important;
     border-radius: 50% !important;
     border: 1px solid rgba(228, 196, 125, 0.35) !important;
     background: rgba(255, 255, 255, 0.08) !important;

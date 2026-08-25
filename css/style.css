@@ -2490,13 +2490,68 @@ bdi {
   border-color: var(--gold);
 }
 
+/* Footer */
+.footer {
+  padding: 32px 0 95px;
+  border-top: 1px solid var(--line);
+  background: var(--paper);
+  transition: background-color 0.3s ease;
+}
+
+.footer-grid {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.footer-brand .brand-mark { width: 38px; height: 38px; }
+.footer-brand .brand-copy strong {
+  font-size: 12px;
+  color: var(--text) !important;
+}
+
+body.dark .footer-brand .brand-copy strong {
+  color: #ffffff !important;
+}
+
+.footer-socials {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+}
+
+.footer-socials .social {
+  border: 1px solid var(--line) !important;
+  background: var(--card-bg) !important;
+  color: var(--text) !important;
+}
+
+.footer-socials .facebook { color: #1877F2 !important; border-color: rgba(24, 119, 242, 0.35) !important; }
+.footer-socials .instagram { color: #E1306C !important; border-color: rgba(225, 48, 108, 0.35) !important; }
+.footer-socials .whatsapp { color: #25D366 !important; border-color: rgba(37, 211, 102, 0.35) !important; }
+
+.footer-socials .facebook:hover { background: #1877F2 !important; color: #fff !important; }
+.footer-socials .instagram:hover { background: #E1306C !important; color: #fff !important; }
+.footer-socials .whatsapp:hover { background: #25D366 !important; color: #fff !important; }
+
+.footer-copyright {
+  font-size: 12px;
+  color: var(--muted);
+  font-family: var(--font-mono);
+  white-space: nowrap;
+}
+
 /* ==========================================================================
-   Bottom Animated Group Companies Ticker Carousel
+   Bottom Animated Group Companies Ticker Carousel — PERMANENT DARK BAR IN ALL MODES
    ========================================================================== */
 .ticker-section {
   padding: 60px 0 50px;
-  background: var(--paper);
-  border-top: 1px solid var(--line);
+  background: #071827 !important;
+  border-top: 1px solid rgba(228, 196, 125, 0.25);
+  border-bottom: 1px solid rgba(228, 196, 125, 0.25);
   overflow: hidden;
   position: relative;
 }
@@ -2506,10 +2561,14 @@ bdi {
   margin-bottom: 30px;
 }
 
+.ticker-header .eyebrow {
+  color: var(--gold-light) !important;
+}
+
 .ticker-header h2 {
   font-size: 24px;
   font-weight: 800;
-  color: var(--text);
+  color: #ffffff !important;
   margin-top: 6px;
 }
 
@@ -2542,17 +2601,17 @@ bdi {
   gap: 14px;
   padding: 12px 22px;
   border-radius: 16px;
-  background: var(--card-bg);
-  border: 1px solid var(--line);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+  background: rgba(11, 33, 53, 0.95) !important;
+  border: 1px solid rgba(228, 196, 125, 0.25) !important;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
   transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
   flex: none;
 }
 
 .ticker-card:hover {
   transform: translateY(-4px) scale(1.02);
-  border-color: var(--gold);
-  box-shadow: 0 8px 24px rgba(197, 154, 74, 0.2);
+  border-color: var(--gold) !important;
+  box-shadow: 0 8px 24px rgba(197, 154, 74, 0.35);
 }
 
 .ticker-logo {
@@ -2587,23 +2646,23 @@ bdi {
 .ticker-info strong {
   font-size: 15px;
   font-weight: 800;
-  color: var(--ink);
+  color: #ffffff !important;
   white-space: nowrap;
 }
 
 body.dark .ticker-info strong {
-  color: #ffffff;
+  color: #ffffff !important;
 }
 
 .ticker-info span {
   font-size: 11.5px;
   font-weight: 700;
-  color: #946f23;
+  color: var(--gold-light) !important;
   white-space: nowrap;
 }
 
 body.dark .ticker-info span {
-  color: #e5bd68;
+  color: var(--gold-light) !important;
 }
 
 @keyframes marqueeScroll {
