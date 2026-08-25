@@ -17,7 +17,24 @@
   const subList = $("#subList");
   const ordersBody = $("#ordersBody");
 
+  const editModalOverlay = $("#editModalOverlay");
+  const closeModalBtn = $("#closeModalBtn");
+  const modalEditForm = $("#modalEditForm");
+  const modalFormGrid = $("#modalFormGrid");
+  const modalTitle = $("#modalTitle");
+  const modalStatus = $("#modalStatus");
+
   let adminToken = localStorage.getItem("big_admin_token") || "";
+  let currentState = {
+    slides: [],
+    services: [],
+    destinations: [],
+    subsidiaries: [],
+    settings: {},
+    orders: []
+  };
+
+  let currentEditItem = null; // { type: 'dest'|'sub'|'service'|'slide', id: string }
 
   function setStatus(id, message, isError, isSuccess) {
     const el = $(id);
@@ -134,7 +151,10 @@
               <h4>${escapeHtml(slide.title_ar || slide.title_en || "")}</h4>
               <p>${escapeHtml(slide.text_ar || slide.text_en || "-")}</p>
             </div>
-            <button class="danger-btn" data-delete-slide="${escapeAttr(slide.id || "")}">حذف الموضوع</button>
+            <div class="card-actions">
+              <button class="edit-btn" data-edit-slide="${escapeAttr(slide.id || "")}">✏️ تصحيح / تعديل</button>
+              <button class="danger-btn" data-delete-slide="${escapeAttr(slide.id || "")}">حذف</button>
+            </div>
           </div>
         </div>
       `;
@@ -155,7 +175,10 @@
           <h4>${escapeHtml(srv.title_ar || srv.title_en || "")}</h4>
           <p>${escapeHtml(srv.text_ar || srv.text_en || "-")}</p>
         </div>
-        <button class="danger-btn" data-delete-service="${escapeAttr(srv.id || "")}">حذف الخدمة</button>
+        <div class="card-actions">
+          <button class="edit-btn" data-edit-service="${escapeAttr(srv.id || "")}">✏️ تصحيح / تعديل</button>
+          <button class="danger-btn" data-delete-service="${escapeAttr(srv.id || "")}">حذف الخدمة</button>
+        </div>
       </div>
     `).join("");
   }
@@ -177,7 +200,10 @@
           <h4>${escapeHtml(dest.name_ar || dest.name_en || '')}</h4>
           <p>${escapeHtml(dest.desc_ar || dest.desc_en || '-')}</p>
         </div>
-        <button class="danger-btn" data-delete-dest="${escapeAttr(dest.id || "")}">حذف الدولة</button>
+        <div class="card-actions">
+          <button class="edit-btn" data-edit-dest="${escapeAttr(dest.id || "")}">✏️ تصحيح / تعديل</button>
+          <button class="danger-btn" data-delete-dest="${escapeAttr(dest.id || "")}">حذف الدولة</button>
+        </div>
       </div>
     `).join("");
   }
@@ -196,7 +222,10 @@
           <h4>${escapeHtml(sub.title_ar || sub.title_en || '')}</h4>
           <p>${escapeHtml(sub.desc_ar || sub.desc_en || '-')}</p>
         </div>
-        <button class="danger-btn" data-delete-sub="${escapeAttr(sub.id || "")}">حذف المؤسسة</button>
+        <div class="card-actions">
+          <button class="edit-btn" data-edit-sub="${escapeAttr(sub.id || "")}">✏️ تصحيح / تعديل</button>
+          <button class="danger-btn" data-delete-sub="${escapeAttr(sub.id || "")}">حذف المؤسسة</button>
+        </div>
       </div>
     `).join("");
   }
@@ -252,6 +281,16 @@
         const curPassEl = $("#currentPasswordVal");
         if (curPassEl) curPassEl.textContent = data.currentPassword;
       }
+
+      currentState = {
+        slides: data.slides || [],
+        services: data.services || [],
+        destinations: data.destinations || [],
+        subsidiaries: data.subsidiaries || [],
+        settings: data.settings || {},
+        orders: data.orders || []
+      };
+
       fillSettings(data.settings);
       fillMetrics(data.metrics || {}, data.orders || []);
       fillOrders(data.orders || []);
@@ -263,6 +302,171 @@
       showDashboard(false);
     }
   }
+
+  // --- Modal Editing Functions ---
+  function openEditModal(type, id) {
+    currentEditItem = { type, id };
+    modalStatus.textContent = "";
+
+    if (type === "dest") {
+      const dest = currentState.destinations.find((d) => d.id === id);
+      if (!dest) return;
+      modalTitle.textContent = `تعديل دولة: ${dest.name_ar}`;
+      const tagString = Array.isArray(dest.tags) ? dest.tags.map((t) => t.val_ar || t).join(", ") : "";
+
+      modalFormGrid.innerHTML = `
+        <label>
+          <span>اسم الدولة بالعربية *</span>
+          <input type="text" name="name_ar" value="${escapeAttr(dest.name_ar || '')}" required>
+        </label>
+        <label>
+          <span>اسم الدولة بالإنجليزي</span>
+          <input type="text" name="name_en" value="${escapeAttr(dest.name_en || '')}">
+        </label>
+        <label>
+          <span>شارة / نوع المقر</span>
+          <input type="text" name="badge_ar" value="${escapeAttr(dest.badge_ar || '')}">
+        </label>
+        <label>
+          <span>رابط صورة العلم (Flag Image URL)</span>
+          <input type="url" name="flag" value="${escapeAttr(dest.flag || '')}">
+        </label>
+        <label class="full-width">
+          <span>الخدمات المتاحة بهذه الدولة (مفصولة بفواصل)</span>
+          <input type="text" name="tags" value="${escapeAttr(tagString)}">
+        </label>
+        <label class="full-width">
+          <span>الوصف التفصيلي بالعربية</span>
+          <textarea name="desc_ar" rows="3">${escapeHtml(dest.desc_ar || '')}</textarea>
+        </label>
+      `;
+    } else if (type === "sub") {
+      const sub = currentState.subsidiaries.find((s) => s.id === id);
+      if (!sub) return;
+      modalTitle.textContent = `تعديل مؤسسة: ${sub.title_ar}`;
+
+      modalFormGrid.innerHTML = `
+        <label>
+          <span>اسم المؤسسة / الشركة بالعربية *</span>
+          <input type="text" name="title_ar" value="${escapeAttr(sub.title_ar || '')}" required>
+        </label>
+        <label>
+          <span>اسم المؤسسة بالإنجليزي</span>
+          <input type="text" name="title_en" value="${escapeAttr(sub.title_en || '')}">
+        </label>
+        <label>
+          <span>الفرع / الدولة التابعة</span>
+          <input type="text" name="tag_ar" value="${escapeAttr(sub.tag_ar || '')}">
+        </label>
+        <label>
+          <span>رابط الشعار / اللوجو (Logo URL)</span>
+          <input type="text" name="logo" value="${escapeAttr(sub.logo || '')}">
+        </label>
+        <label class="full-width">
+          <span>رابط صفحة الفيسبوك الرسمية</span>
+          <input type="url" name="fb" value="${escapeAttr(sub.fb || '')}">
+        </label>
+        <label class="full-width">
+          <span>الوصف التوضيحي بالعربية</span>
+          <textarea name="desc_ar" rows="3">${escapeHtml(sub.desc_ar || '')}</textarea>
+        </label>
+      `;
+    } else if (type === "service") {
+      const srv = currentState.services.find((s) => s.id === id);
+      if (!srv) return;
+      modalTitle.textContent = `تعديل خدمة: ${srv.title_ar}`;
+
+      modalFormGrid.innerHTML = `
+        <label>
+          <span>اسم الخدمة بالعربية *</span>
+          <input type="text" name="title_ar" value="${escapeAttr(srv.title_ar || '')}" required>
+        </label>
+        <label>
+          <span>اسم الخدمة بالإنجليزي</span>
+          <input type="text" name="title_en" value="${escapeAttr(srv.title_en || '')}">
+        </label>
+        <label class="full-width">
+          <span>رمز / أيقونة الخدمة</span>
+          <input type="text" name="icon" value="${escapeAttr(srv.icon || '✦')}">
+        </label>
+        <label class="full-width">
+          <span>الوصف بالعربية</span>
+          <textarea name="text_ar" rows="3">${escapeHtml(srv.text_ar || '')}</textarea>
+        </label>
+        <label class="full-width">
+          <span>الوصف بالإنجليزي</span>
+          <textarea name="text_en" rows="3">${escapeHtml(srv.text_en || '')}</textarea>
+        </label>
+      `;
+    } else if (type === "slide") {
+      const slide = currentState.slides.find((s) => s.id === id);
+      if (!slide) return;
+      modalTitle.textContent = `تعديل موضوع المعرض: ${slide.title_ar}`;
+
+      modalFormGrid.innerHTML = `
+        <label>
+          <span>العنوان بالعربية *</span>
+          <input type="text" name="title_ar" value="${escapeAttr(slide.title_ar || '')}" required>
+        </label>
+        <label>
+          <span>العنوان بالإنجليزي</span>
+          <input type="text" name="title_en" value="${escapeAttr(slide.title_en || '')}">
+        </label>
+        <label class="full-width">
+          <span>رابط الصورة أو الفيديو المباشر</span>
+          <input type="url" name="media_url" value="${escapeAttr(slide.src || '')}">
+        </label>
+        <label class="full-width">
+          <span>الوصف بالعربية</span>
+          <textarea name="text_ar" rows="3">${escapeHtml(slide.text_ar || '')}</textarea>
+        </label>
+      `;
+    }
+
+    editModalOverlay.classList.remove("hidden");
+  }
+
+  function closeEditModal() {
+    editModalOverlay.classList.add("hidden");
+    currentEditItem = null;
+  }
+
+  closeModalBtn.addEventListener("click", closeEditModal);
+
+  modalEditForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    if (!currentEditItem) return;
+
+    setStatus("#modalStatus", "جار حفظ التعديلات وتصحيح النص...");
+
+    const formData = new FormData(modalEditForm);
+    const payload = { id: currentEditItem.id };
+    for (let [key, val] of formData.entries()) {
+      payload[key] = val;
+    }
+
+    let actionName = "";
+    if (currentEditItem.type === "dest") actionName = "edit-destination";
+    else if (currentEditItem.type === "sub") actionName = "edit-subsidiary";
+    else if (currentEditItem.type === "service") actionName = "edit-service";
+    else if (currentEditItem.type === "slide") actionName = "edit-slide";
+
+    try {
+      const data = await request(actionName, payload);
+      setStatus("#modalStatus", "تمت حفظ وتصحيح التعديلات بنجاح!", false, true);
+
+      if (data.destinations) { currentState.destinations = data.destinations; fillDestinations(data.destinations); }
+      if (data.subsidiaries) { currentState.subsidiaries = data.subsidiaries; fillSubsidiaries(data.subsidiaries); }
+      if (data.services) { currentState.services = data.services; fillServices(data.services); }
+      if (data.slides) { currentState.slides = data.slides; fillSlides(data.slides); }
+
+      setTimeout(() => {
+        closeEditModal();
+      }, 700);
+    } catch (err) {
+      setStatus("#modalStatus", err.message, true);
+    }
+  });
 
   loginForm.addEventListener("submit", async (event) => {
     event.preventDefault();
@@ -296,6 +500,7 @@
         const data = await request("add-slide", formData);
         slideForm.reset();
         setStatus("#slideStatus", "تم نشر الموضوع بنجاح!", false, true);
+        currentState.slides = data.slides;
         fillSlides(data.slides);
       } catch (error) {
         setStatus("#slideStatus", error.message, true);
@@ -305,13 +510,19 @@
 
   if (slidesList) {
     slidesList.addEventListener("click", async (event) => {
-      const btn = event.target.closest("button[data-delete-slide]");
-      if (!btn) return;
-      const slideId = btn.dataset.deleteSlide;
+      const editBtn = event.target.closest("button[data-edit-slide]");
+      if (editBtn) {
+        openEditModal("slide", editBtn.dataset.editSlide);
+        return;
+      }
+      const deleteBtn = event.target.closest("button[data-delete-slide]");
+      if (!deleteBtn) return;
+      const slideId = deleteBtn.dataset.deleteSlide;
       if (!confirm("هل أنت تأكد من رغبتك في حذف هذا الموضوع؟")) return;
 
       try {
         const data = await request("delete-slide", { id: slideId });
+        currentState.slides = data.slides;
         fillSlides(data.slides);
       } catch (error) {
         alert(error.message);
@@ -333,6 +544,7 @@
         const data = await request("add-service", { title_ar, title_en, text_ar, text_en, icon });
         serviceForm.reset();
         setStatus("#serviceStatus", "تمت إضافة الخدمة بنجاح!", false, true);
+        currentState.services = data.services;
         fillServices(data.services);
       } catch (error) {
         setStatus("#serviceStatus", error.message, true);
@@ -342,13 +554,19 @@
 
   if (servicesList) {
     servicesList.addEventListener("click", async (event) => {
-      const btn = event.target.closest("button[data-delete-service]");
-      if (!btn) return;
-      const serviceId = btn.dataset.deleteService;
+      const editBtn = event.target.closest("button[data-edit-service]");
+      if (editBtn) {
+        openEditModal("service", editBtn.dataset.editService);
+        return;
+      }
+      const deleteBtn = event.target.closest("button[data-delete-service]");
+      if (!deleteBtn) return;
+      const serviceId = deleteBtn.dataset.deleteService;
       if (!confirm("هل أنت تأكد من رغبتك في حذف هذه الخدمة؟")) return;
 
       try {
         const data = await request("delete-service", { id: serviceId });
+        currentState.services = data.services;
         fillServices(data.services);
       } catch (error) {
         alert(error.message);
@@ -371,6 +589,7 @@
         const data = await request("add-destination", { name_ar, name_en, badge_ar, flag, tags, desc_ar });
         destForm.reset();
         setStatus("#destStatus", "تمت إضافة الدولة بنجاح!", false, true);
+        currentState.destinations = data.destinations;
         fillDestinations(data.destinations);
       } catch (error) {
         setStatus("#destStatus", error.message, true);
@@ -380,13 +599,19 @@
 
   if (destList) {
     destList.addEventListener("click", async (event) => {
-      const btn = event.target.closest("button[data-delete-dest]");
-      if (!btn) return;
-      const destId = btn.dataset.deleteDest;
+      const editBtn = event.target.closest("button[data-edit-dest]");
+      if (editBtn) {
+        openEditModal("dest", editBtn.dataset.editDest);
+        return;
+      }
+      const deleteBtn = event.target.closest("button[data-delete-dest]");
+      if (!deleteBtn) return;
+      const destId = deleteBtn.dataset.deleteDest;
       if (!confirm("هل أنت تأكد من رغبتك في حذف هذه الدولة/الوجهة؟")) return;
 
       try {
         const data = await request("delete-destination", { id: destId });
+        currentState.destinations = data.destinations;
         fillDestinations(data.destinations);
       } catch (error) {
         alert(error.message);
@@ -409,6 +634,7 @@
         const data = await request("add-subsidiary", { title_ar, title_en, tag_ar, logo, fb, desc_ar });
         subForm.reset();
         setStatus("#subStatus", "تمت إضافة المؤسسة بنجاح!", false, true);
+        currentState.subsidiaries = data.subsidiaries;
         fillSubsidiaries(data.subsidiaries);
       } catch (error) {
         setStatus("#subStatus", error.message, true);
@@ -418,13 +644,19 @@
 
   if (subList) {
     subList.addEventListener("click", async (event) => {
-      const btn = event.target.closest("button[data-delete-sub]");
-      if (!btn) return;
-      const subId = btn.dataset.deleteSub;
+      const editBtn = event.target.closest("button[data-edit-sub]");
+      if (editBtn) {
+        openEditModal("sub", editBtn.dataset.editSub);
+        return;
+      }
+      const deleteBtn = event.target.closest("button[data-delete-sub]");
+      if (!deleteBtn) return;
+      const subId = deleteBtn.dataset.deleteSub;
       if (!confirm("هل أنت تأكد من رغبتك في حذف هذه المؤسسة/الشركة؟")) return;
 
       try {
         const data = await request("delete-subsidiary", { id: subId });
+        currentState.subsidiaries = data.subsidiaries;
         fillSubsidiaries(data.subsidiaries);
       } catch (error) {
         alert(error.message);

@@ -322,9 +322,22 @@
             </tbody>
           </table>
         </div>
-      </section>
-    </section>
-  </main>
+  <!-- Dynamic Edit Modal Overlay -->
+  <div class="modal-overlay hidden" id="editModalOverlay">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 id="modalTitle">تعديل البيانات وتصحيح النصوص</h3>
+        <button class="close-modal-btn" id="closeModalBtn" type="button"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <form id="modalEditForm" class="slide-form">
+        <div class="form-grid" id="modalFormGrid">
+          <!-- Dynamic Form Content -->
+        </div>
+        <button type="submit" style="margin-top:16px"><i class="fa-solid fa-floppy-disk"></i> حفظ التعديلات لتصحيح النصوص</button>
+        <small id="modalStatus"></small>
+      </form>
+    </div>
+  </div>
 
   <script src="/admin/admin.js"></script>
 </body>
