@@ -36,7 +36,10 @@
             <h1>لوحة التحكم والإدارة الإدارية</h1>
           </div>
         </div>
-        <button class="ghost" id="logoutBtn" type="button"><i class="fa-solid fa-right-from-bracket"></i> تسجيل خروج</button>
+        <div style="display:flex;align-items:center;gap:10px;">
+          <button class="ghost" id="resetMetricsBtn" type="button" style="font-size:12px;padding:6px 12px;color:var(--gold-light);border-color:rgba(197,154,74,0.4);"><i class="fa-solid fa-rotate-right"></i> تصفير / بدء من الصفر</button>
+          <button class="ghost" id="logoutBtn" type="button"><i class="fa-solid fa-right-from-bracket"></i> تسجيل خروج</button>
+        </div>
       </header>
 
       <!-- Live Stats Cards Grid -->
@@ -44,21 +47,21 @@
         <article class="stat-card">
           <div class="stat-icon"><i class="fa-solid fa-eye"></i></div>
           <div>
-            <span>زيارات الموقع الحية</span>
+            <span>زيارات الموقع الحية (الحقيقية)</span>
             <strong id="visitsCount">0</strong>
           </div>
         </article>
         <article class="stat-card">
           <div class="stat-icon"><i class="fa-solid fa-bolt"></i></div>
           <div>
-            <span>التفاعلات الإجمالية</span>
+            <span>التفاعلات والنقرات الحية</span>
             <strong id="interactionsCount">0</strong>
           </div>
         </article>
         <article class="stat-card">
           <div class="stat-icon whatsapp-icon"><i class="fa-brands fa-whatsapp"></i></div>
           <div>
-            <span>ضغطات الواتساب</span>
+            <span>ضغطات الواتساب الحية</span>
             <strong id="whatsappCount">0</strong>
           </div>
         </article>
@@ -69,6 +72,33 @@
             <strong id="ordersCount">0</strong>
           </div>
         </article>
+      </section>
+
+      <!-- Real-Time Live Visitor Log Panel -->
+      <section class="panel" style="margin-bottom:24px;">
+        <div class="panel-head" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
+          <div>
+            <h2><i class="fa-solid fa-chart-line"></i> سجل الزيارات والنشاط الحي المباشر (Real-Time Live Activity)</h2>
+            <p>مراقبة تفصيلية حية لكل زيارة جديدة، ضغطة واتساب، أو تفاعل يحدث بالموقع لحظة بلحظة مع الوقت ونوع الجهاز.</p>
+          </div>
+          <button id="refreshActivityBtn" type="button" class="edit-btn" style="font-size:12px;padding:8px 14px;"><i class="fa-solid fa-arrows-rotate"></i> تحديث السجل الحي</button>
+        </div>
+
+        <div class="table-wrap">
+          <table class="orders-table">
+            <thead>
+              <tr>
+                <th>الوقت والتاريخ</th>
+                <th>نوع النشاط والتفاعل</th>
+                <th>الصفحة / المسار</th>
+                <th>نوع الجهاز</th>
+              </tr>
+            </thead>
+            <tbody id="activityBody">
+              <!-- Dynamic live events -->
+            </tbody>
+          </table>
+        </div>
       </section>
 
       <!-- Slides / Showcase Panel -->

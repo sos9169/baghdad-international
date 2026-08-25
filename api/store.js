@@ -185,7 +185,7 @@ export function getGlobalStore() {
       }
     } else {
       global.__BIG_STORE__ = {
-        metrics: readJsonFile(rootDataDir, 'metrics.json', { visits: 1452, interactions: 398, whatsappClicks: 214, formSubmits: 28, lastVisit: new Date().toISOString(), events: [] }),
+        metrics: readJsonFile(rootDataDir, 'metrics.json', { visits: 0, interactions: 0, whatsappClicks: 0, formSubmits: 0, lastVisit: '', events: [] }),
         orders: readJsonFile(rootDataDir, 'orders.json', []),
         slides: readJsonFile(rootDataDir, 'slides.json', []),
         services: readJsonFile(rootDataDir, 'services.json', []),

@@ -16,6 +16,7 @@
   const subForm = $("#subForm");
   const subList = $("#subList");
   const ordersBody = $("#ordersBody");
+  const activityBody = $("#activityBody");
 
   const editModalOverlay = $("#editModalOverlay");
   const closeModalBtn = $("#closeModalBtn");
@@ -31,7 +32,8 @@
     destinations: [],
     subsidiaries: [],
     settings: {},
-    orders: []
+    orders: [],
+    metrics: {}
   };
 
   let currentEditItem = null;
@@ -122,10 +124,36 @@
   }
 
   function fillMetrics(metrics, orders) {
+    if (!metrics) metrics = {};
     $("#visitsCount").textContent = metrics.visits || 0;
     $("#interactionsCount").textContent = metrics.interactions || 0;
     $("#whatsappCount").textContent = metrics.whatsappClicks || 0;
     $("#ordersCount").textContent = Array.isArray(orders) ? orders.length : (metrics.formSubmits || 0);
+  }
+
+  function fillActivityLog(events) {
+    if (!activityBody) return;
+    if (!Array.isArray(events) || events.length === 0) {
+      activityBody.innerHTML = '<tr><td colspan="4" style="text-align:center;padding:24px;color:var(--muted)">لا توجد زيارات أو تفاعلات حية مسجلة حتى الآن.</td></tr>';
+      return;
+    }
+
+    activityBody.innerHTML = events.slice(0, 50).map((ev) => {
+      let badge = '<span style="color:#58a6ff;font-weight:600;"><i class="fa-solid fa-eye"></i> زيارة موقع جديدة</span>';
+      if (ev.type === "whatsapp") badge = '<span style="color:#25d366;font-weight:700;"><i class="fa-brands fa-whatsapp"></i> ضغطة واتساب حية</span>';
+      else if (ev.type === "phone") badge = '<span style="color:#e4c47d;font-weight:600;"><i class="fa-solid fa-phone"></i> اتصال هاتفي</span>';
+      else if (ev.type === "tag_click") badge = '<span style="color:#e4c47d;font-weight:600;"><i class="fa-solid fa-bullseye"></i> تفاعل مع دولة/خدمة</span>';
+      else if (ev.type === "form_submit") badge = '<span style="color:#38ef7d;font-weight:700;"><i class="fa-solid fa-paper-plane"></i> إرسال طلب جديد</span>';
+
+      return `
+        <tr>
+          <td dir="ltr" style="font-size:12px;font-family:monospace;">${formatDate(ev.createdAt)}</td>
+          <td>${badge}</td>
+          <td dir="ltr" style="font-size:12px;color:var(--gold-light);font-family:monospace;">${escapeHtml(ev.page || '/')}</td>
+          <td>${escapeHtml(ev.device || 'كمبيوتر/جوال 📱')}</td>
+        </tr>
+      `;
+    }).join("");
   }
 
   function resolveMediaUrl(src) {
@@ -308,11 +336,13 @@
         destinations: data.destinations || [],
         subsidiaries: data.subsidiaries || [],
         settings: data.settings || {},
-        orders: data.orders || []
+        orders: data.orders || [],
+        metrics: data.metrics || {}
       };
 
       fillSettings(data.settings);
       fillMetrics(data.metrics || {}, data.orders || []);
+      fillActivityLog(data.metrics?.events || []);
       fillOrders(data.orders || []);
       fillSlides(data.slides || []);
       fillServices(data.services || []);
@@ -542,6 +572,30 @@
     await request("logout", {}).catch(() => {});
     showDashboard(false);
   });
+
+  const resetBtn = $("#resetMetricsBtn");
+  if (resetBtn) {
+    resetBtn.addEventListener("click", async () => {
+      if (!confirm("هل أنت تأكد من رغبتك في تصفير وإعادة ضبط عداد الإحصائيات وسجل الزيارات؟")) return;
+      try {
+        const res = await request("reset-metrics", {});
+        if (res.metrics) {
+          fillMetrics(res.metrics, currentState.orders);
+          fillActivityLog(res.metrics.events || []);
+          alert("تم تصفير وإعادة ضبط عداد الإحصائيات وسجل الزيارات الحية بنجاح!");
+        }
+      } catch (err) {
+        alert(err.message);
+      }
+    });
+  }
+
+  const refreshActBtn = $("#refreshActivityBtn");
+  if (refreshActBtn) {
+    refreshActBtn.addEventListener("click", async () => {
+      await loadState();
+    });
+  }
 
   if (slideForm) {
     slideForm.addEventListener("submit", async (event) => {

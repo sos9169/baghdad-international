@@ -101,6 +101,19 @@ export default async function handler(req, res) {
     });
   }
 
+  if (action === 'reset-metrics') {
+    store.metrics = {
+      visits: 0,
+      interactions: 0,
+      whatsappClicks: 0,
+      formSubmits: 0,
+      lastVisit: new Date().toISOString(),
+      events: []
+    };
+    saveGlobalStore();
+    return res.status(200).json({ ok: true, metrics: store.metrics });
+  }
+
   // --- Manage Destinations (Countries) ---
   if (action === 'add-destination') {
     const name_ar = String(body.name_ar || '').trim();

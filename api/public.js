@@ -55,6 +55,11 @@ export default async function handler(req, res) {
   if (action === 'track') {
     const type = String(body.type || 'visit');
     const page = String(body.page || '/');
+    const userAgent = req.headers['user-agent'] || '';
+
+    let device = 'كمبيوتر 💻';
+    if (/mobile/i.test(userAgent)) device = 'هاتف جوال 📱';
+    else if (/tablet|ipad/i.test(userAgent)) device = 'تابلت 📱';
 
     if (isSupabaseConfigured()) {
       await trackEvent(type, page).catch(() => null);
@@ -75,13 +80,14 @@ export default async function handler(req, res) {
     }
 
     if (!Array.isArray(store.metrics.events)) store.metrics.events = [];
-    store.metrics.events.push({
+    store.metrics.events.unshift({
       type,
       page,
+      device,
       createdAt: new Date().toISOString()
     });
     if (store.metrics.events.length > 200) {
-      store.metrics.events = store.metrics.events.slice(-200);
+      store.metrics.events = store.metrics.events.slice(0, 200);
     }
 
     saveGlobalStore();
