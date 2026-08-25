@@ -473,7 +473,6 @@
     if (!slides.length) return;
 
     slideIndex = (index + slides.length) % slides.length;
-    slidesTrack.style.transform = `translateX(${-slideIndex * 100}%)`;
 
     for (let i = 0; i < slides.length; i++) {
       slides[i].classList.toggle("active", i === slideIndex);
