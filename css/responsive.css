@@ -153,12 +153,7 @@ body.lang-en .boarding-pass .bp-stub p {
     display: flex !important;
     align-items: center !important;
     justify-content: flex-end !important;
-    gap: 10px !important;
-  }
-
-  [dir="rtl"] .header-actions,
-  body:not(.lang-en) .header-actions {
-    justify-content: flex-start !important;
+    gap: 8px !important;
   }
 
   .menu-btn {
@@ -167,7 +162,7 @@ body.lang-en .boarding-pass .bp-stub p {
 
   .header-actions .social-links {
     display: flex !important;
-    gap: 10px !important;
+    gap: 8px !important;
   }
 }
 
