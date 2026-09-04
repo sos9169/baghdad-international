@@ -683,6 +683,31 @@ body.lang-en .boarding-pass .bp-stub p {
   .node-moscow { top: 6% !important; left: 54% !important; }
 }
 
+/* Mobile Footer Centering */
+@media (max-width: 768px) {
+  .footer-bottom-inner {
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: center !important;
+    text-align: center !important;
+    gap: 14px !important;
+  }
+
+  .copyright-text {
+    text-align: center !important;
+    width: 100% !important;
+    margin: 0 auto !important;
+    line-height: 1.7 !important;
+    font-size: 13px !important;
+  }
+
+  .footer-socials {
+    justify-content: center !important;
+    width: 100% !important;
+    margin: 0 auto !important;
+  }
+}
+
 /* iOS Safe Areas */
 @supports (padding: max(0px)) {
   .site-header {

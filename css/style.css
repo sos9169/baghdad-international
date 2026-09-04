@@ -2284,6 +2284,8 @@ body.dark .country-phones a {
   padding: 32px 28px;
   box-shadow: 0 12px 36px rgba(0, 0, 0, 0.05);
   transition: all 0.3s ease;
+  align-self: start;
+  height: fit-content;
 }
 
 body.dark .contact-form-card,
