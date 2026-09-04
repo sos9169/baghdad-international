@@ -127,8 +127,10 @@ body.lang-en .boarding-pass .bp-stub p {
   }
 
   .brand {
-    justify-self: auto !important;
-    flex: none !important;
+    flex: 1 1 0px !important;
+    min-width: 0 !important;
+    display: flex !important;
+    align-items: center !important;
   }
 
   .main-nav {
@@ -143,11 +145,20 @@ body.lang-en .boarding-pass .bp-stub p {
     box-shadow: none !important;
     padding: 0 !important;
     width: auto !important;
+    z-index: 10 !important;
   }
 
   .header-actions {
-    justify-self: auto !important;
-    flex: none !important;
+    flex: 1 1 0px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    gap: 10px !important;
+  }
+
+  [dir="rtl"] .header-actions,
+  body:not(.lang-en) .header-actions {
+    justify-content: flex-start !important;
   }
 
   .menu-btn {
@@ -156,6 +167,7 @@ body.lang-en .boarding-pass .bp-stub p {
 
   .header-actions .social-links {
     display: flex !important;
+    gap: 10px !important;
   }
 }
 

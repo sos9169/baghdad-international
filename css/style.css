@@ -348,7 +348,8 @@ body:not(.lang-en) .brand-copy strong {
   flex: none;
 }
 
-.social i, .control-btn i, .menu-btn i {
+.social i, .control-btn i, .menu-btn i,
+.social span, .control-btn span, .menu-btn span {
   position: absolute !important;
   inset: 0 !important;
   display: flex !important;
@@ -362,6 +363,7 @@ body:not(.lang-en) .brand-copy strong {
   transform: none !important;
   top: 0 !important;
   left: 0 !important;
+  text-align: center !important;
 }
 
 .facebook i { color: #58a6ff; }
@@ -387,15 +389,16 @@ body:not(.lang-en) .brand-copy strong {
 .whatsapp:hover { border-color: #34d399; background: #25D366; color: #fff; }
 .whatsapp:hover i { color: #fff; }
 
-.theme-toggle .sun { display: inline-block; color: var(--gold-light); font-size: 15px; }
-.theme-toggle .moon { display: none; color: var(--gold-light); font-size: 15px; }
-body.dark .theme-toggle .sun { display: none; }
-body.dark .theme-toggle .moon { display: inline-block; }
+.theme-toggle .sun { display: flex !important; color: var(--gold-light); font-size: 15px; }
+.theme-toggle .moon { display: none !important; color: var(--gold-light); font-size: 15px; }
+body.dark .theme-toggle .sun { display: none !important; }
+body.dark .theme-toggle .moon { display: flex !important; color: var(--gold-light); font-size: 15px; }
 
 #langToggle { color: var(--gold-light); }
-#langToggle .lang-en { display: none; }
-body.lang-en #langToggle .lang-ar { display: none; }
-body.lang-en #langToggle .lang-en { display: inline; }
+#langToggle .lang-ar { display: flex !important; }
+#langToggle .lang-en { display: none !important; }
+body.lang-en #langToggle .lang-ar { display: none !important; }
+body.lang-en #langToggle .lang-en { display: flex !important; }
 
 .menu-btn { display: none; }
 
