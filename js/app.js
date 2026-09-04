@@ -440,7 +440,7 @@
     if (servicesData.length) renderServices(servicesData);
     if (subsidiariesData.length) {
       renderSubsidiaries(subsidiariesData);
-      renderTicker(subsidiariesData);
+      renderCompaniesTicker(subsidiariesData);
     }
     if (destinationsData.length) {
       renderDestinations(destinationsData);
@@ -940,8 +940,8 @@
     }).join("");
   }
 
-  function renderTicker(list) {
-    const track = document.getElementById("tickerTrack");
+  function renderCompaniesTicker(list) {
+    const track = document.getElementById("companiesTickerTrack");
     if (!track || !Array.isArray(list) || !list.length) return;
     const isEn = body.classList.contains("lang-en");
 
@@ -964,8 +964,8 @@
       `;
     }).join("");
 
-    track.innerHTML = `<div class="ticker-unit">${cardsHtml}</div>`;
-    rebuildTicker();
+    // Multiply 4 times for endless unbroken loop in both Arabic and English
+    track.innerHTML = cardsHtml + cardsHtml + cardsHtml + cardsHtml;
   }
 
   fetch(`${apiUrl}?action=subsidiaries`, { cache: "no-store" })
@@ -973,7 +973,7 @@
     .then((data) => {
       if (data && Array.isArray(data.subsidiaries) && data.subsidiaries.length) {
         renderSubsidiaries(data.subsidiaries);
-        renderTicker(data.subsidiaries);
+        renderCompaniesTicker(data.subsidiaries);
       }
     })
     .catch(() => {});

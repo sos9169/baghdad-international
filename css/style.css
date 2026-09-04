@@ -2923,6 +2923,11 @@ body.dark .footer-brand .brand-copy strong {
   text-align: right;
 }
 
+[dir="ltr"] .ticker-info,
+body.lang-en .ticker-info {
+  text-align: left;
+}
+
 .ticker-info strong {
   font-size: 15px;
   font-weight: 800;
