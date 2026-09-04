@@ -2764,7 +2764,7 @@ bdi {
   overflow: hidden;
   border-top: 1px solid rgba(228, 196, 125, 0.25);
   font-family: var(--font-ar);
-  padding: 0 0 75px; /* Extra bottom space for floating whatsapp button */
+  padding: 0;
 }
 
 body.dark .footer {
