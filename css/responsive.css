@@ -65,12 +65,6 @@ body.lang-en .boarding-pass .bp-stub p {
   .container {
     width: min(1080px, calc(100% - 44px));
   }
-  .main-nav {
-    gap: 16px;
-  }
-  .main-nav a {
-    font-size: 12px;
-  }
   .hero-grid {
     gap: 35px;
     grid-template-columns: minmax(0, 1fr) minmax(340px, 0.9fr);
@@ -107,16 +101,6 @@ body.lang-en .boarding-pass .bp-stub p {
   }
 }
 
-/* Laptops & Small Desktop (1025px - 1280px) */
-@media (max-width: 1280px) and (min-width: 1025px) {
-  .main-nav {
-    gap: 12px !important;
-  }
-  .main-nav a {
-    font-size: 12.5px !important;
-  }
-}
-
 /* Desktop Navigation (min-width: 1025px) */
 @media (min-width: 1025px) {
   .nav-wrap {
@@ -124,7 +108,7 @@ body.lang-en .boarding-pass .bp-stub p {
     justify-content: space-between !important;
     align-items: center !important;
     position: relative !important;
-    gap: 12px !important;
+    gap: 8px !important;
   }
 
   .brand {
@@ -132,6 +116,7 @@ body.lang-en .boarding-pass .bp-stub p {
     min-width: 0 !important;
     display: flex !important;
     align-items: center !important;
+    gap: 8px !important;
     z-index: 2 !important;
   }
 
@@ -151,12 +136,20 @@ body.lang-en .boarding-pass .bp-stub p {
     padding: 0 !important;
     width: auto !important;
     z-index: 1 !important;
-    gap: clamp(6px, 1.1vw, 18px) !important;
+    gap: clamp(4px, 0.85vw, 14px) !important;
   }
 
   .main-nav a {
-    font-size: clamp(11.5px, 0.88vw, 13.5px) !important;
+    font-size: clamp(11px, 0.82vw, 13px) !important;
     white-space: nowrap !important;
+  }
+
+  body:not(.lang-en) .main-nav {
+    gap: clamp(3px, 0.75vw, 12px) !important;
+  }
+
+  body:not(.lang-en) .main-nav a {
+    font-size: clamp(10.5px, 0.78vw, 12.5px) !important;
   }
 
   .header-actions {
@@ -164,8 +157,14 @@ body.lang-en .boarding-pass .bp-stub p {
     display: flex !important;
     align-items: center !important;
     justify-content: flex-end !important;
-    gap: 8px !important;
+    gap: 6px !important;
     z-index: 2 !important;
+  }
+
+  .social, .control-btn {
+    width: 36px !important;
+    height: 36px !important;
+    font-size: 13px !important;
   }
 
   .menu-btn {
@@ -174,7 +173,7 @@ body.lang-en .boarding-pass .bp-stub p {
 
   .header-actions .social-links {
     display: flex !important;
-    gap: 8px !important;
+    gap: 6px !important;
   }
 }
 
