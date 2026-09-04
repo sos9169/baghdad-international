@@ -2754,15 +2754,227 @@ bdi {
   border-color: var(--gold);
 }
 
-/* Footer */
+/* ==========================================
+   LUXURY GRAND FOOTER SYSTEM
+   ========================================== */
 .footer {
-  padding: 32px 0 95px;
-  border-top: 1px solid var(--line);
-  background: var(--paper);
-  transition: background-color 0.3s ease;
+  background: var(--ink, #08233d);
+  color: #e2e8f0;
+  position: relative;
+  overflow: hidden;
+  border-top: 1px solid rgba(228, 196, 125, 0.25);
+  font-family: var(--font-ar);
+  padding: 0 0 75px; /* Extra bottom space for floating whatsapp button */
 }
 
-.footer-grid {
+body.dark .footer {
+  background: #040e17;
+  border-top-color: rgba(228, 196, 125, 0.3);
+}
+
+.footer-top-line {
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #c59a4a 30%, #e4c47d 50%, #c59a4a 70%, transparent);
+}
+
+.footer-main {
+  display: grid;
+  grid-template-columns: 1.3fr 0.8fr 1fr 1.1fr;
+  gap: 40px;
+  padding: 60px 0 45px;
+}
+
+@media (max-width: 1024px) {
+  .footer-main {
+    grid-template-columns: 1fr 1fr;
+    gap: 36px;
+  }
+}
+
+@media (max-width: 640px) {
+  .footer-main {
+    grid-template-columns: 1fr;
+    gap: 30px;
+    padding: 45px 0 30px;
+  }
+}
+
+.footer-col {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.footer-brand {
+  margin-bottom: 4px;
+}
+
+.footer-brand .brand-mark {
+  width: 44px;
+  height: 44px;
+  border-color: var(--gold);
+}
+
+.footer-brand .brand-copy strong {
+  font-size: 15px;
+  font-weight: 800;
+  color: #ffffff !important;
+}
+
+.footer-brand .brand-copy small {
+  color: var(--gold-light);
+}
+
+.footer-desc {
+  font-size: 13.5px;
+  line-height: 1.85;
+  color: #94a3b8;
+  margin: 0;
+  max-width: 340px;
+}
+
+.footer-contacts-quick {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.footer-contact-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--gold-light, #e4c47d);
+  text-decoration: none;
+  background: rgba(228, 196, 125, 0.08);
+  padding: 8px 14px;
+  border-radius: 10px;
+  border: 1px solid rgba(228, 196, 125, 0.18);
+  width: fit-content;
+  transition: all 0.25s ease;
+}
+
+.footer-contact-chip i {
+  color: #25D366;
+  font-size: 14px;
+}
+
+.footer-contact-chip:hover {
+  background: rgba(228, 196, 125, 0.18);
+  border-color: var(--gold);
+  color: #ffffff;
+  transform: translateX(-3px);
+}
+
+[dir="ltr"] .footer-contact-chip:hover,
+body.lang-en .footer-contact-chip:hover {
+  transform: translateX(3px);
+}
+
+.footer-title {
+  font-size: 16px;
+  font-weight: 800;
+  color: #ffffff;
+  position: relative;
+  padding-bottom: 12px;
+  margin: 0 0 4px;
+}
+
+.footer-title::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 36px;
+  height: 2.5px;
+  background: var(--gold, #c59a4a);
+  border-radius: 2px;
+}
+
+[dir="ltr"] .footer-title::after,
+body.lang-en .footer-title::after {
+  right: auto;
+  left: 0;
+}
+
+.footer-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+}
+
+.footer-links a {
+  color: #cbd5e1;
+  text-decoration: none;
+  font-size: 13.5px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.footer-links a i {
+  color: var(--gold, #c59a4a);
+  font-size: 12px;
+}
+
+.footer-links a:hover {
+  color: var(--gold-light, #e4c47d);
+  transform: translateX(-4px);
+}
+
+[dir="ltr"] .footer-links a:hover,
+body.lang-en .footer-links a:hover {
+  transform: translateX(4px);
+}
+
+.footer-hq-info {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.hq-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.hq-item i {
+  color: var(--gold, #c59a4a);
+  font-size: 16px;
+  margin-top: 3px;
+  flex-shrink: 0;
+}
+
+.hq-item strong {
+  display: block;
+  font-size: 13px;
+  color: #f1f5f9;
+  margin-bottom: 3px;
+}
+
+.hq-item p {
+  margin: 0;
+  font-size: 12.5px;
+  color: #94a3b8;
+  line-height: 1.6;
+}
+
+.footer-bottom {
+  background: rgba(0, 0, 0, 0.4);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 18px 0;
+}
+
+.footer-bottom-inner {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -2770,43 +2982,39 @@ bdi {
   flex-wrap: wrap;
 }
 
-.footer-brand .brand-mark { width: 38px; height: 38px; }
-.footer-brand .brand-copy strong {
-  font-size: 12px;
-  color: var(--text) !important;
+.copyright-text {
+  margin: 0;
+  font-size: 13px;
+  color: #94a3b8;
+  font-weight: 500;
 }
 
-body.dark .footer-brand .brand-copy strong {
-  color: #ffffff !important;
+.copyright-text strong {
+  color: #e2e8f0;
 }
 
 .footer-socials {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 16px;
+  gap: 12px;
 }
 
 .footer-socials .social {
-  width: 44px;
-  height: 44px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
-  background: var(--card-bg) !important;
-  border: 1.5px solid var(--line) !important;
+  background: rgba(255, 255, 255, 0.06) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 12px rgba(8, 35, 61, 0.08);
-  transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+  transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease;
 }
 
-.footer-socials .facebook i { color: #1877F2 !important; font-size: 18px; }
-.footer-socials .instagram i { color: #E1306C !important; font-size: 18px; }
-.footer-socials .whatsapp i { color: #25D366 !important; font-size: 18px; }
-
-.footer-socials .facebook { border-color: rgba(24, 119, 242, 0.4) !important; }
-.footer-socials .instagram { border-color: rgba(225, 48, 108, 0.4) !important; }
-.footer-socials .whatsapp { border-color: rgba(37, 211, 102, 0.4) !important; }
+.footer-socials .facebook i { color: #1877F2 !important; font-size: 16px; }
+.footer-socials .instagram i { color: #E1306C !important; font-size: 16px; }
+.footer-socials .whatsapp i { color: #25D366 !important; font-size: 16px; }
 
 .footer-socials .facebook:hover { background: #1877F2 !important; border-color: #1877F2 !important; transform: translateY(-3px); }
 .footer-socials .facebook:hover i { color: #ffffff !important; }
@@ -2816,13 +3024,6 @@ body.dark .footer-brand .brand-copy strong {
 
 .footer-socials .whatsapp:hover { background: #25D366 !important; border-color: #25D366 !important; transform: translateY(-3px); }
 .footer-socials .whatsapp:hover i { color: #ffffff !important; }
-
-.footer-copyright {
-  font-size: 12px;
-  color: var(--muted);
-  font-family: var(--font-mono);
-  white-space: nowrap;
-}
 
 /* ==========================================================================
    Bottom Animated Group Companies Ticker Carousel — PERMANENT DARK BAR IN ALL MODES

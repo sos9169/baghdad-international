@@ -1030,20 +1030,105 @@
 </main>
 
 <footer class="footer">
-  <div class="container footer-grid">
-    <div class="brand footer-brand">
-      <span class="brand-mark"><img src="assets/logo.jpg" width="38" height="38" alt="" loading="lazy"></span>
-      <span class="brand-copy"><strong>Baghdad International</strong><small>Group</small></span>
+  <div class="footer-top-line"></div>
+
+  <div class="container footer-main">
+    <!-- Col 1: Brand & Profile -->
+    <div class="footer-col footer-col-brand">
+      <div class="brand footer-brand">
+        <span class="brand-mark"><img src="assets/logo.jpg" width="44" height="44" alt="مجموعة بغداد الدولية" loading="lazy"></span>
+        <span class="brand-copy">
+          <strong data-i18n="footer.brandName">مجموعة بغداد الدولية</strong>
+          <small>BAGHDAD INTERNATIONAL GROUP</small>
+        </span>
+      </div>
+      <p class="footer-desc" data-i18n="footer.desc">
+        المظلة الاستثمارية والتنفيذية الرائدة في تقديم الخدمات التعليمية، القبولات الجامعية، والتجارة والاستشارات العامة في العراق، مصر، وتركيا.
+      </p>
+
+      <div class="footer-contacts-quick">
+        <a href="https://wa.me/9647742881766" target="_blank" rel="noopener" class="footer-contact-chip" dir="ltr">
+          <i class="fa-brands fa-whatsapp"></i>
+          <span>🇮🇶 Iraq: +964 774 288 1766</span>
+        </a>
+        <a href="https://wa.me/201505502339" target="_blank" rel="noopener" class="footer-contact-chip" dir="ltr">
+          <i class="fa-brands fa-whatsapp"></i>
+          <span>🇪🇬 Egypt: +20 150 550 2339</span>
+        </a>
+        <a href="https://wa.me/905011263577" target="_blank" rel="noopener" class="footer-contact-chip" dir="ltr">
+          <i class="fa-brands fa-whatsapp"></i>
+          <span>🇹🇷 Turkey: +90 501 126 3577</span>
+        </a>
+      </div>
     </div>
 
-    <div class="footer-socials" aria-label="Social media">
-      <a href="https://facebook.com/" target="_blank" rel="noopener noreferrer" aria-label="Facebook" class="social facebook"><i class="fa-brands fa-facebook-f"></i></a>
-      <a href="https://instagram.com/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="social instagram"><i class="fa-brands fa-instagram"></i></a>
-      <a href="https://wa.me/9647742881766" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" class="social whatsapp"><i class="fa-brands fa-whatsapp"></i></a>
+    <!-- Col 2: Quick Links -->
+    <div class="footer-col">
+      <h4 class="footer-title" data-i18n="footer.col1Title">روابط سريعة</h4>
+      <ul class="footer-links">
+        <li><a href="#hero" data-i18n="nav.home">الرئيسية</a></li>
+        <li><a href="#about" data-i18n="nav.about">من نحن</a></li>
+        <li><a href="#subsidiaries" data-i18n="nav.subsidiaries">شركات المجموعة</a></li>
+        <li><a href="#destinations" data-i18n="nav.education">التعليم والدراسة</a></li>
+        <li><a href="#services" data-i18n="nav.services">خدماتنا العامة</a></li>
+        <li><a href="#contact" data-i18n="nav.contact">تواصل معنا</a></li>
+      </ul>
     </div>
 
-    <div class="footer-copyright">
-      <span>© 2026 Baghdad International Group</span>
+    <!-- Col 3: Group Companies & Branches -->
+    <div class="footer-col">
+      <h4 class="footer-title" data-i18n="footer.col2Title">مؤسساتنا وفروعنا</h4>
+      <ul class="footer-links">
+        <li><a href="#subsidiaries"><i class="fa-solid fa-graduation-cap"></i> أكاديمية بغداد الدولية (مصر)</a></li>
+        <li><a href="#subsidiaries"><i class="fa-solid fa-school"></i> مدارس يلوا كولج (تركيا)</a></li>
+        <li><a href="#subsidiaries"><i class="fa-solid fa-building-columns"></i> مدارس قرطبة الدولية (اسطنبول)</a></li>
+        <li><a href="#subsidiaries"><i class="fa-solid fa-book-open"></i> مدارس الحضارة العراقية (يلوى)</a></li>
+        <li><a href="#subsidiaries"><i class="fa-solid fa-handshake"></i> شركة النيل للخدمات المتكاملة</a></li>
+        <li><a href="#subsidiaries"><i class="fa-solid fa-chart-line"></i> شركة بلاتفورم التركية</a></li>
+      </ul>
+    </div>
+
+    <!-- Col 4: Main HQ Locations & Working Hours -->
+    <div class="footer-col">
+      <h4 class="footer-title" data-i18n="footer.col3Title">مقراتنا الرسمية</h4>
+      <div class="footer-hq-info">
+        <div class="hq-item">
+          <i class="fa-solid fa-location-dot"></i>
+          <div>
+            <strong data-i18n="footer.hq1Title">المقر الرئيسي (العراق):</strong>
+            <p data-i18n="contact.address1">بغداد — زيونة — شارع الربيعي — بداية كوين</p>
+          </div>
+        </div>
+        <div class="hq-item">
+          <i class="fa-solid fa-location-dot"></i>
+          <div>
+            <strong data-i18n="footer.hq2Title">فرع القاهرة (مصر):</strong>
+            <p data-i18n="contact.address2">الدقي — شارع عقبة بن نافع — عمارة ٧ أمام المركز الثقافي الروسي</p>
+          </div>
+        </div>
+        <div class="hq-item">
+          <i class="fa-solid fa-clock"></i>
+          <div>
+            <strong data-i18n="footer.hoursTitle">أوقات العمل:</strong>
+            <p data-i18n="footer.hours">السبت – الخميس: 9:00 ص – 6:00 م</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom Copyright & Social Bar -->
+  <div class="footer-bottom">
+    <div class="container footer-bottom-inner">
+      <p class="copyright-text">
+        © 2026 <strong data-i18n="footer.brandName">مجموعة بغداد الدولية</strong> — جميع الحقوق محفوظة. Baghdad International Group
+      </p>
+
+      <div class="footer-socials" aria-label="Social media">
+        <a href="https://facebook.com/" target="_blank" rel="noopener noreferrer" aria-label="Facebook" class="social facebook"><i class="fa-brands fa-facebook-f"></i></a>
+        <a href="https://instagram.com/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="social instagram"><i class="fa-brands fa-instagram"></i></a>
+        <a href="https://wa.me/9647742881766" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" class="social whatsapp"><i class="fa-brands fa-whatsapp"></i></a>
+      </div>
     </div>
   </div>
 </footer>
