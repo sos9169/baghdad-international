@@ -2921,6 +2921,7 @@ body.dark .footer-brand .brand-copy strong {
   display: flex;
   flex-direction: column;
   text-align: right;
+  line-height: 1.35;
 }
 
 [dir="ltr"] .ticker-info,
@@ -2929,10 +2930,16 @@ body.lang-en .ticker-info {
 }
 
 .ticker-info strong {
-  font-size: 15px;
+  font-size: 14.5px;
   font-weight: 800;
   color: #ffffff !important;
   white-space: nowrap;
+  font-family: var(--font-ar);
+}
+
+body.lang-en .ticker-info strong {
+  font-family: var(--font-en);
+  letter-spacing: 0.15px;
 }
 
 body.dark .ticker-info strong {
@@ -2941,9 +2948,16 @@ body.dark .ticker-info strong {
 
 .ticker-info span {
   font-size: 11.5px;
-  font-weight: 700;
+  font-weight: 600;
   color: var(--gold-light) !important;
   white-space: nowrap;
+  font-family: var(--font-ar);
+  margin-top: 2px;
+}
+
+body.lang-en .ticker-info span {
+  font-family: var(--font-en);
+  letter-spacing: 0.15px;
 }
 
 body.dark .ticker-info span {
