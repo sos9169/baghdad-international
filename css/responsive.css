@@ -134,14 +134,14 @@ body.lang-en .boarding-pass .bp-stub p {
   .main-nav {
     position: absolute !important;
     left: 50% !important;
-    transform: translateX(-50%) !important;
+    top: 50% !important;
+    transform: translate(-50%, -50%) !important;
     display: flex !important;
     flex-direction: row !important;
     background: transparent !important;
     border: none !important;
     box-shadow: none !important;
     padding: 0 !important;
-    top: auto !important;
     width: auto !important;
   }
 
