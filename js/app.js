@@ -640,12 +640,12 @@
       }
 
       if (modalStatus) {
-        modalStatus.textContent = dict["form.sending"];
+        modalStatus.textContent = dict["form.sending"] || "جار إرسال طلبك...";
         modalStatus.className = "form-status info";
       }
       if (submitBtn) submitBtn.disabled = true;
 
-      const messageCombined = `[${dict["modal.titlePrefix"]} ${service} - ${country}]\n${dict["modal.nationality"]}: ${nationality || "-"}\n${dict["modal.details"]}: ${details || "-"}\n${dict["modal.timeline"]}: ${timeline}\n${dict["modal.notes"]}: ${notes || "-"}`;
+      const messageCombined = `[${dict["modal.titlePrefix"] || 'طلب خدمة:'} ${service} - ${country}]\nالجنسية: ${nationality || "-"}\nالتفاصيل: ${details || "-"}\nالموعد: ${timeline}\nملاحظات: ${notes || "-"}`;
 
       try {
         const response = await fetch(`${apiUrl}?action=order`, {
@@ -654,14 +654,23 @@
           body: JSON.stringify({ name, phone, message: messageCombined, page: "/service-modal" })
         });
         const data = await response.json().catch(() => ({}));
-        if (!response.ok || !data.ok) throw new Error(data.error || dict["form.error"]);
+
+        const waMessage = encodeURIComponent(
+          `مرحباً مجموعة بغداد الدولية 👋\nأرغب في تقديم طلب خدمة:\n\n📌 الخدمة: ${service}\n🌐 الدولة: ${country}\n👤 الاسم: ${name}\n📱 الهاتف: ${phone}\n🎓 الجنسية/الإقامة: ${nationality || '-'}\n📝 التفاصيل: ${details || '-'}\n💬 ملاحظات: ${notes || '-'}`
+        );
+        const waUrl = `https://wa.me/9647742881766?text=${waMessage}`;
 
         if (modalStatus) {
-          modalStatus.textContent = dict["modal.success"];
+          modalStatus.innerHTML = `<div style="margin-top:10px;padding:12px;background:rgba(37,211,102,0.12);border:1px solid rgba(37,211,102,0.4);border-radius:10px;color:#25D366;font-weight:700;"><i class="fa-solid fa-circle-check"></i> تم حفظ طلبك باللوحة وجارٍ فتح الواتساب للتواصل المباشر...<br><a href="${waUrl}" target="_blank" rel="noopener" style="display:inline-block;margin-top:8px;padding:6px 14px;background:#25D366;color:#fff;border-radius:8px;text-decoration:none;font-size:12px;"><i class="fa-brands fa-whatsapp"></i> فتح الواتساب الآن ↗</a></div>`;
           modalStatus.className = "form-status success";
         }
+
+        setTimeout(() => {
+          window.open(waUrl, "_blank");
+        }, 800);
+
         serviceModalForm.reset();
-        setTimeout(closeServiceModal, 2200);
+        setTimeout(closeServiceModal, 3500);
       } catch (err) {
         if (modalStatus) {
           modalStatus.textContent = err.message || dict["form.error"];
@@ -1106,14 +1115,14 @@
       const dict = translations[isEn ? "en" : "ar"];
 
       const formData = new FormData(contactForm);
-      const payload = {
-        name: formData.get("name") || "",
-        phone: formData.get("phone") || "",
-        message: formData.get("message") || ""
-      };
+      const name = String(formData.get("name") || "").trim();
+      const phone = String(formData.get("phone") || "").trim();
+      const message = String(formData.get("message") || "").trim();
+
+      const payload = { name, phone, message };
 
       if (statusEl) {
-        statusEl.textContent = dict["form.sending"];
+        statusEl.textContent = dict["form.sending"] || "جار إرسال طلبك...";
         statusEl.className = "form-status info";
       }
 
@@ -1128,15 +1137,21 @@
 
         const data = await response.json().catch(() => ({}));
 
-        if (response.ok && data.ok) {
-          if (statusEl) {
-            statusEl.textContent = dict["form.success"];
-            statusEl.className = "form-status success";
-          }
-          contactForm.reset();
-        } else {
-          throw new Error(data.error || dict["form.error"]);
+        const waMessage = encodeURIComponent(
+          `مرحباً مجموعة بغداد الدولية 👋\nلدي طلب تواصل واستفسار جديد:\n\n👤 الاسم: ${name}\n📱 رقم الهاتف: ${phone}\n💬 الرسالة: ${message || 'استفسار عام'}`
+        );
+        const waUrl = `https://wa.me/9647742881766?text=${waMessage}`;
+
+        if (statusEl) {
+          statusEl.innerHTML = `<div style="margin-top:12px;padding:14px;background:rgba(37,211,102,0.12);border:1px solid rgba(37,211,102,0.4);border-radius:12px;color:#25D366;font-weight:700;"><i class="fa-solid fa-circle-check"></i> تم حفظ طلبك في لوحة التحكم وجارٍ توجيهك للواتساب للتواصل المباشر...<br><a href="${waUrl}" target="_blank" rel="noopener" style="display:inline-block;margin-top:8px;padding:8px 16px;background:#25D366;color:#fff;border-radius:8px;text-decoration:none;font-size:13px;"><i class="fa-brands fa-whatsapp"></i> فتح محادثة الواتساب الآن ↗</a></div>`;
+          statusEl.className = "form-status success";
         }
+
+        setTimeout(() => {
+          window.open(waUrl, "_blank");
+        }, 800);
+
+        contactForm.reset();
       } catch (err) {
         if (statusEl) {
           statusEl.textContent = err.message || dict["form.error"];
