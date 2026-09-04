@@ -3059,17 +3059,19 @@ body.lang-en .footer-links a:hover {
   white-space: nowrap;
   position: relative;
   direction: ltr !important;
-  mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
-  -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+  mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+  padding: 16px 0; /* Padding for unclipped 3D Pop Out */
 }
 
 .ticker-track {
   display: inline-flex;
   align-items: center;
-  gap: 20px;
+  gap: 22px;
   direction: ltr !important;
   animation: marqueeScroll 28s linear infinite;
   will-change: transform;
+  padding: 12px 0; /* Breathing space for translateY pop */
 }
 
 .ticker-wrapper:hover .ticker-track {
@@ -3080,19 +3082,24 @@ body.lang-en .footer-links a:hover {
   display: inline-flex;
   align-items: center;
   gap: 14px;
-  padding: 12px 22px;
-  border-radius: 16px;
+  padding: 14px 24px;
+  border-radius: 18px;
   background: rgba(11, 33, 53, 0.95) !important;
   border: 1px solid rgba(228, 196, 125, 0.25) !important;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
-  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), border-color 0.3s ease, box-shadow 0.3s ease, background 0.3s ease !important;
   flex: none;
+  cursor: pointer;
+  position: relative;
+  z-index: 1;
 }
 
 .ticker-card:hover {
-  transform: translateY(-4px) scale(1.02);
-  border-color: var(--gold) !important;
-  box-shadow: 0 8px 24px rgba(197, 154, 74, 0.35);
+  transform: translateY(-8px) scale(1.05) !important;
+  background: rgba(16, 44, 71, 0.98) !important;
+  border-color: #e4c47d !important;
+  box-shadow: 0 16px 36px rgba(197, 154, 74, 0.45), 0 0 20px rgba(228, 196, 125, 0.25) !important;
+  z-index: 10;
 }
 
 .ticker-logo {
