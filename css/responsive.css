@@ -124,36 +124,48 @@ body.lang-en .boarding-pass .bp-stub p {
     justify-content: space-between !important;
     align-items: center !important;
     position: relative !important;
+    gap: 12px !important;
   }
 
   .brand {
-    flex: 1 1 0px !important;
+    flex: 0 0 auto !important;
     min-width: 0 !important;
     display: flex !important;
     align-items: center !important;
+    z-index: 2 !important;
   }
 
   .main-nav {
-    position: absolute !important;
-    left: 50% !important;
-    top: 50% !important;
-    transform: translate(-50%, -50%) !important;
+    position: relative !important;
+    left: auto !important;
+    top: auto !important;
+    transform: none !important;
+    flex: 1 1 auto !important;
     display: flex !important;
     flex-direction: row !important;
+    align-items: center !important;
+    justify-content: center !important;
     background: transparent !important;
     border: none !important;
     box-shadow: none !important;
     padding: 0 !important;
     width: auto !important;
-    z-index: 10 !important;
+    z-index: 1 !important;
+    gap: clamp(6px, 1.1vw, 18px) !important;
+  }
+
+  .main-nav a {
+    font-size: clamp(11.5px, 0.88vw, 13.5px) !important;
+    white-space: nowrap !important;
   }
 
   .header-actions {
-    flex: 1 1 0px !important;
+    flex: 0 0 auto !important;
     display: flex !important;
     align-items: center !important;
     justify-content: flex-end !important;
     gap: 8px !important;
+    z-index: 2 !important;
   }
 
   .menu-btn {
