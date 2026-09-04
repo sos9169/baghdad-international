@@ -101,10 +101,22 @@ button {
   outline-offset: 3px;
 }
 
-/* Layout Container */
+/* Layout Container — Dynamic scaling for all screen sizes & zoom levels */
 .container {
-  width: min(1180px, calc(100% - 40px));
+  width: min(1320px, calc(100% - 48px));
   margin-inline: auto;
+}
+
+@media (min-width: 1600px) {
+  .container {
+    width: min(1520px, calc(100% - 64px));
+  }
+}
+
+@media (min-width: 2200px) {
+  .container {
+    width: min(1780px, calc(100% - 80px));
+  }
 }
 
 .section {
