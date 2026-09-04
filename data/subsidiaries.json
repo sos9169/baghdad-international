@@ -1,0 +1,68 @@
+[
+  {
+    "id": "sub-1",
+    "title_ar": "أكاديمية بغداد الدولية",
+    "title_en": "Baghdad International Academy",
+    "tag_ar": "Baghdad International Academy — مصر",
+    "tag_en": "Baghdad International Academy — Egypt",
+    "logo": "images/logo_baghdad_academy.png",
+    "desc_ar": "أكاديمية بغداد الدولية 🎓 — كل الخدمات التعليمية بمصر والقبولات لكافة المراحل المدرسية والجامعية للطلبة العراقيين.",
+    "desc_en": "Baghdad International Academy 🎓 — Educational services in Egypt and admissions for all school and university stages.",
+    "fb": "https://www.facebook.com/share/19AA5UiUaj/"
+  },
+  {
+    "id": "sub-2",
+    "title_ar": "مدارس يلوا كولج",
+    "title_en": "Yalova Koleji Schools",
+    "tag_ar": "Yalova Koleji — تركيا (يلوى)",
+    "tag_en": "Yalova Koleji — Turkey (Yalova)",
+    "logo": "images/logo_yalova.jpg",
+    "desc_ar": "مدارس يلوا كولج للمنهاج التركي في يلوى — شراكة تبني مستقبلاً أفضل لأبنائكم بالمنهاج التركي الرسمي.",
+    "desc_en": "Yalova Koleji Schools for the Turkish curriculum in Yalova — Building a better future with the official Turkish curriculum.",
+    "fb": "https://www.facebook.com/share/195Jt1v3p4/"
+  },
+  {
+    "id": "sub-3",
+    "title_ar": "مدارس قرطبة الدولية",
+    "title_en": "Cortoba International Schools",
+    "tag_ar": "Cortoba International Schools — اسطنبول",
+    "tag_en": "Cortoba International Schools — Istanbul",
+    "logo": "images/logo_cortoba.jpg",
+    "desc_ar": "مدارس قرطبة العراقية في تركيا (فرع اسطنبول) — مناهج تعليمية وتأهيل مدرسي وأكاديمي متكامل لجميع المراحل.",
+    "desc_en": "Cortoba Iraqi Schools in Turkey (Istanbul Branch) — Comprehensive academic schooling for all stages.",
+    "fb": "https://www.facebook.com/share/1bwDgqMFYh/"
+  },
+  {
+    "id": "sub-4",
+    "title_ar": "مدارس الحضارة العراقية",
+    title_en: "Al-Hadhara Iraqi Schools",
+    "tag_ar": "Al-Hadhara Iraqi Schools — يلوى",
+    "tag_en": "Al-Hadhara Iraqi Schools — Yalova",
+    "logo": "images/logo_hadhara.jpg",
+    "desc_ar": "مدارس الحضارة العراقية في تركيا (فرع يلوى) — بيئة تعليمية وتربوية حديثة ومعتمدة لكافة المراحل المدرسية.",
+    "desc_en": "Al-Hadhara Iraqi Schools in Turkey (Yalova Branch) — Modern educational environment for all school stages.",
+    "fb": "https://www.facebook.com/share/1EpVAXXhkH/"
+  },
+  {
+    "id": "sub-5",
+    "title_ar": "النيل للخدمات المتكاملة",
+    "title_en": "Al-Niel Integrated Services",
+    "tag_ar": "Al-Niel Integrated Services",
+    "tag_en": "Al-Niel Integrated Services",
+    "logo": "images/logo_niel.png",
+    "desc_ar": "شركة النيل للخدمات المتكاملة — جودة، ثقة، وتنوع من السودان ومصر لخدمة العالم والخدمات العامة والتجارية.",
+    "desc_en": "Al-Niel Integrated Services — Quality, trust, and commercial services from Sudan and Egypt.",
+    "fb": ""
+  },
+  {
+    "id": "sub-6",
+    "title_ar": "شركة بلاتفورم التركية",
+    "title_en": "Platform Turkish Company",
+    "tag_ar": "Platform Turkish Company",
+    "tag_en": "Platform Turkish Company",
+    "logo": "images/logo_platform.png",
+    "desc_ar": "شركة بلاتفورم التركية للخدمات والاستشارات التجارية والتأسيس والتنسيق في جمهورية تركيا.",
+    "desc_en": "Platform Turkish Company for commercial consulting, business setup, and coordination in Turkey.",
+    "fb": "https://www.facebook.com/share/1JPjSGbuz7/"
+  }
+]

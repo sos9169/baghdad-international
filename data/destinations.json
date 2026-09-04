@@ -1,0 +1,98 @@
+[
+  {
+    "id": "iraq",
+    "name_ar": "جمهورية العراق",
+    "name_en": "Republic of Iraq",
+    "code": "Iraq • Primary HQ",
+    "badge_ar": "المقر الرئيسي",
+    "badge_en": "Main HQ",
+    "flag": "https://flagcdn.com/w40/iq.png",
+    "desc_ar": "المقر الرئيسي في بغداد (زيونة - شارع الربيعي - بداية كوين) — المتابعة والخدمات المباشرة للطلاب والتجار.",
+    "desc_en": "Main HQ in Baghdad (Zeyouna - Al Rubaie St - Beginning of Queen) — Direct services for students and traders.",
+    "tags": [
+      { "val_ar": "متابعة طلابية", "val_en": "Student Support" },
+      { "val_ar": "تجارة عامة", "val_en": "General Trade" },
+      { "val_ar": "تأشيرات رحلات", "val_en": "Travel Visas" }
+    ]
+  },
+  {
+    "id": "egypt",
+    "name_ar": "جمهورية مصر العربية",
+    "name_en": "Arab Republic of Egypt",
+    "code": "Egypt • Regional Hub",
+    "badge_ar": "مقر القاهرة",
+    "badge_en": "Cairo Hub",
+    "flag": "https://flagcdn.com/w40/eg.png",
+    "desc_ar": "مقرنا بالقاهرة والدقي — تقديمات جامعية، والتعليم المدرسي والمدارس، عقود وسكن، وإسناد إجرائي كامل للمقيمين والوافدين.",
+    "desc_en": "Our office in Cairo & Dokki — University admissions, school education & K-12 schooling, contracts & housing, and full legal support.",
+    "tags": [
+      { "val_ar": "جامعات دولية", "val_en": "International Universities" },
+      { "val_ar": "التعليم المدرسي والمدارس", "val_en": "School Education & K-12" },
+      { "val_ar": "إقامة وسكن", "val_en": "Housing & Residency" },
+      { "val_ar": "خدمات رجال أعمال", "val_en": "Business Services" }
+    ]
+  },
+  {
+    "id": "turkey",
+    "name_ar": "تركيا",
+    "name_en": "Turkey",
+    "code": "Turkey • Yalova Branch",
+    "badge_ar": "فرع تركيا",
+    "badge_en": "Turkey Branch",
+    "flag": "https://flagcdn.com/w40/tr.png",
+    "desc_ar": "فرع تركيا (Rüstem Paşa, Şahin Sk. No:13, Yalova) — قبولات جامعية ومدارس دولية وعراقية، وتنسيق تجاري وسياحي.",
+    "desc_en": "Turkey Branch (Rüstem Paşa, Şahin Sk. No:13, Yalova) — University & school admissions in Istanbul & Yalova, commercial coordination and travel.",
+    "tags": [
+      { "val_ar": "جامعات خاصة", "val_en": "Private Universities" },
+      { "val_ar": "التعليم المدرسي والمدارس", "val_en": "School Education & K-12" },
+      { "val_ar": "استيراد وتصدير", "val_en": "Import & Export" },
+      { "val_ar": "سفر ومعارض", "val_en": "Travel & Exhibitions" }
+    ]
+  },
+  {
+    "id": "sudan",
+    "name_ar": "جمهورية السودان",
+    "name_en": "Republic of Sudan",
+    "code": "Sudan • Al-Niel Hub",
+    "badge_ar": "خدمات منسقة",
+    "badge_en": "Coordinated Services",
+    "flag": "https://flagcdn.com/w40/sd.png",
+    "desc_ar": "خدمات شركة النيل للخدمات المتكاملة — الاستيراد والتصدير، التسهيلات التجارية، والإسناد الإجرائي بين السودان ومصر والعراق.",
+    desc_en: "Al-Niel Integrated Services — Import & export, trade facilities, and procedural support across Sudan, Egypt, and Iraq.",
+    "tags": [
+      { "val_ar": "النيل للخدمات المتكاملة", "val_en": "Al-Niel Integrated Services" },
+      { "val_ar": "تجارة عامة", "val_en": "General Trade" },
+      { "val_ar": "رحلات وتنسيق", "val_en": "Travel & Coordination" }
+    ]
+  },
+  {
+    "id": "iran",
+    "name_ar": "إيران",
+    "name_en": "Iran",
+    code: "Iran • Academic & Medical",
+    "badge_ar": "خدمات منسقة",
+    "badge_en": "Coordinated Services",
+    "flag": "https://flagcdn.com/w40/ir.png",
+    "desc_ar": "برامج مقاعد جامعية متخصصة، دورات تدريبية، ومتابعة المسارات التعليمية الطبية والهندسية.",
+    "desc_en": "Specialized academic placements, professional training programs, and medical/engineering path follow-ups.",
+    "tags": [
+      { "val_ar": "طب وهندسة", "val_en": "Medicine & Engineering" },
+      { "val_ar": "منح ومقاعد", "val_en": "Scholarships" }
+    ]
+  },
+  {
+    "id": "russia",
+    "name_ar": "روسيا الاتحادية",
+    "name_en": "Russian Federation",
+    "code": "Russia • Medical Universities",
+    "badge_ar": "خدمات منسقة",
+    "badge_en": "Coordinated Services",
+    "flag": "https://flagcdn.com/w40/ru.png",
+    "desc_ar": "تنسيق القبولات الجامعية في التخصصات الطبية والهندسية، سنة تحضيرية، ومتابعة ملفات السفر.",
+    "desc_en": "Coordinating university admissions in medical and engineering fields, preparatory year, and travel processing.",
+    "tags": [
+      { "val_ar": "سنة تحضيرية", "val_en": "Preparatory Year" },
+      { "val_ar": "جامعات حكومية", "val_en": "State Universities" }
+    ]
+  }
+]

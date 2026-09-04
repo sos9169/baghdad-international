@@ -29,10 +29,11 @@ const defaultDestinations = [
     badge_ar: "مقر القاهرة",
     badge_en: "Cairo Hub",
     flag: "https://flagcdn.com/w40/eg.png",
-    desc_ar: "مقرنا بالقاهرة والدقي — تقديمات جامعية، عقود وسكن، وإسناد إجرائي كامل للمقيمين والوافدين.",
-    desc_en: "Our office in Cairo & Dokki — University admissions, contracts & housing, and full legal support for residents.",
+    desc_ar: "مقرنا بالقاهرة والدقي — تقديمات جامعية، والتعليم المدرسي والمدارس، عقود وسكن، وإسناد إجرائي كامل للمقيمين والوافدين.",
+    desc_en: "Our office in Cairo & Dokki — University admissions, school education & K-12 schooling, contracts & housing, and full legal support.",
     tags: [
       { val_ar: "جامعات دولية", val_en: "International Universities" },
+      { val_ar: "التعليم المدرسي والمدارس", val_en: "School Education & K-12" },
       { val_ar: "إقامة وسكن", val_en: "Housing & Residency" },
       { val_ar: "خدمات رجال أعمال", val_en: "Business Services" }
     ]
@@ -45,12 +46,29 @@ const defaultDestinations = [
     badge_ar: "فرع تركيا",
     badge_en: "Turkey Branch",
     flag: "https://flagcdn.com/w40/tr.png",
-    desc_ar: "فرع تركيا (Rüstem Paşa, Şahin Sk. No:13, Yalova) — قبولات جامعية في إسطنبول ويالوفا، وتنسيق تجاري وسياحي.",
-    desc_en: "Turkey Branch (Rüstem Paşa, Şahin Sk. No:13, Yalova) — University admissions in Istanbul & Yalova, commercial coordination and travel.",
+    desc_ar: "فرع تركيا (Rüstem Paşa, Şahin Sk. No:13, Yalova) — قبولات جامعية ومدارس دولية وعراقية، وتنسيق تجاري وسياحي.",
+    desc_en: "Turkey Branch (Rüstem Paşa, Şahin Sk. No:13, Yalova) — University & school admissions in Istanbul & Yalova, commercial coordination and travel.",
     tags: [
       { val_ar: "جامعات خاصة", val_en: "Private Universities" },
+      { val_ar: "التعليم المدرسي والمدارس", val_en: "School Education & K-12" },
       { val_ar: "استيراد وتصدير", val_en: "Import & Export" },
       { val_ar: "سفر ومعارض", val_en: "Travel & Exhibitions" }
+    ]
+  },
+  {
+    id: "sudan",
+    name_ar: "جمهورية السودان",
+    name_en: "Republic of Sudan",
+    code: "Sudan • Al-Niel Hub",
+    badge_ar: "خدمات منسقة",
+    badge_en: "Coordinated Services",
+    flag: "https://flagcdn.com/w40/sd.png",
+    desc_ar: "خدمات شركة النيل للخدمات المتكاملة — الاستيراد والتصدير، التسهيلات التجارية، والإسناد الإجرائي بين السودان ومصر والعراق.",
+    desc_en: "Al-Niel Integrated Services — Import & export, trade facilities, and procedural support across Sudan, Egypt, and Iraq.",
+    tags: [
+      { val_ar: "النيل للخدمات المتكاملة", val_en: "Al-Niel Integrated Services" },
+      { val_ar: "تجارة عامة", val_en: "General Trade" },
+      { val_ar: "رحلات وتنسيق", val_en: "Travel & Coordination" }
     ]
   },
   {
@@ -147,10 +165,10 @@ const defaultSubsidiaries = [
     title_en: "Platform Turkish Company",
     tag_ar: "Platform Turkish Company",
     tag_en: "Platform Turkish Company",
-    logo: "",
+    logo: "images/logo_platform.png",
     desc_ar: "شركة بلاتفورم التركية للخدمات والاستشارات التجارية والتأسيس والتنسيق في جمهورية تركيا.",
     desc_en: "Platform Turkish Company for commercial consulting, business setup, and coordination in Turkey.",
-    fb: ""
+    fb: "https://www.facebook.com/share/1JPjSGbuz7/"
   }
 ];
 
