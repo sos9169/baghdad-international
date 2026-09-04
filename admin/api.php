@@ -146,7 +146,7 @@ if ($action === 'settings') {
         'instagram' => clean_text($input['instagram'] ?? '', 300),
         'whatsapp' => preg_replace('/\D+/', '', (string) ($input['whatsapp'] ?? '')),
         'maps' => clean_text($input['maps'] ?? '', 400),
-        'phone_egypt' => clean_text($input['phone_egypt'] ?? '+201505502339', 50),
+        'phone_egypt' => clean_text($input['phone_egypt'] ?? '+201507501547', 50),
         'phone_iraq' => clean_text($input['phone_iraq'] ?? '+9647742881766', 50),
         'phone_turkey' => clean_text($input['phone_turkey'] ?? '+905011263577', 50)
     ];

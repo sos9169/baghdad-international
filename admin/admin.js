@@ -132,7 +132,7 @@
     if (settingsForm.instagram) settingsForm.instagram.value = settings.instagram || "";
     if (settingsForm.whatsapp) settingsForm.whatsapp.value = settings.whatsapp || "";
     if (settingsForm.maps) settingsForm.maps.value = settings.maps || "";
-    if (settingsForm.phone_egypt) settingsForm.phone_egypt.value = settings.phone_egypt || "+201505502339";
+    if (settingsForm.phone_egypt) settingsForm.phone_egypt.value = settings.phone_egypt || "+201507501547";
     if (settingsForm.phone_iraq) settingsForm.phone_iraq.value = settings.phone_iraq || "+9647742881766";
     if (settingsForm.phone_turkey) settingsForm.phone_turkey.value = settings.phone_turkey || "+905011263577";
   }

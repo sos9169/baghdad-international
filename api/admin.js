@@ -400,7 +400,7 @@ export default async function handler(req, res) {
     const instagram = String(body.instagram || store.settings?.instagram || '').trim();
     const maps = String(body.maps || store.settings?.maps || '').trim();
 
-    const phone_egypt = String(body.phone_egypt || store.settings?.phone_egypt || '+201505502339').trim();
+    const phone_egypt = String(body.phone_egypt || store.settings?.phone_egypt || '+201507501547').trim();
     const phone_iraq = String(body.phone_iraq || store.settings?.phone_iraq || '+9647742881766').trim();
     const phone_turkey = String(body.phone_turkey || store.settings?.phone_turkey || '+905011263577').trim();
     const whatsapp = String(body.whatsapp || phone_iraq || store.settings?.whatsapp || '').replace(/\D+/g, '');
