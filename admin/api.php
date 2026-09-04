@@ -110,14 +110,19 @@ if ($action === 'logout') {
 require_login();
 
 if ($action === 'state') {
+    $adminData = read_json_file($adminPath, []);
     json_response([
         'ok' => true,
+        'currentPassword' => $adminData['currentPassword'] ?? '241000',
         'settings' => read_json_file($dataDir . DIRECTORY_SEPARATOR . 'settings.json', []),
         'metrics' => read_json_file($dataDir . DIRECTORY_SEPARATOR . 'metrics.json', [
             'visits' => 0, 'interactions' => 0, 'whatsappClicks' => 0, 'formSubmits' => 0, 'lastVisit' => '', 'events' => []
         ]),
         'orders' => read_json_file($dataDir . DIRECTORY_SEPARATOR . 'orders.json', []),
-        'slides' => read_json_file($slidesPath, [])
+        'slides' => read_json_file($slidesPath, []),
+        'services' => read_json_file($dataDir . DIRECTORY_SEPARATOR . 'services.json', []),
+        'destinations' => read_json_file($dataDir . DIRECTORY_SEPARATOR . 'destinations.json', []),
+        'subsidiaries' => read_json_file($dataDir . DIRECTORY_SEPARATOR . 'subsidiaries.json', [])
     ]);
 }
 
@@ -140,15 +145,207 @@ if ($action === 'settings') {
         'facebook' => clean_text($input['facebook'] ?? '', 300),
         'instagram' => clean_text($input['instagram'] ?? '', 300),
         'whatsapp' => preg_replace('/\D+/', '', (string) ($input['whatsapp'] ?? '')),
-        'maps' => clean_text($input['maps'] ?? '', 400)
+        'maps' => clean_text($input['maps'] ?? '', 400),
+        'phone_egypt' => clean_text($input['phone_egypt'] ?? '+201505502339', 50),
+        'phone_iraq' => clean_text($input['phone_iraq'] ?? '+9647742881766', 50),
+        'phone_turkey' => clean_text($input['phone_turkey'] ?? '+905011263577', 50)
     ];
-
-    if ($settings['whatsapp'] === '') {
-        json_response(['ok' => false, 'error' => 'رقم الواتساب مطلوب'], 422);
-    }
 
     write_json_file($dataDir . DIRECTORY_SEPARATOR . 'settings.json', $settings);
     json_response(['ok' => true, 'settings' => $settings]);
+}
+
+// --- Manage Destinations ---
+if ($action === 'add-destination') {
+    $input = input_json();
+    $destinationsPath = $dataDir . DIRECTORY_SEPARATOR . 'destinations.json';
+    $destinations = read_json_file($destinationsPath, []);
+    $name_ar = clean_text($input['name_ar'] ?? '', 150);
+    $name_en = clean_text($input['name_en'] ?? $name_ar, 150);
+    $badge_ar = clean_text($input['badge_ar'] ?? 'خدمات منسقة', 100);
+    $flag = clean_text($input['flag'] ?? 'https://flagcdn.com/w40/un.png', 500);
+    $desc_ar = clean_text($input['desc_ar'] ?? '', 500);
+    $tags_raw = clean_text($input['tags'] ?? '', 300);
+
+    if ($name_ar === '') {
+        json_response(['ok' => false, 'error' => 'اسم الدولة بالعربية مطلوب'], 422);
+    }
+
+    $tagsArr = array_filter(array_map('trim', preg_split('/[,،\n]+/', $tags_raw)));
+    $tags = array_map(fn($t) => ['val_ar' => $t, 'val_en' => $t], $tagsArr);
+
+    $newDest = [
+        'id' => 'dest-' . time(),
+        'name_ar' => $name_ar,
+        'name_en' => $name_en,
+        'code' => $name_en . ' • Services',
+        'badge_ar' => $badge_ar,
+        'badge_en' => $badge_ar,
+        'flag' => $flag,
+        'desc_ar' => $desc_ar,
+        'desc_en' => $desc_ar,
+        'tags' => !empty($tags) ? $tags : [['val_ar' => 'خدمات منسقة', 'val_en' => 'Coordinated Services']]
+    ];
+
+    array_unshift($destinations, $newDest);
+    write_json_file($destinationsPath, $destinations);
+    json_response(['ok' => true, 'destination' => $newDest, 'destinations' => $destinations]);
+}
+
+if ($action === 'edit-destination') {
+    $input = input_json();
+    $destinationsPath = $dataDir . DIRECTORY_SEPARATOR . 'destinations.json';
+    $destinations = read_json_file($destinationsPath, []);
+    $id = clean_text($input['id'] ?? '', 80);
+
+    foreach ($destinations as &$dest) {
+        if (($dest['id'] ?? '') === $id) {
+            if (!empty($input['name_ar'])) $dest['name_ar'] = clean_text($input['name_ar'], 150);
+            if (!empty($input['name_en'])) $dest['name_en'] = clean_text($input['name_en'], 150);
+            if (!empty($input['badge_ar'])) $dest['badge_ar'] = clean_text($input['badge_ar'], 100);
+            if (!empty($input['flag'])) $dest['flag'] = clean_text($input['flag'], 500);
+            if (!empty($input['desc_ar'])) $dest['desc_ar'] = clean_text($input['desc_ar'], 500);
+            if (!empty($input['tags'])) {
+                $tagsArr = array_filter(array_map('trim', preg_split('/[,،\n]+/', (string)$input['tags'])));
+                $dest['tags'] = array_map(fn($t) => ['val_ar' => $t, 'val_en' => $t], $tagsArr);
+            }
+            write_json_file($destinationsPath, $destinations);
+            json_response(['ok' => true, 'destination' => $dest, 'destinations' => $destinations]);
+        }
+    }
+    json_response(['ok' => false, 'error' => 'الدولة غير موجودة'], 404);
+}
+
+if ($action === 'delete-destination') {
+    $input = input_json();
+    $destinationsPath = $dataDir . DIRECTORY_SEPARATOR . 'destinations.json';
+    $destinations = read_json_file($destinationsPath, []);
+    $id = clean_text($input['id'] ?? '', 80);
+    $destinations = array_values(array_filter($destinations, fn($d) => ($d['id'] ?? '') !== $id));
+    write_json_file($destinationsPath, $destinations);
+    json_response(['ok' => true, 'destinations' => $destinations]);
+}
+
+// --- Manage Subsidiaries ---
+if ($action === 'add-subsidiary') {
+    $input = input_json();
+    $subsPath = $dataDir . DIRECTORY_SEPARATOR . 'subsidiaries.json';
+    $subsidiaries = read_json_file($subsPath, []);
+    $title_ar = clean_text($input['title_ar'] ?? '', 150);
+    $title_en = clean_text($input['title_en'] ?? $title_ar, 150);
+    $tag_ar = clean_text($input['tag_ar'] ?? '', 150);
+    $logo = clean_text($input['logo'] ?? '', 500);
+    $desc_ar = clean_text($input['desc_ar'] ?? '', 500);
+    $fb = clean_text($input['fb'] ?? '', 300);
+
+    if ($title_ar === '') {
+        json_response(['ok' => false, 'error' => 'اسم المؤسسة بالعربية مطلوب'], 422);
+    }
+
+    $newSub = [
+        'id' => 'sub-' . time(),
+        'title_ar' => $title_ar,
+        'title_en' => $title_en,
+        'tag_ar' => $tag_ar ?: $title_ar,
+        'tag_en' => $title_en,
+        'logo' => $logo,
+        'desc_ar' => $desc_ar,
+        'desc_en' => $desc_ar,
+        'fb' => $fb
+    ];
+
+    array_unshift($subsidiaries, $newSub);
+    write_json_file($subsPath, $subsidiaries);
+    json_response(['ok' => true, 'subsidiary' => $newSub, 'subsidiaries' => $subsidiaries]);
+}
+
+if ($action === 'edit-subsidiary') {
+    $input = input_json();
+    $subsPath = $dataDir . DIRECTORY_SEPARATOR . 'subsidiaries.json';
+    $subsidiaries = read_json_file($subsPath, []);
+    $id = clean_text($input['id'] ?? '', 80);
+
+    foreach ($subsidiaries as &$sub) {
+        if (($sub['id'] ?? '') === $id) {
+            if (!empty($input['title_ar'])) $sub['title_ar'] = clean_text($input['title_ar'], 150);
+            if (!empty($input['title_en'])) $sub['title_en'] = clean_text($input['title_en'], 150);
+            if (isset($input['tag_ar'])) $sub['tag_ar'] = clean_text($input['tag_ar'], 150);
+            if (isset($input['logo'])) $sub['logo'] = clean_text($input['logo'], 500);
+            if (isset($input['desc_ar'])) $sub['desc_ar'] = clean_text($input['desc_ar'], 500);
+            if (isset($input['fb'])) $sub['fb'] = clean_text($input['fb'], 300);
+            write_json_file($subsPath, $subsidiaries);
+            json_response(['ok' => true, 'subsidiary' => $sub, 'subsidiaries' => $subsidiaries]);
+        }
+    }
+    json_response(['ok' => false, 'error' => 'المؤسسة غير موجودة'], 404);
+}
+
+if ($action === 'delete-subsidiary') {
+    $input = input_json();
+    $subsPath = $dataDir . DIRECTORY_SEPARATOR . 'subsidiaries.json';
+    $subsidiaries = read_json_file($subsPath, []);
+    $id = clean_text($input['id'] ?? '', 80);
+    $subsidiaries = array_values(array_filter($subsidiaries, fn($s) => ($s['id'] ?? '') !== $id));
+    write_json_file($subsPath, $subsidiaries);
+    json_response(['ok' => true, 'subsidiaries' => $subsidiaries]);
+}
+
+// --- Manage Services ---
+if ($action === 'add-service') {
+    $input = input_json();
+    $servicesPath = $dataDir . DIRECTORY_SEPARATOR . 'services.json';
+    $services = read_json_file($servicesPath, []);
+    $title_ar = clean_text($input['title_ar'] ?? '', 150);
+    $title_en = clean_text($input['title_en'] ?? $title_ar, 150);
+    $text_ar = clean_text($input['text_ar'] ?? '', 400);
+    $text_en = clean_text($input['text_en'] ?? $text_ar, 400);
+    $icon = clean_text($input['icon'] ?? '✦', 20);
+
+    if ($title_ar === '') {
+        json_response(['ok' => false, 'error' => 'عنوان الخدمة بالعربية مطلوب'], 422);
+    }
+
+    $newService = [
+        'id' => 'service-' . time(),
+        'icon' => $icon,
+        'title_ar' => $title_ar,
+        'title_en' => $title_en,
+        'text_ar' => $text_ar,
+        'text_en' => $text_en
+    ];
+
+    $services[] = $newService;
+    write_json_file($servicesPath, $services);
+    json_response(['ok' => true, 'service' => $newService, 'services' => $services]);
+}
+
+if ($action === 'edit-service') {
+    $input = input_json();
+    $servicesPath = $dataDir . DIRECTORY_SEPARATOR . 'services.json';
+    $services = read_json_file($servicesPath, []);
+    $id = clean_text($input['id'] ?? '', 80);
+
+    foreach ($services as &$srv) {
+        if (($srv['id'] ?? '') === $id) {
+            if (!empty($input['title_ar'])) $srv['title_ar'] = clean_text($input['title_ar'], 150);
+            if (!empty($input['title_en'])) $srv['title_en'] = clean_text($input['title_en'], 150);
+            if (isset($input['text_ar'])) $srv['text_ar'] = clean_text($input['text_ar'], 400);
+            if (isset($input['icon'])) $srv['icon'] = clean_text($input['icon'], 20);
+            write_json_file($servicesPath, $services);
+            json_response(['ok' => true, 'service' => $srv, 'services' => $services]);
+        }
+    }
+    json_response(['ok' => false, 'error' => 'الخدمة غير موجودة'], 404);
+}
+
+if ($action === 'delete-service') {
+    $input = input_json();
+    $servicesPath = $dataDir . DIRECTORY_SEPARATOR . 'services.json';
+    $services = read_json_file($servicesPath, []);
+    $id = clean_text($input['id'] ?? '', 80);
+    $services = array_values(array_filter($services, fn($s) => ($s['id'] ?? '') !== $id));
+    write_json_file($servicesPath, $services);
+    json_response(['ok' => true, 'services' => $services]);
 }
 
 if ($action === 'add-slide') {
@@ -277,11 +474,13 @@ if ($action === 'password') {
         json_response(['ok' => false, 'error' => 'كلمة السر يجب أن تكون 4 أحرف على الأقل'], 422);
     }
     $salt = bin2hex(random_bytes(8));
-    write_json_file($adminPath, [
+    $adminData = [
+        'currentPassword' => $newPassword,
         'salt' => $salt,
         'passwordHash' => password_hash_value($salt, $newPassword)
-    ]);
-    json_response(['ok' => true]);
+    ];
+    write_json_file($adminPath, $adminData);
+    json_response(['ok' => true, 'currentPassword' => $newPassword]);
 }
 
 if ($action === 'order-status') {
