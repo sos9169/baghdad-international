@@ -2323,11 +2323,12 @@ body.lang-en .contact-form input, body.lang-en .contact-form textarea {
   white-space: nowrap;
 }
 
-/* PERFECT CLEAN FLOATING WHATSAPP BUTTON (NO OFFSET BUG) */
+/* PERFECT CLEAN FLOATING WHATSAPP BUTTON (NO OVERLAP BUG) */
 .floating-whatsapp {
   position: fixed !important;
   z-index: 9999 !important;
   left: max(24px, env(safe-area-inset-left)) !important;
+  right: auto !important;
   bottom: max(24px, env(safe-area-inset-bottom)) !important;
   width: 56px !important;
   height: 56px !important;
@@ -2337,7 +2338,7 @@ body.lang-en .contact-form input, body.lang-en .contact-form textarea {
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
-  box-shadow: 0 10px 25px rgba(37, 211, 102, 0.45) !important;
+  box-shadow: 0 8px 24px rgba(37, 211, 102, 0.35) !important;
   text-decoration: none !important;
   transition: transform 0.25s ease, box-shadow 0.25s ease !important;
   overflow: visible !important;
@@ -2362,12 +2363,7 @@ body.lang-en .contact-form input, body.lang-en .contact-form textarea {
 
 .floating-whatsapp:hover {
   transform: translateY(-3px) scale(1.05) !important;
-  box-shadow: 0 14px 32px rgba(37, 211, 102, 0.55) !important;
-}
-
-body.lang-en .floating-whatsapp {
-  left: auto !important;
-  right: max(24px, env(safe-area-inset-right)) !important;
+  box-shadow: 0 12px 28px rgba(37, 211, 102, 0.45) !important;
 }
 
 .floating-top {

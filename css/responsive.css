@@ -557,13 +557,16 @@ body.lang-en .boarding-pass .bp-stub p {
     gap: 12px;
   }
 
-  .floating-whatsapp, .floating-top {
-    width: 48px;
-    height: 48px;
+  .floating-whatsapp {
+    width: 48px !important;
+    height: 48px !important;
+    left: max(16px, env(safe-area-inset-left)) !important;
+    right: auto !important;
   }
 
-  body.lang-en .floating-whatsapp {
-    left: auto !important;
+  .floating-top {
+    width: 48px !important;
+    height: 48px !important;
     right: max(16px, env(safe-area-inset-right)) !important;
   }
 
