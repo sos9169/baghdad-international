@@ -528,6 +528,7 @@
     }
 
     editModalOverlay.classList.remove("hidden");
+    setupAutoTranslation(modalFormGrid);
   }
 
   function closeEditModal() {
@@ -937,6 +938,66 @@
     await request("order-status", { id: select.dataset.orderId, status: select.value })
       .catch((error) => alert(error.message));
   });
+
+  // --- Instant Auto-Translate System (Arabic -> English) ---
+  const translationCache = {};
+  async function autoTranslate(text) {
+    if (!text || !text.trim()) return "";
+    const clean = text.trim();
+    if (translationCache[clean]) return translationCache[clean];
+
+    try {
+      const res = await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(clean)}&langpair=ar|en`);
+      const json = await res.json();
+      if (json && json.responseData && json.responseData.translatedText) {
+        const result = json.responseData.translatedText.trim();
+        if (!result.toUpperCase().includes("MYMEMORY WARNING")) {
+          translationCache[clean] = result;
+          return result;
+        }
+      }
+    } catch (e) {}
+    return clean;
+  }
+
+  function setupAutoTranslation(container) {
+    if (!container) return;
+    const arElements = container.querySelectorAll('input[name$="_ar"], textarea[name$="_ar"]');
+    arElements.forEach((arEl) => {
+      const fieldName = arEl.name.replace("_ar", "_en");
+      const enEl = container.querySelector(`[name="${fieldName}"]`);
+      if (!enEl) return;
+
+      let timer = null;
+      arEl.addEventListener("input", () => {
+        clearTimeout(timer);
+        timer = setTimeout(async () => {
+          const val = arEl.value.trim();
+          if (val && (!enEl.value.trim() || !enEl.dataset.userEdited)) {
+            enEl.placeholder = "جار الترجمة تلقائياً ✨...";
+            const translated = await autoTranslate(val);
+            if (translated && (!enEl.value.trim() || !enEl.dataset.userEdited)) {
+              enEl.value = translated;
+            }
+          }
+        }, 450);
+      });
+
+      enEl.addEventListener("input", () => {
+        if (enEl.value.trim() !== "") {
+          enEl.dataset.userEdited = "true";
+        } else {
+          delete enEl.dataset.userEdited;
+        }
+      });
+    });
+  }
+
+  // Activate auto-translation on all admin forms
+  setupAutoTranslation(slideForm);
+  setupAutoTranslation(serviceForm);
+  setupAutoTranslation(destForm);
+  setupAutoTranslation(subForm);
 
   loadState();
 })();
