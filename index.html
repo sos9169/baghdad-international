@@ -686,22 +686,42 @@
       </div>
     </div>
 
-    <form class="contact-form" id="contactForm">
-      <label>
-        <span data-i18n="form.name">الاسم</span>
-        <input type="text" name="name" required data-placeholder="form.namePlaceholder" placeholder="اكتب اسمك">
-      </label>
-      <label>
-        <span data-i18n="form.phone">رقم الهاتف</span>
-        <input type="tel" name="phone" required data-placeholder="form.phonePlaceholder" placeholder="01xxxxxxxxx" inputmode="tel" dir="ltr">
-      </label>
-      <label>
-        <span data-i18n="form.message">كيف نقدر نساعدك؟</span>
-        <textarea name="message" rows="4" data-placeholder="form.messagePlaceholder" placeholder="اكتب رسالتك هنا..."></textarea>
-      </label>
-      <button class="btn btn-primary submit-btn-gold" type="submit">
-        <i class="fa-solid fa-paper-plane"></i>
-        <span data-i18n="form.submit">إرسال الطلب والتواصل مباشرة</span>
+    <form class="contact-form-card" id="contactForm">
+      <div class="form-card-head">
+        <div class="form-head-icon"><i class="fa-solid fa-paper-plane"></i></div>
+        <div>
+          <h3 data-i18n="form.cardTitle">نموذج الطلب والتواصل المباشر</h3>
+          <small data-i18n="form.cardSub">أدخل بياناتك وسنتواصل معك فوراً عبر الواتساب</small>
+        </div>
+      </div>
+
+      <div class="form-field-group">
+        <label for="contactName" data-i18n="form.name">الاسم الكامل *</label>
+        <div class="input-icon-wrap">
+          <i class="fa-solid fa-user input-icon"></i>
+          <input type="text" id="contactName" name="name" required data-placeholder="form.namePlaceholder" placeholder="اكتب اسمك الثلاثي">
+        </div>
+      </div>
+
+      <div class="form-field-group">
+        <label for="contactPhone" data-i18n="form.phone">رقم الهاتف / الواتساب *</label>
+        <div class="input-icon-wrap">
+          <i class="fa-solid fa-phone input-icon"></i>
+          <input type="tel" id="contactPhone" name="phone" required data-placeholder="form.phonePlaceholder" placeholder="01xxxxxxxxx" inputmode="tel" dir="ltr">
+        </div>
+      </div>
+
+      <div class="form-field-group">
+        <label for="contactMsg" data-i18n="form.message">كيف نقدر نساعدك؟</label>
+        <div class="input-icon-wrap">
+          <i class="fa-solid fa-comment-dots input-icon icon-textarea"></i>
+          <textarea id="contactMsg" name="message" rows="3" data-placeholder="form.messagePlaceholder" placeholder="اكتب رسالتك أو استفسارك هنا..."></textarea>
+        </div>
+      </div>
+
+      <button class="submit-btn-gold" type="submit">
+        <i class="fa-brands fa-whatsapp"></i>
+        <span data-i18n="form.submit">إرسال الطلب والتواصل بالواتساب</span>
         <span>↗</span>
       </button>
       <small id="formStatus" class="form-status"></small>
