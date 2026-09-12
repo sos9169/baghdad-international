@@ -621,6 +621,22 @@
     if (serviceModal && e.target === serviceModal) {
       closeServiceModal();
     }
+
+    const subModal = document.getElementById("subDetailModal");
+    if (subModal && e.target === subModal) {
+      closeSubsidiaryModal();
+    }
+
+    const subCard = e.target.closest(".subsidiary-card");
+    if (subCard) {
+      const fbLink = e.target.closest(".sub-fb-link");
+      if (!fbLink) {
+        e.preventDefault();
+        const subId = subCard.dataset.subId || "academy";
+        openSubsidiaryModal(subId);
+        return;
+      }
+    }
   });
 
   if (closeServiceModalBtn) {
@@ -628,8 +644,14 @@
   }
 
   document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape" && serviceModal && !serviceModal.classList.contains("hidden")) {
-      closeServiceModal();
+    if (e.key === "Escape") {
+      if (serviceModal && !serviceModal.classList.contains("hidden")) {
+        closeServiceModal();
+      }
+      const subModal = document.getElementById("subDetailModal");
+      if (subModal && !subModal.classList.contains("hidden")) {
+        closeSubsidiaryModal();
+      }
     }
   });
 
@@ -920,6 +942,359 @@
     })
     .catch(() => {});
 
+  // --- Subsidiaries Data Map & Modal Functions ---
+  const SUBSIDIARIES_DETAILS_MAP = {
+    academy: {
+      id: "academy",
+      title_ar: "أكاديمية بغداد الدولية",
+      title_en: "Baghdad International Academy",
+      sub_ar: "مصر — القاهرة (الدقي)",
+      sub_en: "Cairo, Egypt (Dokki)",
+      logo: "images/logo_baghdad_academy.png",
+      est_ar: "تأسست عام 2025",
+      est_en: "Est. 2025",
+      address_ar: "7 شارع عقبة بن نافع متفرع من التحرير أمام المركز الثقافي الروسي - الدور الأول شقة 102، الدقي، القاهرة",
+      address_en: "7 Oqba Ibn Nafeh St, off Tahrir St, opp. Russian Cultural Center, 1st Floor Apt 102, Dokki, Cairo",
+      fb: "https://www.facebook.com/share/19AA5UiUaj/",
+      defaultService: "🎒 التعليم المدرسي (ابتدائي، إعدادي، ثانوي)",
+      defaultCountry: "جمهورية مصر العربية",
+      desc_ar: "أكاديمية تعليمية وتدريبية متخصصة تابعة لمجموعة بغداد الدولية بجمهورية مصر العربية. توفر خدمات متكاملة تشمل القبولات المدرسية والجامعية، الخدمات البرمجية، والتجارة العامة والاستيراد والتصدير.",
+      desc_en: "A specialized educational and training academy under Baghdad International Group in Egypt, offering university and school admissions, software solutions, and trade services.",
+      badges: [
+        { text_ar: "مصر", text_en: "Egypt", icon: "fa-solid fa-flag" },
+        { text_ar: "تعليم وتدريب", text_en: "Education & Training", icon: "fa-solid fa-graduation-cap" },
+        { text_ar: "تأسيس 2025", text_en: "Est. 2025", icon: "fa-solid fa-calendar-check" }
+      ],
+      services_ar: [
+        "🎓 قبولات وتسجيل في جميع المدارس المصرية والجامعات الحكومية والخاصة",
+        "✈️ خدمات الفيزا، الإقامة، وتأمين السكن الطلابي والعائلي",
+        "🤖 خدمات الذكاء الاصطناعي وتطوير البرمجيات للشركات والأفراد",
+        "📦 خدمات التجارة العامة، الاستيراد والتصدير"
+      ],
+      services_en: [
+        "🎓 School & University admissions for all stages in Egypt",
+        "✈️ Visa, residency, and student accommodation arrangements",
+        "🤖 AI & custom software development solutions",
+        "📦 General trade, import and export services"
+      ],
+      phones: [
+        { label_ar: "مصر (واتساب وهاتف)", label_en: "Egypt (WhatsApp & Call)", number: "+201507501548" },
+        { label_ar: "مصر (استعلامات)", label_en: "Egypt (Inquiries)", number: "+201507501547" }
+      ]
+    },
+
+    yalova: {
+      id: "yalova",
+      title_ar: "مدارس يلوا كولج",
+      title_en: "Yalova Koleji Schools",
+      sub_ar: "تركيا — يلوى / اسطنبول",
+      sub_en: "Yalova & Istanbul, Turkey",
+      logo: "images/logo_yalova.jpg",
+      est_ar: "منهاج تركي رسمي معتمد",
+      est_en: "Official Turkish Curriculum",
+      address_ar: "جمهورية تركيا — مدينة يلوى / اسطنبول",
+      address_en: "Yalova & Istanbul, Republic of Turkey",
+      fb: "https://www.facebook.com/share/195Jt1v3p4/",
+      defaultService: "🎒 التعليم المدرسي (ابتدائي، إعدادي، ثانوي)",
+      defaultCountry: "تركيا",
+      desc_ar: "مدارس يلوا كولج تقدم تعليماً كاملاً وفق المنهاج التركي الرسمي لجميع المراحل (ابتدائي، إعدادي، وثانوي) في بيئة تربوية وأكاديمية حديثة تشمل الخيارين الناشونال والانترناشونال.",
+      desc_en: "Yalova Koleji offers complete K-12 schooling following the official Turkish curriculum in a modern academic environment with national & international tracks.",
+      badges: [
+        { text_ar: "تركيا", text_en: "Turkey", icon: "fa-solid fa-flag" },
+        { text_ar: "منهاج تركي رسمي", text_en: "Official Turkish Curriculum", icon: "fa-solid fa-school" },
+        { text_ar: "جميع المراحل", text_en: "K-12 Stages", icon: "fa-solid fa-book-open" }
+      ],
+      services_ar: [
+        "🏫 تعليم لكافة المراحل الدراسية: ابتدائي - إعدادي - ثانوي",
+        "🇹🇷 مسارات تعليمية (ناشونال - انترناشونال) بمعايير دولية",
+        "📚 تأهيل للغة التركية واللغة الإنجليزية للطلاب الجدد",
+        "🤝 رعاية ومتابعة مباشرة من شركة رِع ميديا"
+      ],
+      services_en: [
+        "🏫 K-12 Comprehensive schooling (Primary, Middle, High School)",
+        "🇹🇷 National & International academic curriculum",
+        "📚 Intensive Turkish and English prep classes",
+        "🤝 Direct sponsorship & media coverage by REC Media"
+      ],
+      phones: [
+        { label_ar: "تركيا (واتساب وهاتف المدارس)", label_en: "Turkey (WhatsApp & Call)", number: "+905011263577" }
+      ]
+    },
+
+    cortoba: {
+      id: "cortoba",
+      title_ar: "مدارس قرطبة الدولية",
+      title_en: "Cortoba International Schools",
+      sub_ar: "تركيا — اسطنبول",
+      sub_en: "Istanbul, Turkey",
+      logo: "images/logo_cortoba.jpg",
+      est_ar: "مدارس عراقية معتمدة",
+      est_en: "Accredited Iraqi School",
+      address_ar: "جمهورية تركيا — اسطنبول",
+      address_en: "Istanbul, Republic of Turkey",
+      fb: "https://www.facebook.com/share/1bwDgqMFYh/",
+      defaultService: "🎒 التعليم المدرسي (ابتدائي، إعدادي، ثانوي)",
+      defaultCountry: "تركيا",
+      desc_ar: "مدارس قرطبة العراقية في تركيا (فرع اسطنبول) تقدم المناهج التعليمية العراقية الرسمية المعتمدة لكافة المراحل المدرسية مع توفير بيئة تعليمية وتربوية متميزة.",
+      desc_en: "Cortoba Iraqi International Schools in Istanbul provides accredited Iraqi curriculum schooling for all primary, middle, and secondary stages.",
+      badges: [
+        { text_ar: "اسطنبول", text_en: "Istanbul", icon: "fa-solid fa-location-dot" },
+        { text_ar: "منهاج عراقي رسمي", text_en: "Official Iraqi Curriculum", icon: "fa-solid fa-book" },
+        { text_ar: "كادر متميز", text_en: "Expert Faculty", icon: "fa-solid fa-chalkboard-user" }
+      ],
+      services_ar: [
+        "🎓 تدريس المناهج العراقية الرسمية المعتمدة لجميع الصفوف",
+        "🏫 مراحل تعليمية كاملة: ابتدائي، متوسطة، وإعدادي (ثانوي)",
+        "👨‍🏫 كادر تدريسي عراقي ودولي ذو خبرة عالية",
+        "📜 شهادات معتمدة ورسمية ومتابعة تربوية مستمرة"
+      ],
+      services_en: [
+        "🎓 Official accredited Iraqi Ministry of Education curriculum",
+        "🏫 All schooling stages: Primary, Middle, and High School",
+        "👨‍🏫 Highly qualified Iraqi & international teaching staff",
+        "📜 Accredited official certificates & continuous academic guidance"
+      ],
+      phones: [
+        { label_ar: "اسطنبول (واتساب وهاتف)", label_en: "Istanbul (WhatsApp & Call)", number: "+905011263577" }
+      ]
+    },
+
+    hadhara: {
+      id: "hadhara",
+      title_ar: "مدارس الحضارة العراقية",
+      title_en: "Al-Hadhara Iraqi Schools",
+      sub_ar: "تركيا — يلوى",
+      sub_en: "Yalova, Turkey",
+      logo: "images/logo_hadhara.jpg",
+      est_ar: "بيئة تعليمية حديثة",
+      est_en: "Modern Educational Environment",
+      address_ar: "جمهورية تركيا — يلوى",
+      address_en: "Yalova, Republic of Turkey",
+      fb: "https://www.facebook.com/share/1EpVAXXhkH/",
+      defaultService: "🎒 التعليم المدرسي (ابتدائي، إعدادي، ثانوي)",
+      defaultCountry: "تركيا",
+      desc_ar: "مدارس الحضارة العراقية فرع يلوى توفر مناهج تعليمية حديثة ومعتمدة للطلبة العراقيين والعرب المقيمين بتركيا، مع الاهتمام بالأنشطة والمهارات التربوية.",
+      desc_en: "Al-Hadhara Iraqi Schools (Yalova Branch) delivers modern accredited Iraqi curriculum for Arab students living in Turkey.",
+      badges: [
+        { text_ar: "يلوى", text_en: "Yalova", icon: "fa-solid fa-location-dot" },
+        { text_ar: "منهاج عراقي", text_en: "Iraqi Curriculum", icon: "fa-solid fa-school" },
+        { text_ar: "أنشطة متكاملة", text_en: "Extracurriculars", icon: "fa-solid fa-star" }
+      ],
+      services_ar: [
+        "📚 تعليم شامل لجميع المراحل المدرسية (ابتدائي، إعدادي، ثانوي)",
+        "🇮🇶 منهاج مدرسي رسمي معتمد من وزارة التربية العراقية",
+        "🏫 صفوف مجهزة بأحدث التقنيات التفاعلية والتربوية",
+        "🤝 رعاية متكاملة من شركة رِع ميديا"
+      ],
+      services_en: [
+        "📚 Complete schooling across primary, middle, and high school",
+        "🇮🇶 Accredited curriculum by Ministry of Education",
+        "🏫 Smart classrooms equipped with modern learning tools",
+        "🤝 Complete sponsorship by REC Media"
+      ],
+      phones: [
+        { label_ar: "يلوى (واتساب وهاتف)", label_en: "Yalova (WhatsApp & Call)", number: "+905011263577" }
+      ]
+    },
+
+    niel: {
+      id: "niel",
+      title_ar: "شركة النيل للخدمات المتكاملة",
+      title_en: "Al-Niel Integrated Services",
+      sub_ar: "مصر والسودان",
+      sub_en: "Sudan & Egypt",
+      logo: "images/logo_niel.png",
+      est_ar: "تأسست عام 2026",
+      est_en: "Est. 2026",
+      address_ar: "مصر (القاهرة - الدقي - 7 شارع عقبة بن نافع أمام المركز الثقافي الروسي شقة 102) & السودان",
+      address_en: "7 Oqba Ibn Nafeh St, Dokki, Cairo, Egypt & Sudan",
+      fb: "https://www.facebook.com/share/1JPjSGbuz7/",
+      defaultService: "خدمة أخرى / استفسار عام",
+      defaultCountry: "جمهورية السودان",
+      desc_ar: "تأسست شركة النيل عام 2026 لتقديم خدمات متكاملة تشمل كل ما يخص التعليم لجميع المراحل، السفر، الاستيراد والتصدير، والخدمات العامة والاستشارية بين السودان ومصر ومختلف الدول.",
+      desc_en: "Founded in 2026, Al-Niel Integrated Services offers comprehensive education, travel, import/export, and commercial consulting between Sudan and Egypt.",
+      badges: [
+        { text_ar: "السودان ومصر", text_en: "Sudan & Egypt", icon: "fa-solid fa-earth-africa" },
+        { text_ar: "تأسيس 2026", text_en: "Est. 2026", icon: "fa-solid fa-calendar-check" },
+        { text_ar: "خدمات متكاملة", text_en: "Integrated Services", icon: "fa-solid fa-handshake" }
+      ],
+      services_ar: [
+        "🎓 خدمات تعليمية شاملة ومتابعة لكافة المراحل والقبولات",
+        "✈️ خدمات السفر، الرحلات، والتأشيرات واستكمال الإجراءات",
+        "🤖 الذكاء الاصطناعي والبرمجيات للأعمال",
+        "📦 التجارة العامة والاستيراد والتصدير وإسناد الأعمال"
+      ],
+      services_en: [
+        "🎓 Comprehensive educational admissions & stage coordination",
+        "✈️ Travel, visa, and logistical facilitation",
+        "🤖 AI & software applications for business growth",
+        "📦 General trade, import/export & business execution"
+      ],
+      phones: [
+        { label_ar: "مصر (واتساب وهاتف 1)", label_en: "Egypt (Phone 1)", number: "+201505502339" },
+        { label_ar: "مصر (واتساب وهاتف 2)", label_en: "Egypt (Phone 2)", number: "+201505502338" },
+        { label_ar: "فرع السودان المباشر", label_en: "Sudan Direct Branch", number: "+249912381663" }
+      ]
+    },
+
+    platform: {
+      id: "platform",
+      title_ar: "شركة بلاتفورم التركية",
+      title_en: "Platform Turkish Company",
+      sub_ar: "تركيا (اسطنبول ويلوى) & ممثلية مصر B2B",
+      sub_en: "Turkey (Istanbul & Yalova) & Egypt B2B Rep",
+      logo: "images/logo_platform.png",
+      est_ar: "تأسست عام 2023",
+      est_en: "Est. 2023",
+      address_ar: "تركيا (اسطنبول ويلوى) — ممثلية منصة تركيا لار ماركت B2B بمصر",
+      address_en: "Turkey (Istanbul & Yalova) & TurkeyLar Market B2B Egypt Representation",
+      fb: "https://www.facebook.com/share/1JPjSGbuz7/",
+      defaultService: "استيراد وتصدير",
+      defaultCountry: "تركيا",
+      desc_ar: "تأسست شركة بلاتفورم التركية عام 2023 متخصصة في خدمات الاستيراد والتصدير والتأسيس التجاري وتنسيق الأعمال، وترتبط بويب سايت بغداد الدولي وتدير منصة B2B بين تركيا والعراق ومصر.",
+      desc_en: "Established in 2023, Platform Turkish Company specializes in import/export, commercial setup, and business coordination, operating a B2B platform connecting Turkey, Iraq, and Egypt.",
+      badges: [
+        { text_ar: "تركيا ومصر", text_en: "Turkey & Egypt", icon: "fa-solid fa-handshake-simple" },
+        { text_ar: "تأسيس 2023", text_en: "Est. 2023", icon: "fa-solid fa-calendar-check" },
+        { text_ar: "منصة B2B تجارية", text_en: "B2B Trade Platform", icon: "fa-solid fa-chart-line" }
+      ],
+      services_ar: [
+        "🚢 خدمات الاستيراد والتصدير والتخليص التجاري بين الدول",
+        "🔗 الربط المباشر مع موقع بغداد الدولي ومنصات B2B",
+        "🏢 تأسيس الشركات وتوفير الاستشارات الاستثمارية في تركيا",
+        "🇪🇬 ممثلية بغداد من منصة تركيا لار ماركت منصة B2B بمصر"
+      ],
+      services_en: [
+        "🚢 Import, export, and international trade clearance",
+        "🔗 Direct integration with Baghdad International website & B2B portal",
+        "🏢 Business formation & commercial consulting in Turkey",
+        "🇪🇬 Egypt representation for TurkeyLar Market B2B Platform"
+      ],
+      phones: [
+        { label_ar: "تركيا (واتساب وهاتف رئيسي)", label_en: "Turkey (Main Phone)", number: "+905011263577" },
+        { label_ar: "ممثلية B2B بمصر", label_en: "Egypt B2B Representation", number: "+201500731911" }
+      ]
+    }
+  };
+
+  function getSubKey(sub) {
+    const raw = ((sub.id || "") + " " + (sub.title_ar || "") + " " + (sub.title_en || "")).toLowerCase();
+    if (raw.includes("academy") || raw.includes("أكاديمية")) return "academy";
+    if (raw.includes("yalova") || raw.includes("يلوا")) return "yalova";
+    if (raw.includes("cortoba") || raw.includes("قرطبة")) return "cortoba";
+    if (raw.includes("hadhara") || raw.includes("حضارة")) return "hadhara";
+    if (raw.includes("niel") || raw.includes("نيل")) return "niel";
+    if (raw.includes("platform") || raw.includes("بلاتفورم")) return "platform";
+    return sub.id || "academy";
+  }
+
+  function openSubsidiaryModal(subIdKey) {
+    const modal = document.getElementById("subDetailModal");
+    if (!modal) return;
+
+    const key = String(subIdKey || "").toLowerCase();
+    let data = SUBSIDIARIES_DETAILS_MAP[key];
+
+    if (!data) {
+      for (const k in SUBSIDIARIES_DETAILS_MAP) {
+        if (k.includes(key) || key.includes(k)) {
+          data = SUBSIDIARIES_DETAILS_MAP[k];
+          break;
+        }
+      }
+    }
+
+    if (!data) data = SUBSIDIARIES_DETAILS_MAP["academy"];
+
+    const isEn = body.classList.contains("lang-en");
+
+    const titleEl = document.getElementById("subModalTitle");
+    const subEl = document.getElementById("subModalSub");
+    const logoEl = document.getElementById("subModalLogo");
+    const descEl = document.getElementById("subModalDesc");
+    const addressEl = document.getElementById("subModalAddress");
+    const badgesEl = document.getElementById("subModalBadges");
+    const servicesListEl = document.getElementById("subModalServicesList");
+    const phonesGridEl = document.getElementById("subModalPhonesGrid");
+    const fbBtnEl = document.getElementById("subModalFbBtn");
+    const inquiryBtnEl = document.getElementById("subModalInquiryBtn");
+
+    if (titleEl) titleEl.textContent = isEn ? data.title_en : data.title_ar;
+    if (subEl) subEl.textContent = isEn ? data.sub_en : data.sub_ar;
+    if (logoEl) {
+      logoEl.src = data.logo;
+      logoEl.alt = isEn ? data.title_en : data.title_ar;
+    }
+    if (descEl) descEl.textContent = isEn ? data.desc_en : data.desc_ar;
+    if (addressEl) addressEl.textContent = isEn ? data.address_en : data.address_ar;
+
+    if (badgesEl) {
+      badgesEl.innerHTML = (data.badges || []).map(b => `
+        <span class="sub-badge"><i class="${b.icon}"></i> ${escapeHtml(isEn ? b.text_en : b.text_ar)}</span>
+      `).join("");
+    }
+
+    if (servicesListEl) {
+      const list = isEn ? data.services_en : data.services_ar;
+      servicesListEl.innerHTML = (list || []).map(s => `
+        <li>${escapeHtml(s)}</li>
+      `).join("");
+    }
+
+    if (phonesGridEl) {
+      phonesGridEl.innerHTML = (data.phones || []).map(p => {
+        const cleanNum = p.number.replace(/[^\d+]/g, '');
+        const waUrl = `https://wa.me/${cleanNum.replace('+', '')}`;
+        const label = isEn ? p.label_en : p.label_ar;
+        const waBtnText = isEn ? "WhatsApp" : "واتساب";
+        const callBtnText = isEn ? "Call" : "اتصل";
+        return `
+          <div class="sub-phone-card">
+            <div>
+              <strong>${escapeHtml(label)}</strong>
+              <span dir="ltr" style="font-family:var(--font-mono); font-weight:700; font-size:13px;">${escapeHtml(p.number)}</span>
+            </div>
+            <div style="display:flex; gap:6px;">
+              <a href="${waUrl}" target="_blank" rel="noopener noreferrer" title="WhatsApp"><i class="fa-brands fa-whatsapp"></i> ${waBtnText}</a>
+              <a href="tel:${cleanNum}" style="background:var(--gold); color:#000;" title="Call"><i class="fa-solid fa-phone"></i> ${callBtnText}</a>
+            </div>
+          </div>
+        `;
+      }).join("");
+    }
+
+    if (fbBtnEl) {
+      if (data.fb) {
+        fbBtnEl.href = data.fb;
+        fbBtnEl.style.display = "inline-flex";
+      } else {
+        fbBtnEl.style.display = "none";
+      }
+    }
+
+    if (inquiryBtnEl) {
+      inquiryBtnEl.onclick = () => {
+        modal.classList.add("hidden");
+        document.body.style.overflow = "";
+        openServiceModal(data.defaultService || "خدمة أخرى / استفسار عام", data.defaultCountry || "جمهورية العراق");
+      };
+    }
+
+    modal.classList.remove("hidden");
+    document.body.style.overflow = "hidden";
+  }
+
+  function closeSubsidiaryModal() {
+    const modal = document.getElementById("subDetailModal");
+    if (modal) modal.classList.add("hidden");
+    document.body.style.overflow = "";
+  }
+
+  const closeSubModalBtn = document.getElementById("closeSubDetailModal");
+  if (closeSubModalBtn) {
+    closeSubModalBtn.addEventListener("click", closeSubsidiaryModal);
+  }
+
   // --- Dynamic Subsidiaries & Marquee Rendering ---
   function renderSubsidiaries(list) {
     const grid = document.querySelector(".subsidiary-grid");
@@ -929,6 +1304,7 @@
     const fbLabel = isEn ? "Official Facebook Page" : "صفحة الفيسبوك الرسمية";
 
     grid.innerHTML = list.map((sub) => {
+      const subKey = getSubKey(sub);
       const title = isEn ? (sub.title_en || sub.title_ar) : (sub.title_ar || sub.title_en);
       const tag = isEn ? (sub.tag_en || sub.tag_ar) : (sub.tag_ar || sub.tag_en);
       const desc = isEn ? (sub.desc_en || sub.desc_ar) : (sub.desc_ar || sub.desc_en);
@@ -943,7 +1319,7 @@
         : "";
 
       return `
-        <article class="subsidiary-card reveal visible">
+        <article class="subsidiary-card reveal visible" data-sub-id="${subKey}">
           <div class="sub-header">
             ${logoHtml}
             <div>
