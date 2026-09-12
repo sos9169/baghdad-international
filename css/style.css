@@ -1868,7 +1868,7 @@ body.dark .dest-tag-btn:hover {
 /* Service Quick Request Modal Styling (Unified Dark Navy & Gold) */
 .modal-card {
   position: relative;
-  width: min(580px, 94vw);
+  width: min(620px, 92vw);
   max-height: 88vh;
   overflow-y: auto;
   overflow-x: hidden;
@@ -1876,10 +1876,11 @@ body.dark .dest-tag-btn:hover {
   color: #ffffff !important;
   border: 1.5px solid var(--gold, #c59a4a) !important;
   border-radius: 26px;
-  padding: 30px 28px;
-  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.8), 0 0 40px rgba(197, 154, 74, 0.18);
+  padding: 28px 24px;
+  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.85), 0 0 40px rgba(197, 154, 74, 0.2);
   transform: translateY(0);
   transition: transform 0.3s ease;
+  box-sizing: border-box !important;
 }
 
 /* Custom Slim Scrollbar for Modal Card */
@@ -1901,17 +1902,18 @@ body.dark .dest-tag-btn:hover {
   background: var(--gold);
 }
 
-/* Explicit High-Z-Index Close Button for Service Modal */
+/* Explicit Close Button Position */
 .modal-close {
   position: absolute;
   top: 18px;
   left: 18px;
-  z-index: 100 !important;
+  right: auto;
+  z-index: 999 !important;
   width: 36px;
   height: 36px;
   border-radius: 50%;
   border: 1px solid rgba(197, 154, 74, 0.5);
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.12);
   color: #ffffff !important;
   font-size: 16px;
   font-weight: 700;
@@ -1933,22 +1935,25 @@ body.lang-en .modal-close {
   transform: scale(1.1);
 }
 
+/* Header Padding Fix: In RTL, close button is at LEFT: 18px. So padding-left MUST be 54px */
 .modal-header {
   margin-bottom: 20px;
-  padding-inline-start: 44px; /* Prevents long heading from overlapping close button in RTL */
+  padding-left: 54px !important;
+  padding-right: 0 !important;
 }
 
 body.lang-en .modal-header {
-  padding-inline-start: 0;
-  padding-inline-end: 44px;
+  padding-left: 0 !important;
+  padding-right: 54px !important;
 }
 
 .modal-header h3 {
-  font-size: 20px;
+  font-size: 19px;
   margin: 0 0 6px;
   font-weight: 800;
   color: #ffffff !important;
-  line-height: 1.35;
+  line-height: 1.4;
+  word-break: break-word;
 }
 
 .modal-header h3 span {
@@ -1963,26 +1968,42 @@ body.lang-en .modal-header {
 }
 
 .modal-form {
-  display: grid;
+  display: flex;
+  flex-direction: column;
   gap: 14px;
+  width: 100%;
+  box-sizing: border-box !important;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+  width: 100%;
+  box-sizing: border-box !important;
 }
 
 .modal-form label {
-  display: grid;
+  display: flex;
+  flex-direction: column;
   gap: 6px;
+  width: 100%;
+  box-sizing: border-box !important;
 }
 
 .modal-form label span {
-  font-size: 11.5px;
+  font-size: 12px;
   font-weight: 800;
   color: var(--gold-light, #e4c47d) !important;
+  word-break: break-word;
 }
 
 .modal-form input, 
 .modal-form textarea, 
 .modal-form select {
   width: 100%;
-  border: 1px solid rgba(197, 154, 74, 0.3) !important;
+  box-sizing: border-box !important;
+  border: 1px solid rgba(197, 154, 74, 0.35) !important;
   background: rgba(255, 255, 255, 0.05) !important;
   color: #ffffff !important;
   border-radius: 12px;
@@ -2002,22 +2023,32 @@ body.lang-en .modal-header {
 .modal-form textarea:focus, 
 .modal-form select:focus {
   border-color: var(--gold) !important;
-  box-shadow: 0 0 0 3px rgba(197, 154, 74, 0.2) !important;
+  box-shadow: 0 0 0 3px rgba(197, 154, 74, 0.25) !important;
 }
 
 .modal-actions {
   display: flex;
   gap: 10px;
-  margin-top: 10px;
+  margin-top: 8px;
+  flex-wrap: wrap;
+  width: 100%;
+  box-sizing: border-box !important;
 }
 
 .modal-actions .btn-primary {
   flex: 1;
+  min-width: 180px;
   background: linear-gradient(135deg, var(--gold), #d4aa59) !important;
   color: #071827 !important;
   font-weight: 800;
   border: none;
+  padding: 12px 18px;
+  border-radius: 12px;
   box-shadow: 0 4px 16px rgba(197, 154, 74, 0.35);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .modal-actions .btn-primary:hover {
@@ -2026,10 +2057,19 @@ body.lang-en .modal-header {
 }
 
 .modal-wa-btn {
+  flex: 1;
+  min-width: 180px;
   background: #25D366 !important;
   color: #ffffff !important;
   border: none !important;
   font-weight: 800;
+  padding: 12px 18px;
+  border-radius: 12px;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
 }
 
 .modal-wa-btn:hover {
