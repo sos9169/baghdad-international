@@ -1865,84 +1865,106 @@ body.dark .dest-tag-btn:hover {
   pointer-events: none;
 }
 
+/* Service Quick Request Modal Styling (Unified Dark Navy & Gold) */
 .modal-card {
   position: relative;
-  width: min(560px, 100%);
-  max-height: 90vh;
+  width: min(580px, 94vw);
+  max-height: 88vh;
   overflow-y: auto;
-  background: var(--paper);
-  border: 1px solid var(--gold);
+  overflow-x: hidden;
+  background: #081a29 !important;
+  color: #ffffff !important;
+  border: 1.5px solid var(--gold, #c59a4a) !important;
   border-radius: 26px;
-  padding: 34px 30px;
-  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.4);
+  padding: 30px 28px;
+  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.8), 0 0 40px rgba(197, 154, 74, 0.18);
   transform: translateY(0);
   transition: transform 0.3s ease;
 }
 
+/* Custom Slim Scrollbar for Modal Card */
+.modal-card::-webkit-scrollbar {
+  width: 6px;
+}
+
+.modal-card::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 10px;
+}
+
+.modal-card::-webkit-scrollbar-thumb {
+  background: rgba(197, 154, 74, 0.5);
+  border-radius: 10px;
+}
+
+.modal-card::-webkit-scrollbar-thumb:hover {
+  background: var(--gold);
+}
+
+/* Explicit High-Z-Index Close Button for Service Modal */
 .modal-close {
   position: absolute;
-  top: 20px;
-  left: 20px;
+  top: 18px;
+  left: 18px;
+  z-index: 100 !important;
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  border: 1px solid var(--line);
-  background: transparent;
-  color: var(--text);
+  border: 1px solid rgba(197, 154, 74, 0.5);
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff !important;
   font-size: 16px;
-  cursor: pointer;
+  font-weight: 700;
+  cursor: pointer !important;
   display: grid;
   place-items: center;
-  transition: background 0.2s ease, color 0.2s ease;
+  transition: all 0.2s ease;
+  pointer-events: auto !important;
 }
 
 body.lang-en .modal-close {
   left: auto;
-  right: 20px;
+  right: 18px;
 }
 
 .modal-close:hover {
-  background: var(--ink);
-  color: #fff;
+  background: var(--gold, #c59a4a);
+  color: #071827 !important;
+  transform: scale(1.1);
 }
 
 .modal-header {
-  margin-bottom: 22px;
+  margin-bottom: 20px;
+  padding-inline-start: 44px; /* Prevents long heading from overlapping close button in RTL */
+}
+
+body.lang-en .modal-header {
+  padding-inline-start: 0;
+  padding-inline-end: 44px;
 }
 
 .modal-header h3 {
-  font-size: 24px;
+  font-size: 20px;
   margin: 0 0 6px;
   font-weight: 800;
+  color: #ffffff !important;
+  line-height: 1.35;
 }
 
 .modal-header h3 span {
-  color: var(--gold);
+  color: var(--gold-light, #e4c47d) !important;
 }
 
 .modal-header p {
   margin: 0;
   font-size: 13px;
-  color: var(--muted);
-  line-height: 1.7;
+  color: #c1cbd7 !important;
+  line-height: 1.6;
 }
 
 .modal-form {
   display: grid;
   gap: 14px;
-}
-
-.modal-selectors select {
-  font-weight: 800;
-  color: var(--gold);
-  border-color: rgba(197, 154, 74, 0.5);
-  background: rgba(197, 154, 74, 0.08);
-}
-
-.form-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
 }
 
 .modal-form label {
@@ -1953,14 +1975,16 @@ body.lang-en .modal-close {
 .modal-form label span {
   font-size: 11.5px;
   font-weight: 800;
-  color: var(--muted);
+  color: var(--gold-light, #e4c47d) !important;
 }
 
-.modal-form input, .modal-form textarea, .modal-form select {
+.modal-form input, 
+.modal-form textarea, 
+.modal-form select {
   width: 100%;
-  border: 1px solid var(--line);
-  background: var(--card-bg);
-  color: var(--text);
+  border: 1px solid rgba(197, 154, 74, 0.3) !important;
+  background: rgba(255, 255, 255, 0.05) !important;
+  color: #ffffff !important;
   border-radius: 12px;
   padding: 12px 14px;
   font: 500 13px var(--font-ar);
@@ -1968,9 +1992,17 @@ body.lang-en .modal-close {
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-.modal-form input:focus, .modal-form textarea:focus, .modal-form select:focus {
-  border-color: var(--gold);
-  box-shadow: 0 0 0 3px rgba(197, 154, 74, 0.15);
+.modal-form select option {
+  background: #081a29 !important;
+  color: #ffffff !important;
+  padding: 8px;
+}
+
+.modal-form input:focus, 
+.modal-form textarea:focus, 
+.modal-form select:focus {
+  border-color: var(--gold) !important;
+  box-shadow: 0 0 0 3px rgba(197, 154, 74, 0.2) !important;
 }
 
 .modal-actions {
@@ -1981,16 +2013,29 @@ body.lang-en .modal-close {
 
 .modal-actions .btn-primary {
   flex: 1;
+  background: linear-gradient(135deg, var(--gold), #d4aa59) !important;
+  color: #071827 !important;
+  font-weight: 800;
+  border: none;
+  box-shadow: 0 4px 16px rgba(197, 154, 74, 0.35);
+}
+
+.modal-actions .btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(197, 154, 74, 0.5);
 }
 
 .modal-wa-btn {
-  color: #25D366 !important;
-  border-color: rgba(37, 211, 102, 0.4) !important;
+  background: #25D366 !important;
+  color: #ffffff !important;
+  border: none !important;
+  font-weight: 800;
 }
 
 .modal-wa-btn:hover {
-  background: #25D366 !important;
-  color: #fff !important;
+  background: #20b858 !important;
+  color: #ffffff !important;
+  transform: translateY(-2px);
 }
 
 /* Ultra-Premium Glassmorphic Subsidiary Details Modal v3 */
