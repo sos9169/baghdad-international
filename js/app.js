@@ -595,12 +595,17 @@
     if (serviceModal) {
       serviceModal.classList.remove("hidden");
       document.body.style.overflow = "hidden";
+      document.body.classList.add("modal-open");
     }
   }
 
   function closeServiceModal() {
     if (serviceModal) serviceModal.classList.add("hidden");
-    document.body.style.overflow = "";
+    const subModal = document.getElementById("subDetailModal");
+    if (!subModal || subModal.classList.contains("hidden")) {
+      document.body.style.overflow = "";
+      document.body.classList.remove("modal-open");
+    }
   }
 
   document.addEventListener("click", (e) => {
@@ -1315,12 +1320,17 @@
 
     modal.classList.remove("hidden");
     document.body.style.overflow = "hidden";
+    document.body.classList.add("modal-open");
   }
 
   function closeSubsidiaryModal() {
     const modal = document.getElementById("subDetailModal");
     if (modal) modal.classList.add("hidden");
-    document.body.style.overflow = "";
+    const serviceModal = document.getElementById("serviceModal");
+    if (!serviceModal || serviceModal.classList.contains("hidden")) {
+      document.body.style.overflow = "";
+      document.body.classList.remove("modal-open");
+    }
   }
 
   const closeSubModalBtn = document.getElementById("closeSubDetailModal");

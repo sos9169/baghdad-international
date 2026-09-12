@@ -1865,6 +1865,19 @@ body.dark .dest-tag-btn:hover {
   pointer-events: none;
 }
 
+/* Hide floating WhatsApp button and Back to Top button when ANY modal is open */
+body.modal-open .floating-whatsapp,
+body.modal-open #floatingTop,
+body.modal-open .floating-top,
+.modal-backdrop:not(.hidden) ~ .floating-whatsapp,
+.modal-backdrop:not(.hidden) ~ #floatingTop,
+.modal-backdrop:not(.hidden) ~ .floating-top {
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
 /* Service Quick Request Modal Styling (Unified Dark Navy & Gold) */
 .modal-card {
   position: relative;
@@ -2145,12 +2158,13 @@ body.lang-en .sub-modal-close-btn {
   display: flex;
   align-items: center;
   gap: 16px;
-  padding-inline-start: 40px; /* Leave space for close button in RTL */
+  padding-left: 54px !important; /* Clearance for close button on LEFT in RTL */
+  padding-right: 0 !important;
 }
 
 body.lang-en .sub-modal-hero-content {
-  padding-inline-start: 0;
-  padding-inline-end: 40px;
+  padding-left: 0 !important;
+  padding-right: 54px !important; /* Clearance for close button on RIGHT in LTR */
 }
 
 .sub-modal-logo-wrapper {
