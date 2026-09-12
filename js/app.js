@@ -627,6 +627,14 @@
       closeSubsidiaryModal();
     }
 
+    const closeSubBtn = e.target.closest("#closeSubDetailModal");
+    if (closeSubBtn) {
+      e.preventDefault();
+      e.stopPropagation();
+      closeSubsidiaryModal();
+      return;
+    }
+
     const subCard = e.target.closest(".subsidiary-card");
     if (subCard) {
       const fbLink = e.target.closest(".sub-fb-link");
@@ -1317,7 +1325,13 @@
 
   const closeSubModalBtn = document.getElementById("closeSubDetailModal");
   if (closeSubModalBtn) {
-    closeSubModalBtn.addEventListener("click", closeSubsidiaryModal);
+    closeSubModalBtn.onclick = function(e) {
+      if (e) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+      closeSubsidiaryModal();
+    };
   }
 
   // --- Dynamic Subsidiaries & Marquee Rendering ---
