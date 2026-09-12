@@ -1208,19 +1208,33 @@
 
     const isEn = body.classList.contains("lang-en");
 
+    // Elements
     const titleEl = document.getElementById("subModalTitle");
     const subEl = document.getElementById("subModalSub");
     const logoEl = document.getElementById("subModalLogo");
     const descEl = document.getElementById("subModalDesc");
     const addressEl = document.getElementById("subModalAddress");
     const badgesEl = document.getElementById("subModalBadges");
-    const servicesListEl = document.getElementById("subModalServicesList");
+    const servicesGridEl = document.getElementById("subModalServicesGrid");
     const phonesGridEl = document.getElementById("subModalPhonesGrid");
     const fbBtnEl = document.getElementById("subModalFbBtn");
+    const fbTextEl = document.getElementById("subModalFbText");
     const inquiryBtnEl = document.getElementById("subModalInquiryBtn");
+    const ctaTextEl = document.getElementById("subModalCtaText");
+
+    // Section Headings Multilingual
+    const aboutHeadingEl = document.getElementById("subModalAboutHeading");
+    const servicesHeadingEl = document.getElementById("subModalServicesHeading");
+    const addressHeadingEl = document.getElementById("subModalAddressHeading");
+    const contactHeadingEl = document.getElementById("subModalContactHeading");
+
+    if (aboutHeadingEl) aboutHeadingEl.textContent = isEn ? "About Entity & Specialties" : "نبذة عن المؤسسة والتخصص";
+    if (servicesHeadingEl) servicesHeadingEl.textContent = isEn ? "Core Services & Key Activities" : "أبرز الخدمات والأنشطة المعتمدة";
+    if (addressHeadingEl) addressHeadingEl.textContent = isEn ? "Headquarters & Branch Address:" : "المقر الإداري والعنوان:";
+    if (contactHeadingEl) contactHeadingEl.textContent = isEn ? "Direct Contact & WhatsApp Channels" : "أرقام التواصل والواتساب المباشر";
 
     if (titleEl) titleEl.textContent = isEn ? data.title_en : data.title_ar;
-    if (subEl) subEl.textContent = isEn ? data.sub_en : data.sub_ar;
+    if (subEl) subEl.innerHTML = `<i class="fa-solid fa-location-dot"></i> <span>${escapeHtml(isEn ? data.sub_en : data.sub_ar)}</span>`;
     if (logoEl) {
       logoEl.src = data.logo;
       logoEl.alt = isEn ? data.title_en : data.title_ar;
@@ -1228,49 +1242,60 @@
     if (descEl) descEl.textContent = isEn ? data.desc_en : data.desc_ar;
     if (addressEl) addressEl.textContent = isEn ? data.address_en : data.address_ar;
 
+    // Badges
     if (badgesEl) {
       badgesEl.innerHTML = (data.badges || []).map(b => `
         <span class="sub-badge"><i class="${b.icon}"></i> ${escapeHtml(isEn ? b.text_en : b.text_ar)}</span>
       `).join("");
     }
 
-    if (servicesListEl) {
+    // Services Feature Cards
+    if (servicesGridEl) {
       const list = isEn ? data.services_en : data.services_ar;
-      servicesListEl.innerHTML = (list || []).map(s => `
-        <li>${escapeHtml(s)}</li>
+      servicesGridEl.innerHTML = (list || []).map(s => `
+        <div class="sub-service-feature-card">
+          <i class="fa-solid fa-circle-check"></i>
+          <span>${escapeHtml(s)}</span>
+        </div>
       `).join("");
     }
 
+    // Phone Cards Grid v2
     if (phonesGridEl) {
       phonesGridEl.innerHTML = (data.phones || []).map(p => {
         const cleanNum = p.number.replace(/[^\d+]/g, '');
         const waUrl = `https://wa.me/${cleanNum.replace('+', '')}`;
         const label = isEn ? p.label_en : p.label_ar;
         const waBtnText = isEn ? "WhatsApp" : "واتساب";
-        const callBtnText = isEn ? "Call" : "اتصل";
+        const callBtnText = isEn ? "Call Now" : "اتصال";
         return `
-          <div class="sub-phone-card">
-            <div>
+          <div class="sub-phone-card-v2">
+            <div class="sub-phone-meta">
               <strong>${escapeHtml(label)}</strong>
-              <span dir="ltr" style="font-family:var(--font-mono); font-weight:700; font-size:13px;">${escapeHtml(p.number)}</span>
+              <span class="sub-phone-num" dir="ltr">${escapeHtml(p.number)}</span>
             </div>
-            <div style="display:flex; gap:6px;">
-              <a href="${waUrl}" target="_blank" rel="noopener noreferrer" title="WhatsApp"><i class="fa-brands fa-whatsapp"></i> ${waBtnText}</a>
-              <a href="tel:${cleanNum}" style="background:var(--gold); color:#000;" title="Call"><i class="fa-solid fa-phone"></i> ${callBtnText}</a>
+            <div class="sub-phone-actions">
+              <a href="${waUrl}" target="_blank" rel="noopener noreferrer" class="phone-act-btn wa" title="WhatsApp"><i class="fa-brands fa-whatsapp"></i> ${waBtnText}</a>
+              <a href="tel:${cleanNum}" class="phone-act-btn call" title="Call"><i class="fa-solid fa-phone"></i> ${callBtnText}</a>
             </div>
           </div>
         `;
       }).join("");
     }
 
+    // Facebook Link
     if (fbBtnEl) {
       if (data.fb) {
         fbBtnEl.href = data.fb;
         fbBtnEl.style.display = "inline-flex";
+        if (fbTextEl) fbTextEl.textContent = isEn ? "Official Page ↗" : "الصفحة الرسمية ↗";
       } else {
         fbBtnEl.style.display = "none";
       }
     }
+
+    // CTA Request Button
+    if (ctaTextEl) ctaTextEl.textContent = isEn ? "Request Direct Service" : "طلب خدمة مباشر";
 
     if (inquiryBtnEl) {
       inquiryBtnEl.onclick = () => {

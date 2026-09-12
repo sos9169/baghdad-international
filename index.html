@@ -834,48 +834,75 @@
   </div>
 </div>
 
-<!-- Subsidiary Details Modal -->
+<!-- Premium Subsidiary Details Modal -->
 <div class="modal-backdrop hidden" id="subDetailModal" role="dialog" aria-modal="true" aria-labelledby="subModalTitle">
   <div class="sub-modal-card">
     <button class="modal-close" id="closeSubDetailModal" type="button" aria-label="Close modal">✕</button>
 
-    <div class="sub-modal-head">
-      <img id="subModalLogo" src="images/logo_baghdad_academy.png" width="64" height="64" alt="" class="sub-modal-logo">
-      <div class="sub-modal-head-text">
-        <h3 id="subModalTitle">اسم المؤسسة</h3>
-        <span id="subModalSub">الموقع / الدولة</span>
-        <div class="sub-modal-badges" id="subModalBadges"></div>
+    <!-- Top Hero Header with ambient background glow & logo badge -->
+    <div class="sub-modal-hero">
+      <div class="sub-modal-hero-bg"></div>
+      <div class="sub-modal-hero-content">
+        <div class="sub-modal-logo-wrapper">
+          <img id="subModalLogo" src="" alt="" class="sub-modal-logo">
+          <span class="logo-verified-badge" title="Official Subsidiary"><i class="fa-solid fa-circle-check"></i></span>
+        </div>
+        <div class="sub-modal-hero-meta">
+          <div class="sub-modal-badges" id="subModalBadges"></div>
+          <h3 id="subModalTitle">اسم المؤسسة</h3>
+          <span id="subModalSub" class="sub-modal-sub-tag"><i class="fa-solid fa-location-dot"></i> <span>الموقع / الدولة</span></span>
+        </div>
       </div>
     </div>
 
-    <div class="sub-modal-desc-box">
-      <h4 class="sub-modal-section-title"><i class="fa-solid fa-circle-info"></i> <span>نبذة عن المؤسسة والتخصص:</span></h4>
-      <p id="subModalDesc" class="sub-modal-desc"></p>
-    </div>
+    <!-- Scrollable Modal Body -->
+    <div class="sub-modal-body-scroll">
+      <!-- Section 1: Overview & Description -->
+      <div class="sub-modal-block desc-block">
+        <div class="block-title-row">
+          <div class="block-icon"><i class="fa-solid fa-shield-halved"></i></div>
+          <h4 id="subModalAboutHeading">نبذة عن المؤسسة والتخصص</h4>
+        </div>
+        <p id="subModalDesc" class="sub-modal-desc-text"></p>
+      </div>
 
-    <div class="sub-modal-services-box">
-      <h4 class="sub-modal-section-title"><i class="fa-solid fa-list-check"></i> <span>أبرز الخدمات والأنشطة:</span></h4>
-      <ul id="subModalServicesList" class="sub-modal-services-list"></ul>
-    </div>
+      <!-- Section 2: Core Services Grid -->
+      <div class="sub-modal-block services-block">
+        <div class="block-title-row">
+          <div class="block-icon"><i class="fa-solid fa-cubes"></i></div>
+          <h4 id="subModalServicesHeading">أبرز الخدمات والأنشطة المعتمدة</h4>
+        </div>
+        <div id="subModalServicesGrid" class="sub-modal-services-grid"></div>
+      </div>
 
-    <div class="sub-modal-address-box">
-      <div>
-        <strong style="display:block; color:var(--gold); margin-bottom:2px;"><i class="fa-solid fa-location-dot"></i> المقر والعنوان:</strong>
-        <span id="subModalAddress"></span>
+      <!-- Section 3: Address & Headquarters Card -->
+      <div class="sub-modal-block address-block">
+        <div class="sub-address-card">
+          <div class="address-icon"><i class="fa-solid fa-building-flag"></i></div>
+          <div class="address-content">
+            <strong id="subModalAddressHeading">المقر الإداري والعنوان:</strong>
+            <p id="subModalAddress"></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section 4: Contact & WhatsApp Direct Channels -->
+      <div class="sub-modal-block contact-block">
+        <div class="block-title-row">
+          <div class="block-icon"><i class="fa-solid fa-headset"></i></div>
+          <h4 id="subModalContactHeading">أرقام التواصل والواتساب المباشر</h4>
+        </div>
+        <div id="subModalPhonesGrid" class="sub-modal-phones-grid"></div>
       </div>
     </div>
 
-    <div class="sub-modal-phones-box">
-      <h4 class="sub-modal-section-title"><i class="fa-solid fa-phone"></i> <span>أرقام التواصل والواتساب المباشر:</span></h4>
-      <div id="subModalPhonesGrid" class="sub-modal-phones-grid"></div>
-    </div>
-
-    <div class="sub-modal-actions-bar">
-      <a id="subModalFbBtn" href="#" target="_blank" rel="noopener noreferrer" class="btn btn-ghost" style="border-color:var(--gold); color:var(--gold);">
-        <i class="fa-brands fa-facebook-f"></i> <span>صفحة الفيسبوك الرسمية ↗</span>
+    <!-- Sticky Footer Actions Bar -->
+    <div class="sub-modal-footer">
+      <a id="subModalFbBtn" href="#" target="_blank" rel="noopener noreferrer" class="sub-footer-btn fb-btn">
+        <i class="fa-brands fa-facebook"></i> <span id="subModalFbText">الصفحة الرسمية ↗</span>
       </a>
-      <button type="button" id="subModalInquiryBtn" class="btn btn-primary">
-        <i class="fa-solid fa-paper-plane"></i> <span>طلب خدمة مباشر</span>
+      <button type="button" id="subModalInquiryBtn" class="sub-footer-btn cta-btn">
+        <i class="fa-solid fa-paper-plane"></i> <span id="subModalCtaText">طلب خدمة مباشر</span>
       </button>
     </div>
   </div>
