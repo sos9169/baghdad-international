@@ -1904,6 +1904,7 @@ body.modal-open .floating-top,
 .modal-card::-webkit-scrollbar-track {
   background: rgba(255, 255, 255, 0.03);
   border-radius: 10px;
+  margin: 12px 0;
 }
 
 .modal-card::-webkit-scrollbar-thumb {
@@ -2079,10 +2080,12 @@ body.lang-en .modal-header {
   padding: 12px 18px;
   border-radius: 12px;
   text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
+  gap: 8px;
+  direction: inherit !important;
 }
 
 .modal-wa-btn:hover {
@@ -2253,6 +2256,25 @@ body.lang-en .logo-verified-badge {
   gap: 18px;
   flex: 1;
   background: #081a29 !important;
+}
+
+.sub-modal-body-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+
+.sub-modal-body-scroll::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 10px;
+  margin: 12px 0;
+}
+
+.sub-modal-body-scroll::-webkit-scrollbar-thumb {
+  background: rgba(197, 154, 74, 0.5);
+  border-radius: 10px;
+}
+
+.sub-modal-body-scroll::-webkit-scrollbar-thumb:hover {
+  background: var(--gold);
 }
 
 .sub-modal-block {
@@ -3133,9 +3155,7 @@ body.dark .contact-form textarea:focus {
 .years-badge strong,
 .counter-num,
 .ltr-num,
-.modal-wa-btn,
 a[href^="tel:"],
-a[href^="https://wa.me"],
 input[type="tel"] {
   direction: ltr !important;
   unicode-bidi: isolate !important;
