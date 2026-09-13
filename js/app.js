@@ -959,40 +959,41 @@
   const SUBSIDIARIES_DETAILS_MAP = {
     academy: {
       id: "academy",
-      title_ar: "أكاديمية بغداد الدولية",
-      title_en: "Baghdad International Academy",
+      title_ar: "بغداد انترناشونال جروب (الأكاديمية)",
+      title_en: "Baghdad International Group",
       sub_ar: "مصر — القاهرة (الدقي)",
       sub_en: "Cairo, Egypt (Dokki)",
       logo: "images/logo_baghdad_academy.png",
       est_ar: "تأسست عام 2025",
       est_en: "Est. 2025",
-      address_ar: "7 شارع عقبة بن نافع متفرع من التحرير أمام المركز الثقافي الروسي - الدور الأول شقة 102، الدقي، القاهرة",
-      address_en: "7 Oqba Ibn Nafeh St, off Tahrir St, opp. Russian Cultural Center, 1st Floor Apt 102, Dokki, Cairo",
+      email: "bghdadacademy22@gmail.com",
+      address_ar: "7 شارع عقبة بن نافع الدقي متفرع من التحرير أمام البيت الروسي الدور الأول شقة 102، القاهرة - مصر",
+      address_en: "7 Oqba Ibn Nafeh St, Dokki, off Tahrir St, opp. Russian House, 1st Floor Apt 102, Cairo, Egypt",
       fb: "https://www.facebook.com/share/19AA5UiUaj/",
       defaultService: "🎒 التعليم المدرسي (ابتدائي، إعدادي، ثانوي)",
       defaultCountry: "جمهورية مصر العربية",
-      desc_ar: "أكاديمية تعليمية وتدريبية متخصصة تابعة لمجموعة بغداد الدولية بجمهورية مصر العربية. توفر خدمات متكاملة تشمل القبولات المدرسية والجامعية، الخدمات البرمجية، والتجارة العامة والاستيراد والتصدير.",
-      desc_en: "A specialized educational and training academy under Baghdad International Group in Egypt, offering university and school admissions, software solutions, and trade services.",
+      desc_ar: "تأسست بغداد انترناشونال جروب عام 2025 بجمهورية مصر العربية لتقديم منظومة خدمات متكاملة تشمل الخدمات التعليمية والقبولات، خدمات السفر والتأشيرات، الذكاء الاصطناعي والبرمجيات، والتجارة العامة (استيراد وتصدير).",
+      desc_en: "Founded in 2025 in Egypt, Baghdad International Group offers comprehensive educational services, travel facilitation, AI & software solutions, and general trade (import/export).",
       badges: [
-        { text_ar: "مصر", text_en: "Egypt", icon: "fa-solid fa-flag" },
-        { text_ar: "تعليم وتدريب", text_en: "Education & Training", icon: "fa-solid fa-graduation-cap" },
-        { text_ar: "تأسيس 2025", text_en: "Est. 2025", icon: "fa-solid fa-calendar-check" }
+        { text_ar: "مصر والدول العربية", text_en: "Egypt & Arab World", icon: "fa-solid fa-earth-africa" },
+        { text_ar: "تأسيس 2025", text_en: "Est. 2025", icon: "fa-solid fa-calendar-check" },
+        { text_ar: "خدمات شاملة", text_en: "Full Services", icon: "fa-solid fa-certificate" }
       ],
       services_ar: [
-        "🎓 قبولات وتسجيل في جميع المدارس المصرية والجامعات الحكومية والخاصة",
-        "✈️ خدمات الفيزا، الإقامة، وتأمين السكن الطلابي والعائلي",
+        "🎓 خدمات تعليمية وقبولات مدرسية وجامعية لكافة المراحل",
+        "✈️ خدمات السفر، الرحلات والتأشيرات وتسهيلات الإقامة",
         "🤖 خدمات الذكاء الاصطناعي وتطوير البرمجيات للشركات والأفراد",
-        "📦 خدمات التجارة العامة، الاستيراد والتصدير"
+        "📦 التجارة العامة، الاستيراد والتصدير وإسناد الأعمال"
       ],
       services_en: [
-        "🎓 School & University admissions for all stages in Egypt",
-        "✈️ Visa, residency, and student accommodation arrangements",
-        "🤖 AI & custom software development solutions",
-        "📦 General trade, import and export services"
+        "🎓 K-12 and university admissions & educational services",
+        "✈️ Travel, visa assistance, and relocation logistics",
+        "🤖 AI integration & custom software development",
+        "📦 General trade, import/export, and business setup"
       ],
       phones: [
-        { label_ar: "مصر (واتساب وهاتف)", label_en: "Egypt (WhatsApp & Call)", number: "+201507501548" },
-        { label_ar: "مصر (استعلامات)", label_en: "Egypt (Inquiries)", number: "+201507501547" }
+        { label_ar: "مصر (واتساب وهاتف 1)", label_en: "Egypt (Phone 1)", number: "+201507501548" },
+        { label_ar: "مصر (استعلامات 2)", label_en: "Egypt (Phone 2)", number: "+201507501547" }
       ]
     },
 
@@ -1003,31 +1004,32 @@
       sub_ar: "تركيا — يلوى / اسطنبول",
       sub_en: "Yalova & Istanbul, Turkey",
       logo: "images/logo_yalova.jpg",
-      est_ar: "منهاج تركي رسمي معتمد",
+      est_ar: "منهج تركي رسمي معتمد",
       est_en: "Official Turkish Curriculum",
+      email: "yalovakolejiar@gmail.com",
       address_ar: "جمهورية تركيا — مدينة يلوى / اسطنبول",
       address_en: "Yalova & Istanbul, Republic of Turkey",
       fb: "https://www.facebook.com/share/195Jt1v3p4/",
       defaultService: "🎒 التعليم المدرسي (ابتدائي، إعدادي، ثانوي)",
       defaultCountry: "تركيا",
-      desc_ar: "مدارس يلوا كولج تقدم تعليماً كاملاً وفق المنهاج التركي الرسمي لجميع المراحل (ابتدائي، إعدادي، وثانوي) في بيئة تربوية وأكاديمية حديثة تشمل الخيارين الناشونال والانترناشونال.",
-      desc_en: "Yalova Koleji offers complete K-12 schooling following the official Turkish curriculum in a modern academic environment with national & international tracks.",
+      desc_ar: "مدارس يلوا كولج تقدم تعليماً متكاملاً وفق المنهج التركي الرسمي لجميع المراحل الدراسية (ابتدائي، إعدادي، وثانوي) في بيئة تربوية وأكاديمية حديثة بمساراتها الناشونال والانترناشونال بكادر تعليمي مؤهل ومدرسين ذوي كفاءة ممتازة.",
+      desc_en: "Yalova Koleji offers complete K-12 schooling following the official Turkish curriculum for primary, middle, and high school stages, with national & international tracks and highly qualified faculty.",
       badges: [
         { text_ar: "تركيا", text_en: "Turkey", icon: "fa-solid fa-flag" },
-        { text_ar: "منهاج تركي رسمي", text_en: "Official Turkish Curriculum", icon: "fa-solid fa-school" },
-        { text_ar: "جميع المراحل", text_en: "K-12 Stages", icon: "fa-solid fa-book-open" }
+        { text_ar: "منهج تركي رسمي", text_en: "Official Turkish Curriculum", icon: "fa-solid fa-school" },
+        { text_ar: "ثانوي - إعدادي - ناشونال/انترناشونال", text_en: "National & International K-12", icon: "fa-solid fa-book-open" }
       ],
       services_ar: [
         "🏫 تعليم لكافة المراحل الدراسية: ابتدائي - إعدادي - ثانوي",
-        "🇹🇷 مسارات تعليمية (ناشونال - انترناشونال) بمعايير دولية",
-        "📚 تأهيل للغة التركية واللغة الإنجليزية للطلاب الجدد",
-        "🤝 رعاية ومتابعة مباشرة من شركة رِع ميديا"
+        "🇹🇷 مسارات تعليمية (ناشونال - انترناشونال) بمعايير معتمدة",
+        "👨‍🏫 كادر تعليمي مؤهل ومدرسين ذوي كفاءة ممتازة",
+        "📚 تأهيل وتأسيس للغة التركية واللغة الإنجليزية للطلاب الجدد"
       ],
       services_en: [
         "🏫 K-12 Comprehensive schooling (Primary, Middle, High School)",
         "🇹🇷 National & International academic curriculum",
-        "📚 Intensive Turkish and English prep classes",
-        "🤝 Direct sponsorship & media coverage by REC Media"
+        "👨‍🏫 Qualified teaching staff with top academic expertise",
+        "📚 Intensive Turkish & English prep orientation"
       ],
       phones: [
         { label_ar: "تركيا (واتساب وهاتف المدارس)", label_en: "Turkey (WhatsApp & Call)", number: "+905011263577" }
@@ -1041,31 +1043,32 @@
       sub_ar: "تركيا — اسطنبول",
       sub_en: "Istanbul, Turkey",
       logo: "images/logo_cortoba.jpg",
-      est_ar: "مدارس عراقية معتمدة",
-      est_en: "Accredited Iraqi School",
+      est_ar: "منهج مدرسي معتمد",
+      est_en: "Accredited Schooling",
+      email: "bghdadacademy22@gmail.com",
       address_ar: "جمهورية تركيا — اسطنبول",
       address_en: "Istanbul, Republic of Turkey",
       fb: "https://www.facebook.com/share/1bwDgqMFYh/",
       defaultService: "🎒 التعليم المدرسي (ابتدائي، إعدادي، ثانوي)",
       defaultCountry: "تركيا",
-      desc_ar: "مدارس قرطبة العراقية في تركيا (فرع اسطنبول) تقدم المناهج التعليمية العراقية الرسمية المعتمدة لكافة المراحل المدرسية مع توفير بيئة تعليمية وتربوية متميزة.",
-      desc_en: "Cortoba Iraqi International Schools in Istanbul provides accredited Iraqi curriculum schooling for all primary, middle, and secondary stages.",
+      desc_ar: "مدارس قرطبة في تركيا (فرع اسطنبول) تقدم تعليماً مدرسياً متكاملاً لجميع المراحل (ابتدائي، إعدادي، وثانوي) مع توفير كادر تعليمي مؤهل ومدرسين ذوي كفاءة ممتازة ومتابعة تربوية شاملة.",
+      desc_en: "Cortoba International Schools in Istanbul provides comprehensive school education for all primary, middle, and high school stages with expert qualified teachers.",
       badges: [
         { text_ar: "اسطنبول", text_en: "Istanbul", icon: "fa-solid fa-location-dot" },
-        { text_ar: "منهاج عراقي رسمي", text_en: "Official Iraqi Curriculum", icon: "fa-solid fa-book" },
-        { text_ar: "كادر متميز", text_en: "Expert Faculty", icon: "fa-solid fa-chalkboard-user" }
+        { text_ar: "جميع المراحل الدراسية", text_en: "All School Stages", icon: "fa-solid fa-book" },
+        { text_ar: "كادر تعليمي مؤهل", text_en: "Qualified Faculty", icon: "fa-solid fa-chalkboard-user" }
       ],
       services_ar: [
-        "🎓 تدريس المناهج العراقية الرسمية المعتمدة لجميع الصفوف",
-        "🏫 مراحل تعليمية كاملة: ابتدائي، متوسطة، وإعدادي (ثانوي)",
-        "👨‍🏫 كادر تدريسي عراقي ودولي ذو خبرة عالية",
-        "📜 شهادات معتمدة ورسمية ومتابعة تربوية مستمرة"
+        "🎓 تعليم مدرسي متكامل لجميع المراحل المدرسية (ابتدائي، إعدادي، ثانوي)",
+        "🏫 مسارات تعليمية وتأهيل أكاديمي متكامل لجميع الطلاب",
+        "👨‍🏫 كادر تعليمي مؤهل ومدرسين ذوي كفاءة ممتازة",
+        "📜 متابعة تربوية وأكاديمية مستمرة للطلاب"
       ],
       services_en: [
-        "🎓 Official accredited Iraqi Ministry of Education curriculum",
-        "🏫 All schooling stages: Primary, Middle, and High School",
-        "👨‍🏫 Highly qualified Iraqi & international teaching staff",
-        "📜 Accredited official certificates & continuous academic guidance"
+        "🎓 Integrated school education for all primary, middle & high school stages",
+        "🏫 Complete academic tracks and student preparation",
+        "👨‍🏫 Highly qualified teaching faculty & educators",
+        "📜 Continuous academic guidance & official certificates"
       ],
       phones: [
         { label_ar: "اسطنبول (واتساب وهاتف)", label_en: "Istanbul (WhatsApp & Call)", number: "+905011263577" }
@@ -1076,37 +1079,38 @@
       id: "hadhara",
       title_ar: "مدارس الحضارة العراقية",
       title_en: "Al-Hadhara Iraqi Schools",
-      sub_ar: "تركيا — يلوى",
-      sub_en: "Yalova, Turkey",
+      sub_ar: "تركيا — يلوى / اسطنبول",
+      sub_en: "Yalova & Istanbul, Turkey",
       logo: "images/logo_hadhara.jpg",
-      est_ar: "بيئة تعليمية حديثة",
-      est_en: "Modern Educational Environment",
-      address_ar: "جمهورية تركيا — يلوى",
-      address_en: "Yalova, Republic of Turkey",
+      est_ar: "منهج مدرسي معتمد بتركيا",
+      est_en: "Accredited Schooling in Turkey",
+      email: "alhadharaschools@gmail.com",
+      address_ar: "جمهورية تركيا — يلوى / اسطنبول",
+      address_en: "Yalova & Istanbul, Republic of Turkey",
       fb: "https://www.facebook.com/share/1EpVAXXhkH/",
       defaultService: "🎒 التعليم المدرسي (ابتدائي، إعدادي، ثانوي)",
       defaultCountry: "تركيا",
-      desc_ar: "مدارس الحضارة العراقية فرع يلوى توفر مناهج تعليمية حديثة ومعتمدة للطلبة العراقيين والعرب المقيمين بتركيا، مع الاهتمام بالأنشطة والمهارات التربوية.",
-      desc_en: "Al-Hadhara Iraqi Schools (Yalova Branch) delivers modern accredited Iraqi curriculum for Arab students living in Turkey.",
+      desc_ar: "مدارس الحضارة العراقية في تركيا تقدم تعليماً لكافة المراحل الدراسية (ابتدائي، إعدادي، وثانوي) في يلوى واسطنبول، مع توفير بيئة تعليمية وتربوية حديثة وكادر تعليمي مؤهل ومدرسين ذوي كفاءة ممتازة.",
+      desc_en: "Al-Hadhara Iraqi Schools in Turkey provides education for all school stages in Yalova & Istanbul, featuring modern learning environments and qualified faculty.",
       badges: [
-        { text_ar: "يلوى", text_en: "Yalova", icon: "fa-solid fa-location-dot" },
-        { text_ar: "منهاج عراقي", text_en: "Iraqi Curriculum", icon: "fa-solid fa-school" },
-        { text_ar: "أنشطة متكاملة", text_en: "Extracurriculars", icon: "fa-solid fa-star" }
+        { text_ar: "يلوى واسطنبول", text_en: "Yalova & Istanbul", icon: "fa-solid fa-location-dot" },
+        { text_ar: "منهج معتمد بتركيا", text_en: "Accredited in Turkey", icon: "fa-solid fa-school" },
+        { text_ar: "كادر تعليمي مؤهل", text_en: "Expert Teachers", icon: "fa-solid fa-user-tie" }
       ],
       services_ar: [
-        "📚 تعليم شامل لجميع المراحل المدرسية (ابتدائي، إعدادي، ثانوي)",
-        "🇮🇶 منهاج مدرسي رسمي معتمد من وزارة التربية العراقية",
-        "🏫 صفوف مجهزة بأحدث التقنيات التفاعلية والتربوية",
-        "🤝 رعاية متكاملة من شركة رِع ميديا"
+        "📚 تعليم لكافة المراحل الدراسية بتركيا (ابتدائي، إعدادي، ثانوي)",
+        "👨‍🏫 كادر تعليمي مؤهل ومدرسين ذوي كفاءة ممتازة",
+        "🏫 صفوف مجهزة بأحدث الوسائل التعليمية والتربوية",
+        "🎯 متابعة تربوية وأكاديمية وشاملة للطلاب"
       ],
       services_en: [
-        "📚 Complete schooling across primary, middle, and high school",
-        "🇮🇶 Accredited curriculum by Ministry of Education",
-        "🏫 Smart classrooms equipped with modern learning tools",
-        "🤝 Complete sponsorship by REC Media"
+        "📚 Complete K-12 schooling for all stages in Turkey",
+        "👨‍🏫 Qualified educators with exceptional teaching skills",
+        "🏫 Smart classrooms equipped with modern tools",
+        "🎯 Comprehensive academic & personal guidance"
       ],
       phones: [
-        { label_ar: "يلوى (واتساب وهاتف)", label_en: "Yalova (WhatsApp & Call)", number: "+905011263577" }
+        { label_ar: "تركيا (واتساب وهاتف)", label_en: "Turkey (WhatsApp & Call)", number: "+905011263577" }
       ]
     },
 

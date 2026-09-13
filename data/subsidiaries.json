@@ -1,25 +1,27 @@
 [
   {
     "id": "sub-1",
-    "title_ar": "أكاديمية بغداد الدولية",
-    "title_en": "Baghdad International Academy",
-    "tag_ar": "فرع القاهرة — مصر",
-    "tag_en": "Cairo — Egypt",
+    "title_ar": "بغداد انترناشونال جروب (الأكاديمية)",
+    "title_en": "Baghdad International Group",
+    "tag_ar": "فرع القاهرة — مصر (تأسست 2025)",
+    "tag_en": "Cairo — Egypt (Est. 2025)",
     "logo": "images/logo_baghdad_academy.png",
-    "desc_ar": "أكاديمية بغداد الدولية 🎓 — كل الخدمات التعليمية بمصر والقبولات لكافة المراحل المدرسية والجامعية للطلبة العراقيين.",
-    "desc_en": "Baghdad International Academy 🎓 — Educational services in Egypt and admissions for all school and university stages.",
-    "fb": "https://www.facebook.com/share/19AA5UiUaj/"
+    "desc_ar": "بغداد انترناشونال جروب 🎓 — خدمات تعليمية لكافة المراحل، سفر، ذكاء اصطناعي وبرمجيات، وتجارة عامة.",
+    "desc_en": "Baghdad International Group 🎓 — K-12 & University admissions, travel, AI & software development, and general trade.",
+    "fb": "https://www.facebook.com/share/19AA5UiUaj/",
+    "email": "bghdadacademy22@gmail.com"
   },
   {
     "id": "sub-2",
     "title_ar": "مدارس يلوا كولج",
     "title_en": "Yalova Koleji Schools",
-    "tag_ar": "فرع يلوى — تركيا",
-    "tag_en": "Yalova — Turkey",
+    "tag_ar": "تركيا (يلوى واسطنبول)",
+    "tag_en": "Yalova & Istanbul — Turkey",
     "logo": "images/logo_yalova.jpg",
-    "desc_ar": "مدارس يلوا كولج للمنهاج التركي في يلوى — شراكة تبني مستقبلاً أفضل لأبنائكم بالمنهاج التركي الرسمي.",
-    "desc_en": "Yalova Koleji Schools for the Turkish curriculum in Yalova — Building a better future with the official Turkish curriculum.",
-    "fb": "https://www.facebook.com/share/195Jt1v3p4/"
+    "desc_ar": "مدارس يلوا كولج للمنهج التركي — تعليم لكافة المراحل (ثانوي، إعدادي، ابتدائي) ناشونال وانترناشونال بكادر تعليمي مؤهل.",
+    "desc_en": "Yalova Koleji Schools for the Turkish curriculum — K-12 education with national & international tracks and expert faculty.",
+    "fb": "https://www.facebook.com/share/195Jt1v3p4/",
+    "email": "yalovakolejiar@gmail.com"
   },
   {
     "id": "sub-3",
@@ -28,41 +30,45 @@
     "tag_ar": "فرع اسطنبول — تركيا",
     "tag_en": "Istanbul — Turkey",
     "logo": "images/logo_cortoba.jpg",
-    "desc_ar": "مدارس قرطبة العراقية في تركيا (فرع اسطنبول) — مناهج تعليمية وتأهيل مدرسي وأكاديمي متكامل لجميع المراحل.",
-    "desc_en": "Cortoba Iraqi Schools in Turkey (Istanbul Branch) — Comprehensive academic schooling for all stages.",
-    "fb": "https://www.facebook.com/share/1bwDgqMFYh/"
+    "desc_ar": "مدارس قرطبة الدولية في اسطنبول — تعليم مدرسي متكامل لجميع المراحل وكادر تعليمي مؤهل ومدرسين ذوي كفاءة ممتازة.",
+    "desc_en": "Cortoba International Schools in Istanbul — Integrated school education for all stages with qualified faculty.",
+    "fb": "https://www.facebook.com/share/1bwDgqMFYh/",
+    "email": "bghdadacademy22@gmail.com"
   },
   {
     "id": "sub-4",
     "title_ar": "مدارس الحضارة العراقية",
     "title_en": "Al-Hadhara Iraqi Schools",
-    "tag_ar": "فرع يلوى — تركيا",
-    "tag_en": "Yalova — Turkey",
+    "tag_ar": "تركيا (يلوى واسطنبول)",
+    "tag_en": "Yalova & Istanbul — Turkey",
     "logo": "images/logo_hadhara.jpg",
-    "desc_ar": "مدارس الحضارة العراقية في تركيا (فرع يلوى) — بيئة تعليمية وتربوية حديثة ومعتمدة لكافة المراحل المدرسية.",
-    "desc_en": "Al-Hadhara Iraqi Schools in Turkey (Yalova Branch) — Modern educational environment for all school stages.",
-    "fb": "https://www.facebook.com/share/1EpVAXXhkH/"
+    "desc_ar": "مدارس الحضارة العراقية بتركيا — تعليم لكافة المراحل الدراسية بتركيا بكادر تعليمي مؤهل ومدرسين ذوي كفاءة ممتازة.",
+    "desc_en": "Al-Hadhara Iraqi Schools in Turkey — K-12 schooling with modern facilities and expert teaching staff.",
+    "fb": "https://www.facebook.com/share/1EpVAXXhkH/",
+    "email": "alhadharaschools@gmail.com"
   },
   {
     "id": "sub-5",
     "title_ar": "شركة النيل للخدمات المتكاملة",
     "title_en": "Al-Niel Integrated Services",
-    "tag_ar": "السودان ومصر",
-    "tag_en": "Sudan & Egypt",
+    "tag_ar": "مصر والسودان (تأسست 2026)",
+    "tag_en": "Sudan & Egypt (Est. 2026)",
     "logo": "images/logo_niel.png",
-    "desc_ar": "شركة النيل للخدمات المتكاملة — جودة، ثقة، وتنوع من السودان ومصر لخدمة العالم والخدمات العامة والتجارية.",
-    "desc_en": "Al-Niel Integrated Services — Quality, trust, and commercial services from Sudan and Egypt.",
-    "fb": ""
+    "desc_ar": "شركة النيل للخدمات المتكاملة (تأسست 2026) — كل ما يخص التعليم لكل المراحل، السفر والتأشيرات، والخدمات العامة.",
+    "desc_en": "Al-Niel Integrated Services (Est. 2026) — Complete education services for all stages, travel, and commercial consulting.",
+    "fb": "https://www.facebook.com/share/1JPjSGbuz7/",
+    "email": "alnyll223@gmail.com"
   },
   {
     "id": "sub-6",
-    "title_ar": "شركة بلاتفورم التركية",
-    "title_en": "Platform Turkish Company",
-    "tag_ar": "تركيا (يلوى واسطنبول)",
-    "tag_en": "Turkey (Yalova & Istanbul)",
+    "title_ar": "شركة بلاتفورم التركية & B2B",
+    "title_en": "Platform Turkish Company & B2B",
+    "tag_ar": "تركيا ومصر (تأسست 2023)",
+    "tag_en": "Turkey & Egypt (Est. 2023)",
     "logo": "images/logo_platform.png",
-    "desc_ar": "شركة بلاتفورم التركية للخدمات والاستشارات التجارية والتأسيس والتنسيق في جمهورية تركيا.",
-    "desc_en": "Platform Turkish Company for commercial consulting, business setup, and coordination in Turkey.",
-    "fb": "https://www.facebook.com/share/1JPjSGbuz7/"
+    "desc_ar": "شركة بلاتفورم التركية (تأسست 2023) — استيراد وتصدير وتأسيس الشركات، وممثلية منصة تركيا لار ماركت B2B بمصر.",
+    "desc_en": "Platform Turkish Company (Est. 2023) — Import/export, company setup, and Egypt B2B platform representation.",
+    "fb": "https://www.facebook.com/share/1JPjSGbuz7/",
+    "email": "info@platformgroup.net"
   }
 ]
