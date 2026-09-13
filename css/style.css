@@ -498,7 +498,7 @@ h1 span, h2 span {
   position: relative;
 }
 
-/* Hero Section Holographic Watermark Background & Radiant Orbs */
+/* Hero Section Background & Radiant Orbs */
 .hero-bg-watermark {
   position: absolute;
   inset: 0;
@@ -511,38 +511,19 @@ h1 span, h2 span {
 .islamic-pattern-layer {
   position: absolute;
   inset: 0;
-  background-image: url("data:image/svg+xml;utf8,<svg width='72' height='72' viewBox='0 0 72 72' xmlns='http://www.w3.org/2000/svg'><g fill='none' stroke='%23c59a4a' stroke-width='0.7' stroke-opacity='0.15'><path d='M36 0 L45 15 L60 6 L51 21 L66 30 L51 39 L66 48 L51 57 L60 72 L45 63 L36 78 L27 63 L12 72 L21 57 L6 48 L21 39 L6 30 L21 21 L12 6 L27 15 Z'/><polygon points='36,18 40.5,24.3 48.6,22.5 45,29.7 51.3,36 45,42.3 48.6,49.5 40.5,47.7 36,54 31.5,47.7 23.4,49.5 27,42.3 20.7,36 27,29.7 23.4,22.5 31.5,24.3'/><circle cx='36' cy='36' r='9'/></g></svg>");
+  background-image: url("data:image/svg+xml;utf8,<svg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'><g fill='none' stroke='%23c59a4a' stroke-width='0.8' stroke-opacity='0.22'><path d='M40 0 L48 16 L64 8 L56 24 L72 32 L56 40 L72 48 L56 56 L64 72 L48 64 L40 80 L32 64 L16 72 L24 56 L8 48 L24 40 L8 32 L24 24 L16 8 L32 16 Z'/><polygon points='40,20 45,27 54,25 50,33 57,40 50,47 54,55 45,53 40,60 35,53 26,55 30,47 23,40 30,33 26,25 35,27'/><circle cx='40' cy='40' r='10'/></g></svg>");
   background-repeat: repeat;
-  background-size: 72px 72px;
-  opacity: 0.55;
-  mask-image: radial-gradient(circle at 50% 50%, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0) 80%);
-  -webkit-mask-image: radial-gradient(circle at 50% 50%, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0) 80%);
+  background-size: 80px 80px;
+  opacity: 0.45;
+  mask-image: radial-gradient(circle at 50% 50%, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.2) 75%, rgba(0,0,0,0) 100%);
+  -webkit-mask-image: radial-gradient(circle at 50% 50%, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.2) 75%, rgba(0,0,0,0) 100%);
   pointer-events: none;
-  animation: islamicPatternShift 70s linear infinite;
+  animation: islamicPatternShift 80s linear infinite;
 }
 
 @keyframes islamicPatternShift {
   0% { background-position: 0 0; }
-  100% { background-position: 72px 72px; }
-}
-
-.hero-bg-watermark .watermark-logo-img {
-  position: absolute;
-  top: 48%;
-  left: 6%;
-  transform: translateY(-50%) rotate(-4deg);
-  width: min(540px, 62vw);
-  height: auto;
-  opacity: 0.065;
-  filter: drop-shadow(0 0 50px rgba(197, 154, 74, 0.5)) grayscale(0.1);
-  animation: watermarkFloat 14s ease-in-out infinite alternate;
-  user-select: none;
-}
-
-body.lang-en .hero-bg-watermark .watermark-logo-img {
-  left: auto;
-  right: 6%;
-  transform: translateY(-50%) rotate(4deg);
+  100% { background-position: 80px 80px; }
 }
 
 .hero-bg-watermark .watermark-orb {
