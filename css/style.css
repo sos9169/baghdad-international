@@ -3247,16 +3247,16 @@ body.dark .contact-form textarea:focus {
 
 .floating-top i { font-size: 21px; }
 
-/* Reveal Animations */
+/* Reveal Animations - GUARANTEED 100% INSTANT VISIBILITY ON ALL DEVICES */
 .reveal {
-  opacity: 0;
-  transform: translateY(18px);
-  transition: opacity 0.45s ease, transform 0.45s ease;
+  opacity: 1 !important;
+  transform: none !important;
+  transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
 .reveal.visible {
-  opacity: 1;
-  transform: none;
+  opacity: 1 !important;
+  transform: none !important;
 }
 
 @media (prefers-reduced-motion: reduce) {

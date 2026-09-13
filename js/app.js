@@ -1552,21 +1552,8 @@
   }
   window.addEventListener("load", rebuildTicker);
 
-  // --- Lightweight Scroll Reveal Observer ---
-  const observer = ("IntersectionObserver" in window)
-    ? new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("visible");
-            observer.unobserve(entry.target);
-          }
-        });
-      }, { rootMargin: "0px 0px 100px 0px", threshold: 0.01 })
-    : null;
-
   document.querySelectorAll(".reveal").forEach((el) => {
-    if (observer && window.innerWidth > 768) observer.observe(el);
-    else el.classList.add("visible");
+    el.classList.add("visible");
   });
 
   // --- Back to Top Control ---
