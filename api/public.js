@@ -126,6 +126,9 @@ export default async function handler(req, res) {
       ? await createOrder({ name, phone, message, page, device }).catch(() => fallbackOrder)
       : fallbackOrder;
 
+    if (!global.__BIG_ORDERS_CACHE__) global.__BIG_ORDERS_CACHE__ = [];
+    global.__BIG_ORDERS_CACHE__.unshift(order);
+
     if (!Array.isArray(store.orders)) store.orders = [];
     store.orders.unshift(order);
 

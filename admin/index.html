@@ -350,34 +350,47 @@
 
       <!-- Official Domain Emails & DNS Settings Panel -->
       <section class="panel" style="margin-top: 24px;">
-        <div class="panel-head">
-          <h2><i class="fa-solid fa-envelope-circle-check"></i> إدارة الإيميلات الرسمية الـ 9 وسجلات Vercel DNS</h2>
-          <p>جميع الإيميلات الرسمية الـ 9 مجهزة ومربوطة في الكود المباشر. اتبع السجلات بالأسفل عند شراء الدومين.</p>
+        <div class="panel-head" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+          <div>
+            <h2><i class="fa-solid fa-envelope-circle-check"></i> إدارة الإيميلات الرسمية وربط Google Workspace & Vercel DNS</h2>
+            <p>يمكنك التعديل، الإضافة، والحذف الكامل للإيميلات الرسمية. السجلات بالأسفل مجهزة لربط Google Workspace أو ImprovMX فور شراء الدومين.</p>
+          </div>
+          <button type="button" class="btn primary" id="addOfficialEmailBtn" style="padding: 8px 16px; font-size: 13px;"><i class="fa-solid fa-plus"></i> إضافة إيميل جديد</button>
         </div>
         
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-bottom: 20px;">
-          <div style="background: rgba(197, 154, 74, 0.08); border: 1px solid rgba(197, 154, 74, 0.25); border-radius: 12px; padding: 16px;">
-            <strong style="color: var(--gold); font-size: 14px; display: block; margin-bottom: 8px;"><i class="fa-solid fa-at"></i> الإيميلات الرسمية المفعلة (9 إيميلات):</strong>
-            <ul style="margin: 0; padding-right: 18px; font-size: 13px; color: var(--text); line-height: 1.8;">
-              <li><code>info@baghdad-international.com</code></li>
-              <li><code>cairo@baghdad-international.com</code></li>
-              <li><code>iraq@baghdad-international.com</code></li>
-              <li><code>turkey@baghdad-international.com</code></li>
-              <li><code>academy@baghdad-international.com</code></li>
-              <li><code>sales@baghdad-international.com</code></li>
-              <li><code>support@baghdad-international.com</code></li>
-              <li><code>admin@baghdad-international.com</code></li>
-              <li><code>booking@baghdad-international.com</code></li>
-            </ul>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px; margin-bottom: 20px;">
+          <!-- Dynamic Email List -->
+          <div style="background: rgba(197, 154, 74, 0.08); border: 1px solid rgba(197, 154, 74, 0.25); border-radius: 14px; padding: 18px;">
+            <strong style="color: var(--gold); font-size: 14.5px; display: block; margin-bottom: 12px;"><i class="fa-solid fa-at"></i> الإيميلات الرسمية المفعلة (تحكم كامل):</strong>
+            <div id="officialEmailsList" style="display: flex; flex-direction: column; gap: 10px;">
+              <!-- Rendered via JS -->
+            </div>
           </div>
 
-          <div style="background: rgba(255, 255, 255, 0.03); border: 1px solid var(--line); border-radius: 12px; padding: 16px;">
-            <strong style="color: #ffffff; font-size: 14px; display: block; margin-bottom: 8px;"><i class="fa-solid fa-server"></i> سجلات الربط المطلوبة في Vercel DNS:</strong>
+          <!-- Google Workspace & ImprovMX DNS Records Guide -->
+          <div style="background: rgba(255, 255, 255, 0.03); border: 1px solid var(--line); border-radius: 14px; padding: 18px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+              <strong style="color: #ffffff; font-size: 14.5px;"><i class="fa-solid fa-server"></i> سجلات DNS عند شراء الدومين (Google Workspace / ImprovMX):</strong>
+            </div>
+            
             <div style="font-size: 12.5px; color: var(--muted); line-height: 1.6;">
-              <p style="margin:0 0 6px;">1. <strong>MX Record 1:</strong> Type: <code>MX</code> | Name: <code>@</code> | Value: <code style="color:var(--gold);">mx1.improvmx.com</code> | Priority: <code>10</code></p>
-              <p style="margin:0 0 6px;">2. <strong>MX Record 2:</strong> Type: <code>MX</code> | Name: <code>@</code> | Value: <code style="color:var(--gold);">mx2.improvmx.com</code> | Priority: <code>20</code></p>
-              <p style="margin:0 0 10px;">3. <strong>TXT / SPF:</strong> Type: <code>TXT</code> | Name: <code>@</code> | Value: <code style="color:var(--gold);">v=spf1 include:spf.improvmx.com ~all</code></p>
-              <a href="https://improvmx.com/" target="_blank" rel="noopener" class="btn ghost" style="display: inline-block; padding: 6px 14px; font-size: 12px; border-radius: 8px; color: var(--gold); border: 1px solid var(--gold); text-decoration: none;"><i class="fa-solid fa-arrow-up-right-from-square"></i> فتح موقع ImprovMX للتفعيل ↗</a>
+              <div style="margin-bottom: 12px; padding: 10px; background: rgba(66, 133, 244, 0.1); border: 1px solid rgba(66, 133, 244, 0.3); border-radius: 10px; color: #e2e8f0;">
+                <strong style="color: #4285F4; display:block; margin-bottom:4px;"><i class="fa-brands fa-google"></i> خيار 1: Google Workspace (الإيميلات الاحترافية المدفوعة):</strong>
+                عند شراء إيميلين أو أكثر من Google Workspace، ضَع سجلات MX التالية في Vercel DNS:
+                <div style="font-family: monospace; font-size: 11.5px; margin-top:4px; color: #93c5fd;">
+                  • 1 ASPMX.L.GOOGLE.COM. (Priority 1)<br>
+                  • 5 ALT1.ASPMX.L.GOOGLE.COM. (Priority 5)<br>
+                  • 5 ALT2.ASPMX.L.GOOGLE.COM. (Priority 5)<br>
+                  • TXT / SPF: v=spf1 include:_spf.google.com ~all
+                </div>
+              </div>
+
+              <div style="padding: 10px; background: rgba(197, 154, 74, 0.06); border: 1px solid rgba(197, 154, 74, 0.2); border-radius: 10px;">
+                <strong style="color: var(--gold); display:block; margin-bottom:4px;"><i class="fa-solid fa-arrows-split-up-and-left"></i> خيار 2: ImprovMX (تحويل الإيميلات المجاني):</strong>
+                <p style="margin:0 0 4px;">MX 1: <code>mx1.improvmx.com</code> (Priority 10)</p>
+                <p style="margin:0 0 6px;">MX 2: <code>mx2.improvmx.com</code> (Priority 20)</p>
+                <a href="https://improvmx.com/" target="_blank" rel="noopener" class="btn ghost" style="display: inline-block; padding: 4px 10px; font-size: 11.5px; border-radius: 6px; color: var(--gold); border: 1px solid var(--gold); text-decoration: none;">فتح ImprovMX للتفعيل ↗</a>
+              </div>
             </div>
           </div>
         </div>
@@ -385,9 +398,12 @@
 
       <!-- Incoming Orders Panel -->
       <section class="panel orders-panel">
-        <div class="panel-head">
-          <h2><i class="fa-solid fa-inbox"></i> الطلبات المرسلة من الموقع</h2>
-          <p>جميع الطلبات المرسلة من نموذج التواصل في الموقع الرئيسي مع إمكانية تحديث الحالة.</p>
+        <div class="panel-head" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+          <div>
+            <h2><i class="fa-solid fa-inbox"></i> الطلبات المرسلة من الموقع</h2>
+            <p>جميع الطلبات المرسلة من نموذج التواصل في الموقع الرئيسي مع إمكانية تحديث الحالة أو الحذف.</p>
+          </div>
+          <button type="button" class="btn danger-btn" id="clearAllOrdersBtn" style="padding: 6px 14px; font-size: 12px; background: rgba(239, 68, 68, 0.15); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 8px; cursor: pointer;"><i class="fa-solid fa-trash-can"></i> مسح جميع الطلبات</button>
         </div>
         <div class="table-wrap">
           <table>
@@ -398,10 +414,11 @@
                 <th>رقم الهاتف</th>
                 <th>محتوى الرسالة</th>
                 <th>حالة الطلب</th>
+                <th>حذف</th>
               </tr>
             </thead>
             <tbody id="ordersBody">
-              <tr><td colspan="5" style="text-align:center;padding:24px;color:var(--muted)">لا توجد طلبات حتى الآن.</td></tr>
+              <tr><td colspan="6" style="text-align:center;padding:24px;color:var(--muted)">لا توجد طلبات حتى الآن.</td></tr>
             </tbody>
           </table>
         </div>

@@ -87,7 +87,9 @@ export default async function handler(req, res) {
       : store.metrics;
     const orders = isSupabaseConfigured()
       ? await getOrders().catch(() => store.orders)
-      : store.orders;
+      : (Array.isArray(global.__BIG_ORDERS_CACHE__) && global.__BIG_ORDERS_CACHE__.length
+          ? global.__BIG_ORDERS_CACHE__
+          : store.orders);
 
     return res.status(200).json({
       ok: true,
@@ -95,6 +97,7 @@ export default async function handler(req, res) {
       settings: store.settings,
       metrics,
       orders,
+      officialEmails: store.officialEmails || [],
       slides: store.slides,
       services: store.services,
       destinations: store.destinations,
@@ -459,6 +462,11 @@ export default async function handler(req, res) {
       }
     }
 
+    if (Array.isArray(global.__BIG_ORDERS_CACHE__)) {
+      const o = global.__BIG_ORDERS_CACHE__.find((x) => x.id === id);
+      if (o) o.status = status;
+    }
+
     if (Array.isArray(store.orders)) {
       const order = store.orders.find((o) => o.id === id);
       if (order) {
@@ -468,6 +476,78 @@ export default async function handler(req, res) {
       }
     }
     return res.status(404).json({ ok: false, error: 'الطلب غير موجود' });
+  }
+
+  if (action === 'delete-order') {
+    const id = String(body.id || '');
+    if (Array.isArray(global.__BIG_ORDERS_CACHE__)) {
+      global.__BIG_ORDERS_CACHE__ = global.__BIG_ORDERS_CACHE__.filter((o) => o.id !== id);
+    }
+    if (Array.isArray(store.orders)) {
+      store.orders = store.orders.filter((o) => o.id !== id);
+      saveGlobalStore();
+      return res.status(200).json({ ok: true, orders: store.orders });
+    }
+    return res.status(404).json({ ok: false, error: 'الطلب غير موجود' });
+  }
+
+  if (action === 'clear-orders') {
+    global.__BIG_ORDERS_CACHE__ = [];
+    store.orders = [];
+    saveGlobalStore();
+    return res.status(200).json({ ok: true, orders: [] });
+  }
+
+  // --- Manage Official Domain Emails ---
+  if (action === 'add-official-email') {
+    const email = String(body.email || '').trim().toLowerCase();
+    const label_ar = String(body.label_ar || 'إيميل رسمي').trim();
+    const provider = String(body.provider || 'Google Workspace').trim();
+
+    if (!email || !email.includes('@')) {
+      return res.status(422).json({ ok: false, error: 'عنوان الإيميل غير صحيح' });
+    }
+
+    const newEmailItem = {
+      id: 'email-' + Date.now(),
+      email,
+      label_ar,
+      provider
+    };
+
+    if (!Array.isArray(store.officialEmails)) store.officialEmails = [];
+    store.officialEmails.push(newEmailItem);
+    saveGlobalStore();
+    return res.status(200).json({ ok: true, officialEmail: newEmailItem, officialEmails: store.officialEmails });
+  }
+
+  if (action === 'edit-official-email') {
+    const id = String(body.id || '');
+    const email = String(body.email || '').trim().toLowerCase();
+    const label_ar = String(body.label_ar || '').trim();
+    const provider = String(body.provider || '').trim();
+
+    if (Array.isArray(store.officialEmails)) {
+      const item = store.officialEmails.find((e) => e.id === id);
+      if (item) {
+        if (email) item.email = email;
+        if (label_ar) item.label_ar = label_ar;
+        if (provider) item.provider = provider;
+        saveGlobalStore();
+        return res.status(200).json({ ok: true, officialEmail: item, officialEmails: store.officialEmails });
+      }
+    }
+    return res.status(404).json({ ok: false, error: 'الإيميل غير موجود' });
+  }
+
+  if (action === 'delete-official-email') {
+    const id = String(body.id || '');
+    if (Array.isArray(store.officialEmails)) {
+      store.officialEmails = store.officialEmails.filter((e) => e.id !== id);
+      saveGlobalStore();
+      return res.status(200).json({ ok: true, officialEmails: store.officialEmails });
+    }
+    return res.status(404).json({ ok: false, error: 'الإيميل غير موجود' });
   }
 
   return res.status(404).json({ ok: false, error: 'Unknown action' });

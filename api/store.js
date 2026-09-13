@@ -190,7 +190,23 @@ function readJsonFile(dir, filename, fallback) {
   }
 }
 
+const defaultOfficialEmails = [
+  { id: "email-1", email: "info@baghdad-international.com", label_ar: "المقر الرئيسي (استفسارات عامة)", provider: "Google Workspace" },
+  { id: "email-2", email: "cairo@baghdad-international.com", label_ar: "فرع القاهرة — مصر (أكاديمية بغداد)", provider: "Google Workspace" },
+  { id: "email-3", email: "iraq@baghdad-international.com", label_ar: "فرع بغداد — العراق", provider: "Google Workspace" },
+  { id: "email-4", email: "turkey@baghdad-international.com", label_ar: "فرع تركيا (اسطنبول / يالوفا)", provider: "Google Workspace" },
+  { id: "email-5", email: "academy@baghdad-international.com", label_ar: "أكاديمية بغداد الدولية", provider: "Google Workspace" },
+  { id: "email-6", email: "sales@baghdad-international.com", label_ar: "المبيعات والتعاقدات", provider: "Google Workspace" },
+  { id: "email-7", email: "support@baghdad-international.com", label_ar: "الدعم والمتابعة الطلابية", provider: "Google Workspace" },
+  { id: "email-8", email: "admin@baghdad-international.com", label_ar: "الإدارة العامة والخدمات", provider: "Google Workspace" },
+  { id: "email-9", email: "booking@baghdad-international.com", label_ar: "الحجوزات والسفر والتأشيرات", provider: "Google Workspace" }
+];
+
 export function getGlobalStore() {
+  if (!global.__BIG_ORDERS_CACHE__) {
+    global.__BIG_ORDERS_CACHE__ = [];
+  }
+
   if (!global.__BIG_STORE__) {
     let loadedFromTmp = null;
     try {
@@ -207,6 +223,9 @@ export function getGlobalStore() {
       if (!Array.isArray(global.__BIG_STORE__.subsidiaries) || !global.__BIG_STORE__.subsidiaries.length) {
         global.__BIG_STORE__.subsidiaries = defaultSubsidiaries;
       }
+      if (!Array.isArray(global.__BIG_STORE__.officialEmails)) {
+        global.__BIG_STORE__.officialEmails = defaultOfficialEmails;
+      }
     } else {
       global.__BIG_STORE__ = {
         metrics: readJsonFile(rootDataDir, 'metrics.json', { visits: 0, interactions: 0, whatsappClicks: 0, formSubmits: 0, lastVisit: '', events: [] }),
@@ -215,6 +234,7 @@ export function getGlobalStore() {
         services: readJsonFile(rootDataDir, 'services.json', []),
         destinations: readJsonFile(rootDataDir, 'destinations.json', defaultDestinations),
         subsidiaries: readJsonFile(rootDataDir, 'subsidiaries.json', defaultSubsidiaries),
+        officialEmails: readJsonFile(rootDataDir, 'official_emails.json', defaultOfficialEmails),
         settings: readJsonFile(rootDataDir, 'settings.json', {
           facebook: 'https://facebook.com/',
           instagram: 'https://instagram.com/',
@@ -228,6 +248,15 @@ export function getGlobalStore() {
         })
       };
     }
+  }
+
+  // Merge global orders cache into store.orders if orders array is empty
+  if ((!Array.isArray(global.__BIG_STORE__.orders) || !global.__BIG_STORE__.orders.length) && global.__BIG_ORDERS_CACHE__.length) {
+    global.__BIG_STORE__.orders = [...global.__BIG_ORDERS_CACHE__];
+  }
+
+  if (!Array.isArray(global.__BIG_STORE__.officialEmails)) {
+    global.__BIG_STORE__.officialEmails = defaultOfficialEmails;
   }
 
   return global.__BIG_STORE__;
@@ -244,6 +273,7 @@ export function saveGlobalStore() {
       fs.writeFileSync(path.join(rootDataDir, 'services.json'), JSON.stringify(store.services, null, 2), 'utf8');
       fs.writeFileSync(path.join(rootDataDir, 'destinations.json'), JSON.stringify(store.destinations, null, 2), 'utf8');
       fs.writeFileSync(path.join(rootDataDir, 'subsidiaries.json'), JSON.stringify(store.subsidiaries, null, 2), 'utf8');
+      fs.writeFileSync(path.join(rootDataDir, 'official_emails.json'), JSON.stringify(store.officialEmails, null, 2), 'utf8');
       fs.writeFileSync(path.join(rootDataDir, 'settings.json'), JSON.stringify(store.settings, null, 2), 'utf8');
       fs.writeFileSync(path.join(rootDataDir, 'admin.json'), JSON.stringify(store.admin, null, 2), 'utf8');
     }

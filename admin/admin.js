@@ -326,9 +326,32 @@
     return Number.isNaN(date.getTime()) ? value : date.toLocaleString("ar-EG");
   }
 
+  function fillOfficialEmails(emails) {
+    const listContainer = document.getElementById("officialEmailsList");
+    if (!listContainer) return;
+
+    if (!Array.isArray(emails) || emails.length === 0) {
+      listContainer.innerHTML = '<div style="color:var(--muted);font-size:13px;padding:10px;">لا توجد إيميلات رسمية مضافة. اضغط إضافة إيميل جديد.</div>';
+      return;
+    }
+
+    listContainer.innerHTML = emails.map((item) => `
+      <div style="display:flex; justify-content:space-between; align-items:center; background:rgba(255,255,255,0.03); border:1px solid rgba(197,154,74,0.2); padding:10px 14px; border-radius:10px; gap:10px; flex-wrap:wrap;">
+        <div style="display:flex; flex-direction:column; gap:2px;">
+          <code style="color:var(--gold-light); font-size:13.5px; font-weight:700;">${escapeHtml(item.email || "")}</code>
+          <span style="font-size:12px; color:#cbd5e1;">${escapeHtml(item.label_ar || "إيميل رسمي")} • <small style="color:var(--gold);">${escapeHtml(item.provider || "Google Workspace")}</small></span>
+        </div>
+        <div style="display:flex; gap:6px;">
+          <button type="button" class="btn ghost btn-edit-email" data-email-id="${escapeAttr(item.id || "")}" style="padding:4px 10px; font-size:11.5px; color:var(--gold); border:1px solid var(--gold); cursor:pointer;"><i class="fa-solid fa-pen"></i> تعديل</button>
+          <button type="button" class="btn danger-btn btn-delete-email" data-email-id="${escapeAttr(item.id || "")}" style="padding:4px 10px; font-size:11.5px; background:rgba(239,68,68,0.15); color:#ef4444; border:1px solid rgba(239,68,68,0.3); border-radius:6px; cursor:pointer;"><i class="fa-solid fa-trash"></i> حذف</button>
+        </div>
+      </div>
+    `).join("");
+  }
+
   function fillOrders(orders) {
     if (!Array.isArray(orders) || orders.length === 0) {
-      ordersBody.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:24px;color:var(--muted)">لا توجد طلبات حتى الآن.</td></tr>';
+      ordersBody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:24px;color:var(--muted)">لا توجد طلبات حتى الآن.</td></tr>';
       return;
     }
 
@@ -341,9 +364,13 @@
         <td>
           <select data-order-id="${escapeAttr(order.id || "")}">
             <option value="new"${order.status === "new" ? " selected" : ""}>جديد</option>
-            <option value="reviewed"${order.status === "reviewed" ? " selected" : ""}>تمت المراجعة</option>
-            <option value="done"${order.status === "done" ? " selected" : ""}>منتهي</option>
+            <option value="reviewed"${order.status === "reviewed" ? " selected" : ""}>قيد المتابعة</option>
+            <option value="done"${order.status === "done" ? " selected" : ""}>مكتمل</option>
+            <option value="cancelled"${order.status === "cancelled" ? " selected" : ""}>ملغى</option>
           </select>
+        </td>
+        <td>
+          <button type="button" class="btn danger-btn btn-delete-order" data-order-id="${escapeAttr(order.id || "")}" style="padding:4px 10px; font-size:11.5px; background:rgba(239,68,68,0.15); color:#ef4444; border:1px solid rgba(239,68,68,0.3); border-radius:6px; cursor:pointer;" title="حذف الطلب"><i class="fa-solid fa-trash"></i> حذف</button>
         </td>
       </tr>
     `).join("");
@@ -379,6 +406,7 @@
         subsidiaries: data.subsidiaries || [],
         settings: data.settings || {},
         orders: data.orders || [],
+        officialEmails: data.officialEmails || [],
         metrics: data.metrics || {}
       };
 
@@ -386,6 +414,7 @@
       fillMetrics(data.metrics || {}, data.orders || []);
       fillActivityLog(data.metrics?.events || []);
       fillOrders(data.orders || []);
+      fillOfficialEmails(data.officialEmails || []);
       fillSlides(data.slides || []);
       fillServices(data.services || []);
       fillDestinations(data.destinations || []);
@@ -950,6 +979,105 @@
     await request("order-status", { id: select.dataset.orderId, status: select.value })
       .catch((error) => alert(error.message));
   });
+
+  // Official Email Events
+  const addEmailBtn = document.getElementById("addOfficialEmailBtn");
+  if (addEmailBtn) {
+    addEmailBtn.addEventListener("click", async () => {
+      const email = prompt("أدخل عنوان الإيميل الرسمي الجديد (مثال: ceo@baghdad-international.com):");
+      if (!email || !email.trim()) return;
+      const label = prompt("أدخل الوصف أو القسم (مثال: الإدارة العامة / Google Workspace):", "Google Workspace");
+      
+      try {
+        const res = await request("add-official-email", { email: email.trim(), label_ar: label ? label.trim() : "Google Workspace", provider: "Google Workspace" });
+        if (res && res.officialEmails) {
+          currentState.officialEmails = res.officialEmails;
+          fillOfficialEmails(res.officialEmails);
+        }
+      } catch (err) {
+        alert(err.message || "حدث خطأ أثناء إضافة الإيميل");
+      }
+    });
+  }
+
+  const emailsList = document.getElementById("officialEmailsList");
+  if (emailsList) {
+    emailsList.addEventListener("click", async (e) => {
+      const editBtn = e.target.closest(".btn-edit-email");
+      if (editBtn) {
+        const id = editBtn.dataset.emailId;
+        const item = (currentState.officialEmails || []).find((x) => x.id === id);
+        if (!item) return;
+        const newEmail = prompt("تعديل عنوان الإيميل الرسمي:", item.email);
+        if (!newEmail || !newEmail.trim()) return;
+        const newLabel = prompt("تعديل الوصف أو القسم:", item.label_ar);
+
+        try {
+          const res = await request("edit-official-email", { id, email: newEmail.trim(), label_ar: newLabel ? newLabel.trim() : item.label_ar, provider: item.provider });
+          if (res && res.officialEmails) {
+            currentState.officialEmails = res.officialEmails;
+            fillOfficialEmails(res.officialEmails);
+          }
+        } catch (err) {
+          alert(err.message || "حدث خطأ أثناء التعديل");
+        }
+        return;
+      }
+
+      const delBtn = e.target.closest(".btn-delete-email");
+      if (delBtn) {
+        const id = delBtn.dataset.emailId;
+        if (!confirm("هل أنت تأكد من حذف هذا الإيميل من القائمة؟")) return;
+        try {
+          const res = await request("delete-official-email", { id });
+          if (res && res.officialEmails) {
+            currentState.officialEmails = res.officialEmails;
+            fillOfficialEmails(res.officialEmails);
+          }
+        } catch (err) {
+          alert(err.message || "حدث خطأ أثناء الحذف");
+        }
+      }
+    });
+  }
+
+  // Order Deletion Events
+  const clearAllOrdersBtn = document.getElementById("clearAllOrdersBtn");
+  if (clearAllOrdersBtn) {
+    clearAllOrdersBtn.addEventListener("click", async () => {
+      if (!confirm("هل أنت متأكد من مسح جميع الطلبات المرسلة من الموقع؟")) return;
+      try {
+        const res = await request("clear-orders");
+        if (res) {
+          currentState.orders = [];
+          fillOrders([]);
+          fillMetrics(currentState.metrics, []);
+        }
+      } catch (err) {
+        alert(err.message || "حدث خطأ أثناء المسح");
+      }
+    });
+  }
+
+  if (ordersBody) {
+    ordersBody.addEventListener("click", async (e) => {
+      const delBtn = e.target.closest(".btn-delete-order");
+      if (delBtn) {
+        const id = delBtn.dataset.orderId;
+        if (!confirm("هل أنت متأكد من حذف هذا الطلب؟")) return;
+        try {
+          const res = await request("delete-order", { id });
+          if (res && res.orders) {
+            currentState.orders = res.orders;
+            fillOrders(res.orders);
+            fillMetrics(currentState.metrics, res.orders);
+          }
+        } catch (err) {
+          alert(err.message || "حدث خطأ أثناء حذف الطلب");
+        }
+      }
+    });
+  }
 
   // --- Instant Auto-Translate System (Arabic -> English) ---
   const translationCache = {};
