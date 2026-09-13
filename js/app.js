@@ -907,6 +907,35 @@
       });
     }
 
+    // Touch Swipe Gestures for Mobile & Touchscreens
+    let touchStartX = 0;
+    let touchStartY = 0;
+
+    slidesTrack.addEventListener("touchstart", (e) => {
+      if (e.touches && e.touches.length > 0) {
+        touchStartX = e.touches[0].clientX;
+        touchStartY = e.touches[0].clientY;
+      }
+    }, { passive: true });
+
+    slidesTrack.addEventListener("touchend", (e) => {
+      if (e.changedTouches && e.changedTouches.length > 0) {
+        const touchEndX = e.changedTouches[0].clientX;
+        const touchEndY = e.changedTouches[0].clientY;
+        const diffX = touchEndX - touchStartX;
+        const diffY = touchEndY - touchStartY;
+
+        if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 35) {
+          if (diffX < 0) {
+            showSlide(slideIndex + 1);
+          } else {
+            showSlide(slideIndex - 1);
+          }
+          restartSlider();
+        }
+      }
+    }, { passive: true });
+
     startSlider();
   }
 
@@ -1532,11 +1561,11 @@
             observer.unobserve(entry.target);
           }
         });
-      }, { rootMargin: "0px 0px -8% 0px", threshold: 0.05 })
+      }, { rootMargin: "0px 0px 100px 0px", threshold: 0.01 })
     : null;
 
   document.querySelectorAll(".reveal").forEach((el) => {
-    if (observer) observer.observe(el);
+    if (observer && window.innerWidth > 768) observer.observe(el);
     else el.classList.add("visible");
   });
 

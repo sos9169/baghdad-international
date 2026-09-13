@@ -1024,11 +1024,6 @@ h1 span, h2 span {
   color: var(--gold-light);
   transform: translateX(-3px);
 }
-  margin: 0;
-  font-size: 13px;
-  line-height: 1.85;
-  color: var(--muted);
-}
 
 /* General Two-Column Layout */
 .two-col {
@@ -3426,6 +3421,45 @@ body.dark .footer {
   .footer-main {
     grid-template-columns: 1fr 1fr;
     gap: 36px;
+  }
+  .subsidiary-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+  .service-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+  .two-col {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+}
+
+@media (max-width: 768px) {
+  .subsidiary-grid {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+  .service-grid {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+  .destinations-grid {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+  .two-col {
+    grid-template-columns: 1fr !important;
+    gap: 28px !important;
+  }
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+  .slides, .slider {
+    touch-action: pan-y !important;
   }
 }
 
