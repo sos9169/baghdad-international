@@ -175,6 +175,18 @@ const defaultSubsidiaries = [
     desc_en: "Platform Turkish Company (Est. 2023) — Import/export, company setup, and Egypt B2B platform representation.",
     fb: "https://www.facebook.com/share/1JPjSGbuz7/",
     email: "info@platformgroup.net"
+  },
+  {
+    id: "sub-7",
+    title_ar: "منصة B2B - turkishmarketer",
+    title_en: "turkishmarketer B2B Platform",
+    tag_ar: "مصر",
+    tag_en: "Egypt — B2B Platform",
+    logo: "images/logo_platform.png",
+    desc_ar: "ممثلة بغداد من منصة تركيا لارا ماركت - منصة B2B بمصر توفير جميع طلبات الموردين والمستوردين.",
+    desc_en: "Baghdad representation for Turkey Lara Market B2B platform in Egypt — fulfilling supplier & importer demands.",
+    fb: "https://www.facebook.com/share/1JPjSGbuz7/",
+    email: "info@turkishmarketer.com"
   }
 ];
 

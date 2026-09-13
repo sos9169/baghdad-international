@@ -1250,6 +1250,46 @@
       }
     }
 
+    // Dynamic search from active subsidiariesData array
+    const dynSub = (subsidiariesData || []).find(s => 
+      String(s.id).toLowerCase() === key ||
+      (s.title_ar && s.title_ar.toLowerCase().includes(key)) ||
+      (s.title_en && s.title_en.toLowerCase().includes(key))
+    );
+
+    if (dynSub) {
+      data = {
+        title_ar: dynSub.title_ar || dynSub.title_en,
+        title_en: dynSub.title_en || dynSub.title_ar,
+        sub_ar: dynSub.tag_ar || "مجموعة بغداد الدولية",
+        sub_en: dynSub.tag_en || "Baghdad International Group",
+        logo: dynSub.logo ? resolveMediaUrl(dynSub.logo) : (data ? data.logo : "assets/logo.jpg"),
+        desc_ar: dynSub.desc_ar || (data ? data.desc_ar : "مؤسسة تابعة لمجموعة بغداد الدولية."),
+        desc_en: dynSub.desc_en || (data ? data.desc_en : "Baghdad International Group Subsidiary."),
+        address_ar: dynSub.address_ar || (data ? data.address_ar : "المقر الإداري — جمهورية مصر العربية وتركيا والعراق"),
+        address_en: dynSub.address_en || (data ? data.address_en : "Group HQ — Egypt, Turkey & Iraq"),
+        fb: dynSub.fb || (data ? data.fb : "https://facebook.com/"),
+        badges: (data && data.badges) ? data.badges : [
+          { icon: "fa-solid fa-earth-americas", text_ar: dynSub.tag_ar || "خدمات متكاملة", text_en: dynSub.tag_en || "Integrated Services" },
+          { icon: "fa-solid fa-certificate", text_ar: "مؤسسة رسمية", text_en: "Official Subsidiary" }
+        ],
+        services_ar: (data && data.services_ar) ? data.services_ar : [
+          "خدمات تخصصية وتوفير جميع احتياجات الموردين والمستوردين",
+          "خدمات السفر والرحلات والتأشيرات وتسهيلات الإقامة",
+          "استشارات الأعمال والخدمات البرمجية والتعليمية"
+        ],
+        services_en: (data && data.services_en) ? data.services_en : [
+          "Specialized supplier and importer services & trade clearance",
+          "Travel services, visas, and residency facilities",
+          "Business consulting, software & educational services"
+        ],
+        phones: (data && data.phones) ? data.phones : [
+          { label_ar: "خدمة العملاء والواتساب المباشر", label_en: "Direct WhatsApp & Support", number: "+201500731911" },
+          { label_ar: "مكتب المتابعة الرئيسي", label_en: "Main HQ Desk", number: "+9647742881766" }
+        ]
+      };
+    }
+
     if (!data) data = SUBSIDIARIES_DETAILS_MAP["academy"];
 
     const isEn = body.classList.contains("lang-en");
@@ -1443,6 +1483,18 @@
     // Multiply 4 times for endless unbroken loop in both Arabic and English
     track.innerHTML = cardsHtml + cardsHtml + cardsHtml + cardsHtml;
   }
+
+  // Instant local store fallback & sync
+  try {
+    const rawLocal = localStorage.getItem("big_public_store_v1");
+    if (rawLocal) {
+      const storeData = JSON.parse(rawLocal);
+      if (Array.isArray(storeData.subsidiaries) && storeData.subsidiaries.length) {
+        renderSubsidiaries(storeData.subsidiaries);
+        renderCompaniesTicker(storeData.subsidiaries);
+      }
+    }
+  } catch (e) {}
 
   fetch(`${apiUrl}?action=subsidiaries`, { cache: "no-store" })
     .then((res) => (res.ok ? res.json() : null))

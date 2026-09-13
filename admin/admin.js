@@ -390,6 +390,21 @@
     return escapeHtml(value).replace(/`/g, "&#096;");
   }
 
+  function syncPublicLocalStorageStore() {
+    try {
+      const payload = {
+        subsidiaries: currentState.subsidiaries || [],
+        services: currentState.services || [],
+        slides: currentState.slides || [],
+        destinations: currentState.destinations || [],
+        officialEmails: currentState.officialEmails || [],
+        settings: currentState.settings || {},
+        updatedAt: Date.now()
+      };
+      localStorage.setItem("big_public_store_v1", JSON.stringify(payload));
+    } catch (e) {}
+  }
+
   async function loadState() {
     try {
       const data = await request("state");
@@ -419,6 +434,7 @@
       fillServices(data.services || []);
       fillDestinations(data.destinations || []);
       fillSubsidiaries(data.subsidiaries || []);
+      syncPublicLocalStorageStore();
     } catch (err) {
       showDashboard(false);
     }
@@ -625,6 +641,7 @@
       if (data.subsidiaries) { currentState.subsidiaries = data.subsidiaries; fillSubsidiaries(data.subsidiaries); }
       if (data.services) { currentState.services = data.services; fillServices(data.services); }
       if (data.slides) { currentState.slides = data.slides; fillSlides(data.slides); }
+      syncPublicLocalStorageStore();
 
       setTimeout(() => {
         closeEditModal();
@@ -907,6 +924,7 @@
         setStatus("#subStatus", "تمت إضافة المؤسسة والشعار بنجاح!", false, true);
         currentState.subsidiaries = data.subsidiaries;
         fillSubsidiaries(data.subsidiaries);
+        syncPublicLocalStorageStore();
       } catch (error) {
         setStatus("#subStatus", error.message, true);
       }
@@ -929,6 +947,7 @@
         const data = await request("delete-subsidiary", { id: subId });
         currentState.subsidiaries = data.subsidiaries;
         fillSubsidiaries(data.subsidiaries);
+        syncPublicLocalStorageStore();
       } catch (error) {
         alert(error.message);
       }
