@@ -1974,15 +1974,15 @@ body.modal-open .floating-top,
 /* Service Quick Request Modal Styling (Unified Dark Navy & Gold) */
 .modal-card {
   position: relative;
-  width: min(620px, 92vw);
-  max-height: 88vh;
+  width: min(760px, 94vw) !important;
+  max-height: 90vh !important;
   overflow-y: auto;
   overflow-x: hidden;
   background: #081a29 !important;
   color: #ffffff !important;
   border: 1.5px solid var(--gold, #c59a4a) !important;
   border-radius: 26px;
-  padding: 28px 24px;
+  padding: 32px 28px !important;
   box-shadow: 0 30px 90px rgba(0, 0, 0, 0.85), 0 0 40px rgba(197, 154, 74, 0.2);
   transform: translateY(0);
   transition: transform 0.3s ease;
@@ -2012,12 +2012,12 @@ body.modal-open .floating-top,
 /* Explicit Close Button Position */
 .modal-close {
   position: absolute;
-  top: 18px;
-  left: 18px;
-  right: auto;
+  top: 22px !important;
+  left: 22px !important;
+  right: auto !important;
   z-index: 999 !important;
-  width: 36px;
-  height: 36px;
+  width: 38px !important;
+  height: 38px !important;
   border-radius: 50%;
   border: 1px solid rgba(197, 154, 74, 0.5);
   background: rgba(255, 255, 255, 0.12);
@@ -2032,8 +2032,8 @@ body.modal-open .floating-top,
 }
 
 body.lang-en .modal-close {
-  left: auto;
-  right: 18px;
+  left: auto !important;
+  right: 22px !important;
 }
 
 .modal-close:hover {
@@ -2042,25 +2042,28 @@ body.lang-en .modal-close {
   transform: scale(1.1);
 }
 
-/* Header Padding Fix: In RTL, close button is at LEFT: 18px. So padding-left MUST be 54px */
+/* Header Padding Fix: In RTL, close button is at LEFT: 22px. In LTR (English), close button is at RIGHT: 22px */
 .modal-header {
-  margin-bottom: 20px;
-  padding-left: 54px !important;
+  margin-bottom: 22px !important;
+  padding-left: 56px !important;
   padding-right: 0 !important;
+  position: relative;
 }
 
 body.lang-en .modal-header {
   padding-left: 0 !important;
-  padding-right: 54px !important;
+  padding-right: 56px !important;
+  text-align: left !important;
 }
 
 .modal-header h3 {
-  font-size: 19px;
-  margin: 0 0 6px;
-  font-weight: 800;
+  font-size: 20px !important;
+  margin: 0 0 6px !important;
+  font-weight: 800 !important;
   color: #ffffff !important;
-  line-height: 1.4;
-  word-break: break-word;
+  line-height: 1.35 !important;
+  word-break: break-word !important;
+  overflow-wrap: break-word !important;
 }
 
 .modal-header h3 span {
@@ -2068,26 +2071,36 @@ body.lang-en .modal-header {
 }
 
 .modal-header p {
-  margin: 0;
-  font-size: 13px;
-  color: #c1cbd7 !important;
-  line-height: 1.6;
+  margin: 0 !important;
+  font-size: 13.5px !important;
+  color: #94a3b8 !important;
+  line-height: 1.5 !important;
 }
 
 .modal-form {
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 16px;
   width: 100%;
   box-sizing: border-box !important;
 }
 
 .form-row {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 12px;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
   width: 100%;
   box-sizing: border-box !important;
+}
+
+@media (max-width: 640px) {
+  .form-row {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+  }
+  .modal-card {
+    padding: 24px 18px !important;
+  }
 }
 
 .modal-form label {
@@ -2099,8 +2112,8 @@ body.lang-en .modal-header {
 }
 
 .modal-form label span {
-  font-size: 12px;
-  font-weight: 800;
+  font-size: 13px !important;
+  font-weight: 700 !important;
   color: var(--gold-light, #e4c47d) !important;
   word-break: break-word;
 }
@@ -2108,17 +2121,31 @@ body.lang-en .modal-header {
 .modal-form input, 
 .modal-form textarea, 
 .modal-form select {
-  width: 100%;
+  width: 100% !important;
   box-sizing: border-box !important;
   border: 1.5px solid rgba(197, 154, 74, 0.4) !important;
   background: #092136 !important;
   color: #ffffff !important;
-  border-radius: 14px;
-  padding: 13px 16px;
-  font: 600 13.5px var(--font-ar);
+  border-radius: 14px !important;
+  padding: 12px 16px !important;
+  font: 600 14px var(--font-ar) !important;
   outline: 0;
   transition: all 0.25s ease;
   box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.25);
+  height: 48px;
+}
+
+body.lang-en .modal-form input,
+body.lang-en .modal-form textarea,
+body.lang-en .modal-form select {
+  font-family: var(--font-en) !important;
+}
+
+.modal-form textarea {
+  height: auto !important;
+  min-height: 80px !important;
+  padding: 12px 16px !important;
+  resize: vertical;
 }
 
 /* Custom Golden Chevron (fa-chevron-down) for Select Inputs */
@@ -2159,56 +2186,62 @@ body.lang-en select.form-control {
 }
 
 .modal-actions {
-  display: flex;
-  gap: 10px;
-  margin-top: 8px;
-  flex-wrap: wrap;
+  display: flex !important;
+  align-items: center !important;
+  gap: 14px !important;
+  margin-top: 10px !important;
   width: 100%;
   box-sizing: border-box !important;
 }
 
+@media (max-width: 520px) {
+  .modal-actions {
+    flex-direction: column !important;
+    gap: 10px !important;
+  }
+}
+
 .modal-actions .btn-primary {
-  flex: 1;
-  min-width: 180px;
+  flex: 1 !important;
+  height: 48px !important;
   background: linear-gradient(135deg, var(--gold), #d4aa59) !important;
   color: #071827 !important;
-  font-weight: 800;
-  border: none;
-  padding: 12px 18px;
-  border-radius: 12px;
-  box-shadow: 0 4px 16px rgba(197, 154, 74, 0.35);
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+  font-weight: 800 !important;
+  font-size: 14.5px !important;
+  border: none !important;
+  border-radius: 14px !important;
+  box-shadow: 0 4px 16px rgba(197, 154, 74, 0.35) !important;
+  cursor: pointer !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-decoration: none !important;
 }
 
 .modal-actions .btn-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 22px rgba(197, 154, 74, 0.5);
+  box-shadow: 0 8px 22px rgba(197, 154, 74, 0.5) !important;
 }
 
 .modal-wa-btn {
-  flex: 1;
-  min-width: 180px;
+  flex: 1 !important;
+  height: 48px !important;
   background: #25D366 !important;
   color: #ffffff !important;
   border: none !important;
-  font-weight: 800;
-  padding: 12px 18px;
-  border-radius: 12px;
-  text-decoration: none;
+  font-weight: 800 !important;
+  font-size: 14.5px !important;
+  border-radius: 14px !important;
+  text-decoration: none !important;
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
   text-align: center !important;
-  gap: 8px;
-  direction: inherit !important;
+  gap: 8px !important;
 }
 
 .modal-wa-btn:hover {
   background: #20b858 !important;
-  color: #ffffff !important;
   transform: translateY(-2px);
 }
 
