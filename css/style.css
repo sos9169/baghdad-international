@@ -92,8 +92,6 @@ header, main, section, footer,
 .hero, .subsidiary-card, .service-card, .modal-card, .sub-modal-card {
   position: relative;
   z-index: 1;
-  transform: translateZ(0);
-  backface-visibility: hidden;
 }
 
 body.lang-en {

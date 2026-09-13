@@ -464,7 +464,7 @@ body.lang-en .boarding-pass .bp-stub p {
   }
 
   .subsidiary-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
     gap: 16px;
   }
 
@@ -535,7 +535,7 @@ body.lang-en .boarding-pass .bp-stub p {
   }
 
   .service-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
     gap: 16px;
   }
 
@@ -546,7 +546,7 @@ body.lang-en .boarding-pass .bp-stub p {
   }
 
   .program-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
     gap: 16px;
   }
 
@@ -556,9 +556,9 @@ body.lang-en .boarding-pass .bp-stub p {
     border-radius: 18px;
   }
 
-  /* DESTINATIONS SECTION ON MOBILE */
+  /* DESTINATIONS SECTION ON MOBILE & TABLET */
   .destinations-grid {
-    grid-template-columns: 1fr !important;
+    grid-template-columns: repeat(2, 1fr) !important;
     gap: 16px;
   }
 
