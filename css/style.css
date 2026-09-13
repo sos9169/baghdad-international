@@ -2245,20 +2245,58 @@ body.lang-en select.form-control {
   transform: translateY(-2px);
 }
 
+/* SERVICE QUICK REQUEST MODAL & SUB DETAILS MODAL BACKDROP */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 999999 !important;
+  background: rgba(7, 24, 39, 0.85);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 24px 16px !important;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+  overflow-y: auto;
+}
+
+.modal-backdrop.hidden {
+  display: none !important;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Hide floating WhatsApp button and Back to Top button when ANY modal is open */
+body.modal-open .floating-whatsapp,
+body.modal-open #floatingTop,
+body.modal-open .floating-top,
+.modal-backdrop:not(.hidden) ~ .floating-whatsapp,
+.modal-backdrop:not(.hidden) ~ #floatingTop,
+.modal-backdrop:not(.hidden) ~ .floating-top {
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
 /* Ultra-Premium Glassmorphic Subsidiary Details Modal v3 */
 .sub-modal-card {
   position: relative;
-  width: min(680px, 94vw);
-  max-height: 86vh;
+  width: min(720px, 94vw);
+  max-height: 88vh;
   background: #081a29 !important;
   color: #ffffff !important;
   border: 1.5px solid var(--gold, #c59a4a) !important;
   border-radius: 26px;
-  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.75), 0 0 40px rgba(197, 154, 74, 0.2);
+  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.85), 0 0 40px rgba(197, 154, 74, 0.2);
   display: flex;
   flex-direction: column;
   overflow: hidden;
   animation: subModalScaleUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-sizing: border-box !important;
+  margin: auto !important;
 }
 
 @keyframes subModalScaleUp {
@@ -2269,28 +2307,29 @@ body.lang-en select.form-control {
 /* Explicit High-Z-Index Close Button */
 .sub-modal-close-btn {
   position: absolute;
-  top: 16px;
-  left: 18px;
-  z-index: 9999 !important;
-  width: 38px;
-  height: 38px;
+  top: 18px !important;
+  left: 18px !important;
+  right: auto !important;
+  z-index: 99999 !important;
+  width: 38px !important;
+  height: 38px !important;
   border-radius: 50%;
-  border: 1px solid rgba(197, 154, 74, 0.5);
-  background: rgba(8, 35, 61, 0.9);
+  border: 1px solid rgba(197, 154, 74, 0.6);
+  background: rgba(7, 24, 39, 0.95);
   color: #ffffff !important;
   font-size: 18px;
   font-weight: 700;
   cursor: pointer !important;
   display: grid;
   place-items: center;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5);
   transition: all 0.2s ease;
   pointer-events: auto !important;
 }
 
 body.lang-en .sub-modal-close-btn {
-  left: auto;
-  right: 18px;
+  left: auto !important;
+  right: 18px !important;
 }
 
 .sub-modal-close-btn:hover {
@@ -2302,7 +2341,7 @@ body.lang-en .sub-modal-close-btn {
 /* Modal Hero Top Header */
 .sub-modal-hero {
   position: relative;
-  padding: 24px 24px 18px;
+  padding: 30px 24px 20px !important;
   background: linear-gradient(135deg, rgba(197, 154, 74, 0.22), #071827);
   border-bottom: 1px solid rgba(197, 154, 74, 0.3);
   flex-shrink: 0;
@@ -2312,13 +2351,13 @@ body.lang-en .sub-modal-close-btn {
   display: flex;
   align-items: center;
   gap: 16px;
-  padding-left: 54px !important; /* Clearance for close button on LEFT in RTL */
+  padding-left: 56px !important; /* Clearance for close button on LEFT in RTL */
   padding-right: 0 !important;
 }
 
 body.lang-en .sub-modal-hero-content {
   padding-left: 0 !important;
-  padding-right: 54px !important; /* Clearance for close button on RIGHT in LTR */
+  padding-right: 56px !important; /* Clearance for close button on RIGHT in LTR */
 }
 
 .sub-modal-logo-wrapper {
@@ -2366,6 +2405,7 @@ body.lang-en .logo-verified-badge {
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
+  max-width: 100%;
 }
 
 .sub-badge {
