@@ -63,6 +63,37 @@ body {
   text-rendering: optimizeLegibility;
   transition: background-color 0.3s ease, color 0.3s ease;
   letter-spacing: normal;
+  position: relative;
+}
+
+/* Global Full-Page Ultra-Luxurious Islamic Geometric Pattern Background */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml;utf8,<svg width='84' height='84' viewBox='0 0 84 84' xmlns='http://www.w3.org/2000/svg'><g fill='none' stroke='%23c59a4a' stroke-width='0.75' stroke-opacity='0.16'><path d='M42 0 L50.4 16.8 L67.2 8.4 L58.8 25.2 L75.6 33.6 L58.8 42 L75.6 50.4 L58.8 58.8 L67.2 75.6 L50.4 67.2 L42 84 L33.6 67.2 L16.8 75.6 L25.2 58.8 L8.4 50.4 L25.2 42 L8.4 33.6 L25.2 25.2 L16.8 8.4 L33.6 16.8 Z'/><polygon points='42,21 47.25,28.35 56.7,26.25 52.5,34.65 59.85,42 52.5,49.35 56.7,57.75 47.25,55.65 42,63 36.75,55.65 27.3,57.75 31.5,49.35 24.15,42 31.5,34.65 27.3,26.25 36.75,28.35'/><circle cx='42' cy='42' r='10.5'/></g></svg>");
+  background-repeat: repeat;
+  background-size: 84px 84px;
+  opacity: 0.28;
+  pointer-events: none;
+  z-index: 0;
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+  animation: globalPatternShift 95s linear infinite;
+}
+
+@keyframes globalPatternShift {
+  0% { background-position: 0 0; }
+  100% { background-position: 84px 84px; }
+}
+
+/* 60FPS GPU Hardware Acceleration & Fast Rendering */
+header, main, section, footer,
+.hero, .subsidiary-card, .service-card, .modal-card, .sub-modal-card {
+  position: relative;
+  z-index: 1;
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
 body.lang-en {

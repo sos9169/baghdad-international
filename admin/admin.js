@@ -455,6 +455,14 @@
           <input type="text" name="tag_ar" value="${escapeAttr(sub.tag_ar || '')}">
         </label>
         <label>
+          <span>البريد الإلكتروني الرسمي (Email)</span>
+          <input type="email" name="email" value="${escapeAttr(sub.email || '')}">
+        </label>
+        <label>
+          <span>سنة التأسيس / التخصص</span>
+          <input type="text" name="est_ar" value="${escapeAttr(sub.est_ar || '')}">
+        </label>
+        <label>
           <span>تغيير اللوجو/الشعار من المعرض 📷</span>
           <input type="file" name="logo_file" accept="image/*">
         </label>
@@ -465,6 +473,10 @@
         <label class="full-width">
           <span>رابط صفحة الفيسبوك الرسمية</span>
           <input type="url" name="fb" value="${escapeAttr(sub.fb || '')}">
+        </label>
+        <label class="full-width">
+          <span>العنوان التفصيلي</span>
+          <input type="text" name="address_ar" value="${escapeAttr(sub.address_ar || '')}">
         </label>
         <label class="full-width">
           <span>الوصف التوضيحي بالعربية</span>

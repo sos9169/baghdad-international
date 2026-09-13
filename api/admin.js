@@ -213,6 +213,10 @@ export default async function handler(req, res) {
     const desc_en = String(body.desc_en || desc_ar).trim();
     const fb = String(body.fb || '').trim();
 
+    const email = String(body.email || '').trim();
+    const est_ar = String(body.est_ar || '').trim();
+    const address_ar = String(body.address_ar || '').trim();
+
     if (!title_ar) {
       return res.status(422).json({ ok: false, error: 'اسم الشركة/المؤسسة بالعربية مطلوب' });
     }
@@ -226,7 +230,10 @@ export default async function handler(req, res) {
       logo,
       desc_ar,
       desc_en,
-      fb
+      fb,
+      email,
+      est_ar,
+      address_ar
     };
 
     if (!Array.isArray(store.subsidiaries)) store.subsidiaries = [];
@@ -245,6 +252,9 @@ export default async function handler(req, res) {
     const desc_ar = String(body.desc_ar || '').trim();
     const desc_en = String(body.desc_en || desc_ar).trim();
     const fb = String(body.fb || '').trim();
+    const email = String(body.email || '').trim();
+    const est_ar = String(body.est_ar || '').trim();
+    const address_ar = String(body.address_ar || '').trim();
 
     if (Array.isArray(store.subsidiaries)) {
       const sub = store.subsidiaries.find((s) => s.id === id);
@@ -257,6 +267,9 @@ export default async function handler(req, res) {
         sub.desc_ar = desc_ar || sub.desc_ar;
         sub.desc_en = desc_en || sub.desc_en;
         sub.fb = fb !== undefined ? fb : sub.fb;
+        if (email) sub.email = email;
+        if (est_ar) sub.est_ar = est_ar;
+        if (address_ar) sub.address_ar = address_ar;
         saveGlobalStore();
         return res.status(200).json({ ok: true, subsidiary: sub, subsidiaries: store.subsidiaries });
       }
