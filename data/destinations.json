@@ -58,7 +58,7 @@
     "badge_en": "Coordinated Services",
     "flag": "https://flagcdn.com/w40/sd.png",
     "desc_ar": "خدمات شركة النيل للخدمات المتكاملة — الاستيراد والتصدير، التسهيلات التجارية، والإسناد الإجرائي بين السودان ومصر والعراق.",
-    desc_en: "Al-Niel Integrated Services — Import & export, trade facilities, and procedural support across Sudan, Egypt, and Iraq.",
+    "desc_en": "Al-Niel Integrated Services — Import & export, trade facilities, and procedural support across Sudan, Egypt, and Iraq.",
     "tags": [
       { "val_ar": "النيل للخدمات المتكاملة", "val_en": "Al-Niel Integrated Services" },
       { "val_ar": "تجارة عامة", "val_en": "General Trade" },
@@ -69,7 +69,7 @@
     "id": "iran",
     "name_ar": "إيران",
     "name_en": "Iran",
-    code: "Iran • Academic & Medical",
+    "code": "Iran • Academic & Medical",
     "badge_ar": "خدمات منسقة",
     "badge_en": "Coordinated Services",
     "flag": "https://flagcdn.com/w40/ir.png",
