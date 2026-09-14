@@ -48,9 +48,7 @@ export default async function handler(req, res) {
 
   async function persistStore() {
     saveGlobalStore();
-    if (isSupabaseConfigured()) {
-      await saveSiteContent(store);
-    }
+    await saveSiteContent(store).catch(() => null);
   }
 
   let body = {};

@@ -1555,6 +1555,20 @@
     });
   }
 
+  try {
+    const rawLocal = localStorage.getItem("big_public_store_v2");
+    if (rawLocal) {
+      const storeData = JSON.parse(rawLocal);
+      if (Array.isArray(storeData.slides) && storeData.slides.length) renderSlides(storeData.slides);
+      if (Array.isArray(storeData.services) && storeData.services.length) renderServices(storeData.services);
+      if (Array.isArray(storeData.destinations) && storeData.destinations.length) renderDestinations(storeData.destinations);
+      if (Array.isArray(storeData.subsidiaries) && storeData.subsidiaries.length) {
+        renderSubsidiaries(storeData.subsidiaries);
+        renderCompaniesTicker(storeData.subsidiaries);
+      }
+    }
+  } catch (e) {}
+
   fetch(`${apiUrl}?action=init`, { cache: "no-store" })
     .then((res) => (res.ok ? res.json() : null))
     .then((data) => {

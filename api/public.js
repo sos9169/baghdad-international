@@ -14,10 +14,8 @@ export default async function handler(req, res) {
   }
 
   const store = getGlobalStore();
-  if (isSupabaseConfigured()) {
-    const remoteContent = await getSiteContent().catch(() => null);
-    if (remoteContent) Object.assign(store, remoteContent);
-  }
+  const remoteContent = await getSiteContent().catch(() => null);
+  if (remoteContent) Object.assign(store, remoteContent);
 
   let body = {};
   if (req.body) {
