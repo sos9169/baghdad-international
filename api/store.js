@@ -204,13 +204,13 @@ function readJsonFile(dir, filename, fallback) {
 
 const defaultOfficialEmails = [
   { id: "email-1", email: "info@baghdad-international.com", label_ar: "المقر الرئيسي (استفسارات عامة)", provider: "Google Workspace" },
-  { id: "email-2", email: "cairo@baghdad-international.com", label_ar: "فرع القاهرة — مصر (أكاديمية بغداد)", provider: "Google Workspace" },
-  { id: "email-3", email: "iraq@baghdad-international.com", label_ar: "فرع بغداد — العراق", provider: "Google Workspace" },
-  { id: "email-4", email: "turkey@baghdad-international.com", label_ar: "فرع تركيا (اسطنبول / يالوفا)", provider: "Google Workspace" },
-  { id: "email-5", email: "academy@baghdad-international.com", label_ar: "أكاديمية بغداد الدولية", provider: "Google Workspace" },
-  { id: "email-6", email: "sales@baghdad-international.com", label_ar: "المبيعات والتعاقدات", provider: "Google Workspace" },
-  { id: "email-7", email: "support@baghdad-international.com", label_ar: "الدعم والمتابعة الطلابية", provider: "Google Workspace" },
-  { id: "email-8", email: "admin@baghdad-international.com", label_ar: "الإدارة العامة والخدمات", provider: "Google Workspace" },
+  { id: "email-2", email: "contact@baghdad-international.com", label_ar: "التواصل المباشر والخدمات", provider: "Google Workspace" },
+  { id: "email-3", email: "cairo@baghdad-international.com", label_ar: "فرع القاهرة — مصر (أكاديمية بغداد)", provider: "Google Workspace" },
+  { id: "email-4", email: "iraq@baghdad-international.com", label_ar: "فرع بغداد — العراق", provider: "Google Workspace" },
+  { id: "email-5", email: "turkey@baghdad-international.com", label_ar: "فرع تركيا (اسطنبول / يالوفا)", provider: "Google Workspace" },
+  { id: "email-6", email: "academy@baghdad-international.com", label_ar: "أكاديمية بغداد الدولية", provider: "Google Workspace" },
+  { id: "email-7", email: "sales@baghdad-international.com", label_ar: "المبيعات والتعاقدات", provider: "Google Workspace" },
+  { id: "email-8", email: "support@baghdad-international.com", label_ar: "الدعم والمتابعة الطلابية", provider: "Google Workspace" },
   { id: "email-9", email: "booking@baghdad-international.com", label_ar: "الحجوزات والسفر والتأشيرات", provider: "Google Workspace" }
 ];
 
