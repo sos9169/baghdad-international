@@ -954,7 +954,7 @@
   // --- Dynamic Services Rendering ---
   function renderServices(services) {
     const serviceGrid = document.querySelector(".service-grid");
-    if (!serviceGrid || !Array.isArray(services) || services.length < 6) return;
+    if (!serviceGrid || !Array.isArray(services) || !services.length) return;
     servicesData = services;
     const isEn = body.classList.contains("lang-en");
     const moreText = isEn ? "Learn more ↙" : "اعرف المزيد ↙";
@@ -1562,11 +1562,44 @@
     });
   }
 
-  fetch(`${apiUrl}?action=destinations`, { cache: "no-store" })
+  // Global Store Init & Sync for All Sections (Slides, Services, Destinations, Subsidiaries)
+  try {
+    const rawLocal = localStorage.getItem("big_public_store_v1");
+    if (rawLocal) {
+      const storeData = JSON.parse(rawLocal);
+      if (Array.isArray(storeData.slides) && storeData.slides.length) renderSlides(storeData.slides);
+      if (Array.isArray(storeData.services) && storeData.services.length) renderServices(storeData.services);
+      if (Array.isArray(storeData.destinations) && storeData.destinations.length) renderDestinations(storeData.destinations);
+      if (Array.isArray(storeData.subsidiaries) && storeData.subsidiaries.length) {
+        renderSubsidiaries(storeData.subsidiaries);
+        renderCompaniesTicker(storeData.subsidiaries);
+      }
+    }
+  } catch (e) {}
+
+  fetch(`${apiUrl}?action=init`, { cache: "no-store" })
     .then((res) => (res.ok ? res.json() : null))
     .then((data) => {
-      if (data && Array.isArray(data.destinations) && data.destinations.length) {
-        renderDestinations(data.destinations);
+      if (data && data.ok) {
+        if (Array.isArray(data.slides) && data.slides.length) renderSlides(data.slides);
+        if (Array.isArray(data.services) && data.services.length) renderServices(data.services);
+        if (Array.isArray(data.destinations) && data.destinations.length) renderDestinations(data.destinations);
+        if (Array.isArray(data.subsidiaries) && data.subsidiaries.length) {
+          renderSubsidiaries(data.subsidiaries);
+          renderCompaniesTicker(data.subsidiaries);
+        }
+        try {
+          const storePayload = {
+            subsidiaries: data.subsidiaries || [],
+            services: data.services || [],
+            slides: data.slides || [],
+            destinations: data.destinations || [],
+            officialEmails: data.officialEmails || [],
+            settings: data.settings || {},
+            updatedAt: Date.now()
+          };
+          localStorage.setItem("big_public_store_v1", JSON.stringify(storePayload));
+        } catch (e) {}
       }
     })
     .catch(() => {});

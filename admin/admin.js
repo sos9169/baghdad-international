@@ -800,6 +800,7 @@
         const data = await request("delete-slide", { id: slideId });
         currentState.slides = data.slides;
         fillSlides(data.slides);
+        syncPublicLocalStorageStore();
       } catch (error) {
         alert(error.message);
       }
@@ -822,6 +823,7 @@
         setStatus("#serviceStatus", "تمت إضافة الخدمة بنجاح!", false, true);
         currentState.services = data.services;
         fillServices(data.services);
+        syncPublicLocalStorageStore();
       } catch (error) {
         setStatus("#serviceStatus", error.message, true);
       }
@@ -844,6 +846,7 @@
         const data = await request("delete-service", { id: serviceId });
         currentState.services = data.services;
         fillServices(data.services);
+        syncPublicLocalStorageStore();
       } catch (error) {
         alert(error.message);
       }
@@ -873,6 +876,7 @@
         setStatus("#destStatus", "تمت إضافة الدولة بنجاح!", false, true);
         currentState.destinations = data.destinations;
         fillDestinations(data.destinations);
+        syncPublicLocalStorageStore();
       } catch (error) {
         setStatus("#destStatus", error.message, true);
       }
@@ -895,6 +899,7 @@
         const data = await request("delete-destination", { id: destId });
         currentState.destinations = data.destinations;
         fillDestinations(data.destinations);
+        syncPublicLocalStorageStore();
       } catch (error) {
         alert(error.message);
       }

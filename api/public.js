@@ -32,6 +32,18 @@ export default async function handler(req, res) {
   }
   action = action || 'slides';
 
+  if (action === 'init') {
+    return res.status(200).json({
+      ok: true,
+      slides: store.slides,
+      services: store.services,
+      destinations: store.destinations,
+      subsidiaries: store.subsidiaries,
+      officialEmails: store.officialEmails,
+      settings: store.settings
+    });
+  }
+
   if (action === 'settings') {
     return res.status(200).json({ ok: true, settings: store.settings });
   }
