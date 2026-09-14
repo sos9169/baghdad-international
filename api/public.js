@@ -1,16 +1,23 @@
-import { createOrder, isSupabaseConfigured, trackEvent } from './supabase-store.js';
+import { createOrder, getSiteContent, isSupabaseConfigured, trackEvent } from './supabase-store.js';
 import { getGlobalStore, saveGlobalStore } from './store.js';
 
 export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+  res.setHeader('Pragma', 'no-cache');
+  res.setHeader('Expires', '0');
 
   if (req.method === 'OPTIONS') {
     return res.status(200).end();
   }
 
   const store = getGlobalStore();
+  if (isSupabaseConfigured()) {
+    const remoteContent = await getSiteContent().catch(() => null);
+    if (remoteContent) Object.assign(store, remoteContent);
+  }
 
   let body = {};
   if (req.body) {

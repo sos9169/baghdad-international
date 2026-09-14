@@ -14,6 +14,18 @@ insert into public.site_metrics (id)
 values ('main')
 on conflict (id) do nothing;
 
+create table if not exists public.site_content_store (
+  id text primary key default 'main',
+  content jsonb not null default '{}'::jsonb,
+  updated_at timestamptz not null default now()
+);
+
+alter table public.site_content_store enable row level security;
+
+insert into public.site_content_store (id, content)
+values ('main', '{}'::jsonb)
+on conflict (id) do nothing;
+
 create table if not exists public.site_events (
   id bigint generated always as identity primary key,
   event_type text not null,

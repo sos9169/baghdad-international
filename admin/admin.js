@@ -391,18 +391,7 @@
   }
 
   function syncPublicLocalStorageStore() {
-    try {
-      const payload = {
-        subsidiaries: currentState.subsidiaries || [],
-        services: currentState.services || [],
-        slides: currentState.slides || [],
-        destinations: currentState.destinations || [],
-        officialEmails: currentState.officialEmails || [],
-        settings: currentState.settings || {},
-        updatedAt: Date.now()
-      };
-      localStorage.setItem("big_public_store_v1", JSON.stringify(payload));
-    } catch (e) {}
+    // Public content is served from the API now; localStorage is intentionally not used for publishing.
   }
 
   async function loadState() {

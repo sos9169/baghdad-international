@@ -73,6 +73,59 @@ function toEvent(row) {
   };
 }
 
+const siteContentKeys = [
+  'slides',
+  'services',
+  'destinations',
+  'subsidiaries',
+  'officialEmails',
+  'settings',
+  'admin'
+];
+
+function pickSiteContent(store = {}) {
+  return siteContentKeys.reduce((content, key) => {
+    if (store[key] !== undefined) content[key] = store[key];
+    return content;
+  }, {});
+}
+
+export async function getSiteContent() {
+  const rows = await supabaseRequest('site_content_store?id=eq.main&select=content');
+  const row = Array.isArray(rows) ? rows[0] : null;
+  return row && row.content && typeof row.content === 'object' ? row.content : null;
+}
+
+export async function saveSiteContent(store) {
+  const content = pickSiteContent(store);
+  const updatedAt = new Date().toISOString();
+
+  const patched = await supabaseRequest('site_content_store?id=eq.main', {
+    method: 'PATCH',
+    headers: { Prefer: 'return=representation' },
+    body: JSON.stringify({
+      content,
+      updated_at: updatedAt
+    })
+  });
+
+  if (Array.isArray(patched) && patched.length > 0) {
+    return patched[0];
+  }
+
+  const inserted = await supabaseRequest('site_content_store?on_conflict=id', {
+    method: 'POST',
+    headers: { Prefer: 'resolution=merge-duplicates,return=representation' },
+    body: JSON.stringify([{
+      id: 'main',
+      content,
+      updated_at: updatedAt
+    }])
+  });
+
+  return Array.isArray(inserted) ? inserted[0] : inserted;
+}
+
 export async function getMetrics() {
   const rows = await supabaseRequest('site_metrics?id=eq.main&select=*');
   const metrics = toMetrics(Array.isArray(rows) ? rows[0] : null);

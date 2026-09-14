@@ -4,7 +4,9 @@ import {
   getOrders,
   isSupabaseConfigured,
   resetMetrics,
-  updateOrderStatus
+  updateOrderStatus,
+  getSiteContent,
+  saveSiteContent
 } from './supabase-store.js';
 import { getGlobalStore, saveGlobalStore } from './store.js';
 
@@ -30,12 +32,26 @@ export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Cookie, x-admin-token, authorization');
+  res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+  res.setHeader('Pragma', 'no-cache');
+  res.setHeader('Expires', '0');
 
   if (req.method === 'OPTIONS') {
     return res.status(200).end();
   }
 
   const store = getGlobalStore();
+  if (isSupabaseConfigured()) {
+    const remoteContent = await getSiteContent().catch(() => null);
+    if (remoteContent) Object.assign(store, remoteContent);
+  }
+
+  async function persistStore() {
+    saveGlobalStore();
+    if (isSupabaseConfigured()) {
+      await saveSiteContent(store);
+    }
+  }
 
   let body = {};
   if (req.body) {
@@ -161,7 +177,7 @@ export default async function handler(req, res) {
 
     if (!Array.isArray(store.destinations)) store.destinations = [];
     store.destinations.unshift(newDest);
-    saveGlobalStore();
+    await persistStore();
     return res.status(200).json({ ok: true, destination: newDest, destinations: store.destinations });
   }
 
@@ -189,7 +205,7 @@ export default async function handler(req, res) {
         if (tags_raw) {
           dest.tags = tags_raw.split(/[,،\n]+/).map((t) => ({ val_ar: t.trim(), val_en: t.trim() })).filter((t) => t.val_ar);
         }
-        saveGlobalStore();
+        await persistStore();
         return res.status(200).json({ ok: true, destination: dest, destinations: store.destinations });
       }
     }
@@ -201,7 +217,7 @@ export default async function handler(req, res) {
     if (Array.isArray(store.destinations)) {
       store.destinations = store.destinations.filter((d) => d.id !== id);
     }
-    saveGlobalStore();
+    await persistStore();
     return res.status(200).json({ ok: true, destinations: store.destinations });
   }
 
@@ -241,7 +257,7 @@ export default async function handler(req, res) {
 
     if (!Array.isArray(store.subsidiaries)) store.subsidiaries = [];
     store.subsidiaries.unshift(newSub);
-    saveGlobalStore();
+    await persistStore();
     return res.status(200).json({ ok: true, subsidiary: newSub, subsidiaries: store.subsidiaries });
   }
 
@@ -273,7 +289,7 @@ export default async function handler(req, res) {
         if (email) sub.email = email;
         if (est_ar) sub.est_ar = est_ar;
         if (address_ar) sub.address_ar = address_ar;
-        saveGlobalStore();
+        await persistStore();
         return res.status(200).json({ ok: true, subsidiary: sub, subsidiaries: store.subsidiaries });
       }
     }
@@ -285,7 +301,7 @@ export default async function handler(req, res) {
     if (Array.isArray(store.subsidiaries)) {
       store.subsidiaries = store.subsidiaries.filter((s) => s.id !== id);
     }
-    saveGlobalStore();
+    await persistStore();
     return res.status(200).json({ ok: true, subsidiaries: store.subsidiaries });
   }
 
@@ -312,7 +328,7 @@ export default async function handler(req, res) {
 
     if (!Array.isArray(store.services)) store.services = [];
     store.services.push(newService);
-    saveGlobalStore();
+    await persistStore();
     return res.status(200).json({ ok: true, service: newService, services: store.services });
   }
 
@@ -332,7 +348,7 @@ export default async function handler(req, res) {
         srv.text_ar = text_ar || srv.text_ar;
         srv.text_en = text_en || srv.text_en;
         srv.icon = icon || srv.icon;
-        saveGlobalStore();
+        await persistStore();
         return res.status(200).json({ ok: true, service: srv, services: store.services });
       }
     }
@@ -344,7 +360,7 @@ export default async function handler(req, res) {
     if (Array.isArray(store.services)) {
       store.services = store.services.filter((s) => s.id !== id);
     }
-    saveGlobalStore();
+    await persistStore();
     return res.status(200).json({ ok: true, services: store.services });
   }
 
@@ -374,7 +390,7 @@ export default async function handler(req, res) {
     };
 
     store.slides.unshift(newSlide);
-    saveGlobalStore();
+    await persistStore();
     return res.status(200).json({ ok: true, slide: newSlide, slides: store.slides });
   }
 
@@ -394,7 +410,7 @@ export default async function handler(req, res) {
         slide.text_ar = text_ar || slide.text_ar;
         slide.text_en = text_en || slide.text_en;
         if (media_url) slide.src = media_url;
-        saveGlobalStore();
+        await persistStore();
         return res.status(200).json({ ok: true, slide, slides: store.slides });
       }
     }
@@ -406,7 +422,7 @@ export default async function handler(req, res) {
     if (Array.isArray(store.slides)) {
       store.slides = store.slides.filter((s) => s.id !== id);
     }
-    saveGlobalStore();
+    await persistStore();
     return res.status(200).json({ ok: true, slides: store.slides });
   }
 
@@ -433,7 +449,7 @@ export default async function handler(req, res) {
       whatsapp_iraq,
       whatsapp_turkey
     };
-    saveGlobalStore();
+    await persistStore();
     return res.status(200).json({ ok: true, settings: store.settings });
   }
 
@@ -448,7 +464,7 @@ export default async function handler(req, res) {
       salt,
       passwordHash: hashPassword(salt, newPassword)
     };
-    saveGlobalStore();
+    await persistStore();
     return res.status(200).json({ ok: true, currentPassword: newPassword });
   }
 
@@ -517,7 +533,7 @@ export default async function handler(req, res) {
 
     if (!Array.isArray(store.officialEmails)) store.officialEmails = [];
     store.officialEmails.push(newEmailItem);
-    saveGlobalStore();
+    await persistStore();
     return res.status(200).json({ ok: true, officialEmail: newEmailItem, officialEmails: store.officialEmails });
   }
 
@@ -533,7 +549,7 @@ export default async function handler(req, res) {
         if (email) item.email = email;
         if (label_ar) item.label_ar = label_ar;
         if (provider) item.provider = provider;
-        saveGlobalStore();
+        await persistStore();
         return res.status(200).json({ ok: true, officialEmail: item, officialEmails: store.officialEmails });
       }
     }
@@ -544,7 +560,7 @@ export default async function handler(req, res) {
     const id = String(body.id || '');
     if (Array.isArray(store.officialEmails)) {
       store.officialEmails = store.officialEmails.filter((e) => e.id !== id);
-      saveGlobalStore();
+      await persistStore();
       return res.status(200).json({ ok: true, officialEmails: store.officialEmails });
     }
     return res.status(404).json({ ok: false, error: 'الإيميل غير موجود' });
@@ -556,3 +572,4 @@ export default async function handler(req, res) {
 function isVideoUrl(url) {
   return typeof url === 'string' && (url.endsWith('.mp4') || url.endsWith('.webm') || url.includes('video'));
 }
+

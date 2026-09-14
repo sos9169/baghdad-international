@@ -3,6 +3,10 @@
 
   const apiUrl = window.location.hostname.endsWith(".vercel.app") ? "/api/public" : "api.php";
 
+  try {
+    localStorage.removeItem("big_public_store_v1");
+  } catch (e) {}
+
   const body = document.body;
   const nav = document.getElementById("mainNav") || document.querySelector(".main-nav");
   const menuBtn = document.getElementById("menuBtn");
@@ -1484,18 +1488,6 @@
     track.innerHTML = cardsHtml + cardsHtml + cardsHtml + cardsHtml;
   }
 
-  // Instant local store fallback & sync
-  try {
-    const rawLocal = localStorage.getItem("big_public_store_v1");
-    if (rawLocal) {
-      const storeData = JSON.parse(rawLocal);
-      if (Array.isArray(storeData.subsidiaries) && storeData.subsidiaries.length) {
-        renderSubsidiaries(storeData.subsidiaries);
-        renderCompaniesTicker(storeData.subsidiaries);
-      }
-    }
-  } catch (e) {}
-
   fetch(`${apiUrl}?action=subsidiaries`, { cache: "no-store" })
     .then((res) => (res.ok ? res.json() : null))
     .then((data) => {
@@ -1562,21 +1554,6 @@
     });
   }
 
-  // Global Store Init & Sync for All Sections (Slides, Services, Destinations, Subsidiaries)
-  try {
-    const rawLocal = localStorage.getItem("big_public_store_v1");
-    if (rawLocal) {
-      const storeData = JSON.parse(rawLocal);
-      if (Array.isArray(storeData.slides) && storeData.slides.length) renderSlides(storeData.slides);
-      if (Array.isArray(storeData.services) && storeData.services.length) renderServices(storeData.services);
-      if (Array.isArray(storeData.destinations) && storeData.destinations.length) renderDestinations(storeData.destinations);
-      if (Array.isArray(storeData.subsidiaries) && storeData.subsidiaries.length) {
-        renderSubsidiaries(storeData.subsidiaries);
-        renderCompaniesTicker(storeData.subsidiaries);
-      }
-    }
-  } catch (e) {}
-
   fetch(`${apiUrl}?action=init`, { cache: "no-store" })
     .then((res) => (res.ok ? res.json() : null))
     .then((data) => {
@@ -1588,18 +1565,6 @@
           renderSubsidiaries(data.subsidiaries);
           renderCompaniesTicker(data.subsidiaries);
         }
-        try {
-          const storePayload = {
-            subsidiaries: data.subsidiaries || [],
-            services: data.services || [],
-            slides: data.slides || [],
-            destinations: data.destinations || [],
-            officialEmails: data.officialEmails || [],
-            settings: data.settings || {},
-            updatedAt: Date.now()
-          };
-          localStorage.setItem("big_public_store_v1", JSON.stringify(storePayload));
-        } catch (e) {}
       }
     })
     .catch(() => {});

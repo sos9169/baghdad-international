@@ -49,6 +49,18 @@ function clean_text(mixed $value, int $max = 500): string {
 
 $action = $_GET['action'] ?? 'settings';
 
+if ($action === 'init') {
+    json_response([
+        'ok' => true,
+        'slides' => read_json_file($dataDir . DIRECTORY_SEPARATOR . 'slides.json', []),
+        'services' => read_json_file($dataDir . DIRECTORY_SEPARATOR . 'services.json', []),
+        'destinations' => read_json_file($dataDir . DIRECTORY_SEPARATOR . 'destinations.json', []),
+        'subsidiaries' => read_json_file($dataDir . DIRECTORY_SEPARATOR . 'subsidiaries.json', []),
+        'officialEmails' => read_json_file($dataDir . DIRECTORY_SEPARATOR . 'official_emails.json', []),
+        'settings' => read_json_file($dataDir . DIRECTORY_SEPARATOR . 'settings.json', [])
+    ]);
+}
+
 if ($action === 'settings') {
     $settings = read_json_file($dataDir . DIRECTORY_SEPARATOR . 'settings.json', [
         'facebook' => 'https://facebook.com/',
@@ -57,6 +69,27 @@ if ($action === 'settings') {
         'maps' => 'https://www.google.com/maps/search/?api=1&query=7+Okba+Ibn+Nafeh+St+Dokki+Giza+Egypt'
     ]);
     json_response(['ok' => true, 'settings' => $settings]);
+}
+
+if ($action === 'services') {
+    json_response([
+        'ok' => true,
+        'services' => read_json_file($dataDir . DIRECTORY_SEPARATOR . 'services.json', [])
+    ]);
+}
+
+if ($action === 'destinations') {
+    json_response([
+        'ok' => true,
+        'destinations' => read_json_file($dataDir . DIRECTORY_SEPARATOR . 'destinations.json', [])
+    ]);
+}
+
+if ($action === 'subsidiaries') {
+    json_response([
+        'ok' => true,
+        'subsidiaries' => read_json_file($dataDir . DIRECTORY_SEPARATOR . 'subsidiaries.json', [])
+    ]);
 }
 
 if ($action === 'slides') {
