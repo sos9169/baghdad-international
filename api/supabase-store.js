@@ -4,6 +4,10 @@ const supabaseKey =
   process.env.SUPABASE_SERVICE_ROLE_KEY ||
   '';
 
+const UPSTASH_URL = (process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL || 'https://probable-rooster-99529.upstash.io').replace(/\/+$/, '');
+const UPSTASH_TOKEN = process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN || 'gQAAAAAAAYTJAAIncDJhZmQ3MmQzMTkzMGM0NzVmODM4MTE3ZGNkMWVjNWI1OHAyOTk1Mjk';
+const UPSTASH_KEY = 'baghdad_site_content_v1';
+
 export const emptyMetrics = {
   visits: 0,
   interactions: 0,
@@ -91,6 +95,22 @@ function pickSiteContent(store = {}) {
 }
 
 export async function getSiteContent() {
+  // 1. Try Upstash Redis Cloud Persistence
+  try {
+    const res = await fetch(`${UPSTASH_URL}/get/${UPSTASH_KEY}`, {
+      headers: { Authorization: `Bearer ${UPSTASH_TOKEN}` },
+      cache: 'no-store'
+    });
+    if (res.ok) {
+      const data = await res.json();
+      if (data && data.result) {
+        const parsed = typeof data.result === 'string' ? JSON.parse(data.result) : data.result;
+        if (parsed && typeof parsed === 'object') return parsed;
+      }
+    }
+  } catch (err) {}
+
+  // 2. Try Supabase site_content_store
   try {
     const rows = await supabaseRequest('site_content_store?id=eq.main&select=content');
     const row = Array.isArray(rows) ? rows[0] : null;
@@ -99,6 +119,7 @@ export async function getSiteContent() {
     }
   } catch (err) {}
 
+  // 3. Try Supabase site_orders fallback
   try {
     const rows = await supabaseRequest('site_orders?id=eq.__SITE_CONTENT_STORE__&select=message');
     const row = Array.isArray(rows) ? rows[0] : null;
@@ -114,7 +135,21 @@ export async function getSiteContent() {
 export async function saveSiteContent(store) {
   const content = pickSiteContent(store);
   const updatedAt = new Date().toISOString();
+  const jsonStr = JSON.stringify(content);
 
+  // 1. Save to Upstash Redis Cloud Database
+  try {
+    await fetch(UPSTASH_URL, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${UPSTASH_TOKEN}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(['SET', UPSTASH_KEY, jsonStr])
+    });
+  } catch (err) {}
+
+  // 2. Save to Supabase
   try {
     const patched = await supabaseRequest('site_content_store?id=eq.main', {
       method: 'PATCH',
@@ -139,20 +174,18 @@ export async function saveSiteContent(store) {
       }])
     });
 
-    if (inserted) {
-      return Array.isArray(inserted) ? inserted[0] : inserted;
-    }
+    if (inserted) return Array.isArray(inserted) ? inserted[0] : inserted;
   } catch (err) {}
 
+  // 3. Save to Supabase site_orders fallback
   try {
-    const messageStr = JSON.stringify(content);
     const patchedOrder = await supabaseRequest('site_orders?id=eq.__SITE_CONTENT_STORE__', {
       method: 'PATCH',
       headers: { Prefer: 'return=representation' },
       body: JSON.stringify({
         name: 'site_content',
         phone: '1.0',
-        message: messageStr,
+        message: jsonStr,
         status: 'system'
       })
     });
@@ -168,7 +201,7 @@ export async function saveSiteContent(store) {
         id: '__SITE_CONTENT_STORE__',
         name: 'site_content',
         phone: '1.0',
-        message: messageStr,
+        message: jsonStr,
         status: 'system',
         created_at: updatedAt
       }])
@@ -177,7 +210,7 @@ export async function saveSiteContent(store) {
     return Array.isArray(insertedOrder) ? insertedOrder[0] : insertedOrder;
   } catch (err) {}
 
-  return null;
+  return content;
 }
 
 export async function getMetrics() {
