@@ -1,7 +1,8 @@
 (() => {
   "use strict";
 
-  const apiUrl = window.location.hostname.endsWith(".vercel.app") ? "/api/public" : "api.php";
+  const isVercelHost = window.location.hostname.endsWith(".vercel.app") || window.location.hostname.includes("baghdad-international.com");
+  const apiUrl = isVercelHost ? "/api/public" : "api.php";
 
   try {
     localStorage.removeItem("big_public_store_v1");
