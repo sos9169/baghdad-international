@@ -91,39 +91,93 @@ function pickSiteContent(store = {}) {
 }
 
 export async function getSiteContent() {
-  const rows = await supabaseRequest('site_content_store?id=eq.main&select=content');
-  const row = Array.isArray(rows) ? rows[0] : null;
-  return row && row.content && typeof row.content === 'object' ? row.content : null;
+  try {
+    const rows = await supabaseRequest('site_content_store?id=eq.main&select=content');
+    const row = Array.isArray(rows) ? rows[0] : null;
+    if (row && row.content && typeof row.content === 'object') {
+      return row.content;
+    }
+  } catch (err) {}
+
+  try {
+    const rows = await supabaseRequest('site_orders?id=eq.__SITE_CONTENT_STORE__&select=message');
+    const row = Array.isArray(rows) ? rows[0] : null;
+    if (row && row.message) {
+      const parsed = JSON.parse(row.message);
+      if (parsed && typeof parsed === 'object') return parsed;
+    }
+  } catch (err) {}
+
+  return null;
 }
 
 export async function saveSiteContent(store) {
   const content = pickSiteContent(store);
   const updatedAt = new Date().toISOString();
 
-  const patched = await supabaseRequest('site_content_store?id=eq.main', {
-    method: 'PATCH',
-    headers: { Prefer: 'return=representation' },
-    body: JSON.stringify({
-      content,
-      updated_at: updatedAt
-    })
-  });
+  try {
+    const patched = await supabaseRequest('site_content_store?id=eq.main', {
+      method: 'PATCH',
+      headers: { Prefer: 'return=representation' },
+      body: JSON.stringify({
+        content,
+        updated_at: updatedAt
+      })
+    });
 
-  if (Array.isArray(patched) && patched.length > 0) {
-    return patched[0];
-  }
+    if (Array.isArray(patched) && patched.length > 0) {
+      return patched[0];
+    }
 
-  const inserted = await supabaseRequest('site_content_store?on_conflict=id', {
-    method: 'POST',
-    headers: { Prefer: 'resolution=merge-duplicates,return=representation' },
-    body: JSON.stringify([{
-      id: 'main',
-      content,
-      updated_at: updatedAt
-    }])
-  });
+    const inserted = await supabaseRequest('site_content_store?on_conflict=id', {
+      method: 'POST',
+      headers: { Prefer: 'resolution=merge-duplicates,return=representation' },
+      body: JSON.stringify([{
+        id: 'main',
+        content,
+        updated_at: updatedAt
+      }])
+    });
 
-  return Array.isArray(inserted) ? inserted[0] : inserted;
+    if (inserted) {
+      return Array.isArray(inserted) ? inserted[0] : inserted;
+    }
+  } catch (err) {}
+
+  try {
+    const messageStr = JSON.stringify(content);
+    const patchedOrder = await supabaseRequest('site_orders?id=eq.__SITE_CONTENT_STORE__', {
+      method: 'PATCH',
+      headers: { Prefer: 'return=representation' },
+      body: JSON.stringify({
+        name: 'site_content',
+        phone: '1.0',
+        message: messageStr,
+        status: 'system'
+      })
+    });
+
+    if (Array.isArray(patchedOrder) && patchedOrder.length > 0) {
+      return patchedOrder[0];
+    }
+
+    const insertedOrder = await supabaseRequest('site_orders?on_conflict=id', {
+      method: 'POST',
+      headers: { Prefer: 'resolution=merge-duplicates,return=representation' },
+      body: JSON.stringify([{
+        id: '__SITE_CONTENT_STORE__',
+        name: 'site_content',
+        phone: '1.0',
+        message: messageStr,
+        status: 'system',
+        created_at: updatedAt
+      }])
+    });
+
+    return Array.isArray(insertedOrder) ? insertedOrder[0] : insertedOrder;
+  } catch (err) {}
+
+  return null;
 }
 
 export async function getMetrics() {
@@ -139,8 +193,8 @@ export async function getEvents() {
 }
 
 export async function getOrders() {
-  const rows = await supabaseRequest('site_orders?select=*&order=created_at.desc&limit=200');
-  return Array.isArray(rows) ? rows.map(toOrder) : [];
+  const rows = await supabaseRequest('site_orders?id=neq.__SITE_CONTENT_STORE__&select=*&order=created_at.desc&limit=200');
+  return Array.isArray(rows) ? rows.filter((r) => r.id !== '__SITE_CONTENT_STORE__').map(toOrder) : [];
 }
 
 export async function trackEvent(type, page, device = '') {
