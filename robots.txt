@@ -1,6 +1,6 @@
-# robots.txt for Baghdad International Group (https://baghdad-international.com)
 User-agent: *
 Allow: /
+
 Disallow: /admin/
 Disallow: /api/
 
