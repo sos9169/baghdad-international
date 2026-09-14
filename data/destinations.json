@@ -94,5 +94,21 @@
       { "val_ar": "سنة تحضيرية", "val_en": "Preparatory Year" },
       { "val_ar": "جامعات حكومية", "val_en": "State Universities" }
     ]
+  },
+  {
+    "id": "germany",
+    "name_ar": "ألمانيا",
+    "name_en": "Germany",
+    "code": "Germany • Coordinated Services",
+    "badge_ar": "خدمات منسقة",
+    "badge_en": "Coordinated Services",
+    "flag": "https://flagcdn.com/w40/de.png",
+    "desc_ar": "قبولات جامعية، دورات لغة ألمانية، وتنسيق التأشيرات والخدمات التعليمية.",
+    "desc_en": "University admissions, German language courses, and visa coordination.",
+    "tags": [
+      { "val_ar": "قبولات جامعية", "val_en": "University Admissions" },
+      { "val_ar": "سنة تحضيرية ولغة", "val_en": "Language & Prep Year" },
+      { "val_ar": "تأشيرات وسفر", "val_en": "Visas & Travel" }
+    ]
   }
 ]
