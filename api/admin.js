@@ -5,6 +5,8 @@ import {
   isSupabaseConfigured,
   resetMetrics,
   updateOrderStatus,
+  deleteOrder,
+  clearOrders,
   getSiteContent,
   saveSiteContent
 } from './supabase-store.js';
@@ -202,23 +204,23 @@ export default async function handler(req, res) {
     const id = String(body.id || '');
     const name_ar = String(body.name_ar || '').trim();
     const name_en = String(body.name_en || name_ar).trim();
-    const badge_ar = String(body.badge_ar || 'خدمات منسقة').trim();
-    const badge_en = String(body.badge_en || 'Coordinated Services').trim();
-    const flag = String(body.flag || 'https://flagcdn.com/w40/un.png').trim();
+    const badge_ar = String(body.badge_ar || '').trim();
+    const badge_en = String(body.badge_en || '').trim();
+    const flag = String(body.flag || '').trim();
     const desc_ar = String(body.desc_ar || '').trim();
-    const desc_en = String(body.desc_en || desc_ar).trim();
+    const desc_en = hasOwn(body, 'desc_en') ? String(body.desc_en || '').trim() : '';
     const tags_raw = String(body.tags || '').trim();
 
     if (Array.isArray(store.destinations)) {
       const dest = store.destinations.find((d) => d.id === id);
       if (dest) {
-        dest.name_ar = name_ar || dest.name_ar;
-        dest.name_en = name_en || dest.name_en;
-        dest.badge_ar = badge_ar || dest.badge_ar;
-        dest.badge_en = badge_en || dest.badge_en;
-        dest.flag = flag || dest.flag;
-        dest.desc_ar = desc_ar || dest.desc_ar;
-        dest.desc_en = desc_en || dest.desc_en;
+        if (name_ar) dest.name_ar = name_ar;
+        if (name_en) dest.name_en = name_en;
+        if (badge_ar) dest.badge_ar = badge_ar;
+        if (badge_en) dest.badge_en = badge_en;
+        if (flag) dest.flag = flag;
+        if (desc_ar) dest.desc_ar = desc_ar;
+        if (hasOwn(body, 'desc_en')) dest.desc_en = desc_en || dest.desc_en;
         if (tags_raw) {
           dest.tags = tags_raw.split(/[,،\n]+/).map((t) => ({ val_ar: t.trim(), val_en: t.trim() })).filter((t) => t.val_ar);
         }
@@ -476,7 +478,8 @@ export default async function handler(req, res) {
     const phone_egypt = String(hasOwn(body, 'phone_egypt') ? body.phone_egypt : (store.settings?.phone_egypt || '+201507501547')).trim();
     const phone_iraq = String(hasOwn(body, 'phone_iraq') ? body.phone_iraq : (store.settings?.phone_iraq || '+9647742881766')).trim();
     const phone_turkey = String(hasOwn(body, 'phone_turkey') ? body.phone_turkey : (store.settings?.phone_turkey || '+905011263577')).trim();
-    const whatsapp = String(hasOwn(body, 'whatsapp') ? body.whatsapp : (phone_iraq || store.settings?.whatsapp || '')).replace(/\D+/g, '');
+    const rawWa = hasOwn(body, 'whatsapp') && String(body.whatsapp).trim() ? String(body.whatsapp).trim() : '';
+    const whatsapp = (rawWa || phone_iraq || store.settings?.whatsapp || '9647742881766').replace(/\D+/g, '');
     const whatsapp_egypt = String(hasOwn(body, 'whatsapp_egypt') ? body.whatsapp_egypt : `https://wa.me/${phone_egypt.replace(/\D+/g, '')}`).trim();
     const whatsapp_iraq = String(hasOwn(body, 'whatsapp_iraq') ? body.whatsapp_iraq : `https://wa.me/${phone_iraq.replace(/\D+/g, '')}`).trim();
     const whatsapp_turkey = String(hasOwn(body, 'whatsapp_turkey') ? body.whatsapp_turkey : `https://wa.me/${phone_turkey.replace(/\D+/g, '')}`).trim();

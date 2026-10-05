@@ -334,3 +334,15 @@ export async function updateOrderStatus(id, status) {
 
   return Array.isArray(rows) && rows[0] ? toOrder(rows[0]) : null;
 }
+
+export async function deleteOrder(id) {
+  return supabaseRequest(`site_orders?id=eq.${encodeURIComponent(id)}`, {
+    method: 'DELETE'
+  });
+}
+
+export async function clearOrders() {
+  return supabaseRequest('site_orders?id=neq.__SITE_CONTENT_STORE__', {
+    method: 'DELETE'
+  });
+}

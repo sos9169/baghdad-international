@@ -595,8 +595,12 @@
           <input type="text" name="name_en" value="${escapeAttr(dest.name_en || '')}">
         </label>
         <label>
-          <span>شارة / نوع المقر</span>
+          <span>شارة / نوع المقر بالعربية</span>
           <input type="text" name="badge_ar" value="${escapeAttr(dest.badge_ar || '')}">
+        </label>
+        <label>
+          <span>شارة / نوع المقر بالإنجليزي</span>
+          <input type="text" name="badge_en" value="${escapeAttr(dest.badge_en || '')}">
         </label>
         <label>
           <span>تغيير صورة العلم من المعرض 📷</span>
@@ -613,6 +617,10 @@
         <label class="full-width">
           <span>الوصف التفصيلي بالعربية</span>
           <textarea name="desc_ar" rows="3">${escapeHtml(dest.desc_ar || '')}</textarea>
+        </label>
+        <label class="full-width">
+          <span>الوصف التفصيلي بالإنجليزي</span>
+          <textarea name="desc_en" rows="3">${escapeHtml(dest.desc_en || '')}</textarea>
         </label>
       `;
     } else if (type === "sub") {
@@ -681,6 +689,10 @@
           <span>الوصف التوضيحي بالعربية</span>
           <textarea name="desc_ar" rows="3">${escapeHtml(sub.desc_ar || '')}</textarea>
         </label>
+        <label class="full-width">
+          <span>الوصف التوضيحي بالإنجليزي</span>
+          <textarea name="desc_en" rows="3">${escapeHtml(sub.desc_en || '')}</textarea>
+        </label>
       `;
     } else if (type === "service") {
       const srv = currentState.services.find((s) => s.id === id);
@@ -734,6 +746,10 @@
         <label class="full-width">
           <span>الوصف بالعربية</span>
           <textarea name="text_ar" rows="3">${escapeHtml(slide.text_ar || '')}</textarea>
+        </label>
+        <label class="full-width">
+          <span>الوصف بالإنجليزي</span>
+          <textarea name="text_en" rows="3">${escapeHtml(slide.text_en || '')}</textarea>
         </label>
       `;
     }
@@ -1022,9 +1038,11 @@
       const name_ar = destForm.name_ar.value;
       const name_en = destForm.name_en.value;
       const badge_ar = destForm.badge_ar.value;
+      const badge_en = destForm.badge_en ? destForm.badge_en.value.trim() : "";
       let flag = destForm.flag ? destForm.flag.value.trim() : "";
       const tags = destForm.tags.value;
       const desc_ar = destForm.desc_ar.value;
+      const desc_en = destForm.desc_en ? destForm.desc_en.value.trim() : "";
 
       const fileInput = destForm.querySelector('input[name="flag_file"]');
       if (fileInput && fileInput.files && fileInput.files[0]) {
@@ -1033,7 +1051,7 @@
       }
 
       try {
-        const data = await request("add-destination", { name_ar, name_en, badge_ar, flag, tags, desc_ar });
+        const data = await request("add-destination", { name_ar, name_en, badge_ar, badge_en, flag, tags, desc_ar, desc_en });
         destForm.reset();
         setStatus("#destStatus", "تمت إضافة الدولة بنجاح!", false, true);
         currentState.destinations = data.destinations;
@@ -1076,9 +1094,12 @@
       const title_en = subForm.title_en.value;
       const tag_ar = subForm.tag_ar.value;
       const tag_en = subForm.tag_en ? subForm.tag_en.value : "";
+      const email = subForm.email ? subForm.email.value.trim() : "";
+      const est_ar = subForm.est_ar ? subForm.est_ar.value.trim() : "";
       let logo = subForm.logo ? subForm.logo.value.trim() : "";
       const fb = subForm.fb ? subForm.fb.value : "";
       const desc_ar = subForm.desc_ar ? subForm.desc_ar.value : "";
+      const desc_en = subForm.desc_en ? subForm.desc_en.value.trim() : "";
       const address_ar = subForm.address_ar ? subForm.address_ar.value : "";
       const address_en = subForm.address_en ? subForm.address_en.value : "";
       const services_ar = subForm.services_ar ? linesToList(subForm.services_ar.value) : [];
@@ -1093,7 +1114,7 @@
       }
 
       try {
-        const data = await request("add-subsidiary", { title_ar, title_en, tag_ar, tag_en, logo, fb, desc_ar, address_ar, address_en, services_ar, services_en, phones });
+        const data = await request("add-subsidiary", { title_ar, title_en, tag_ar, tag_en, email, est_ar, logo, fb, desc_ar, desc_en, address_ar, address_en, services_ar, services_en, phones });
         subForm.reset();
         setStatus("#subStatus", "تمت إضافة المؤسسة والشعار بنجاح!", false, true);
         currentState.subsidiaries = data.subsidiaries;
@@ -1137,7 +1158,7 @@
       const data = await request("settings", {
         facebook: settingsForm.facebook ? settingsForm.facebook.value : "",
         instagram: settingsForm.instagram ? settingsForm.instagram.value : "",
-        whatsapp: settingsForm.whatsapp ? settingsForm.whatsapp.value : "",
+        whatsapp: settingsForm.whatsapp && settingsForm.whatsapp.value.trim() ? settingsForm.whatsapp.value.trim() : (settingsForm.phone_iraq ? settingsForm.phone_iraq.value.trim() : ""),
         maps: settingsForm.maps ? settingsForm.maps.value : "",
         phone_egypt: settingsForm.phone_egypt ? settingsForm.phone_egypt.value : "",
         phone_iraq: settingsForm.phone_iraq ? settingsForm.phone_iraq.value : "",
@@ -1302,12 +1323,15 @@
       if (json && json.responseData && json.responseData.translatedText) {
         const result = json.responseData.translatedText.trim();
         if (!result.toUpperCase().includes("MYMEMORY WARNING")) {
-          translationCache[clean] = result;
-          return result;
+          const hasArabic = /[\u0600-\u06FF]/.test(result);
+          if (!hasArabic || /[a-zA-Z]/.test(result)) {
+            translationCache[clean] = result;
+            return result;
+          }
         }
       }
     } catch (e) {}
-    return clean;
+    return "";
   }
 
   function setupAutoTranslation(container) {
@@ -1348,6 +1372,7 @@
   setupAutoTranslation(serviceForm);
   setupAutoTranslation(destForm);
   setupAutoTranslation(subForm);
+  setupAutoTranslation(settingsForm);
 
   loadState();
 })();
