@@ -223,6 +223,10 @@
               <input type="text" name="badge_ar" placeholder="مثال: فرع رسمي / خدمات منسقة">
             </label>
             <label>
+              <span>شارة / نوع المقر بالإنجليزي</span>
+              <input type="text" name="badge_en" placeholder="Coordinated Services">
+            </label>
+            <label>
               <span>اختيار صورة العلم من جهازك/المعرض 📷</span>
               <input type="file" name="flag_file" accept="image/*">
             </label>
@@ -237,6 +241,10 @@
             <label class="full-width">
               <span>الوصف التفصيلي بالعربية</span>
               <textarea name="desc_ar" rows="2" placeholder="شرح خدمات الدولة والجامعات المتاحة..."></textarea>
+            </label>
+            <label class="full-width">
+              <span>الوصف التفصيلي بالإنجليزي <span style="color:var(--gold);font-size:11px;font-weight:700;">(ترجمة تلقائية ✨)</span></span>
+              <textarea name="desc_en" rows="2" placeholder="يتم التعبئة والترجمة تلقائياً..."></textarea>
             </label>
           </div>
           <button type="submit" style="margin-top:10px"><i class="fa-solid fa-plus"></i> إضافة دولة جديدة</button>
@@ -319,6 +327,10 @@
               <span>الوصف التوضيحي بالعربية</span>
               <textarea name="desc_ar" rows="2" placeholder="وصف الخدمة والمراحل التعليمية..."></textarea>
             </label>
+            <label class="full-width">
+              <span>الوصف التوضيحي بالإنجليزي <span style="color:var(--gold);font-size:11px;font-weight:700;">(ترجمة تلقائية ✨)</span></span>
+              <textarea name="desc_en" rows="2" placeholder="يتم التعبئة والترجمة تلقائياً..."></textarea>
+            </label>
           </div>
           <button type="submit" style="margin-top:10px"><i class="fa-solid fa-plus"></i> إضافة مؤسسة/شركة للمجموعة</button>
           <small id="subStatus"></small>
@@ -341,6 +353,7 @@
           </div>
           <label><span>Facebook</span><input type="url" name="facebook" placeholder="https://facebook.com/..."></label>
           <label><span>Instagram</span><input type="url" name="instagram" placeholder="https://instagram.com/..."></label>
+          <label><span>رقم الواتساب الرئيسي (العام)</span><input type="tel" name="whatsapp" placeholder="+9647742881766"></label>
           <label><span>🇪🇬 رقم الواتساب / هاتف مصر</span><input type="tel" name="phone_egypt" placeholder="+201000000000"></label>
           <label><span>🇮🇶 رقم الواتساب / هاتف العراق</span><input type="tel" name="phone_iraq" placeholder="+9647700000000"></label>
           <label><span>🇹🇷 رقم الواتساب / هاتف تركيا</span><input type="tel" name="phone_turkey" placeholder="+905300000000"></label>
