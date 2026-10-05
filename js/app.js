@@ -21,6 +21,7 @@
   let servicesData = [];
   let destinationsData = [];
   let subsidiariesData = [];
+  let siteSettingsData = {};
 
   const translations = {
     ar: {
@@ -457,6 +458,7 @@
     document.documentElement.dir = isEn ? "ltr" : "rtl";
 
     updatePageLanguage();
+    applySiteSettings(siteSettingsData);
     localStorage.setItem("big-lang", isEn ? "en" : "ar");
 
     updateSlideTexts();
@@ -716,7 +718,7 @@
         const waMessage = encodeURIComponent(
           `مرحباً مجموعة بغداد الدولية 👋\nأرغب في تقديم طلب خدمة:\n\n📌 الخدمة: ${service}\n🌐 الدولة: ${country}\n👤 الاسم: ${name}\n📱 الهاتف: ${phone}\n🎓 الجنسية/الإقامة: ${nationality || '-'}\n📝 التفاصيل: ${details || '-'}\n💬 ملاحظات: ${notes || '-'}`
         );
-        const waUrl = `https://wa.me/9647742881766?text=${waMessage}`;
+        const waUrl = `https://wa.me/${mainWhatsappNumber()}?text=${waMessage}`;
 
         if (modalStatus) {
           modalStatus.innerHTML = `<div style="margin-top:10px;padding:12px;background:rgba(37,211,102,0.12);border:1px solid rgba(37,211,102,0.4);border-radius:10px;color:#25D366;font-weight:700;"><i class="fa-solid fa-circle-check"></i> تم حفظ طلبك باللوحة وجارٍ فتح الواتساب للتواصل المباشر...<br><a href="${waUrl}" target="_blank" rel="noopener" style="display:inline-block;margin-top:8px;padding:6px 14px;background:#25D366;color:#fff;border-radius:8px;text-decoration:none;font-size:12px;"><i class="fa-brands fa-whatsapp"></i> فتح الواتساب الآن ↗</a></div>`;
@@ -802,6 +804,248 @@
       '"': "&quot;",
       "'": "&#039;"
     }[char]));
+  }
+
+  function cleanPhone(value) {
+    return String(value || "").replace(/[^\d+]/g, "");
+  }
+
+  function mainWhatsappNumber() {
+    return cleanPhone(siteSettingsData.whatsapp || siteSettingsData.phone_iraq || "9647742881766").replace(/^\+/, "");
+  }
+
+  function localizeValue(item, key) {
+    const isEn = body.classList.contains("lang-en");
+    return item ? (isEn ? (item[`${key}_en`] || item[`${key}_ar`] || "") : (item[`${key}_ar`] || item[`${key}_en`] || "")) : "";
+  }
+
+  function linkForButton(button) {
+    const type = String(button.type || "whatsapp").toLowerCase();
+    const value = String(button.value || button.label || "").trim();
+    if (type === "email") return `mailto:${value}`;
+    if (type === "phone" || type === "tel") return `tel:${cleanPhone(value)}`;
+    return `https://wa.me/${cleanPhone(value).replace(/^\+/, "")}`;
+  }
+
+  function iconForButton(button) {
+    const type = String(button.type || "whatsapp").toLowerCase();
+    if (type === "email") return "fa-solid fa-envelope";
+    if (type === "phone" || type === "tel") return "fa-solid fa-phone";
+    return "fa-brands fa-whatsapp";
+  }
+
+  function renderContactButton(button, className = "phone-chip") {
+    const type = String(button.type || "whatsapp").toLowerCase();
+    const label = button.label || button.value || "";
+    const chipType = type === "whatsapp" ? "wa" : "tel";
+    const target = type === "whatsapp" ? ' target="_blank" rel="noopener"' : "";
+    return `<a href="${escapeHtml(linkForButton(button))}"${target} class="${className} ${chipType}" dir="ltr"><i class="${iconForButton(button)}"></i> <bdi>${escapeHtml(label)}</bdi></a>`;
+  }
+
+  function defaultContactAddresses() {
+    return [
+      {
+        label_ar: translations.ar["contact.addressLabel1"],
+        label_en: translations.en["contact.addressLabel1"],
+        address_ar: translations.ar["contact.address1"],
+        address_en: translations.en["contact.address1"],
+        map: ""
+      },
+      {
+        label_ar: translations.ar["contact.addressLabel2"],
+        label_en: translations.en["contact.addressLabel2"],
+        address_ar: translations.ar["contact.address2"],
+        address_en: translations.en["contact.address2"],
+        map: siteSettingsData.maps || "https://www.google.com/maps/search/?api=1&query=7+Okba+Ibn+Nafeh+St+Dokki+Giza+Egypt"
+      },
+      {
+        label_ar: translations.ar["contact.addressLabel3"],
+        label_en: translations.en["contact.addressLabel3"],
+        address_ar: translations.ar["contact.address3"],
+        address_en: translations.en["contact.address3"],
+        map: ""
+      }
+    ];
+  }
+
+  function defaultContactChannels() {
+    return [
+      {
+        title_ar: translations.ar["contact.iraqBranch"],
+        title_en: translations.en["contact.iraqBranch"],
+        subtitle_ar: translations.ar["contact.iraqSub"],
+        subtitle_en: translations.en["contact.iraqSub"],
+        flag: "https://flagcdn.com/w40/iq.png",
+        buttons: [
+          { type: "whatsapp", label: siteSettingsData.phone_iraq || "+964 774 288 1766", value: siteSettingsData.phone_iraq || "+9647742881766" },
+          { type: "email", label: "iraq@baghdad-international.com", value: "iraq@baghdad-international.com" }
+        ]
+      },
+      {
+        title_ar: translations.ar["contact.cairoBranch"],
+        title_en: translations.en["contact.cairoBranch"],
+        subtitle_ar: translations.ar["contact.cairoSub"],
+        subtitle_en: translations.en["contact.cairoSub"],
+        flag: "https://flagcdn.com/w40/eg.png",
+        buttons: [
+          { type: "whatsapp", label: "+20 150 750 1547", value: "+201507501547" },
+          { type: "whatsapp", label: "+20 150 750 1548", value: "+201507501548" },
+          { type: "phone", label: "01507501547", value: "01507501547" },
+          { type: "email", label: "cairo@baghdad-international.com", value: "cairo@baghdad-international.com" }
+        ]
+      },
+      {
+        title_ar: translations.ar["contact.nileBranch"],
+        title_en: translations.en["contact.nileBranch"],
+        subtitle_ar: translations.ar["contact.nileSub"],
+        subtitle_en: translations.en["contact.nileSub"],
+        icon: "fa-solid fa-handshake",
+        buttons: [
+          { type: "whatsapp", label: "+20 150 550 2339", value: "+201505502339" },
+          { type: "whatsapp", label: "+20 150 550 2337", value: "+201505502337" },
+          { type: "whatsapp", label: "+249 912 381 663", value: "+249912381663" },
+          { type: "email", label: "info@baghdad-international.com", value: "info@baghdad-international.com" }
+        ]
+      },
+      {
+        title_ar: translations.ar["contact.turkeyBranch"],
+        title_en: translations.en["contact.turkeyBranch"],
+        subtitle_ar: translations.ar["contact.turkeySub"],
+        subtitle_en: translations.en["contact.turkeySub"],
+        flag: "https://flagcdn.com/w40/tr.png",
+        buttons: [
+          { type: "whatsapp", label: siteSettingsData.phone_turkey || "+90 501 126 3577", value: siteSettingsData.phone_turkey || "+905011263577" },
+          { type: "email", label: "turkey@baghdad-international.com", value: "turkey@baghdad-international.com" }
+        ]
+      }
+    ];
+  }
+
+  function renderContactAddresses(settings) {
+    const list = Array.isArray(settings.contact_addresses) ? settings.contact_addresses : defaultContactAddresses();
+    const container = document.getElementById("contactAddressesList");
+    if (!container) return;
+    const isEn = body.classList.contains("lang-en");
+    container.innerHTML = list.map((item, index) => {
+      const mapLink = item.map ? `<a href="${escapeHtml(item.map)}" target="_blank" rel="noopener noreferrer">${escapeHtml(isEn ? "Get directions ↗" : "احصل على الاتجاهات ↗")}</a>` : "";
+      return `
+        <div class="contact-address"${index ? ' style="margin-top: 16px;"' : ""}>
+          <i class="fa-solid fa-location-dot"></i>
+          <div>
+            <span>${escapeHtml(localizeValue(item, "label"))}</span>
+            <p>${escapeHtml(localizeValue(item, "address"))}</p>
+            ${mapLink}
+          </div>
+        </div>
+      `;
+    }).join("");
+  }
+
+  function renderContactChannels(settings) {
+    const list = Array.isArray(settings.contact_channels) ? settings.contact_channels : defaultContactChannels();
+    const container = document.getElementById("contactChannelsList");
+    if (!container) return;
+    container.innerHTML = list.map((item) => {
+      const media = item.flag
+        ? `<img src="${escapeHtml(resolveMediaUrl(item.flag))}" width="22" height="15" alt="" class="inline-flag">`
+        : `<i class="${escapeHtml(item.icon || "fa-solid fa-headset")} branch-icon-gold"></i>`;
+      return `
+        <div class="country-phone-item">
+          <div class="c-phone-info">
+            ${media}
+            <div>
+              <strong>${escapeHtml(localizeValue(item, "title"))}</strong>
+              <small>${escapeHtml(localizeValue(item, "subtitle"))}</small>
+            </div>
+          </div>
+          <div class="c-phone-btns">
+            ${(item.buttons || []).map((button) => renderContactButton(button)).join("")}
+          </div>
+        </div>
+      `;
+    }).join("");
+  }
+
+  function renderFooter(settings) {
+    const isEn = body.classList.contains("lang-en");
+    const footerDesc = document.querySelector(".footer-desc");
+    if (footerDesc) {
+      footerDesc.textContent = isEn
+        ? (settings.footer_desc_en || translations.en["footer.desc"])
+        : (settings.footer_desc_ar || translations.ar["footer.desc"]);
+    }
+
+    const contactButtons = (Array.isArray(settings.contact_channels) ? settings.contact_channels : defaultContactChannels())
+      .flatMap((item) => item.buttons || [])
+      .slice(0, 4);
+    const quick = document.getElementById("footerContactsQuick");
+    if (quick) {
+      quick.innerHTML = contactButtons.map((button) => `
+        <a href="${escapeHtml(linkForButton(button))}"${String(button.type || "").toLowerCase() === "whatsapp" ? ' target="_blank" rel="noopener"' : ""} class="footer-contact-chip" dir="ltr">
+          <i class="${iconForButton(button)}"></i>
+          <span>${escapeHtml(button.label || button.value || "")}</span>
+        </a>
+      `).join("");
+    }
+
+    const companies = document.getElementById("footerCompaniesLinks");
+    if (companies && subsidiariesData.length) {
+      companies.innerHTML = subsidiariesData.slice(0, 8).map((sub) => {
+        const title = isEn ? (sub.title_en || sub.title_ar) : (sub.title_ar || sub.title_en);
+        return `<li><a href="#subsidiaries"><i class="fa-solid fa-building-columns"></i> ${escapeHtml(title)}</a></li>`;
+      }).join("");
+    }
+
+    const hqInfo = document.getElementById("footerHqInfo");
+    if (hqInfo) {
+      const addresses = (Array.isArray(settings.contact_addresses) ? settings.contact_addresses : defaultContactAddresses()).slice(0, 3);
+      const hoursTitle = isEn ? translations.en["footer.hoursTitle"] : translations.ar["footer.hoursTitle"];
+      const hours = isEn ? (settings.footer_hours_en || translations.en["footer.hours"]) : (settings.footer_hours_ar || translations.ar["footer.hours"]);
+      hqInfo.innerHTML = addresses.map((item) => `
+        <div class="hq-item">
+          <i class="fa-solid fa-location-dot"></i>
+          <div>
+            <strong>${escapeHtml(localizeValue(item, "label"))}</strong>
+            <p>${escapeHtml(localizeValue(item, "address"))}</p>
+          </div>
+        </div>
+      `).join("") + `
+        <div class="hq-item">
+          <i class="fa-solid fa-clock"></i>
+          <div>
+            <strong>${escapeHtml(hoursTitle)}</strong>
+            <p>${escapeHtml(hours)}</p>
+          </div>
+        </div>
+      `;
+    }
+  }
+
+  function applySiteSettings(settings = {}) {
+    siteSettingsData = settings || {};
+    const isEn = body.classList.contains("lang-en");
+    const contactTitle = document.querySelector('[data-i18n="contact.title"]');
+    const contactText = document.querySelector('[data-i18n="contact.text"]');
+    const floatingWa = document.querySelector(".floating-whatsapp");
+    const modalWaLink = document.getElementById("modalWaBtn");
+    const socialWa = document.querySelectorAll(".social.whatsapp");
+    const waHref = `https://wa.me/${mainWhatsappNumber()}`;
+
+    if (contactTitle) {
+      const title = isEn ? settings.contact_title_en : settings.contact_title_ar;
+      if (title) contactTitle.innerHTML = title;
+    }
+    if (contactText) {
+      const text = isEn ? settings.contact_text_en : settings.contact_text_ar;
+      if (text) contactText.textContent = text;
+    }
+    if (floatingWa) floatingWa.href = waHref;
+    if (modalWaLink) modalWaLink.href = waHref;
+    socialWa.forEach((link) => { link.href = waHref; });
+
+    renderContactAddresses(settings);
+    renderContactChannels(settings);
+    renderFooter(settings);
   }
 
   // --- Dynamic Showcase Slider Logic ---
@@ -1459,6 +1703,7 @@
         </article>
       `;
     }).join("");
+    renderFooter(siteSettingsData);
   }
 
   function renderCompaniesTicker(list) {
@@ -1559,6 +1804,7 @@
     const rawLocal = localStorage.getItem("big_public_store_v2");
     if (rawLocal) {
       const storeData = JSON.parse(rawLocal);
+      window.__bigPublicStoreUpdatedAt = storeData.updatedAt || "";
       if (Array.isArray(storeData.slides) && storeData.slides.length) renderSlides(storeData.slides);
       if (Array.isArray(storeData.services) && storeData.services.length) renderServices(storeData.services);
       if (Array.isArray(storeData.destinations) && storeData.destinations.length) renderDestinations(storeData.destinations);
@@ -1566,13 +1812,39 @@
         renderSubsidiaries(storeData.subsidiaries);
         renderCompaniesTicker(storeData.subsidiaries);
       }
+      if (storeData.settings) applySiteSettings(storeData.settings);
     }
   } catch (e) {}
+
+  function storeTimestamp(value) {
+    if (!value) return 0;
+    if (typeof value === "number") return value;
+    const parsed = Date.parse(value);
+    return Number.isNaN(parsed) ? 0 : parsed;
+  }
+
+  function cachePublicStore(data) {
+    try {
+      localStorage.setItem("big_public_store_v2", JSON.stringify({
+        slides: Array.isArray(data.slides) ? data.slides : slidesData,
+        services: Array.isArray(data.services) ? data.services : servicesData,
+        destinations: Array.isArray(data.destinations) ? data.destinations : destinationsData,
+        subsidiaries: Array.isArray(data.subsidiaries) ? data.subsidiaries : subsidiariesData,
+        officialEmails: Array.isArray(data.officialEmails) ? data.officialEmails : [],
+        settings: data.settings || {},
+        updatedAt: data.updatedAt || new Date().toISOString()
+      }));
+      window.__bigPublicStoreUpdatedAt = data.updatedAt || window.__bigPublicStoreUpdatedAt || "";
+    } catch (e) {}
+  }
 
   fetch(`${apiUrl}?action=init`, { cache: "no-store" })
     .then((res) => (res.ok ? res.json() : null))
     .then((data) => {
       if (data && data.ok) {
+        const localTime = storeTimestamp(window.__bigPublicStoreUpdatedAt);
+        const serverTime = storeTimestamp(data.updatedAt);
+        if (localTime && serverTime && serverTime < localTime) return;
         if (Array.isArray(data.slides) && data.slides.length) renderSlides(data.slides);
         if (Array.isArray(data.services) && data.services.length) renderServices(data.services);
         if (Array.isArray(data.destinations) && data.destinations.length) renderDestinations(data.destinations);
@@ -1580,6 +1852,8 @@
           renderSubsidiaries(data.subsidiaries);
           renderCompaniesTicker(data.subsidiaries);
         }
+        if (data.settings) applySiteSettings(data.settings);
+        cachePublicStore(data);
       }
     })
     .catch(() => {});
@@ -1668,7 +1942,7 @@
         const waMessage = encodeURIComponent(
           `مرحباً مجموعة بغداد الدولية 👋\nلدي طلب تواصل واستفسار جديد:\n\n👤 الاسم: ${name}\n📱 رقم الهاتف: ${phone}\n💬 الرسالة: ${message || 'استفسار عام'}`
         );
-        const waUrl = `https://wa.me/9647742881766?text=${waMessage}`;
+        const waUrl = `https://wa.me/${mainWhatsappNumber()}?text=${waMessage}`;
 
         if (statusEl) {
           statusEl.innerHTML = `<div style="margin-top:12px;padding:14px;background:rgba(37,211,102,0.12);border:1px solid rgba(37,211,102,0.4);border-radius:12px;color:#25D366;font-weight:700;"><i class="fa-solid fa-circle-check"></i> تم حفظ طلبك في لوحة التحكم وجارٍ توجيهك للواتساب للتواصل المباشر...<br><a href="${waUrl}" target="_blank" rel="noopener" style="display:inline-block;margin-top:8px;padding:8px 16px;background:#25D366;color:#fff;border-radius:8px;text-decoration:none;font-size:13px;"><i class="fa-brands fa-whatsapp"></i> فتح محادثة الواتساب الآن ↗</a></div>`;

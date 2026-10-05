@@ -175,6 +175,16 @@ input:focus, textarea:focus, select:focus {
   box-shadow: 0 0 0 3px rgba(197, 154, 74, 0.14);
 }
 
+.json-editor {
+  min-height: 170px;
+  direction: ltr;
+  text-align: left;
+  font-family: Consolas, "Courier New", monospace;
+  font-size: 12px;
+  line-height: 1.55;
+  white-space: pre;
+}
+
 small {
   display: block;
   min-height: 22px;

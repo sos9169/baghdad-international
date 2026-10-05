@@ -1,6 +1,11 @@
 import { createOrder, getSiteContent, isSupabaseConfigured, trackEvent } from './supabase-store.js';
 import { getGlobalStore, saveGlobalStore } from './store.js';
 
+function getContentTime(content) {
+  const time = Date.parse(content?.updatedAt || content?.updated_at || '');
+  return Number.isNaN(time) ? 0 : time;
+}
+
 export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
@@ -15,7 +20,9 @@ export default async function handler(req, res) {
 
   const store = getGlobalStore();
   const remoteContent = await getSiteContent().catch(() => null);
-  if (remoteContent) Object.assign(store, remoteContent);
+  if (remoteContent && getContentTime(remoteContent) >= getContentTime(store)) {
+    Object.assign(store, remoteContent);
+  }
 
   let body = {};
   if (req.body) {
@@ -45,7 +52,8 @@ export default async function handler(req, res) {
       destinations: store.destinations,
       subsidiaries: store.subsidiaries,
       officialEmails: store.officialEmails,
-      settings: store.settings
+      settings: store.settings,
+      updatedAt: store.updatedAt || ''
     });
   }
 

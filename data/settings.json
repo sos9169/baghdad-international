@@ -3,6 +3,7 @@
   "instagram": "https://instagram.com/",
   "whatsapp": "201507501547",
   "phone": "+201507501547",
+  "maps": "https://www.google.com/maps/search/?api=1&query=7+Okba+Ibn+Nafeh+St+Dokki+Giza+Egypt",
   "phone_egypt": "+20 150 750 1547 / +20 150 750 1548",
   "phone_iraq": "+964 774 288 1766",
   "phone_turkey": "+90 501 126 3577",
@@ -17,5 +18,134 @@
   "email_sales": "sales@baghdad-international.com",
   "email_support": "support@baghdad-international.com",
   "email_admin": "admin@baghdad-international.com",
-  "email_booking": "booking@baghdad-international.com"
+  "email_booking": "booking@baghdad-international.com",
+  "contact_title_ar": "",
+  "contact_title_en": "",
+  "contact_text_ar": "",
+  "contact_text_en": "",
+  "footer_desc_ar": "",
+  "footer_desc_en": "",
+  "footer_hours_ar": "",
+  "footer_hours_en": "",
+  "contact_addresses": [
+    {
+      "label_ar": "المقر الرئيسي (بغداد - العراق) ⭐",
+      "label_en": "Main HQ (Baghdad - Iraq) ⭐",
+      "address_ar": "بغداد — زيونة — شارع الربيعي — بداية كوين",
+      "address_en": "Baghdad — Zeyouna — Al Rubaie St — Beginning of Queen",
+      "map": ""
+    },
+    {
+      "label_ar": "مقر القاهرة (مصر)",
+      "label_en": "Cairo Office (Egypt)",
+      "address_ar": "عمارة رقم ٧، شارع عقبة بن نافع، الدور الأول، مكتب رقم ٣ — أمام البيت الثقافي الروسي، الدقي، الجيزة",
+      "address_en": "Building 7, Okba Ibn Nafeh St., 1st Floor, Office 3 — In front of the Russian Cultural Centre, Dokki, Giza",
+      "map": "https://www.google.com/maps/search/?api=1&query=7+Okba+Ibn+Nafeh+St+Dokki+Giza+Egypt"
+    },
+    {
+      "label_ar": "فرع تركيا (يالوفا)",
+      "label_en": "Turkey Branch (Yalova)",
+      "address_ar": "Rüstem Paşa, Şahin Sk. No:13, 77200 Yalova Merkez/Yalova, تركيا",
+      "address_en": "Rüstem Paşa, Şahin Sk. No:13, 77200 Yalova Merkez/Yalova, Turkey",
+      "map": ""
+    }
+  ],
+  "contact_channels": [
+    {
+      "title_ar": "🇮🇶 المقر الرئيسي (بغداد — العراق)",
+      "title_en": "🇮🇶 Primary HQ (Baghdad — Iraq)",
+      "subtitle_ar": "أرقام الإدارة والخدمات بالعراق",
+      "subtitle_en": "Management & Services in Iraq",
+      "flag": "https://flagcdn.com/w40/iq.png",
+      "buttons": [
+        {
+          "type": "whatsapp",
+          "label": "+964 774 288 1766",
+          "value": "+964 774 288 1766"
+        },
+        {
+          "type": "email",
+          "label": "iraq@baghdad-international.com",
+          "value": "iraq@baghdad-international.com"
+        }
+      ]
+    },
+    {
+      "title_ar": "🇪🇬 فرع أكاديمية بغداد الدولية (القاهرة — مصر)",
+      "title_en": "🇪🇬 Baghdad International Academy (Cairo — Egypt)",
+      "subtitle_ar": "خدمات القبولات والدراسة بمصر",
+      "subtitle_en": "Admissions & University Services in Egypt",
+      "flag": "https://flagcdn.com/w40/eg.png",
+      "buttons": [
+        {
+          "type": "whatsapp",
+          "label": "+20 150 750 1547",
+          "value": "+201507501547"
+        },
+        {
+          "type": "whatsapp",
+          "label": "+20 150 750 1548",
+          "value": "+201507501548"
+        },
+        {
+          "type": "phone",
+          "label": "01507501547",
+          "value": "01507501547"
+        },
+        {
+          "type": "email",
+          "label": "cairo@baghdad-international.com",
+          "value": "cairo@baghdad-international.com"
+        }
+      ]
+    },
+    {
+      "title_ar": "🤝 شركة النيل للخدمات المتكاملة (مصر والسودان)",
+      "title_en": "🤝 Al-Nile Integrated Services (Egypt & Sudan)",
+      "subtitle_ar": "خدمات السودانيين والخدمات التجارية",
+      "subtitle_en": "Sudanese & Business Services",
+      "icon": "fa-solid fa-handshake",
+      "buttons": [
+        {
+          "type": "whatsapp",
+          "label": "+20 150 550 2339",
+          "value": "+201505502339"
+        },
+        {
+          "type": "whatsapp",
+          "label": "+20 150 550 2337",
+          "value": "+201505502337"
+        },
+        {
+          "type": "whatsapp",
+          "label": "+249 912 381 663",
+          "value": "+249912381663"
+        },
+        {
+          "type": "email",
+          "label": "info@baghdad-international.com",
+          "value": "info@baghdad-international.com"
+        }
+      ]
+    },
+    {
+      "title_ar": "🇹🇷 فرع تركيا (يلوى واسطنبول — بلاتفورم والمدارس)",
+      "title_en": "🇹🇷 Turkey Branch (Yalova & Istanbul)",
+      "subtitle_ar": "الخدمات والمدارس بتركيا",
+      "subtitle_en": "Services & Schools in Turkey",
+      "flag": "https://flagcdn.com/w40/tr.png",
+      "buttons": [
+        {
+          "type": "whatsapp",
+          "label": "+90 501 126 3577",
+          "value": "+90 501 126 3577"
+        },
+        {
+          "type": "email",
+          "label": "turkey@baghdad-international.com",
+          "value": "turkey@baghdad-international.com"
+        }
+      ]
+    }
+  ]
 }

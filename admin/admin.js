@@ -33,7 +33,9 @@
     subsidiaries: [],
     settings: {},
     orders: [],
-    metrics: {}
+    metrics: {},
+    officialEmails: [],
+    updatedAt: ""
   };
 
   let currentEditItem = null;
@@ -118,6 +120,9 @@
       adminToken = data.token;
       localStorage.setItem("big_admin_token", data.token);
     }
+    if (data.updatedAt) {
+      currentState.updatedAt = data.updatedAt;
+    }
     return data;
   }
 
@@ -135,6 +140,134 @@
     if (settingsForm.phone_egypt) settingsForm.phone_egypt.value = settings.phone_egypt || "+201507501547";
     if (settingsForm.phone_iraq) settingsForm.phone_iraq.value = settings.phone_iraq || "+9647742881766";
     if (settingsForm.phone_turkey) settingsForm.phone_turkey.value = settings.phone_turkey || "+905011263577";
+    if (settingsForm.contact_title_ar) settingsForm.contact_title_ar.value = settings.contact_title_ar || "";
+    if (settingsForm.contact_title_en) settingsForm.contact_title_en.value = settings.contact_title_en || "";
+    if (settingsForm.contact_text_ar) settingsForm.contact_text_ar.value = settings.contact_text_ar || "";
+    if (settingsForm.contact_text_en) settingsForm.contact_text_en.value = settings.contact_text_en || "";
+    if (settingsForm.footer_desc_ar) settingsForm.footer_desc_ar.value = settings.footer_desc_ar || "";
+    if (settingsForm.footer_desc_en) settingsForm.footer_desc_en.value = settings.footer_desc_en || "";
+    if (settingsForm.footer_hours_ar) settingsForm.footer_hours_ar.value = settings.footer_hours_ar || "";
+    if (settingsForm.footer_hours_en) settingsForm.footer_hours_en.value = settings.footer_hours_en || "";
+    if (settingsForm.contact_addresses_json) settingsForm.contact_addresses_json.value = formatJson(settings.contact_addresses || defaultContactAddresses());
+    if (settingsForm.contact_channels_json) settingsForm.contact_channels_json.value = formatJson(settings.contact_channels || defaultContactChannels(settings));
+  }
+
+  function formatJson(value) {
+    try {
+      return JSON.stringify(value || [], null, 2);
+    } catch (e) {
+      return "[]";
+    }
+  }
+
+  function parseJsonField(field, fallback) {
+    if (!field || !field.value.trim()) return fallback;
+    try {
+      const parsed = JSON.parse(field.value);
+      if (!Array.isArray(parsed)) throw new Error("not-array");
+      return parsed;
+    } catch (e) {
+      throw new Error("صيغة JSON غير صحيحة في: " + (field.name || "حقل غير معروف"));
+    }
+  }
+
+  function linesToList(value) {
+    return String(value || "").split(/\r?\n/).map((line) => line.trim()).filter(Boolean);
+  }
+
+  function parsePhoneLines(value) {
+    return linesToList(value).map((line) => {
+      const parts = line.split("|").map((part) => part.trim());
+      return {
+        label_ar: parts[0] || "رقم التواصل",
+        label_en: parts[0] || "Contact Number",
+        number: parts[1] || parts[0] || ""
+      };
+    }).filter((item) => item.number);
+  }
+
+  function phonesToLines(phones) {
+    if (!Array.isArray(phones)) return "";
+    return phones.map((phone) => `${phone.label_ar || phone.label_en || "رقم التواصل"} | ${phone.number || ""}`).join("\n");
+  }
+
+  function defaultContactAddresses() {
+    return [
+      {
+        label_ar: "المقر الرئيسي (بغداد - العراق) ⭐",
+        label_en: "Main HQ (Baghdad - Iraq) ⭐",
+        address_ar: "بغداد — زيونة — شارع الربيعي — بداية كوين",
+        address_en: "Baghdad — Zeyouna — Al Rubaie St — Beginning of Queen",
+        map: ""
+      },
+      {
+        label_ar: "مقر القاهرة (مصر)",
+        label_en: "Cairo Office (Egypt)",
+        address_ar: "عمارة رقم ٧، شارع عقبة بن نافع، الدور الأول، مكتب رقم ٣ — أمام البيت الثقافي الروسي، الدقي، الجيزة",
+        address_en: "Building 7, Okba Ibn Nafeh St., 1st Floor, Office 3 — In front of the Russian Cultural Centre, Dokki, Giza",
+        map: "https://www.google.com/maps/search/?api=1&query=7+Okba+Ibn+Nafeh+St+Dokki+Giza+Egypt"
+      },
+      {
+        label_ar: "فرع تركيا (يالوفا)",
+        label_en: "Turkey Branch (Yalova)",
+        address_ar: "Rüstem Paşa, Şahin Sk. No:13, 77200 Yalova Merkez/Yalova, تركيا",
+        address_en: "Rüstem Paşa, Şahin Sk. No:13, 77200 Yalova Merkez/Yalova, Turkey",
+        map: ""
+      }
+    ];
+  }
+
+  function defaultContactChannels(settings = {}) {
+    return [
+      {
+        title_ar: "🇮🇶 المقر الرئيسي (بغداد — العراق)",
+        title_en: "🇮🇶 Primary HQ (Baghdad — Iraq)",
+        subtitle_ar: "أرقام الإدارة والخدمات بالعراق",
+        subtitle_en: "Management & Services in Iraq",
+        flag: "https://flagcdn.com/w40/iq.png",
+        buttons: [
+          { type: "whatsapp", label: settings.phone_iraq || "+964 774 288 1766", value: settings.phone_iraq || "+9647742881766" },
+          { type: "email", label: "iraq@baghdad-international.com", value: "iraq@baghdad-international.com" }
+        ]
+      },
+      {
+        title_ar: "🇪🇬 فرع أكاديمية بغداد الدولية (القاهرة — مصر)",
+        title_en: "🇪🇬 Baghdad International Academy (Cairo — Egypt)",
+        subtitle_ar: "خدمات القبولات والدراسة بمصر",
+        subtitle_en: "Admissions & University Services in Egypt",
+        flag: "https://flagcdn.com/w40/eg.png",
+        buttons: [
+          { type: "whatsapp", label: "+20 150 750 1547", value: "+201507501547" },
+          { type: "whatsapp", label: "+20 150 750 1548", value: "+201507501548" },
+          { type: "phone", label: "01507501547", value: "01507501547" },
+          { type: "email", label: "cairo@baghdad-international.com", value: "cairo@baghdad-international.com" }
+        ]
+      },
+      {
+        title_ar: "🤝 شركة النيل للخدمات المتكاملة (مصر والسودان)",
+        title_en: "🤝 Al-Nile Integrated Services (Egypt & Sudan)",
+        subtitle_ar: "خدمات السودانيين والخدمات التجارية",
+        subtitle_en: "Sudanese & Business Services",
+        icon: "fa-solid fa-handshake",
+        buttons: [
+          { type: "whatsapp", label: "+20 150 550 2339", value: "+201505502339" },
+          { type: "whatsapp", label: "+20 150 550 2337", value: "+201505502337" },
+          { type: "whatsapp", label: "+249 912 381 663", value: "+249912381663" },
+          { type: "email", label: "info@baghdad-international.com", value: "info@baghdad-international.com" }
+        ]
+      },
+      {
+        title_ar: "🇹🇷 فرع تركيا (يلوى واسطنبول — بلاتفورم والمدارس)",
+        title_en: "🇹🇷 Turkey Branch (Yalova & Istanbul)",
+        subtitle_ar: "الخدمات والمدارس بتركيا",
+        subtitle_en: "Services & Schools in Turkey",
+        flag: "https://flagcdn.com/w40/tr.png",
+        buttons: [
+          { type: "whatsapp", label: settings.phone_turkey || "+90 501 126 3577", value: settings.phone_turkey || "+905011263577" },
+          { type: "email", label: "turkey@baghdad-international.com", value: "turkey@baghdad-international.com" }
+        ]
+      }
+    ];
   }
 
   function getMergedEvents(serverEvents) {
@@ -399,7 +532,7 @@
         subsidiaries: currentState.subsidiaries || [],
         officialEmails: currentState.officialEmails || [],
         settings: currentState.settings || {},
-        updatedAt: Date.now()
+        updatedAt: currentState.updatedAt || new Date().toISOString()
       };
       localStorage.setItem("big_public_store_v2", JSON.stringify(storePayload));
     } catch (e) {}
@@ -422,7 +555,8 @@
         settings: data.settings || {},
         orders: data.orders || [],
         officialEmails: data.officialEmails || [],
-        metrics: data.metrics || {}
+        metrics: data.metrics || {},
+        updatedAt: data.updatedAt || ""
       };
 
       fillSettings(data.settings);
@@ -500,6 +634,10 @@
           <input type="text" name="tag_ar" value="${escapeAttr(sub.tag_ar || '')}">
         </label>
         <label>
+          <span>الفرع / الدولة بالإنجليزي</span>
+          <input type="text" name="tag_en" value="${escapeAttr(sub.tag_en || '')}">
+        </label>
+        <label>
           <span>البريد الإلكتروني الرسمي (Email)</span>
           <input type="email" name="email" value="${escapeAttr(sub.email || '')}">
         </label>
@@ -522,6 +660,22 @@
         <label class="full-width">
           <span>العنوان التفصيلي</span>
           <input type="text" name="address_ar" value="${escapeAttr(sub.address_ar || '')}">
+        </label>
+        <label class="full-width">
+          <span>العنوان التفصيلي بالإنجليزي</span>
+          <input type="text" name="address_en" value="${escapeAttr(sub.address_en || '')}">
+        </label>
+        <label class="full-width">
+          <span>خدمات المؤسسة داخل النافذة (كل خدمة في سطر)</span>
+          <textarea name="services_ar" rows="3">${escapeHtml(Array.isArray(sub.services_ar) ? sub.services_ar.join('\n') : '')}</textarea>
+        </label>
+        <label class="full-width">
+          <span>خدمات المؤسسة بالإنجليزي (كل خدمة في سطر)</span>
+          <textarea name="services_en" rows="3">${escapeHtml(Array.isArray(sub.services_en) ? sub.services_en.join('\n') : '')}</textarea>
+        </label>
+        <label class="full-width">
+          <span>أرقام واتساب المؤسسة (كل رقم في سطر: الوصف | الرقم)</span>
+          <textarea name="phones" rows="3">${escapeHtml(phonesToLines(sub.phones))}</textarea>
         </label>
         <label class="full-width">
           <span>الوصف التوضيحي بالعربية</span>
@@ -625,6 +779,13 @@
     if (mediaFile && mediaFile.files && mediaFile.files[0]) {
       const uploadedDataUrl = await fileToDataUrl(mediaFile.files[0]);
       if (uploadedDataUrl) payload.media_url = uploadedDataUrl;
+    }
+
+    if (currentEditItem.type === "sub") {
+      payload.services_ar = linesToList(payload.services_ar || "");
+      payload.services_en = linesToList(payload.services_en || "");
+      if (!payload.services_en.length) payload.services_en = payload.services_ar;
+      payload.phones = parsePhoneLines(payload.phones || "");
     }
 
     let actionName = "";
@@ -778,6 +939,7 @@
         setStatus("#slideStatus", "تم نشر الموضوع بنجاح!", false, true);
         currentState.slides = data.slides;
         fillSlides(data.slides);
+        syncPublicLocalStorageStore();
       } catch (error) {
         setStatus("#slideStatus", error.message, true);
       }
@@ -913,9 +1075,16 @@
       const title_ar = subForm.title_ar.value;
       const title_en = subForm.title_en.value;
       const tag_ar = subForm.tag_ar.value;
+      const tag_en = subForm.tag_en ? subForm.tag_en.value : "";
       let logo = subForm.logo ? subForm.logo.value.trim() : "";
       const fb = subForm.fb ? subForm.fb.value : "";
       const desc_ar = subForm.desc_ar ? subForm.desc_ar.value : "";
+      const address_ar = subForm.address_ar ? subForm.address_ar.value : "";
+      const address_en = subForm.address_en ? subForm.address_en.value : "";
+      const services_ar = subForm.services_ar ? linesToList(subForm.services_ar.value) : [];
+      let services_en = subForm.services_en ? linesToList(subForm.services_en.value) : [];
+      if (!services_en.length) services_en = services_ar;
+      const phones = subForm.phones ? parsePhoneLines(subForm.phones.value) : [];
 
       const fileInput = subForm.querySelector('input[name="logo_file"]');
       if (fileInput && fileInput.files && fileInput.files[0]) {
@@ -924,7 +1093,7 @@
       }
 
       try {
-        const data = await request("add-subsidiary", { title_ar, title_en, tag_ar, logo, fb, desc_ar });
+        const data = await request("add-subsidiary", { title_ar, title_en, tag_ar, tag_en, logo, fb, desc_ar, address_ar, address_en, services_ar, services_en, phones });
         subForm.reset();
         setStatus("#subStatus", "تمت إضافة المؤسسة والشعار بنجاح!", false, true);
         currentState.subsidiaries = data.subsidiaries;
@@ -963,6 +1132,8 @@
     event.preventDefault();
     setStatus("#settingsStatus", "جار الحفظ...");
     try {
+      const contact_addresses = parseJsonField(settingsForm.contact_addresses_json, defaultContactAddresses());
+      const contact_channels = parseJsonField(settingsForm.contact_channels_json, defaultContactChannels(currentState.settings || {}));
       const data = await request("settings", {
         facebook: settingsForm.facebook ? settingsForm.facebook.value : "",
         instagram: settingsForm.instagram ? settingsForm.instagram.value : "",
@@ -970,9 +1141,21 @@
         maps: settingsForm.maps ? settingsForm.maps.value : "",
         phone_egypt: settingsForm.phone_egypt ? settingsForm.phone_egypt.value : "",
         phone_iraq: settingsForm.phone_iraq ? settingsForm.phone_iraq.value : "",
-        phone_turkey: settingsForm.phone_turkey ? settingsForm.phone_turkey.value : ""
+        phone_turkey: settingsForm.phone_turkey ? settingsForm.phone_turkey.value : "",
+        contact_title_ar: settingsForm.contact_title_ar ? settingsForm.contact_title_ar.value : "",
+        contact_title_en: settingsForm.contact_title_en ? settingsForm.contact_title_en.value : "",
+        contact_text_ar: settingsForm.contact_text_ar ? settingsForm.contact_text_ar.value : "",
+        contact_text_en: settingsForm.contact_text_en ? settingsForm.contact_text_en.value : "",
+        footer_desc_ar: settingsForm.footer_desc_ar ? settingsForm.footer_desc_ar.value : "",
+        footer_desc_en: settingsForm.footer_desc_en ? settingsForm.footer_desc_en.value : "",
+        footer_hours_ar: settingsForm.footer_hours_ar ? settingsForm.footer_hours_ar.value : "",
+        footer_hours_en: settingsForm.footer_hours_en ? settingsForm.footer_hours_en.value : "",
+        contact_addresses,
+        contact_channels
       });
+      currentState.settings = data.settings || currentState.settings;
       fillSettings(data.settings);
+      syncPublicLocalStorageStore();
       setStatus("#settingsStatus", "تم حفظ التعديلات بنجاح.", false, true);
     } catch (error) {
       setStatus("#settingsStatus", error.message, true);
@@ -1017,6 +1200,7 @@
         if (res && res.officialEmails) {
           currentState.officialEmails = res.officialEmails;
           fillOfficialEmails(res.officialEmails);
+          syncPublicLocalStorageStore();
         }
       } catch (err) {
         alert(err.message || "حدث خطأ أثناء إضافة الإيميل");
@@ -1041,6 +1225,7 @@
           if (res && res.officialEmails) {
             currentState.officialEmails = res.officialEmails;
             fillOfficialEmails(res.officialEmails);
+            syncPublicLocalStorageStore();
           }
         } catch (err) {
           alert(err.message || "حدث خطأ أثناء التعديل");
@@ -1057,6 +1242,7 @@
           if (res && res.officialEmails) {
             currentState.officialEmails = res.officialEmails;
             fillOfficialEmails(res.officialEmails);
+            syncPublicLocalStorageStore();
           }
         } catch (err) {
           alert(err.message || "حدث خطأ أثناء الحذف");

@@ -286,6 +286,9 @@ export function getGlobalStore() {
   if (!Array.isArray(global.__BIG_STORE__.officialEmails)) {
     global.__BIG_STORE__.officialEmails = defaultOfficialEmails;
   }
+  if (!global.__BIG_STORE__.updatedAt) {
+    global.__BIG_STORE__.updatedAt = '';
+  }
 
   return global.__BIG_STORE__;
 }

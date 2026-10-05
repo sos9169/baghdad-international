@@ -271,6 +271,10 @@
               <input type="text" name="tag_ar" placeholder="مثال: تركيا (اسطنبول)">
             </label>
             <label>
+              <span>الفرع / الدولة بالإنجليزي</span>
+              <input type="text" name="tag_en" placeholder="Turkey (Istanbul)">
+            </label>
+            <label>
               <span>البريد الإلكتروني الرسمي (Email)</span>
               <input type="email" name="email" placeholder="example@domain.com">
             </label>
@@ -293,6 +297,22 @@
             <label class="full-width">
               <span>العنوان التفصيلي</span>
               <input type="text" name="address_ar" placeholder="مثال: 7 شارع عقبة بن نافع، الدقي، القاهرة">
+            </label>
+            <label class="full-width">
+              <span>العنوان التفصيلي بالإنجليزي</span>
+              <input type="text" name="address_en" placeholder="7 Okba Ibn Nafeh St, Dokki, Cairo">
+            </label>
+            <label class="full-width">
+              <span>خدمات المؤسسة داخل النافذة (كل خدمة في سطر)</span>
+              <textarea name="services_ar" rows="3" placeholder="خدمة القبولات الجامعية&#10;خدمات السفر والتأشيرات&#10;استشارات تجارية"></textarea>
+            </label>
+            <label class="full-width">
+              <span>خدمات المؤسسة بالإنجليزي (كل خدمة في سطر)</span>
+              <textarea name="services_en" rows="3" placeholder="University admissions&#10;Travel and visa services&#10;Business consulting"></textarea>
+            </label>
+            <label class="full-width">
+              <span>أرقام واتساب المؤسسة (كل رقم في سطر: الوصف | الرقم)</span>
+              <textarea name="phones" rows="3" placeholder="خدمة العملاء | +20 150 000 0000&#10;مكتب المتابعة | +964 774 288 1766"></textarea>
             </label>
             <label class="full-width">
               <span>الوصف التوضيحي بالعربية</span>
@@ -324,6 +344,22 @@
           <label><span>🇮🇶 رقم الواتساب / هاتف العراق</span><input type="tel" name="phone_iraq" placeholder="+9647700000000"></label>
           <label><span>🇹🇷 رقم الواتساب / هاتف تركيا</span><input type="tel" name="phone_turkey" placeholder="+905300000000"></label>
           <label><span>رابط خرائط Google</span><input type="url" name="maps" placeholder="https://www.google.com/maps/..."></label>
+          <label><span>عنوان التواصل بالعربية</span><input type="text" name="contact_title_ar" placeholder="جاهز للخطوة&lt;br&gt;&lt;span&gt;التالية؟&lt;/span&gt;"></label>
+          <label><span>عنوان التواصل بالإنجليزي</span><input type="text" name="contact_title_en" placeholder="Ready for the&lt;br&gt;&lt;span&gt;next step?&lt;/span&gt;"></label>
+          <label><span>وصف التواصل بالعربية</span><textarea name="contact_text_ar" rows="2" placeholder="احكي لنا احتياجك..."></textarea></label>
+          <label><span>وصف التواصل بالإنجليزي</span><textarea name="contact_text_en" rows="2" placeholder="Tell us what you need..."></textarea></label>
+          <label><span>وصف الفوتر بالعربية</span><textarea name="footer_desc_ar" rows="2" placeholder="وصف المجموعة في الفوتر"></textarea></label>
+          <label><span>وصف الفوتر بالإنجليزي</span><textarea name="footer_desc_en" rows="2" placeholder="Footer group description"></textarea></label>
+          <label><span>أوقات العمل بالعربية</span><input type="text" name="footer_hours_ar" placeholder="السبت – الخميس: 9:00 ص – 6:00 م"></label>
+          <label><span>أوقات العمل بالإنجليزي</span><input type="text" name="footer_hours_en" placeholder="Saturday – Thursday: 9:00 AM – 6:00 PM"></label>
+          <label>
+            <span>عناوين المقرات (JSON قابل للتعديل)</span>
+            <textarea name="contact_addresses_json" class="json-editor" rows="8" spellcheck="false"></textarea>
+          </label>
+          <label>
+            <span>كروت أرقام التواصل حسب الدولة (JSON قابل للتعديل)</span>
+            <textarea name="contact_channels_json" class="json-editor" rows="12" spellcheck="false"></textarea>
+          </label>
           <button type="submit"><i class="fa-solid fa-floppy-disk"></i> حفظ التعديلات</button>
           <small id="settingsStatus"></small>
         </form>

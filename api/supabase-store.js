@@ -84,7 +84,8 @@ const siteContentKeys = [
   'subsidiaries',
   'officialEmails',
   'settings',
-  'admin'
+  'admin',
+  'updatedAt'
 ];
 
 function pickSiteContent(store = {}) {
@@ -94,7 +95,24 @@ function pickSiteContent(store = {}) {
   }, {});
 }
 
+function normalizeContent(content, source = '') {
+  if (!content || typeof content !== 'object') return null;
+  const normalized = { ...content };
+  if (!normalized.updatedAt) {
+    normalized.updatedAt = normalized.updated_at || normalized.savedAt || '';
+  }
+  normalized._source = source;
+  return normalized;
+}
+
+function contentTime(content) {
+  const time = Date.parse(content?.updatedAt || content?.updated_at || '');
+  return Number.isNaN(time) ? 0 : time;
+}
+
 export async function getSiteContent() {
+  const candidates = [];
+
   // 1. Try Upstash Redis Cloud Persistence
   try {
     const res = await fetch(`${UPSTASH_URL}/get/${UPSTASH_KEY}`, {
@@ -105,7 +123,8 @@ export async function getSiteContent() {
       const data = await res.json();
       if (data && data.result) {
         const parsed = typeof data.result === 'string' ? JSON.parse(data.result) : data.result;
-        if (parsed && typeof parsed === 'object') return parsed;
+        const normalized = normalizeContent(parsed, 'upstash');
+        if (normalized) candidates.push(normalized);
       }
     }
   } catch (err) {}
@@ -115,7 +134,8 @@ export async function getSiteContent() {
     const rows = await supabaseRequest('site_content_store?id=eq.main&select=content');
     const row = Array.isArray(rows) ? rows[0] : null;
     if (row && row.content && typeof row.content === 'object') {
-      return row.content;
+      const normalized = normalizeContent(row.content, 'supabase:site_content_store');
+      if (normalized) candidates.push(normalized);
     }
   } catch (err) {}
 
@@ -125,16 +145,23 @@ export async function getSiteContent() {
     const row = Array.isArray(rows) ? rows[0] : null;
     if (row && row.message) {
       const parsed = JSON.parse(row.message);
-      if (parsed && typeof parsed === 'object') return parsed;
+      const normalized = normalizeContent(parsed, 'supabase:site_orders');
+      if (normalized) candidates.push(normalized);
     }
   } catch (err) {}
 
-  return null;
+  if (!candidates.length) return null;
+  candidates.sort((a, b) => contentTime(b) - contentTime(a));
+  const latest = candidates[0];
+  delete latest._source;
+  return latest;
 }
 
 export async function saveSiteContent(store) {
-  const content = pickSiteContent(store);
   const updatedAt = new Date().toISOString();
+  store.updatedAt = updatedAt;
+  const content = pickSiteContent(store);
+  content.updatedAt = updatedAt;
   const jsonStr = JSON.stringify(content);
 
   // 1. Save to Upstash Redis Cloud Database
